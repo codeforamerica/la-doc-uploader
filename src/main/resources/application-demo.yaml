@@ -2,7 +2,7 @@ spring:
   thymeleaf:
     cache: true
   datasource:
-    url: jdbc:postgresql://host.docker.internal:5432/starter-app
+    url: jdbc:postgresql://host.docker.internal:5432/la-doc-uploader
 form-flow:
   aws:
-    s3_bucket_name: 'form-flow-demo'
+    s3_bucket_name: 'la-document-uploader-demo'
