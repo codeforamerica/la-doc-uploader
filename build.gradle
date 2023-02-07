@@ -1,0 +1,71 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+    id 'java'
+    id 'com.gorylenko.gradle-git-properties' version '2.3.2'
+    id 'com.adarshr.test-logger' version '3.2.0'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+configurations.configureEach {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+def props = new Properties()
+if (file(".env").exists()) {
+    file(".env").withInputStream { props.load(it) }
+}
+
+repositories {
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+    mavenCentral()
+}
+
+def profile = props.getProperty('SPRING_PROFILES_ACTIVE')
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'org.flywaydb:flyway-core'
+
+    if (profile == 'dev') {
+        implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
+        println "Using local library 🗼"
+    } else {
+        implementation 'org.codeforamerica.platform:form-flow:0.0.1-SNAPSHOT'
+        println "Using 0.0.1-SNAPSHOT 💜"
+    }
+
+    compileOnly 'org.projectlombok:lombok'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.seleniumhq.selenium:selenium-java'
+    testImplementation 'io.percy:percy-java-selenium:1.1.0'
+    testImplementation 'org.awaitility:awaitility'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.3.0'
+    testImplementation 'com.h2database:h2'
+
+    runtimeOnly 'org.postgresql:postgresql'
+}
+
+springBoot {
+    buildInfo()
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

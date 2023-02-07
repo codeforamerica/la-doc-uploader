@@ -1,0 +1,19 @@
+form-flow:
+  uploads:
+    accepted-file-types: '.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
+    thumbnail-width: '54'
+    thumbnail-height: '50'
+    max-files: '5' # 5 files maximum
+    max-file-size: '1' # 1 MB file size limit
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;
+    username: sa
+    password: sa
+  thymeleaf:
+    prefix: classpath:/templates/
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  main:
+    allow-circular-references: true

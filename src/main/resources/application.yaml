@@ -1,0 +1,67 @@
+form-flow:
+  inputs: 'org.formflowstartertemplate.app.inputs.'
+  uploads:
+    accepted-file-types: '.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
+    thumbnail-width: '64'
+    thumbnail-height: '60'
+    # 20 files maximum
+    max-files: '20'
+    # 20 MB file size limit
+    # If this is not set then the server values below for servlet max-file-size and tomcat max POST size will not be set
+    # which will cause the server to use the default values of 1MB preventing uploads larger than that.
+    max-file-size: '20'
+  aws:
+    region: 'us-west-1'
+    s3_bucket_name: 'form-flow'
+    access_key: ${AWS_ACCESS_KEY}
+    secret_key: ${AWS_SECRET_KEY}
+  address:
+    smarty:
+      smarty_auth_id: ${SMARTY_AUTH_ID}
+      smarty_auth_token: ${SMARTY_AUTH_TOKEN}
+      smarty_url: "https://us-street.api.smartystreets.com/street-address"
+spring:
+  profiles:
+    group:
+      test:
+        - test
+        - form-flow-library-test
+      dev:
+        - dev
+        - form-flow-library
+      demo:
+        - demo
+        - form-flow-library
+  thymeleaf:
+    cache: false
+    template-resolver-order: 0
+    check-template-location: true
+  # TODO: move caching 0 to a dev only context?
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0
+  datasource:
+    url: jdbc:postgresql://localhost:5432/starter-app
+    username: starter-app
+    password:
+  servlet:
+    multipart:
+      max-file-size: ${form-flow.uploads.max-file-size}MB
+      max-request-size: ${form-flow.uploads.max-file-size}MB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+server:
+  tomcat:
+    max-http-form-post-size: ${form-flow.uploads.max-file-size}MB
+  error:
+    whitelabel:
+      enabled: false
