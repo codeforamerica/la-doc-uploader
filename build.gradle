@@ -71,8 +71,7 @@ tasks.named('test') {
 }
 
 jar {
-    baseName 'app'
-    version '0.0.1'
+  enabled false
   manifest {
     attributes(
       'Main-Class': ' org.formflowstartertemplate.app.StarterApplication'
