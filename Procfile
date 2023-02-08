@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/*.jar --spring.profiles.active=demo
+web: java -Dserver.port=${PORT:8080} $JAVA_OPTS -jar target/*.jar --spring.profiles.active=demo
