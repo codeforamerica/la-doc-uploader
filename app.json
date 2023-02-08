@@ -10,6 +10,12 @@
   "buildpacks": [
     {
       "url": "heroku/jvm"
+    },
+    {
+      "url": "heroku/gradle"
+    },
+    {
+      "url": "heroku/java"
     }
   ],
   "env": {
