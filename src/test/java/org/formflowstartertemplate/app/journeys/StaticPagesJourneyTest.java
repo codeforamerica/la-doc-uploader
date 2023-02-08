@@ -17,7 +17,7 @@ public class StaticPagesJourneyTest extends AbstractBasePageTest {
   @Test
   void staticPagesJourney() {
     // Landing screen
-    assertThat(testPage.getTitle()).isEqualTo("Apply for UBI payments easily online.");
+    assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
     assertThat(driver.getWindowHandles().size()).isEqualTo(1);
     String originalWindow = driver.getWindowHandle();
     // Go to FAQ tab
@@ -28,7 +28,7 @@ public class StaticPagesJourneyTest extends AbstractBasePageTest {
     // Back on landing screen
     driver.close();
     driver.switchTo().window(originalWindow);
-    assertThat(testPage.getTitle()).isEqualTo("Apply for UBI payments easily online.");
+    assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
     assertThat(driver.getWindowHandles().size()).isEqualTo(1);
     // Go to privacy policy tab
     testPage.clickLink("Privacy Policy");
