@@ -69,3 +69,13 @@ springBoot {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// Heroku
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/libs"
+}
+
+stage.dependsOn(copyToLib)
