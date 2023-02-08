@@ -70,6 +70,14 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+jar {
+  manifest {
+    attributes(
+      'Main-Class': ' org.formflowstartertemplate.app.StarterApplication'
+    )
+  }
+}
+
 // Heroku
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
