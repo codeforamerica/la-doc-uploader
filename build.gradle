@@ -71,6 +71,8 @@ tasks.named('test') {
 }
 
 jar {
+    baseName 'app'
+    version '0.0.1'
   manifest {
     attributes(
       'Main-Class': ' org.formflowstartertemplate.app.StarterApplication'
@@ -79,15 +81,15 @@ jar {
 }
 
 // Heroku
-task stage(type: Copy, dependsOn: [clean, build]) {
-    from jar.archivePath
-    into project.rootDir
-    rename {
-        'app.jar'
-    }
-}
-stage.mustRunAfter(clean)
-
-clean << {
-    project.file('app.jar').delete()
-}
+//task stage(type: Copy, dependsOn: [clean, build]) {
+//    from jar.archivePath
+//    into project.rootDir
+//    rename {
+//        'app.jar'
+//    }
+//}
+//stage.mustRunAfter(clean)
+//
+//clean << {
+//    project.file('app.jar').delete()
+//}
