@@ -6,11 +6,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication(scanBasePackages = {"org.formflowstartertemplate.app", "formflow.library"})
 @EnableConfigurationProperties
-public class StarterApplication {
+public class LaDocUploader {
 
   public static void main(String[] args) {
 
-    SpringApplication.run(StarterApplication.class, args);
+    SpringApplication.run(LaDocUploader.class, args);
   }
 
 }
