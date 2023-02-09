@@ -8,6 +8,7 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block th:replace="'fragments/icons' :: matchInfo"></th:block>
         <th:block
             th:replace="'fragments/cardHeader' :: cardHeader(header=#{client-info.header}, subtext=#{client-info.subtext})"/>
           <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::clientInfoFormContents})">
@@ -16,12 +17,11 @@
                 <th:block th:replace="'fragments/inputs/text' ::
                   text(inputName='firstName',
                   label=#{client-info.first-name-question},
-                  helpText=#{client-info.first-name-subtext})" />
+                  helpText=#{client-info.name-subtext})" />
                 <th:block th:replace="'fragments/inputs/text' ::
-                  text(inputName='firstName',
-                  label=#{client-info.first-name-question},
-                  helpText=#{client-info.first-name-subtext})" />
-
+                  text(inputName='lastName',
+                  label=#{client-info.last-name-question},
+                  helpText=#{client-info.name-subtext})" />
               </div>
             <div class="form-card__footer">
               <th:block th:replace="fragments/inputs/submitButton :: submitButton(

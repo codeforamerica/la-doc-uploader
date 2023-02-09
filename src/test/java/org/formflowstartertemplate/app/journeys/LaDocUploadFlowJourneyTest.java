@@ -14,5 +14,8 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     // Landing screen
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
     testPage.clickButton("Upload documents");
+
+    // Client Info
+    assertThat(testPage.getTitle()).isEqualTo("Match Info");
   }
 }
