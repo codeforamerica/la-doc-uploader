@@ -106,3 +106,18 @@
 .email-confirmation-box svg {
   flex-shrink: 0;
 }
+
+.footer-louisiana-blue {
+  color: #FFF;
+  background-color: #00284D;
+}
+
+.main-footer-la {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+
+  background: #00284D;
+}

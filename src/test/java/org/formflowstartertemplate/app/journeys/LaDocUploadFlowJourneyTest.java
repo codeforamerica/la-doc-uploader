@@ -7,7 +7,7 @@ import static org.formflowstartertemplate.app.utils.YesNoAnswer.YES;
 import org.formflowstartertemplate.app.utils.AbstractBasePageTest;
 import org.junit.jupiter.api.Test;
 
-public class UbiFlowJourneyTest extends AbstractBasePageTest {
+public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void fullUbiFlow() {

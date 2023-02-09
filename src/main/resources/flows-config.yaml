@@ -122,3 +122,5 @@ flow:
       - name: success
   success:
     nextScreens: null
+---
+name: laDocUpload
