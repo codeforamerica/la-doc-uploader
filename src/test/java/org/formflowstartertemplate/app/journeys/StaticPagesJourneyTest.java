@@ -21,8 +21,6 @@ public class StaticPagesJourneyTest extends AbstractBasePageTest {
     assertThat(driver.getWindowHandles().size()).isEqualTo(1);
     String originalWindow = driver.getWindowHandle();
     // Back on landing screen
-//    driver.close();
-//    driver.switchTo().window(originalWindow);
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
     assertThat(driver.getWindowHandles().size()).isEqualTo(1);
     // Go to privacy policy tab

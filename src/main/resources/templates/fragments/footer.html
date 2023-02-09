@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <footer th:fragment="footer" class="main-footer footer-louisiana-blue">
         <p th:utext="#{footer.this-benefits-application-is}"></p>
         <a class="text--small font-white spacing-below-15" target="_blank" rel="noopener noreferrer" href="/privacy"
            th:text="#{footer.privacy}"></a>
-        <th:block th:if="${codeCommitHashShort != null}">
-          <p class="text--small font-white"
-             th:text="${codeCommitHashShort} + ( (${codeCommitDateTime} != null) ? ' : ' + ${codeCommitDateTime} : '')">
-          </p>
-        </th:block>
     <div class="spacing-above-35">
       <a href="https://www.codeforamerica.org">
         <img src="/webjars/form-flow/0.0.1/images/code-for-america-logo_white.svg"
@@ -19,4 +12,3 @@
     </div>
 
 </footer>
-</html>
