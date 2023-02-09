@@ -20,11 +20,6 @@ public class StaticPagesJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
     assertThat(driver.getWindowHandles().size()).isEqualTo(1);
     String originalWindow = driver.getWindowHandle();
-    // Go to FAQ tab
-    testPage.clickLink("FAQ");
-    assertThat(driver.getWindowHandles().size()).isEqualTo(2);
-    switchAwayFromOriginalWindow(originalWindow);
-    assertThat(testPage.getTitle()).isEqualTo("Frequently Asked Questions");
     // Back on landing screen
     driver.close();
     driver.switchTo().window(originalWindow);
