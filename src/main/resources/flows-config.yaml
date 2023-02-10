@@ -132,4 +132,7 @@ flow:
     nextScreens:
      - name: uploadDocuments
   uploadDocuments:
+    nextScreens:
+      - name: docSubmitConfirmation
+  docSubmitConfirmation:
     nextScreens: null
