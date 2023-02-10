@@ -135,4 +135,7 @@ flow:
     nextScreens:
       - name: docSubmitConfirmation
   docSubmitConfirmation:
+    nextScreens:
+      - name: finalConfirmation
+  finalConfirmation:
     nextScreens: null
