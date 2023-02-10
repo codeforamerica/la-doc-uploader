@@ -127,6 +127,6 @@ name: laDocUpload
 flow:
   clientInfo:
     nextScreens:
-      - name: success
-  success:
+      - name: howToAddDocuments
+  howToAddDocuments:
     nextScreens: null
