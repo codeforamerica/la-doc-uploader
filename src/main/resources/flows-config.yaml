@@ -129,4 +129,7 @@ flow:
     nextScreens:
       - name: howToAddDocuments
   howToAddDocuments:
+    nextScreens:
+     - name: uploadDocuments
+  uploadDocuments:
     nextScreens: null

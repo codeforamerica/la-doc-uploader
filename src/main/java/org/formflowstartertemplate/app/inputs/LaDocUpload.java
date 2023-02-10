@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class LaDocUpload extends FlowInputs {
 
-  MultipartFile docUpload;
+  MultipartFile uploadDocuments;
 
   // Client Info Screen
   @NotBlank(message = "{client-info.provide-first-name}")
