@@ -19,6 +19,6 @@ public class LaDocUpload extends FlowInputs {
   @NotBlank(message = "{client-info.provide-last-name}")
   private String lastName;
 
-  @Email
+  @Email(message = "{client-info.provide-correct-email}")
   private String emailAddress;
 }
