@@ -12,7 +12,7 @@ form-flow:
     max-file-size: '5'
   aws:
     region: 'us-east-1'
-    s3_bucket_name: 'la-document-uploader'
+    s3_bucket_name: 'la-doc-uploader'
     access_key: ${AWS_ACCESS_KEY}
     secret_key: ${AWS_SECRET_KEY}
   address:
