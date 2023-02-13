@@ -22,6 +22,10 @@
                   text(inputName='lastName',
                   label=#{client-info.last-name-question},
                   helpText=#{client-info.name-subtext})" />
+                <th:block th:replace="'fragments/inputs/date' ::
+                  date(inputName='birthDate',
+                  label=#{client-info.date-of-birth},
+                  helpText=#{client-info.date-of-birth.help})"/>
               </div>
             <div class="form-card__footer">
               <th:block th:replace="fragments/inputs/submitButton :: submitButton(
