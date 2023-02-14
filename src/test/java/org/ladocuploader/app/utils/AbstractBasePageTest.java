@@ -64,8 +64,7 @@ public abstract class AbstractBasePageTest {
     }
   }
 
-  protected void uploadFile(String filepath, String dzName) {
-    testPage.clickElementById("drag-and-drop-box-" + dzName); // is this needed?
+  protected void uploadFile(String filepath) {
     WebElement upload = driver.findElement(By.className("dz-hidden-input"));
     upload.sendKeys(TestUtils.getAbsoluteFilepathString(filepath));
     await().until(
@@ -73,9 +72,9 @@ public abstract class AbstractBasePageTest {
             .isBlank());
   }
 
-  protected void uploadJpgFile(String dzName) {
-    uploadFile(UPLOADED_JPG_FILE_NAME, dzName);
-    assertThat(driver.findElement(By.id("dropzone-" + dzName)).getText().replace("\n", ""))
+  protected void uploadJpgFile() {
+    uploadFile(UPLOADED_JPG_FILE_NAME);
+    assertThat(driver.findElement(By.id("file-preview-template-uploadDocuments")).getText().replace("\n", ""))
         .contains(UPLOADED_JPG_FILE_NAME);
   }
 }
