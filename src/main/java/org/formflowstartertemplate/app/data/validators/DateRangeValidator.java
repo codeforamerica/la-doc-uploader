@@ -14,7 +14,9 @@ public class DateRangeValidator implements ConstraintValidator<DateWithinRange, 
     @Override
     public boolean isValid(LaDocUpload laDocUpload, ConstraintValidatorContext context){
 
-    LocalDate inputDate = LocalDate.of(Integer.parseInt(laDocUpload.getBirthDateYear()),
+        log.info("CHECKING IF THE DATE IS VALID");
+
+        LocalDate inputDate = LocalDate.of(Integer.parseInt(laDocUpload.getBirthDateYear()),
                 Integer.parseInt(laDocUpload.getBirthDateMonth()),
                 Integer.parseInt(laDocUpload.getBirthDateYear())
         );

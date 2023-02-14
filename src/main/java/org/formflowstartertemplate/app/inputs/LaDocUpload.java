@@ -8,8 +8,8 @@ import javax.validation.constraints.NotBlank;
 import org.formflowstartertemplate.app.data.validators.DateWithinRange;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
 @DateWithinRange
+@Data
 public class LaDocUpload extends FlowInputs {
 
   MultipartFile uploadDocuments;
