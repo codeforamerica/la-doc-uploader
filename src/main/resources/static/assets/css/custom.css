@@ -1,5 +1,14 @@
 /* This file is provided for addition of custom CSS styles */
 
+:root {
+  --primary: #00284D;
+  --light: #F5F5F5;
+}
+
+body {
+  background-color: var(--light);
+}
+
 .reveal a {
   display: flex;
 }
@@ -107,9 +116,10 @@
   flex-shrink: 0;
 }
 
-.footer-louisiana-blue {
+/* TODO Consider pulling these out into variables in FFL itself */
+.toolbar__wrapper, .main-footer, .button--primary, .dz-button {
   color: #FFF;
-  background-color: #00284D;
+  background-color: var(--primary);
 }
 
 .main-footer-la {
@@ -139,5 +149,4 @@
 
 .button--center {
   text-align: center;
-
 }
