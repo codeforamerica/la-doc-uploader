@@ -22,6 +22,13 @@
                   text(inputName='lastName',
                   label=#{client-info.last-name-question},
                   helpText=#{client-info.name-subtext})" />
+
+
+                <th:block th:replace="'fragments/inputs/text' ::
+                  text(inputName='emailAddress',
+                  label=#{client-info.email-address},
+                  helpText=#{client-info.email-address-subtext})" />
+
               </div>
             <div class="form-card__footer">
               <th:block th:replace="fragments/inputs/submitButton :: submitButton(
