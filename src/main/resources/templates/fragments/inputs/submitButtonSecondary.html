@@ -3,11 +3,12 @@
 <body>
 <th:block
     th:fragment="submitButton"
-    th:with="text=${text} ? ${text} : #{general.inputs.submit}">
+    th:with="text=${text} ? ${text} : #{general.inputs.submit}, isDisabled=${isDisabled} ? ${isDisabled}: false">
   <button id="form-submit-button"
           class="button button--secondary"
           type="submit"
-          th:text="${text}"></button>
+          th:text="${text}"
+          th:classappend="${isDisabled}? 'disabled'"></button>
 </th:block>
 </body>
 </html>
