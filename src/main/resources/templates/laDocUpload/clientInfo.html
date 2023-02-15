@@ -22,7 +22,12 @@
                   text(inputName='lastName',
                   label=#{client-info.last-name-question},
                   helpText=#{client-info.name-subtext})" />
-
+                <th:block
+                  th:replace="'fragments/inputs/phone' :: phone(
+                  inputName='phoneNumber',
+                  label=#{client-info.phone-number},
+                  helpText=#{client-info.phone-number-subtext},
+                  placeholder=#{client-info.phone-number-placeholder})"/>
 
                 <th:block th:replace="'fragments/inputs/text' ::
                   text(inputName='emailAddress',
