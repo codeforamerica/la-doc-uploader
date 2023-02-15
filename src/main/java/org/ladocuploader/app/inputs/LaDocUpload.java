@@ -23,7 +23,7 @@ public class LaDocUpload extends FlowInputs {
   @Email(message = "{client-info.provide-correct-email}")
   private String emailAddress;
 
-  @Size(min=10, max=10, message="{client-info.provide-10-digit-phone}")
+  @Size(min=15, max=15, message="{client-info.provide-10-digit-phone}")
   private String phoneNumber;
 
 
