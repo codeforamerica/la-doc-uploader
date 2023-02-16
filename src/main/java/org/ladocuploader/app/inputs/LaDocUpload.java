@@ -4,6 +4,7 @@ import formflow.library.data.FlowInputs;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,4 +22,9 @@ public class LaDocUpload extends FlowInputs {
 
   @Email(message = "{client-info.provide-correct-email}")
   private String emailAddress;
+
+  @Size(min=14, max=14, message="{client-info.provide-10-digit-phone}")
+  private String phoneNumber;
+
+
 }
