@@ -34,6 +34,11 @@
                   label=#{client-info.email-address},
                   helpText=#{client-info.email-address-subtext})" />
 
+                <th:block th:replace="'fragments/inputs/text' ::
+                  text(inputName='caseNumber',
+                  label=#{client-info.case-number},
+                  helpText=#{client-info.case-number-subtext})" />
+
               </div>
             <div class="form-card__footer">
               <th:block th:replace="fragments/inputs/submitButton :: submitButton(
