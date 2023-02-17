@@ -26,5 +26,7 @@ public class LaDocUpload extends FlowInputs {
   @Size(min=14, max=14, message="{client-info.provide-10-digit-phone}")
   private String phoneNumber;
 
+  private String caseNumber;
+
 
 }
