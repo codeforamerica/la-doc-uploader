@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DateValidator implements ConstraintValidator<Date, List<String>> {
-
-  static final LocalDate MIN_DATE = LocalDate.of(1900, 1, 1);
   static final DateTimeFormatter MM_DD_YYYY = DateTimeFormatter.ofPattern("M/d/uuuu");
 
   @Override

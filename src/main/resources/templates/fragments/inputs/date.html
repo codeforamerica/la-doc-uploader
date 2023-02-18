@@ -21,7 +21,7 @@
         errorMessages.get(inputName + 'Year') != null &&
         #arrays.length(errorMessages.get(inputName + 'Year')) > 0 },
       emptyList = ${ {'', '', ''} },
-      dateComponents=${inputData.get(inputName) != null ? inputData.get(inputName) : emptyList }"
+      dateComponents=${inputData.get(inputName) != null && inputData.get(inputName).size() > 2 ? inputData.get(inputName) : emptyList }"
     th:assert="${!#strings.isEmpty(inputName)}, ${hasLabel || hasAriaLabel}">
   <div
       th:class="'form-group' + ${((hasErrorMonth || hasErrorDay || hasErrorYear) ? ' form-group--error' : '')}">
