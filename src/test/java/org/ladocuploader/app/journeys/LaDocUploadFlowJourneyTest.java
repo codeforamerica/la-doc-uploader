@@ -1,11 +1,10 @@
 package org.ladocuploader.app.journeys;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.ladocuploader.app.utils.AbstractBasePageTest;
 import org.junit.jupiter.api.Test;
+import org.ladocuploader.app.utils.AbstractBasePageTest;
 
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
@@ -19,6 +18,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Match Info");
     testPage.enter("firstName", "Britney");
     testPage.enter("lastName", "Spears");
+    testPage.enter("birthDate", "12/2/1981");
     testPage.clickContinue();
 
     // How to add docs

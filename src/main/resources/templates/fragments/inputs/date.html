@@ -1,0 +1,81 @@
+<th:block
+    th:fragment="date"
+    th:with="
+      hasLabel=${!#strings.isEmpty(label)},
+      hasAriaLabel=${!#strings.isEmpty(ariaLabel)},
+      hasErrorDate=${
+        errorMessages != null &&
+        errorMessages.get(inputName) != null &&
+        #arrays.length(errorMessages.get(inputName)) > 0
+      },
+      hasErrorMonth=${
+        errorMessages != null &&
+        errorMessages.get(inputName + 'Month') != null &&
+        #arrays.length(errorMessages.get(inputName + 'Month')) > 0 },
+      hasErrorDay=${
+        errorMessages != null &&
+        errorMessages.get(inputName + 'Day') != null &&
+        #arrays.length(errorMessages.get(inputName + 'Day')) > 0 },
+      hasErrorYear=${
+        errorMessages != null &&
+        errorMessages.get(inputName + 'Year') != null &&
+        #arrays.length(errorMessages.get(inputName + 'Year')) > 0 },
+      emptyList = ${ {'', '', ''} },
+      dateComponents=${inputData.get(inputName) != null && inputData.get(inputName).size() > 2 ? inputData.get(inputName) : emptyList }"
+    th:assert="${!#strings.isEmpty(inputName)}, ${hasLabel || hasAriaLabel}">
+  <div
+      th:class="'form-group' + ${((hasErrorMonth || hasErrorDay || hasErrorYear) ? ' form-group--error' : '')}">
+    <fieldset class="input-group input-group--inline">
+      <label th:if="${hasLabel}" th:for="${inputName}" th:text="${label}" class="form-question"/>
+      <p class="text--help">
+        <label th:for="${inputName}+'-month'"
+               th:id="${inputName}+'-month-label'"
+               th:text="#{${helpText} + '.month'}"></label>
+        &nbsp;/&nbsp;
+        <label th:for="${inputName}+'-day'"
+               th:id="${inputName}+'-day-label'"
+               th:text="#{${helpText} + '.day'}"></label>
+        &nbsp;/&nbsp;
+        <label th:for="${inputName}+'-year'"
+               th:id="${inputName}+'-year-label'"
+               th:text="#{${helpText} + '.year'}"></label>
+      </p>
+      <!-- TODO: figure out the three fields for each date issue -->
+      <input type="text" inputmode="numeric" maxlength="2"
+             class="text-input text-input--inline form-width--month dob-input"
+             th:id="${inputName}+'-month'"
+             th:name="${inputName}"
+             th:placeholder="mm"
+             th:attr="
+              aria-describedby=${inputName + '-month-label'},
+              aria-labelledby=${hasAriaLabel ? ariaLabel : ''},
+              aria-invalid=${hasErrorMonth}"
+             th:value="${dateComponents.get(0)}"/>
+      /
+      <input type="text" inputmode="numeric" maxlength="2"
+             class="text-input text-input--inline form-width--day dob-input"
+             th:id="${inputName}+'-day'"
+             th:name="${inputName}"
+             th:placeholder="dd"
+             th:attr="
+              aria-describedby=${inputName}+'-day-label',
+              aria-labelledby=${hasAriaLabel ? ariaLabel : ''},
+              aria-invalid=${hasErrorDay}"
+             th:value="${dateComponents.get(1)}"/>
+      /
+      <input type="text" inputmode="numeric" maxlength="4"
+             class="text-input text-input--inline form-width--year dob-input"
+             th:id="${inputName}+'-year'"
+             th:name="${inputName}"
+             th:placeholder="yyyy"
+             th:attr="
+              aria-describedby=${inputName}+'-year-label',
+              aria-labelledby=${hasAriaLabel ? ariaLabel : ''},
+              aria-invalid=${hasErrorYear}"
+             th:value="${dateComponents.get(2)}"/>
+    </fieldset>
+    <th:block
+      th:replace="fragments/inputError :: validationError(inputName=${inputName})">
+    </th:block>
+  </div>
+</th:block>
