@@ -9,4 +9,27 @@
     'page_name': window.location.pathname,
     'language': navigator.language
   });
+
+  function buttonClickEvent() {
+    const elementId = $(this).attr("id");
+    mixpanel.track('button_click', {
+      'page_name': window.location.pathname,
+      'element_id': elementId,
+      'language': navigator.language
+    });
+  }
+
+  $(document).ready(function () {
+    $("button").each(function () {
+      $(this).click(function () {
+        buttonClickEvent.call(this);
+      });
+    });
+
+    $("a.button").each(function () {
+      $(this).click(function () {
+        buttonClickEvent.call(this);
+      });
+    });
+  });
 </script>
