@@ -1,17 +1,14 @@
 <th:block th:fragment="toolbar">
-  <header class="main-header toolbar__wrapper">
-    <div class="toolbar">
-      <div class="toolbar__left spacing-above-10 spacing-below-10">
-        <a href="#content" id="skip-to-content" class="button button--small">Skip to content</a>
-        <a class="logo" href="/">
-          <img src="/assets/images/dcfs-logo-white.png"
-               alt="DCFS logo"
-               class="vertical-align-left max-width-logo"/>
-        </a>
-      </div>
-      <div class="toolbar__right">
-        <!--        <select th:replace="fragments/localeSelect :: localeSelect"></select>-->
-      </div>
+  <header class="main-header toolbar__wrapper" id="main-header">
+    <div class="toolbar" id="toolbar">
+      <a href="#content" id="skip-to-content" class="button button--small">Skip to content</a>
+      <a class="logo" href="/">
+        <img src="/assets/images/dcfs-logo-white.png"
+             alt="DCFS logo"
+             class="max-width-logo"/>
+      </a>
+      <div th:replace="fragments/localeSelect_V3 :: localeSelect_V3"></div>
+      <th:block th:replace="fragments/localeSelect_V3 :: translate_noscript"></th:block>
     </div>
   </header>
   <th:block th:replace="fragments/demoBanner :: demoBanner(demoText=#{demo.banner-text}, profile='demo')"/>
