@@ -1,0 +1,47 @@
+<div th:fragment="localeSelect" class="form-group" th:with="lang=${#locale.toString()}">
+  <div class="usa-language-container">
+    <ul>
+      <li>
+        <button
+            id="localSelect"
+            type="button"
+            class="button language-button spacing-below-10"
+            role="button"
+            aria-expanded="false"
+            aria-controls="language-options"
+            th:text="#{language-preferences.title}">
+        </button>
+        <ul id="language-options" class="usa-language__submenu" hidden="true">
+          <li class="usa-language__submenu-item">
+            <a href="?lang=es">
+              <span lang="ar" xml:lang="ar"><strong>Español</strong> (Spanish)</span>
+            </a>
+          </li>
+          <li class="usa-language__submenu-item">
+            <a href="?lang=vi">
+              <span lang="vi" xml:lang="vi"><strong>Tiếng Việt</strong> (Vietnamese)</span>
+            </a>
+          </li>
+          <li class="usa-language__submenu-item">
+            <a href="?lang=en">
+              <span lang="en" xml:lang="en"><strong>English</strong></span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $("#localSelect").click(function () {
+        let languageOptions = $("#language-options")[0];
+        let hidden = languageOptions.getAttribute("hidden");
+        if (hidden === "true") {
+          languageOptions.removeAttribute("hidden");
+        } else {
+          languageOptions.setAttribute("hidden", "true");
+        }
+      });
+    });
+  </script>
+</div>

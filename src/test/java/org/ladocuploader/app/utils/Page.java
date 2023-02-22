@@ -144,9 +144,7 @@ public class Page {
   }
 
   public void selectFromDropdown(String inputName, String optionText) {
-    selectFromDropdown(
-        driver.findElement(By.cssSelector(String.format("select[name='%s']", inputName))),
-        optionText);
+    selectFromDropdown(driver.findElement(By.name(inputName)), optionText);
   }
 
   private void selectFromDropdown(WebElement webElement, String optionText) {

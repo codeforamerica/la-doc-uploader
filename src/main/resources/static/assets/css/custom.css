@@ -3,6 +3,8 @@
 :root {
   --primary: #00284D;
   --light: #F5F5F5;
+  --primary-light: #C0CEDB;
+  --dark-grey: #121111;
 }
 
 body {
@@ -15,6 +17,7 @@ body {
   border-radius: 3px;
   max-width: 35rem;
 }
+
 .legal-stuff-header {
   padding: 2.5rem 0 -2.5rem 0;
   margin: auto;
@@ -28,6 +31,7 @@ body {
   overflow-y: scroll;
   padding-right: calc(1.5rem + 12px);
 }
+
 .textarea-readonly::-webkit-scrollbar {
   -webkit-appearance: none;
 }
@@ -81,7 +85,7 @@ body {
   text-align: center;
 }
 
-.vertical-steps:before{
+.vertical-steps:before {
   content: '';
   display: block;
   position: absolute;
@@ -107,11 +111,83 @@ body {
 }
 
 .toolbar {
-  margin: 0;
+   align-items: flex-start;
+   padding-top: 12px;
 }
 
+.toolbar__wrapper {
+  height: 7rem;
+}
+
+.menu-button-links button {
+  min-width: 160px;
+  padding: 5px 10px;
+  margin-bottom: 0;
+  margin-right: 0;
+  display: flex;
+  position: relative;
+  background-color: white;
+  border: none;
+  font-size: 16px;
+  color: black;
+  border-radius: 5px;
+  line-height: 1;
+  box-shadow: none;
+}
+
+.menu-button-links button > span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.3;
+}
+
+.menu-button-links button strong {
+  font-size: 16px;
+}
+
+.menu-button-links .small-text {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.menu-button-links [role="menu"] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: none;
+  position: absolute;
+  border: 2px solid var(--dark-grey);
+  border-radius: 5px;
+  background-color: white;
+  z-index: 3;
+}
+
+.menu-button-links [role="menuitem"],
+.menu-button-links [role="separator"] {
+  margin: 0;
+  padding: 10px 15px;
+  display: block;
+  border: none;
+  color: teal;
+  font-size: 15px;
+}
+
+.menu-button-links button svg {
+  margin-right: 12px;
+  align-self: center;
+}
+
+/* focus styling */
+.menu-button-links button:focus,
+.menu-button-links [role="menuitem"]:focus,
+.menu-button-links button:hover {
+  color: var(--dark-grey)
+}
+
+
 /* TODO Consider pulling these out into variables in FFL itself */
-.toolbar__wrapper, .main-footer, .button--primary, .dz-button {
+.toolbar__wrapper, .main-footer, .button--primary, .dz-button, .usa-language__submenu {
   color: #FFF;
   background-color: var(--primary);
 }
@@ -142,7 +218,8 @@ body {
 }
 
 .max-width-logo {
-  max-width: 19rem;
+  max-width: 18rem;
+  margin-top: 4px;
 }
 
 .footer-logos {
@@ -203,6 +280,89 @@ body {
 
 .slab--yellow {
   background-color: #FEF1D9;
+}
+
+.page-wrapper {
+  padding-bottom: 140px;
+}
+
+.usa-language-container {
+  z-index: 3;
+  position: relative;
+}
+
+.language-button {
+  background-color: var(--primary);
+}
+
+.language-button:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.usa-language__submenu {
+  position: absolute;
+  right: 0;
+  width: 150%;
+}
+
+.usa-language__submenu-item {
+  border-bottom: 1px solid white;
+}
+
+.usa-language__submenu-item > a {
+  color: white;
+  padding: 0 1rem;
+  text-decoration: none;
+}
+
+.usa-language__submenu-item > a:hover {
+  text-decoration: underline;
+}
+
+#locales {
+  padding: 0 1.6rem;
+  border-radius: 1rem;
+  font-size: 14px;
+}
+
+.select {
+  background-color: var(--primary);
+  border-radius: 1rem;
+  max-width: 250px;
+  height: 4rem;
+  line-height: 4rem;
+
+}
+
+.select__element {
+  color: white;
+  border-color: white;
+}
+
+.select:after {
+  font-size: 4rem;
+  color: white;
+}
+
+.select:hover:after {
+  color: var(--primary);
+}
+
+.select:hover {
+  background-color: white;
+}
+
+.select:hover > .select__element {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.language-selector {
+  margin-bottom: 6rem;
+  position: relative;
+  border-color: white;
+  color: white;
 }
 
 .page-wrapper {
