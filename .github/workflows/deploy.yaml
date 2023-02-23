@@ -31,13 +31,6 @@ jobs:
           ssh-keyscan beta.aptible.com >> ~/.ssh/known_hosts
           git remote add aptible ${{ vars.APTIBLE_REMOTE_URL }}
           git push --force ${{ vars.APTIBLE_REMOTE_URL }} ${GITHUB_SHA}:${{ vars.APTIBLE_REMOTE_BRANCH }}
-#      - name: Announce on Slack when deploy fails
-#        if: failure()
-#        uses: ravsamhq/notify-slack-action@v2
-#        with:
-#          status: ${{ job.status }}
-#        env:
-#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
