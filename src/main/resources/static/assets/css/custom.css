@@ -154,3 +154,19 @@ body {
 .max-width-logo {
   max-width: 25rem;
 }
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+}
+
+.footer-logos > div {
+  margin-left: 15px;
+}
+
+.vl {
+  border-left: 3px solid white;
+  height: 100px;
+  margin-left: -3px;
+  top: 0;
+}
