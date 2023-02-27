@@ -161,12 +161,11 @@ body {
 }
 
 .footer-logos > div {
-  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .vl {
   border-left: 3px solid white;
   height: 100px;
-  margin-left: -3px;
   top: 0;
 }
