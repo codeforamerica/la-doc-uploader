@@ -9,8 +9,25 @@
     <section class="slab">
       <div class="grid">
         <div class="width-one-half">
-          <h1 class="spacing-below-35 spacing-above-5" th:text="#{index.title}"></h1>
-          <a id="upload_docs" href="/laDocUpload/clientInfo" th:text="#{index.upload-documents}" class="button"></a>
+          <h1 class="spacing-below-35 spacing-above-5" th:utext="#{index.header}"></h1>
+          <p th:utext="#{index.upload-description}"></p>
+          <div class="display-flex flex-column">
+            <a id="upload_docs" href="/laDocUpload/clientInfo" class="button">Upload documents</a>
+            <a id="upload_docs_es" href="/laDocUpload/clientInfo" class="button">Subir documentos</a>
+            <a id="upload_docs_vt" href="/laDocUpload/clientInfo" class="button">Tải lên tài liệu</a>
+          </div>
+          <table>
+            <tr>
+              <td th:utext="#{index.snap-info}"></td>
+              <td>Maria Anders</td>
+              <td>Germany</td>
+            </tr>
+            <tr>
+              <td>Centro comercial Moctezuma</td>
+              <td>Francisco Chang</td>
+              <td>Mexico</td>
+            </tr>
+          </table>
         </div>
       </div>
     </section>

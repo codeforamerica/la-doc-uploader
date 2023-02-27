@@ -173,3 +173,22 @@ body {
   height: 100px;
   top: 0;
 }
+
+.flex-column {
+  flex-direction: column;
+  height: 400px;
+  align-items: baseline;
+}
+
+.button--grid {
+  width: 30rem;
+}
+
+table{
+  border-collapse:collapse;
+  border:1px solid black;
+}
+
+table td{
+  border:1px solid black;
+}
