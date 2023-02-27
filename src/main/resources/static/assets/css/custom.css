@@ -150,3 +150,7 @@ body {
 .button--center {
   text-align: center;
 }
+
+.max-width-logo {
+  max-width: 25rem;
+}
