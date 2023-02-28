@@ -7,15 +7,18 @@
   <th:block th:replace="fragments/demoBanner :: demoBanner"/>
   <main id="content" role="main" class="slab slab--white spacing-below-0">
     <section class="slab">
-      <div class="grid">
-        <div class="width-one-half">
-          <h1 class="spacing-below-35 spacing-above-5" th:utext="#{index.header}"></h1>
-          <p th:utext="#{index.upload-description}"></p>
-          <div class="display-flex flex-column">
-            <a id="upload_docs" href="/laDocUpload/clientInfo" class="button">Upload documents</a>
-            <a id="upload_docs_es" href="/laDocUpload/clientInfo/es" class="button">Subir documentos</a>
-            <a id="upload_docs_vi" href="/laDocUpload/clientInfo/vi" class="button">Tải lên tài liệu</a>
-          </div>
+      <h1 class="spacing-below-35 spacing-above-5" th:utext="#{index.header}"></h1>
+      <p th:utext="#{index.upload-description}"></p>
+      <div class="display-flex flex-column">
+        <a id="upload_docs_1" th:href="#{index.upload-documents-primary.link}"
+           th:text="#{index.upload-documents-primary}" class="button button--primary"></a>
+        <a id="upload_docs_2" th:href="#{index.upload-documents-second.link}"
+           th:text="#{index.upload-documents-second}" class="button"></a>
+        <a id="upload_docs_3" th:href="#{index.upload-documents-third.link}"
+           th:text="#{index.upload-documents-third}" class="button"></a>
+      </div>
+
+      <p th:text="#{index.these-documents}"></p>
           <table>
             <tr>
               <td th:utext="#{index.snap-info}"></td>
@@ -26,8 +29,34 @@
               <td th:utext="#{index.lcap-info}"></td>
             </tr>
           </table>
-        </div>
-      </div>
+      <p th:utext="#{index.looking-for-other-programs}"></p>
+      <a href="/laDocUpload/clientInfo/" th:text="#{index.get-started}" class="button button--primary"></a>
+
+      <h2 th:text="#{index.heres-a-quick-list}"></h2>
+      <p th:utext="#{index.you-can-upload}"></p>
+
+      <ul class="list--checkmark">
+        <li>
+          <div th:text="#{index.ID}"></div>
+          <p class="text--help" th:text="#{index.ID-examples}"></p>
+        </li>
+        <li>
+          <div th:text="#{index.immigration-status}"></div>
+          <p class="text--help" th:text="#{index.immigration-status-examples}"></p>
+        </li>
+        <li>
+          <div th:text="#{index.income}"></div>
+          <p class="text--help" th:text="#{index.income-examples}"></p>
+        </li>
+        <li>
+          <div th:text="#{index.expenses}"></div>
+          <p class="text--help" th:text="#{index.expenses-examples}"></p>
+        </li>
+        <li>
+          <div th:text="#{index.immunization-records}"></div>
+        </li>
+      </ul>
+      <a href="/laDocUpload/clientInfo/" th:text="#{index.get-started}" class="button button--primary"></a>
     </section>
   </main>
 </div>
