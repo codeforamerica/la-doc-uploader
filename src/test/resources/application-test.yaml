@@ -1,4 +1,5 @@
 form-flow:
+  encryption_key: 'some-secret-key-that-is-32-bytes'
   uploads:
     accepted-file-types: '.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
     thumbnail-width: '54'
