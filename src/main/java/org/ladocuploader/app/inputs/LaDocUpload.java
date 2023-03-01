@@ -38,6 +38,7 @@ public class LaDocUpload extends FlowInputs {
   @Pattern(regexp = "^[0-9]*$", message = "{client-info.number-format}")
   private String caseNumber;
 
+  @Size(min=11, max=11, message="{client-info.provide-9-digit-ssn}")
   private String ssn;
 
 
