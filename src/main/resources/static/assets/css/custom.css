@@ -191,6 +191,7 @@ table{
 
 table td{
   border:1px solid black;
+  vertical-align: top;
 }
 
 .list--checkmark li, .list--crossmark li {
