@@ -1,47 +1,45 @@
 <div th:fragment="localeSelect" class="form-group" th:with="lang=${#locale.toString()}">
-  <div class="usa-language-container">
-    <ul>
-      <li>
-        <button
-            id="localSelect"
-            type="button"
-            class="button language-button spacing-below-10"
-            role="button"
-            aria-expanded="false"
-            aria-controls="language-options"
-            th:text="#{language-preferences.title}">
-        </button>
-        <ul id="language-options" class="usa-language__submenu" hidden="true">
-          <li class="usa-language__submenu-item">
-            <a href="?lang=es">
-              <span lang="ar" xml:lang="ar"><strong>Español</strong> (Spanish)</span>
-            </a>
-          </li>
-          <li class="usa-language__submenu-item">
-            <a href="?lang=vi">
-              <span lang="vi" xml:lang="vi"><strong>Tiếng Việt</strong> (Vietnamese)</span>
-            </a>
-          </li>
-          <li class="usa-language__submenu-item">
-            <a href="?lang=en">
-              <span lang="en" xml:lang="en"><strong>English</strong></span>
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
+  <label th:text="#{language-preferences.title}" class="sr-only" for="locales"></label>
+  <div class="select">
+    <select class="select__element" name="locales" id="locales">
+      <option class="language-selector-option" selected
+              th:text="#{language-preferences.title}" th:lang="${lang}"></option>
+      <option class="language-selector-option" lang="en" value="en"
+              th:text="#{language-preferences.english}"></option>
+      <option class="language-selector-option" lang="es" value="es"
+              th:text="#{language-preferences.spanish}"></option>
+      <option class="language-selector-option" lang="vi" value="vi"
+              th:text="#{language-preferences.vietnamese}"></option>
+    </select>
   </div>
   <script>
     $(document).ready(function () {
-      $("#localSelect").click(function () {
-        let languageOptions = $("#language-options")[0];
-        let hidden = languageOptions.getAttribute("hidden");
-        if (hidden === "true") {
-          languageOptions.removeAttribute("hidden");
-        } else {
-          languageOptions.setAttribute("hidden", "true");
+      $("#locales").change(function () {
+        if ($("#locales").val() !== '') {
+          window.location.replace('?lang=' + $("#locales").val());
         }
       });
+
+      // language preferences
+      var writtenLanguage = $("#writtenLanguage");
+      if (writtenLanguage) {
+        var localeToLanguage = {'es': 'SPANISH', 'en': 'ENGLISH'}
+        var languageToLocale = {'SPANISH': 'es', 'ENGLISH': 'en'}
+        var localeLang = localeToLanguage[$("#locales").val()]
+        if (localeLang) {
+          $('#writtenLanguage option[value="' + localeLang + '"]').prop('selected', true)
+        }
+
+        writtenLanguage.change(function () {
+          var writtenLanguageSelected = $("#writtenLanguage option:selected");
+          var languagePreference = languageToLocale[writtenLanguageSelected.val()]
+          if (languagePreference) {
+            window.location.replace('?lang=' + languagePreference + '')
+          } else if ($("#locales").val() !== 'en') {
+            window.location.replace('?lang=en')
+          }
+        });
+      }
     });
   </script>
 </div>

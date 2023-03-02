@@ -119,16 +119,14 @@ body {
 
 .toolbar {
   margin: 0;
+  max-width: none;
+  align-items: normal;
 }
 
 /* TODO Consider pulling these out into variables in FFL itself */
 .toolbar__wrapper, .main-footer, .button--primary, .dz-button, .usa-language__submenu {
   color: #FFF;
   background-color: var(--primary);
-}
-
-.toolbar__wrapper {
-  height: 10rem;
 }
 
 .main-footer-la {
@@ -211,4 +209,22 @@ body {
 
 .usa-language__submenu-item > a:hover {
   text-decoration: underline;
+}
+
+#locales {
+  padding: 0 1.6rem;
+  border-radius: 1rem;
+  font-size: 14px;
+}
+
+.select {
+  color: var(--primary);
+  border-radius: 1rem;
+  max-width: 250px;
+  height: 4rem;
+  line-height: 4rem;
+}
+
+.select:after {
+  font-size: 4rem;
 }
