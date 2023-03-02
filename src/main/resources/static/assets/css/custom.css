@@ -193,20 +193,3 @@ table td{
   border:1px solid black;
   vertical-align: top;
 }
-
-.list--checkmark li, .list--crossmark li {
-  position: relative;
-  margin-left: 2.5rem;
-  padding-left: 2.5rem;
-  margin-bottom: 1.5rem; }
-.list--checkmark li:before, .list--crossmark li:before {
-  content: '';
-  display: block;
-  position: absolute;
-  left: 0;
-  top: .25em;
-  width: 2.5rem;
-  height: 1.5rem;
-  background-image: url(/assets/images/checkmark-5b981632cefe31ece2a4f47f362ae6377e815c1415945092d0ff97814df5a4c7.png);
-  background-repeat: no-repeat;
-  background-size: auto 1.5rem; }
