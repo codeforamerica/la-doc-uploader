@@ -233,6 +233,11 @@ body {
 
 .select:after {
   font-size: 4rem;
+  color: white;
+}
+
+.select:hover:after {
+  color: var(--primary);
 }
 
 .select:hover {
