@@ -183,7 +183,7 @@ body {
 }
 
 .language-button {
-  background-color: var(--primary-light);
+  background-color: var(--primary);
 }
 
 .language-button:hover {
@@ -218,13 +218,44 @@ body {
 }
 
 .select {
-  color: var(--primary);
+  background-color: var(--primary);
   border-radius: 1rem;
   max-width: 250px;
   height: 4rem;
   line-height: 4rem;
+
+}
+
+.select__element {
+  color: white;
+  border-color: white;
 }
 
 .select:after {
   font-size: 4rem;
 }
+
+.select:hover {
+  background-color: var(--primary-light);
+}
+
+.select:hover > .select__element {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.language-selector {
+  margin-bottom:6rem;
+  position:relative;
+  border-color: white;
+  color: white;
+}
+
+.main-header:hover > .select {
+  background-color: var(--primary-light);
+}
+
+
+/*.main-footer-la > .select {*/
+/*  background-color: var(--primary-light);*/
+/*}*/

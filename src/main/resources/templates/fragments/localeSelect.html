@@ -1,4 +1,4 @@
-<div th:fragment="localeSelect" class="form-group" th:with="lang=${#locale.toString()}">
+<div th:fragment="localeSelect" class="language-selector" th:with="lang=${#locale.toString()}">
   <label th:text="#{language-preferences.title}" class="sr-only" for="locales"></label>
   <div class="select">
     <select class="select__element" name="locales" id="locales">
