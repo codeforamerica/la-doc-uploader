@@ -255,12 +255,3 @@ body {
   border-color: white;
   color: white;
 }
-
-.main-header:hover > .select {
-  background-color: var(--primary-light);
-}
-
-
-/*.main-footer-la > .select {*/
-/*  background-color: var(--primary-light);*/
-/*}*/
