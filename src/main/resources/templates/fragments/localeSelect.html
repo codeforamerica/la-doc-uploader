@@ -1,6 +1,6 @@
 <div th:fragment="localeSelect" class="language-selector" th:with="lang=${#locale.toString()}">
   <label th:text="#{language-preferences.title}" class="sr-only" for="locales"></label>
-  <div class="select">
+  <div class="select" id="language-select">
     <select class="select__element" name="locales" id="locales">
       <option class="language-selector-option" selected
               th:text="#{language-preferences.title}" th:lang="${lang}"></option>

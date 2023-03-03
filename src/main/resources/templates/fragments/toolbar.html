@@ -1,5 +1,5 @@
 <th:block th:fragment="toolbar">
-  <header class="main-header toolbar__wrapper">
+  <header class="main-header toolbar__wrapper" id="main-header">
     <div class="toolbar" id="toolbar">
       <div class="toolbar__left spacing-above-10 spacing-below-10">
         <a href="#content" id="skip-to-content" class="button button--small">Skip to content</a>
@@ -12,4 +12,12 @@
       <div th:replace="fragments/localeSelect :: localeSelect"></div>
     </div>
   </header>
+  <script>
+      $(document).ready(function () {
+          $("#main-header").hover(function () {
+              $("#language-select").css("background-color", "var(--primary-light)")
+              $("#locales").css("color", "var(--primary)", "border-color", "var(--primary)")
+          });
+      });
+  </script>
 </th:block>
