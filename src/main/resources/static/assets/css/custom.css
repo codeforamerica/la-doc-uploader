@@ -116,6 +116,10 @@ body {
   flex-shrink: 0;
 }
 
+.toolbar {
+  margin: 0;
+}
+
 /* TODO Consider pulling these out into variables in FFL itself */
 .toolbar__wrapper, .main-footer, .button--primary, .dz-button {
   color: #FFF;
@@ -149,4 +153,23 @@ body {
 
 .button--center {
   text-align: center;
+}
+
+.max-width-logo {
+  max-width: 19rem;
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+}
+
+.footer-logos > div {
+  margin-right: 15px;
+}
+
+.vl {
+  border-left: 3px solid white;
+  height: 100px;
+  top: 0;
 }

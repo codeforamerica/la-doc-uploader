@@ -1,14 +1,24 @@
 <footer th:fragment="footer" class="main-footer">
-        <p th:utext="#{footer.this-benefits-application-is}"></p>
-        <a class="text--small font-white spacing-below-15" target="_blank" rel="noopener noreferrer" href="/privacy"
-           th:text="#{footer.privacy}"></a>
-    <div class="spacing-above-35">
+  <div class="footer-logos spacing-below-35">
+    <div>
+      <a href="https://www.dcfs.louisiana.gov">
+        <img src="/assets/images/Seal_of_Louisiana.png"
+             alt="DCFS logo"
+             style="width: 100px;">
+      </a>
+    </div>
+    <div class="vl"></div>
+    <div>
       <a href="https://www.codeforamerica.org">
         <img src="/webjars/form-flow/0.0.1/images/code-for-america-logo_white.svg"
              alt="Code for America logo"
              style="width: 100px;">
       </a>
-
     </div>
+  </div>
+
+        <p th:utext="#{footer.this-benefits-application-is}"></p>
+        <a class="text--small font-white spacing-below-15" target="_blank" rel="noopener noreferrer" href="/privacy"
+           th:text="#{footer.privacy}"></a>
 
 </footer>
