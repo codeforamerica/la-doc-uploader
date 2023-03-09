@@ -24,11 +24,6 @@
                   label=#{client-info.last-name-question},
                   helpText=#{client-info.name-subtext})"/>
 
-              <th:block
-                th:replace="'fragments/inputs/ssn' :: ssn(
-                inputName='ssn',
-                label='please enter ssn')"/>
-
               <th:block th:replace="'fragments/inputs/date' ::
                   date(inputName='birthDate',
                   label=#{client-info.date-of-birth},
