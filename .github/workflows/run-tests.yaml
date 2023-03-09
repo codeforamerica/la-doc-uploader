@@ -8,6 +8,7 @@ on:
 env:
   USERNAME: ${{ secrets.GPR_USER }}
   TOKEN: ${{ secrets.GPR_KEY }}
+  ENCRYPTION_KEY: some-secret-key-that-is-32-bytes
 
 jobs:
   test:
