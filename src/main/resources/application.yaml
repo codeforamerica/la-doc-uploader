@@ -1,5 +1,7 @@
 form-flow:
   inputs: 'org.ladocuploader.app.inputs.'
+  path: 'flows-config.yaml'
+  encryption_key: ${ENCRYPTION_KEY}
   uploads:
     accepted-file-types: '.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
     thumbnail-width: '64'
