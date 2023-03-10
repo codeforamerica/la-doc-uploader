@@ -1,10 +1,12 @@
 package org.ladocuploader.app.journeys;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
+
+import java.util.Objects;
 
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
@@ -19,6 +21,12 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("firstName", "Britney");
     testPage.enter("lastName", "Spears");
     testPage.enter("birthDate", "12/2/1981");
+    testPage.enter("ssn", "000-00-1111");
+    testPage.clickContinue();
+
+    // Go back and ensure that SSN value shown in input is decrypted
+    testPage.clickLink("< Go Back");
+    assertEquals("000-00-1111", testPage.getInputValue("ssn"));
     testPage.clickContinue();
 
     // How to add docs
