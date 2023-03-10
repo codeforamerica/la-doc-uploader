@@ -43,6 +43,7 @@ jobs:
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
           'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
           'FORCE_SSL=true' \
+          'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'demo=true'
