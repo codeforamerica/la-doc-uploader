@@ -4,7 +4,7 @@
 <body class="template--static-page">
 <div class="page-wrapper">
   <th:block th:replace="fragments/toolbar :: toolbar"/>
-  <th:block th:replace="fragments/demoBanner :: demoBanner"/>
+  <th:block th:replace="fragments/demoBanner :: demoBanner(demoText=#{demo.banner-text}, profile='demo')"/>
   <main id="content" role="main" class="slab slab--white spacing-below-0">
     <section class="slab">
       <h1 class="spacing-below-35 spacing-above-5" th:utext="#{index.header}"></h1>

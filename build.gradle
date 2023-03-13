@@ -69,6 +69,10 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+test {
+    environment("ENCRYPTION_KEY", "this-is-a-dummy-key-for-la-tests")
+}
+
 jar {
   enabled false
 }
