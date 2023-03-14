@@ -11,11 +11,17 @@
       <p th:utext="#{index.upload-description}"></p>
       <div class="display-flex flex-column">
         <a id="upload_docs_1" th:href="#{index.upload-documents-primary.link}"
-           th:text="#{index.upload-documents-primary}" class="button button--primary"></a>
+           th:text="#{index.upload-documents-primary}" class="button button--primary spacing-below-10"></a>
+        <p class="text--help spacing-below-25">
+          <small>
+            <i class="icon-lock_outline"></i>
+            <span th:text="#{index.safe-and-secure}"></span>
+          </small>
+        </p>
         <a id="upload_docs_2" th:href="#{index.upload-documents-second.link}"
-           th:text="#{index.upload-documents-second}" class="button"></a>
+           th:text="#{index.upload-documents-second}" class="button button--small spacing-below-15"></a>
         <a id="upload_docs_3" th:href="#{index.upload-documents-third.link}"
-           th:text="#{index.upload-documents-third}" class="button"></a>
+           th:text="#{index.upload-documents-third}" class="button button--small"></a>
       </div>
 
       <p th:text="#{index.these-documents}"></p>
