@@ -1,12 +1,11 @@
 package org.ladocuploader.app.journeys;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
-
-import java.util.Objects;
 
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
@@ -41,7 +40,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("I'm finished uploading");
 
     // Confirm submit
-    takeSnapShot("snapshot.png");
     assertThat(testPage.getTitle()).isEqualTo("Doc submit confirmation");
     testPage.clickButton("Yes, submit and finish");
 
