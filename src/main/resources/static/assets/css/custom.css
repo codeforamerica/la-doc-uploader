@@ -241,7 +241,7 @@ body {
 }
 
 .select:hover {
-  background-color: var(--primary-light);
+  background-color: white;
 }
 
 .select:hover > .select__element {
