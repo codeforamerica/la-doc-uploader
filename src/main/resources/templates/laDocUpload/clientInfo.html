@@ -30,6 +30,12 @@
                   helpText='client-info.date-of-birth.help')"/>
 
               <th:block
+                th:replace="'fragments/inputs/ssn' :: ssn(
+                inputName='ssn',
+                label=#{client-info.ssn},
+                helpText=#{client-info.ssn.help})"/>
+
+              <th:block
                   th:replace="'fragments/inputs/phone' :: phone(
                   inputName='phoneNumber',
                   label=#{client-info.phone-number},
