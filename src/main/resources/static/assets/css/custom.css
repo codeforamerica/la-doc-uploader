@@ -159,6 +159,14 @@ body {
   max-width: 19rem;
 }
 
+.landing-page-logos {
+  display: flex;
+  align-items: center;
+}
+.landing-page-logos > div {
+  margin-right: 15px;
+}
+
 .footer-logos {
   display: flex;
   align-items: center;
@@ -172,6 +180,10 @@ body {
   border-left: 3px solid white;
   height: 100px;
   top: 0;
+}
+
+.vl--black {
+  border-left: 1px solid black;
 }
 
 .flex-column {
@@ -192,4 +204,8 @@ table{
 table td{
   border:1px solid black;
   vertical-align: top;
+}
+
+.slab--la-blue {
+  background-color: #C3CEDA;
 }
