@@ -54,7 +54,7 @@
       <div class="grid__item shift-one-twelfth width-seven-twelfths">
         <div class="grid">
             <div class="grid__item spacing-below-35">
-              <h2 id="overview" class="h3 spacing-above-60" th:text="#{privacy.overview.title}"></h2>
+              <h2 id="overview" th:text="#{privacy.overview.title}"></h2>
               <p th:text="#{privacy.sub-title}"></p>
               <ol class="list--numbered padding-left-25">
                 <li th:text="#{privacy.info.li1}"></li>
@@ -183,7 +183,7 @@
               <p th:text="#{privacy.effective-date.p1}"></p>
 
               <h2 id="questions" class="h3 spacing-above-60" th:text="#{privacy.questions.title}"></h2>
-              <p th:text="#{privacy.questions.p1}"></p>
+              <p th:utext="#{privacy.questions.p1}"></p>
               <p th:text="#{privacy.questions.p2}"></p>
             </div>
           </div>
