@@ -11,8 +11,13 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void fullUploadDocumentFlow() {
-    // Landing screen
+    // Landing screen (language toggled)
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
+    testPage.selectFromDropdown("locales", "Español (Spanish)");
+    assertThat(testPage.getSelectedOption("locales").getText()).isEqualTo("Seleccione el idioma");
+    // TODO add other assert for page content
+    testPage.selectFromDropdown("locales", "English");
+
     testPage.clickButton("Upload documents");
 
     // Client Info
