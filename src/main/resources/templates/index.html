@@ -5,14 +5,130 @@
 <div class="page-wrapper">
   <th:block th:replace="fragments/toolbar :: toolbar"/>
   <th:block th:replace="fragments/demoBanner :: demoBanner(demoText=#{demo.banner-text}, profile='demo')"/>
-  <main id="content" role="main" class="slab slab--white spacing-below-0">
-    <section class="slab">
+  <main id="content" role="main">
+    <section class="slab slab--white">
       <div class="grid">
-        <div class="width-one-half">
-          <h1 class="spacing-below-35 spacing-above-5" th:text="#{index.title}"></h1>
-          <a id="upload_docs" href="/laDocUpload/clientInfo" th:text="#{index.upload-documents}" class="button"></a>
+        <div class="grid__item width-one-half">
+          <h1 class="spacing-below-15 spacing-above-0" th:utext="#{index.header}"></h1>
+          <p class="spacing-below-15" th:utext="#{index.upload-description}"></p>
+          <p class="text--help spacing-below-25">
+            <small th:text="#{index.louisiana-partner}"></small>
+          </p>
+
+          <a id="upload_docs_1" th:href="#{index.upload-documents-primary.link}"
+             th:text="#{index.upload-documents-primary}"
+             class="button button--primary spacing-below-10"></a>
+          <p class="text--help spacing-below-25">
+            <small>
+              <i class="icon-lock_outline"></i>
+              <span th:text="#{index.safe-and-secure}"></span>
+            </small>
+          </p>
+
+          <div class="display-inline-grid">
+            <a id="upload_docs_2" th:href="#{index.upload-documents-second.link}"
+               th:text="#{index.upload-documents-second}"
+               class="button button--small spacing-below-15 button--other"></a>
+            <a id="upload_docs_3" th:href="#{index.upload-documents-third.link}"
+               th:text="#{index.upload-documents-third}"
+               class="button button--small button--other"></a>
+          </div>
+        </div>
+        <div class="grid__item width-one-half">
+          <img src="/assets/images/mother-with-laptop-father-playing.png">
         </div>
       </div>
+    </section>
+
+    <section class="slab slab--la-blue">
+      <div class="grid">
+        <div class="grid__item width-one-third">
+          <a href="https://www.dcfs.louisiana.gov" class="link-div">
+          <div class="seal">
+              <img src="/assets/images/Seal_of_Louisiana.png"
+                   alt="Louisiana State Seal"
+                   class="border-right"
+                   style="width: 100px;">
+          </div>
+          <div class="logo">
+            <img src="/assets/images/dcfs-logo-bg.png"
+                 alt="DCFS Logo"
+                 style="width: 160px;">
+          </div>
+          </a>
+        </div>
+        <div class="grid__item width-two-thirds">
+          <p class="spacing-above-25 text--centered" th:text="#{index.website-description}"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slab slab--white">
+      <h2 class="spacing-above-5 spacing-below-35 text--centered"
+          th:text="#{index.recommended-documents}"></h2>
+      <div class="grid">
+        <div class="grid__item width-five-twelfths">
+          <th:block th:replace="fragments/icons :: smallMoneyIcon"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.income}"></p>
+          <p th:text="#{index.income-examples}"></p>
+
+          <th:block th:replace="fragments/icons :: monetization"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.expenses}"></p>
+          <p th:text="#{index.expenses-examples}"></p>
+
+          <th:block th:replace="fragments/icons :: syringe"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immunization-records}"></p>
+          <p th:text="#{index.immunization-record-examples}"></p>
+        </div>
+
+        <div class="grid__item width-five-twelfths shift-one-twelfth">
+          <th:block th:replace="fragments/icons :: smallPersonIcon"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.identity}"></p>
+          <p th:text="#{index.identity-examples}"></p>
+
+          <th:block th:replace="fragments/icons :: airplane"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immigration-status}"></p>
+          <p th:text="#{index.immigration-status-examples}"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slab slab--yellow spacing-below-0">
+      <h2 class="spacing-above-5 spacing-below-35 text--centered"
+          th:text="#{index.this-tool}"></h2>
+      <div class="grid">
+        <div class="grid__item width-five-twelfths">
+          <p class="spacing-below-10" th:utext="#{index.food-programs}"></p>
+          <ul class="bulleted-list-items">
+            <li th:utext="#{index.food-programs-l1}"></li>
+            <li th:utext="#{index.food-programs-l2}"></li>
+          </ul>
+        </div>
+        <div class="grid__item width-five-twelfths shift-one-twelfth">
+          <p class="spacing-below-0" th:utext="#{index.cash-programs}"></p>
+          <ul class="bulleted-list-items">
+            <li th:utext="#{index.cash-programs-l1}"></li>
+            <li th:utext="#{index.cash-programs-l2}"></li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item width-five-twelfths">
+          <div class="blurb" th:utext="#{index.snap.description}"></div>
+          <div class="blurb" th:utext="#{index.lacap.description}"></div>
+        </div>
+        <div class="grid__item width-five-twelfths shift-one-twelfth">
+          <div class="blurb" th:utext="#{index.fitap.description}"></div>
+          <div class="blurb" th:utext="#{index.kscp.description}"></div>
+        </div>
+      </div>
+
+      <div class="grid shift-one-twelfth spacing-above-35">
+        <p th:utext="#{index.looking-for-help}"></p>
+        <p th:utext="#{index.visit-dcfs-website}"></p>
+      </div>
+
+
     </section>
   </main>
 </div>
