@@ -204,3 +204,7 @@ body {
 .slab--yellow {
   background-color: #FEF1D9;
 }
+
+.page-wrapper {
+  padding-bottom: 230px;
+}
