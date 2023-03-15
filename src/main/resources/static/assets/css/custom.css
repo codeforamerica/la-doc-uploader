@@ -178,6 +178,14 @@ body {
   font-size: 16px;
 }
 
+.bulleted-list-items {
+  font-size: 16px;
+  padding-left: 1rem;
+  list-style: disc;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
 .font-size--smaller {
   font-size: 16px;
 }
@@ -206,5 +214,5 @@ body {
 }
 
 .page-wrapper {
-  padding-bottom: 230px;
+  padding-bottom: 140px;
 }
