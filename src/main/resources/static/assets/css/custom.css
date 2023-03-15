@@ -185,3 +185,17 @@ body {
 .slab--la-blue {
   background-color: #C3CEDA;
 }
+
+.vl {
+  border-left: 3px solid white;
+  height: 100px;
+  top: 0;
+}
+
+.privacy-policy-choices {
+  color: #388081
+}
+
+.slab--yellow {
+  background-color: #FEF1D9;
+}
