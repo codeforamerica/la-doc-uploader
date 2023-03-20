@@ -187,7 +187,7 @@ body {
 
 
 /* TODO Consider pulling these out into variables in FFL itself */
-.toolbar__wrapper, .main-footer, .button--primary, .dz-button, .usa-language__submenu {
+.toolbar__wrapper, .main-footer, .button--primary, .dz-button {
   color: #FFF;
   background-color: var(--primary);
 }
@@ -280,89 +280,6 @@ body {
 
 .slab--yellow {
   background-color: #FEF1D9;
-}
-
-.page-wrapper {
-  padding-bottom: 140px;
-}
-
-.usa-language-container {
-  z-index: 3;
-  position: relative;
-}
-
-.language-button {
-  background-color: var(--primary);
-}
-
-.language-button:hover {
-  background-color: var(--primary);
-  color: white;
-}
-
-.usa-language__submenu {
-  position: absolute;
-  right: 0;
-  width: 150%;
-}
-
-.usa-language__submenu-item {
-  border-bottom: 1px solid white;
-}
-
-.usa-language__submenu-item > a {
-  color: white;
-  padding: 0 1rem;
-  text-decoration: none;
-}
-
-.usa-language__submenu-item > a:hover {
-  text-decoration: underline;
-}
-
-#locales {
-  padding: 0 1.6rem;
-  border-radius: 1rem;
-  font-size: 14px;
-}
-
-.select {
-  background-color: var(--primary);
-  border-radius: 1rem;
-  max-width: 250px;
-  height: 4rem;
-  line-height: 4rem;
-
-}
-
-.select__element {
-  color: white;
-  border-color: white;
-}
-
-.select:after {
-  font-size: 4rem;
-  color: white;
-}
-
-.select:hover:after {
-  color: var(--primary);
-}
-
-.select:hover {
-  background-color: white;
-}
-
-.select:hover > .select__element {
-  color: var(--primary);
-  border-color: var(--primary);
-}
-
-.language-selector {
-  margin-bottom: 6rem;
-  position: relative;
-  border-color: white;
-  color: white;
 }
 
 .page-wrapper {

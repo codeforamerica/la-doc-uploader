@@ -7,8 +7,8 @@
              alt="DCFS logo"
              class="max-width-logo"/>
       </a>
-      <div th:replace="fragments/localeSelect_V3 :: localeSelect_V3"></div>
-      <th:block th:replace="fragments/localeSelect_V3 :: translate_noscript"></th:block>
+      <div th:replace="fragments/localeSelect :: localeSelect"></div>
+      <th:block th:replace="fragments/localeSelect :: translate_noscript"></th:block>
     </div>
   </header>
   <th:block th:replace="fragments/demoBanner :: demoBanner(demoText=#{demo.banner-text}, profile='demo')"/>
