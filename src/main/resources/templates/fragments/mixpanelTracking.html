@@ -17,18 +17,36 @@
       'element_id': elementId,
       'language': navigator.language
     });
+    
+    if(elementId === 'language_menu') {
+      mixpanel.track('language_picker_click', {
+        'page_name': window.location.pathname,
+        'language': navigator.language
+      });
+    }
   }
 
   $(document).ready(function () {
+    // Track all "button" clicks
     $("button").each(function () {
       $(this).click(function () {
         buttonClickEvent.call(this);
       });
     });
-
     $("a.button").each(function () {
       $(this).click(function () {
         buttonClickEvent.call(this);
+      });
+    });
+
+    // Track language selection
+    $(".language-option-track-click").each(function () {
+      $(this).click(function () {
+        mixpanel.track('language_select', {
+          'page_name': window.location.pathname,
+          'language': navigator.language,
+          'selected_language': this.href.split("=")[1]
+        });
       });
     });
   });

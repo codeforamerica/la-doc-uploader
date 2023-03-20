@@ -2,7 +2,7 @@
 <div th:fragment="localeSelect" id="translate-button" class="menu-button-links"
      th:with="lang=${#locale.toString()}, currentURL=${#httpServletRequest.requestURI}">
   <button type="button"
-          id="menubutton"
+          id="language_menu"
           class="button"
           aria-haspopup="true"
           aria-controls="menu2">
@@ -27,15 +27,15 @@
   </button>
   <ul id="menu2"
       role="menu"
-      aria-labelledby="menubutton">
+      aria-labelledby="language_menu">
     <li role="none">
-      <a th:text="English" th:href="|${currentURL}?lang=en|" class="text--small" role="menuitem"></a>
+      <a th:text="English" th:href="|${currentURL}?lang=en|" class="text--small language-option-track-click" role="menuitem"></a>
     </li>
     <li role="none">
-      <a th:text="Español" th:href="|${currentURL}?lang=es|" class="text--small" role="menuitem"></a>
+      <a th:text="Español" th:href="|${currentURL}?lang=es|" class="text--small language-option-track-click" role="menuitem"></a>
     </li>
     <li role="none">
-      <a th:text="#{language-preferences.vietnamese}" th:href="|${currentURL}?lang=vi|" class="text--small"
+      <a th:text="#{language-preferences.vietnamese}" th:href="|${currentURL}?lang=vi|" class="text--small language-option-track-click"
          role="menuitem"></a>
     </li>
   </ul>
@@ -311,6 +311,7 @@
       } else {
         switch (key) {
           case ' ':
+            mixpanel.track('language_picker_click', )
             window.location.href = tgt.href;
             break;
 
