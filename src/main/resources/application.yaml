@@ -44,6 +44,8 @@ spring:
       static-locations: file:src/main/resources/static/
       cache:
         period: 0
+    locale: ${DEFAULT_LOCALE}
+    locale-resolver: fixed
   datasource:
     url: jdbc:postgresql://localhost:5432/la-doc-uploader
     username: la-doc-uploader
