@@ -43,7 +43,11 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Upload documents");
     assertThat(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none")).isTrue();
     uploadJpgFile();
-    assertFalse(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none"));
+    boolean isHidden = testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none");
+    if (isHidden) { 
+      takeSnapShot("flakeyTestScreenshot.jpg");
+    }
+    assertFalse(isHidden);
     testPage.clickButton("I'm finished uploading");
 
     // Confirm submit
