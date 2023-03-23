@@ -1,6 +1,4 @@
 name: laDocUpload
-actionsPath: 'org.ladocuploader.app.submission.actions'
-conditionsPath: 'org.ladocuploader.app.submissions.actions'
 flow:
   clientInfo:
     beforeSaveAction: 'org.ladocuploader.app.submission.actions.EncryptSSNBeforeSaving'
