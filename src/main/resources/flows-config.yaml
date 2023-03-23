@@ -1,8 +1,8 @@
 name: laDocUpload
 flow:
   clientInfo:
-    beforeSaveAction: 'org.ladocuploader.app.submission.actions.EncryptSSNBeforeSaving'
-    beforeDisplayAction: 'org.ladocuploader.app.submission.actions.DecryptSSNBeforeDisplaying'
+    beforeSaveAction: EncryptSSNBeforeSaving
+    beforeDisplayAction: DecryptSSNBeforeDisplaying
     nextScreens:
       - name: howToAddDocuments
   howToAddDocuments:
