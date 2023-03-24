@@ -37,13 +37,13 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Announce failures on Slack
+      - name: Save screenshot from flaky tests
         if: failure()
-        uses: ravsamhq/notify-slack-action@v2
+        uses: actions/upload-artifact@v3
         with:
-          status: ${{ job.status }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          name: flaky test screenshot
+          path: output/test/flakeyTestScreenshot.jpg
+          retention-days: 14
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
