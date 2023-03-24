@@ -141,8 +141,9 @@
       var numberOfAddedFiles = window[dropzonePrefix + [[${inputName}]]].files.length;
       var numberOfAddedFilesDiv = document.getElementById(
           "number-of-uploaded-files-" + [[${inputName}]]);
+      var multipleFilesAddedMsg = `[[${#messages.msg('general.files.file-added.other', '${numberOfAddedFiles}')}]]`;
       var numberOfUploadsString = numberOfAddedFiles === 1 ? [[#{general.files.file-added.one}]]
-          : `${numberOfAddedFiles} ` + [[#{general.files.file-added.other}]];
+          : multipleFilesAddedMsg.replaceAll('"', '');
       numberOfAddedFilesDiv.innerHTML = numberOfUploadsString;
     }
 
@@ -356,9 +357,9 @@
           updateFileInputValue();
 
           removeLink.onclick = function () {
-            let confirmation = confirm(
-                [[#{general.files.confirm-delete}]] + fileName + '. '
-                + [[#{general.files.confirm-delete-ok}]])
+            var confirmMsg = `[[${#messages.msg('general.files.confirm-delete', '${fileName}')}]]`;
+            let confirmation = confirm(confirmMsg.replaceAll('"',''))
+
             if (confirmation) {
               sendDeleteXhrRequest(id);
               removeFileFromDropzone(file, id);
