@@ -22,8 +22,8 @@ public class SubmissionUtilities {
   public static List<Map<String, Object>> sortIncomeNamesWithApplicantFirst(Submission submission) {
     Map<String, Object> inputData = submission.getInputData();
     if (inputData.containsKey(INCOME)) {
-      ArrayList<Map<String, Object>> subflow =
-          (ArrayList<Map<String, Object>>) submission.getInputData().get(INCOME);
+      List<Map<String, Object>> subflow =
+          (List<Map<String, Object>>) submission.getInputData().get(INCOME);
       Stream<Map<String, Object>> applicantEntry = subflow.stream()
           .filter(entry -> entry.get(HOUSEHOLD_MEMBER).equals(APPLICANT));
       Stream<Map<String, Object>> nonApplicantEntries = subflow.stream()
@@ -45,15 +45,15 @@ public class SubmissionUtilities {
     DecimalFormat df = new DecimalFormat("0.00");
 
     if (submission.getInputData().containsKey(INCOME)) {
-      ArrayList<Map<String, Object>> incomeSubflow =
-          (ArrayList<Map<String, Object>>) submission.getInputData().get(INCOME);
+      List<Map<String, Object>> incomeSubflow =
+          (List<Map<String, Object>>) submission.getInputData().get(INCOME);
       Map<String, Object> individualsIncomeEntry =
           incomeSubflow.stream()
               .filter(entry -> entry.get(ITERATION_UUID)
                   .equals(uuid))
               .toList()
               .get(0);
-      ArrayList<String> incomeTypes = (ArrayList<String>) individualsIncomeEntry.get("incomeTypes[]");
+      List<String> incomeTypes = (List<String>) individualsIncomeEntry.get("incomeTypes[]");
       List<BigDecimal> incomeTypeAmounts = incomeTypes.stream()
           .map(type -> new BigDecimal((String) individualsIncomeEntry.get(type + "Amount")))
           .toList();
@@ -78,9 +78,9 @@ public class SubmissionUtilities {
     if (submission.getInputData().containsKey(REPORTED_TOTAL_ANNUAL_HOUSEHOLD_INCOME)) {
       total = Double.valueOf((String) submission.getInputData().get(REPORTED_TOTAL_ANNUAL_HOUSEHOLD_INCOME));
     } else if (submission.getInputData().containsKey(INCOME)) {
-      ArrayList<Map<String, Object>> incomeSubflow =
-          (ArrayList<Map<String, Object>>) submission.getInputData().get(INCOME);
-      ArrayList<Double> amounts = new ArrayList<>();
+      List<Map<String, Object>> incomeSubflow =
+          (List<Map<String, Object>>) submission.getInputData().get(INCOME);
+      List<Double> amounts = new ArrayList<>();
       incomeSubflow.forEach(iteration -> {
         iteration.forEach((key, value) -> {
           if (key.contains("Amount")) {
@@ -116,7 +116,7 @@ public class SubmissionUtilities {
     //Add all household member and the applicant to get total family size
     int familySize = 1;
     if (submission.getInputData().get(HOUSEHOLD) != null) {
-      var household = (ArrayList<LinkedHashMap<String, String>>) submission.getInputData().get(HOUSEHOLD);
+      var household = (List<LinkedHashMap<String, String>>) submission.getInputData().get(HOUSEHOLD);
       familySize = household.size() + familySize;
     }
     return (Integer.toString(familySize));
