@@ -1,12 +1,46 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <configuration>
-  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="LocalConsole" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%boldCyan(%d{HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %boldMagenta(%logger{36}) - %msg%n</pattern>
     </encoder>
   </appender>
 
-  <root level="INFO">
-    <appender-ref ref="console"/>
-  </root>
+  <appender name="HostedConsole" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+      <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+        <prettyPrint>false</prettyPrint>
+      </jsonFormatter>
+      <appendLineSeparator>true</appendLineSeparator>
+      <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
+    </layout>
+  </appender>
+
+  <appender name="DatadogJSON" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    <destination>intake.logs.datadoghq.com:10514</destination>
+    <keepAliveDuration>20 seconds</keepAliveDuration>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <prefix class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+          <pattern>${DATADOG_API_KEY} %mdc{keyThatDoesNotExist}</pattern>
+        </layout>
+      </prefix>
+      <customFields>
+        {"ddsource":"client","service":"Spring"}
+      </customFields>
+    </encoder>
+  </appender>
+
+  <springProfile name="default | test">
+    <root level="INFO">
+      <appender-ref ref="LocalConsole"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="dev | demo | production">
+    <root level="INFO">
+      <appender-ref ref="HostedConsole"/>
+      <appender-ref ref="DatadogJSON"/>
+    </root>
+  </springProfile>
 </configuration>
