@@ -1,6 +1,6 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <configuration>
-  <appender name="LocalConsole" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%boldCyan(%d{HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %boldMagenta(%logger{36}) - %msg%n</pattern>
     </encoder>
@@ -33,7 +33,7 @@
 
   <springProfile name="default | test">
     <root level="INFO">
-      <appender-ref ref="LocalConsole"/>
+      <appender-ref ref="console"/>
     </root>
   </springProfile>
 
