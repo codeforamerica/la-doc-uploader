@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import org.joda.time.DateTime;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ public class LoggingFilter implements Filter {
       FilterChain filterChain) throws ServletException, IOException {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     MDC.put("sessionId", request.getSession().getId());
-    MDC.put("sessionCreatedAt", String.valueOf(request.getSession().getCreationTime()));
+    MDC.put("sessionCreatedAt", new DateTime(request.getSession().getCreationTime()).toString("HH:mm:ss.SSS"));
     MDC.put("method", request.getMethod());
     MDC.put("request", request.getRequestURI());
     filterChain.doFilter(servletRequest, servletResponse);
