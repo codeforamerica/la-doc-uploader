@@ -25,6 +25,7 @@ public class LoggingFilter implements Filter {
       FilterChain filterChain) throws ServletException, IOException {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     MDC.put("sessionId", request.getSession().getId());
+    MDC.put("sessionCreatedAt", String.valueOf(request.getSession().getCreationTime()));
     MDC.put("method", request.getMethod());
     MDC.put("request", request.getRequestURI());
     filterChain.doFilter(servletRequest, servletResponse);
