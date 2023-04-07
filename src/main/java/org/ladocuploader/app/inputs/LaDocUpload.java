@@ -41,6 +41,8 @@ public class LaDocUpload extends FlowInputs {
   @Size(min=11, max=11, message="{client-info.provide-9-digit-ssn}")
   private String ssn;
 
+  String someAttr;
+
 
 }
 
