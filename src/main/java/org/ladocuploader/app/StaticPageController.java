@@ -3,7 +3,11 @@ package org.ladocuploader.app;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A controller to render static pages that are not in any flow.
@@ -18,9 +22,13 @@ public class StaticPageController {
    * @return the static page template
    */
   @GetMapping("/")
-  ModelAndView getIndex(HttpSession httpSession) {
+  ModelAndView getIndex(HttpSession httpSession,
+                        @RequestParam(required = false) String ref_id) {
     // For dev, reset session if you visit home
-    httpSession.invalidate();
+//    httpSession.invalidate();
+    Map<String, String> test = new HashMap<>();
+    test.put("ref_id", ref_id);
+    httpSession.setAttribute("test", test);
 
     return new ModelAndView("index");
   }
