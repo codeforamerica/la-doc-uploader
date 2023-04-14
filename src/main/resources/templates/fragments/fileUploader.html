@@ -73,8 +73,6 @@
     var maxFileSize = Number(
         [[${@environment.getProperty('form-flow.uploads.max-file-size')}]]);
 
-    mixpanel.init('[[${@environment.getProperty("MIXPANEL_API_KEY")}]]');
-
     function addDragBorder() {
       var dragAndDropBox = document.getElementById("drag-and-drop-box-" + [[${inputName}]]);
       dragAndDropBox.classList.add("drag-over");
