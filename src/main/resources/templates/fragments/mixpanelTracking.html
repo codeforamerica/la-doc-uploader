@@ -5,22 +5,31 @@
 
   mixpanel.init('[[${@environment.getProperty("MIXPANEL_API_KEY")}]]');
 
+
+  const pageName = window.location.pathname;
+
   mixpanel.track('page_view', {
-    'page_name': window.location.pathname,
+    'page_name': pageName,
     'language': navigator.language
   });
+
+  if (pageName === '/flow/laDocUpload/clientInfo'){
+      mixpanel.track('doc_uploader_start', {
+              'language': navigator.language, 'page_name': pageName
+      });
+  }
 
   function buttonClickEvent() {
     const elementId = $(this).attr("id");
     mixpanel.track('button_click', {
-      'page_name': window.location.pathname,
+      'page_name': pageName,
       'element_id': elementId,
       'language': navigator.language
     });
     
     if(elementId === 'language_menu') {
       mixpanel.track('language_picker_click', {
-        'page_name': window.location.pathname,
+        'page_name': pageName,
         'language': navigator.language
       });
     }
