@@ -26,9 +26,7 @@ public class StaticPageController {
                         @RequestParam(required = false) String ref_id) {
     // For dev, reset session if you visit home
 //    httpSession.invalidate();
-    Map<String, String> test = new HashMap<>();
-    test.put("ref_id", ref_id);
-    httpSession.setAttribute("test", test);
+    httpSession.setAttribute("ref_id", ref_id);
 
     return new ModelAndView("index");
   }
