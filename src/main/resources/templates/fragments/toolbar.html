@@ -7,6 +7,15 @@
              alt="DCFS logo"
              class="max-width-logo"/>
       </a>
+      <script>
+          $(document).ready(function () {
+              $("a[rel~='keep-params']").each(function (e) {
+                  var params = window.location.search.replace('?', '&'),
+                      dest = $(this).attr('href') + params;
+                  $(this).attr('href', dest);
+              })
+          });
+      </script>
       <div th:replace="fragments/localeSelect :: localeSelect"></div>
       <th:block th:replace="fragments/localeSelect :: translate_noscript"></th:block>
     </div>

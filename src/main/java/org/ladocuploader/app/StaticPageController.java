@@ -17,7 +17,8 @@ public class StaticPageController {
   /**
    * Renders the website index page.
    *
-   * @param httpSession The current HTTP session, not null
+   * @param request The current request, not null
+   * @param response The current request response
    * @return the static page template
    */
   @GetMapping("/")
@@ -27,7 +28,6 @@ public class StaticPageController {
     // For dev, reset session if you visit home
     HttpSession httpSession = request.getSession();
     httpSession.invalidate();
-
     httpSession = request.getSession(true);
 
     // start new session
