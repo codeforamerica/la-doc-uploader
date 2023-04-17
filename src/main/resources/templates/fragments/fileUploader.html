@@ -209,11 +209,6 @@
       filesToDelete.forEach(fTD => {
         if (fTD.name === file.name) {
           removeFileFromDropzone(file, id);
-            mixpanel.track('file_upload_delete', {
-                'page_name': window.location.pathname,
-                'file_size': file.size,
-                'file_format': file.type
-            });
           sendDeleteXhrRequest(id);
         }
       })
@@ -298,12 +293,6 @@
               "<span class='filename-text-ext' aria-hidden='true'>" + fileNameComponents[1]
               + "</span>";
 
-          mixpanel.track('file_upload_initiate', {
-              'page_name': window.location.pathname,
-              'file_format': file.type,
-              'file_size': file.size
-          });
-
           removeLink.onclick = destroyerCreator(file);
           removeLink.innerText = [[#{general.cancel}]].toLowerCase();
           thumbnail.classList.add("hidden");
@@ -381,11 +370,6 @@
           progressBar.classList.add("hidden");
           $('#submit-my-documents-' + [[${inputName}]]).removeClass("disabled");
           deleteCancelledFiles(file, id);
-          mixpanel.track('file_upload_success', {
-              'page_name': window.location.pathname,
-              'file_size': file.size,
-              'file_format': file.type
-          });
         });
 
         // This lets dropzone know to process the queue after each file has completed
@@ -442,13 +426,6 @@
         }
 
         showNumberOfAddedFiles();
-
-          mixpanel.track('file_upload_failure', {
-              'page_name': window.location.pathname,
-              'file_size': file.size,
-              'file_format': file.type,
-              'reason': errorMessage
-          });
 
         file.previewElement.classList.add("form-group--error");
 
