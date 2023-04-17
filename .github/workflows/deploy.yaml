@@ -1,4 +1,4 @@
-name: Deploy to Aptible
+name: Deploy to Aptible Prod
 
 on:
  workflow_run:
