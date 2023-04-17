@@ -5,7 +5,6 @@
 
   mixpanel.init('[[${@environment.getProperty("MIXPANEL_API_KEY")}]]');
 
-
   const pageName = window.location.pathname;
   const ref_id_param = window.location.href.includes("?ref_id=") ? window.location.href.split("?ref_id=")[1].split('&')[0] : null
   const ref_id = ref_id_param ? ref_id_param : '[[${submission == null ? "" : submission.getUrlParams().getOrDefault("ref_id", "")}]]'
@@ -16,6 +15,11 @@
           'language': navigator.language,
           'ref_id': ref_id
       });
+  }
+
+  var submissionId = '[[${submission == null ? "" : submission.getId()}]]'
+  if (submissionId !== "") {
+    mixpanel.identify(submissionId);
   }
 
   mixpanel.track('page_view', {
@@ -52,6 +56,17 @@
         buttonClickEvent.call(this);
       });
     });
+
+    // Track input errors
+    $(".text--error").each(function (){
+        if (this.textContent.trim().length > 0){
+            mixpanel.track('error', {
+                'page_name': window.location.pathname,
+                'location': $(this).attr("id").replace("-error-p", ""),
+                'error_message': this.textContent
+            })
+        }
+    })
 
     // Track language selection
     $(".language-option-track-click").each(function () {
