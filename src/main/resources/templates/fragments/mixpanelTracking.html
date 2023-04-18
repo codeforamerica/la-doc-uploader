@@ -7,7 +7,7 @@
 
   mixpanel.track('page_view', {
     'page_name': window.location.pathname,
-    'language': navigator.language, 'ref_id': String([[${submission == null ? "" : submission.getUrlParams().getOrDefault("ref_id", "")}]])
+    'language': navigator.language, 'ref_id': '[[${submission == null ? "" : submission.getUrlParams().getOrDefault("ref_id", "")}]]'
   });
 
   function buttonClickEvent() {
