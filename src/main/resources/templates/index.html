@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{index.title})"></head>
+<head th:replace="fragments/head :: head(title=#{index.title})"
+</head>
 <body class="template--static-page">
 <div class="page-wrapper">
   <th:block th:replace="fragments/toolbar :: toolbar"/>
@@ -16,6 +17,7 @@
 
           <a id="upload_docs_1" th:href="#{index.upload-documents-primary.link}"
              th:text="#{index.upload-documents-primary}"
+             th:rel="keep-params"
              class="button button--primary spacing-below-10"></a>
           <p class="text--help spacing-below-25">
             <small>
@@ -27,9 +29,11 @@
           <div class="display-inline-grid">
             <a id="upload_docs_2" th:href="#{index.upload-documents-second.link}"
                th:text="#{index.upload-documents-second}"
+               th:rel="keep-params"
                class="button button--small spacing-below-15 button--other"></a>
             <a id="upload_docs_3" th:href="#{index.upload-documents-third.link}"
                th:text="#{index.upload-documents-third}"
+               th:rel="keep-params"
                class="button button--small button--other"></a>
           </div>
         </div>

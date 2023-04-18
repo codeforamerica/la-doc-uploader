@@ -1,4 +1,4 @@
-name: Deploy to Aptible
+name: Deploy to Aptible Staging
 
 on:
   workflow_run:
