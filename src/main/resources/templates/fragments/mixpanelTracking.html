@@ -5,9 +5,11 @@
 
   mixpanel.init('[[${@environment.getProperty("MIXPANEL_API_KEY")}]]');
 
+  const ref_id = window.location.href.includes("?ref_id=") ? window.location.href.split("?ref_id=")[1] : null
+
   mixpanel.track('page_view', {
     'page_name': window.location.pathname,
-    'language': navigator.language, 'ref_id': '[[${submission == null ? "" : submission.getUrlParams().getOrDefault("ref_id", "")}]]'
+    'language': navigator.language, 'ref_id': ref_id ? ref_id : '[[${submission == null ? "" : submission.getUrlParams().getOrDefault("ref_id", "")}]]'
   });
 
   function buttonClickEvent() {
