@@ -5,7 +5,7 @@
 
   mixpanel.init('[[${@environment.getProperty("MIXPANEL_API_KEY")}]]');
 
-  const ref_id = window.location.href.includes("?ref_id=") ? window.location.href.split("?ref_id=")[1] : null
+  const ref_id = window.location.href.includes("?ref_id=") ? window.location.href.split("?ref_id=")[1].split('&')[0] : null
 
   mixpanel.track('page_view', {
     'page_name': window.location.pathname,
