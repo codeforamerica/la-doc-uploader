@@ -2,7 +2,7 @@ name: Run tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, staging ]
   pull_request:
 
 env:
@@ -14,12 +14,24 @@ jobs:
   test:
     name: Run unit tests
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: la-doc-uploader-test
+          POSTGRES_DB: la-doc-uploader-test
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - uses: actions/checkout@v3
       - name: Set up ChromeDriver
         uses: nanasess/setup-chromedriver@v1
       - name: Set up JDK
-        uses: actions/setup-java@v3.5.0
+        uses: actions/setup-java@v3.10.0
         with:
           distribution: 'adopt'
           java-version: '17'
@@ -37,13 +49,13 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Announce failures on Slack
+      - name: Save screenshot from flaky tests
         if: failure()
-        uses: ravsamhq/notify-slack-action@v2
+        uses: actions/upload-artifact@v3
         with:
-          status: ${{ job.status }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          name: flaky test screenshot
+          path: flakeyTestScreenshot.jpg
+          retention-days: 14
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock

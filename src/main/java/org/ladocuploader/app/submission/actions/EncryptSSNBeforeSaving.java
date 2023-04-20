@@ -3,11 +3,9 @@ package org.ladocuploader.app.submission.actions;
 import formflow.library.config.submission.Action;
 import formflow.library.data.Submission;
 import org.ladocuploader.app.submission.StringEncryptor;
+import org.springframework.stereotype.Component;
 
-/**
- *
- */
-@SuppressWarnings("unused")
+@Component
 public class EncryptSSNBeforeSaving implements Action {
 
   private final StringEncryptor encryptor;

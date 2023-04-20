@@ -58,6 +58,7 @@ public abstract class AbstractBasePageTest {
     Path sourceFile = screenshot.getScreenshotAs(OutputType.FILE).toPath();
     Path destinationFile = new File(fileWithPath).toPath();
     try {
+      System.out.println("DestinationFile:" + destinationFile);
       Files.copy(sourceFile, destinationFile, StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException e) {
       throw new RuntimeException(e);

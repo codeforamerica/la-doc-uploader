@@ -1,10 +1,8 @@
 name: laDocUpload
-actionsPath: 'org.ladocuploader.app.submission.actions'
-conditionsPath: 'org.ladocuploader.app.submissions.actions'
 flow:
   clientInfo:
-    beforeSaveAction: 'org.ladocuploader.app.submission.actions.EncryptSSNBeforeSaving'
-    beforeDisplayAction: 'org.ladocuploader.app.submission.actions.DecryptSSNBeforeDisplaying'
+    beforeSaveAction: EncryptSSNBeforeSaving
+    beforeDisplayAction: DecryptSSNBeforeDisplaying
     nextScreens:
       - name: howToAddDocuments
   howToAddDocuments:

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{index.title})"></head>
+<head th:replace="fragments/head :: head(title=#{index.title})"
+</head>
 <body class="template--static-page">
 <div class="page-wrapper">
   <th:block th:replace="fragments/toolbar :: toolbar"/>
@@ -16,6 +17,7 @@
 
           <a id="upload_docs_1" th:href="#{index.upload-documents-primary.link}"
              th:text="#{index.upload-documents-primary}"
+             th:rel="keep-params"
              class="button button--primary spacing-below-10"></a>
           <p class="text--help spacing-below-25">
             <small>
@@ -27,9 +29,11 @@
           <div class="display-inline-grid">
             <a id="upload_docs_2" th:href="#{index.upload-documents-second.link}"
                th:text="#{index.upload-documents-second}"
+               th:rel="keep-params"
                class="button button--small spacing-below-15 button--other"></a>
             <a id="upload_docs_3" th:href="#{index.upload-documents-third.link}"
                th:text="#{index.upload-documents-third}"
+               th:rel="keep-params"
                class="button button--small button--other"></a>
           </div>
         </div>
@@ -67,27 +71,42 @@
           th:text="#{index.recommended-documents}"></h2>
       <div class="grid">
         <div class="grid__item width-five-twelfths">
-          <th:block th:replace="fragments/icons :: smallMoneyIcon"/>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.income}"></p>
-          <p th:text="#{index.income-examples}"></p>
-
-          <th:block th:replace="fragments/icons :: monetization"/>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.expenses}"></p>
-          <p th:text="#{index.expenses-examples}"></p>
-
-          <th:block th:replace="fragments/icons :: syringe"/>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immunization-records}"></p>
-          <p th:text="#{index.immunization-record-examples}"></p>
-        </div>
-
-        <div class="grid__item width-five-twelfths shift-one-twelfth">
           <th:block th:replace="fragments/icons :: smallPersonIcon"/>
           <p class="spacing-below-5 spacing-above-10" th:utext="#{index.identity}"></p>
           <p th:text="#{index.identity-examples}"></p>
+        </div>
+        <div class="grid__item width-five-twelfths shift-one-twelfth">
+          <th:block th:replace="fragments/icons :: smallMoneyIcon"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.income}"></p>
+          <p th:text="#{index.income-examples}"></p>
+        </div>
+      </div>
 
+      <div class="grid">
+        <div class="grid__item width-five-twelfths">
+          <th:block th:replace="fragments/icons :: smallMoneyIcon"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.non-work-income}"></p>
+          <p th:text="#{index.non-work-income-examples}"></p>
+        </div>
+
+        <div class="grid__item width-five-twelfths shift-one-twelfth">
+          <th:block th:replace="fragments/icons :: monetization"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.expenses}"></p>
+          <p th:text="#{index.expenses-examples}"></p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="grid__item width-five-twelfths">
           <th:block th:replace="fragments/icons :: airplane"/>
           <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immigration-status}"></p>
           <p th:text="#{index.immigration-status-examples}"></p>
+        </div>
+
+        <div class="grid__item width-five-twelfths shift-one-twelfth">
+          <th:block th:replace="fragments/icons :: syringe"/>
+          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immunization-records}"></p>
+          <p th:text="#{index.immunization-record-examples}"></p>
         </div>
       </div>
     </section>
