@@ -14,8 +14,8 @@ env:
   APTIBLE_BRANCH: ${{ vars.APTIBLE_REMOTE_BRANCH }}
 
 jobs:
-  deploy:
-    name: Deploy to Aptible
+  deploy_en:
+    name: Deploy to Aptible (en)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -39,6 +39,7 @@ jobs:
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
           aptible deploy --app app-prod --git-commitish ${GITHUB_SHA} \
           'SPRING_PROFILES_ACTIVE=demo' \
+          'DEFAULT_LOCALE=en' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
           'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
@@ -47,3 +48,37 @@ jobs:
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'demo=true'
+    deploy_es:
+      name: Deploy to Aptible (es)
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+          with:
+            ref: ${{ github.event.inputs.branch }}
+            fetch-depth: 0
+        - name: Install SSH Key
+          uses: shimataro/ssh-key-action@v2.3.1
+          with:
+            key: ${{ secrets.APTIBLE_SSH_PRIVATE_KEY }}
+            known_hosts: ${{ secrets.APTIBLE_KNOWN_HOSTS }}
+        - name: Push to Aptible remote branch
+          run: |
+            ssh-keyscan beta.aptible.com >> ~/.ssh/known_hosts
+            git remote add aptible-es ${{ vars.APTIBLE_REMOTE_URL_ES }}
+            git push aptible-es ${APTIBLE_BRANCH}:${GITHUB_SHA}
+        - name: Set Aptible environment variables and deploy
+          run: |
+            wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
+            sudo dpkg -i aptible-package
+            aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
+            aptible deploy --app app-prod-es --git-commitish ${GITHUB_SHA} \
+            'SPRING_PROFILES_ACTIVE=demo' \
+            'DEFAULT_LOCALE=es' \
+            'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
+            'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
+            'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
+            'FORCE_SSL=true' \
+            'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
+            'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
+            'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
+            'demo=true'
