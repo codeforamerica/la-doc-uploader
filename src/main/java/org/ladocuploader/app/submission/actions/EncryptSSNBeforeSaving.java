@@ -19,6 +19,7 @@ public class EncryptSSNBeforeSaving implements Action {
     if (ssnInput != null) {
       String encryptedSSN = encryptor.encrypt(ssnInput);
       submission.getInputData().put("encryptedSSN", encryptedSSN);
+      submission.getInputData().put("encryptedSSN_iv", encryptor.getIV());
     }
   }
 }
