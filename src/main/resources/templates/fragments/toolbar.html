@@ -11,8 +11,6 @@
           $(document).ready(function () {
               $("a[rel~='keep-params']").each(function (e) {
                   const params = window.location.search.replace('?', '&').replace(/&lang=\S{2}/, "");
-                  console.log(params);
-                  console.log($(this).attr('href'))
                   $(this).attr('href', $(this).attr('href') + params);
               })
           });
