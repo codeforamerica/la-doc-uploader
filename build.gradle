@@ -72,6 +72,7 @@ tasks.named('test') {
 
 test {
     environment("ENCRYPTION_KEY", "this-is-a-dummy-key-for-la-tests")
+    environment("DEFAULT_LOCALE", "en")
 }
 
 jar {
