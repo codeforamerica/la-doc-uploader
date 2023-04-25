@@ -10,9 +10,8 @@
       <script>
           $(document).ready(function () {
               $("a[rel~='keep-params']").each(function (e) {
-                  var params = window.location.search.replace('?', '&'),
-                      dest = $(this).attr('href') + params;
-                  $(this).attr('href', dest);
+                  const params = window.location.search.replace('?', '&').replace(/&lang=\S{2}/, "");
+                  $(this).attr('href', $(this).attr('href') + params);
               })
           });
       </script>
