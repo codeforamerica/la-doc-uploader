@@ -45,6 +45,8 @@ dependencies {
         println "📚Using form flow library ${formFlowLibraryVersion}"
     }
 
+    implementation 'com.google.crypto.tink:tink:1.9.0'
+
     compileOnly 'org.projectlombok:lombok'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -71,7 +73,7 @@ tasks.named('test') {
 }
 
 test {
-    environment("ENCRYPTION_KEY", "this-is-a-dummy-key-for-la-tests")
+    environment("ENCRYPTION_KEYSET", "{\"primaryKeyId\":2135185311,\"key\":[{\"keyData\":{\"typeUrl\":\"type.googleapis.com/google.crypto.tink.AesGcmKey\",\"value\":\"GiCRKaXiJ/zlDHAZfRQf1rCIbIY4fFmLqLWYIPLNXpOx4A==\",\"keyMaterialType\":\"SYMMETRIC\"},\"status\":\"ENABLED\",\"keyId\":2135185311,\"outputPrefixType\":\"TINK\"}]}")
     environment("DEFAULT_LOCALE", "en")
 }
 
