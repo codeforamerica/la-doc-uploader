@@ -45,6 +45,8 @@ dependencies {
         println "📚Using form flow library ${formFlowLibraryVersion}"
     }
 
+    implementation 'com.google.crypto.tink:tink:1.9.0'
+
     compileOnly 'org.projectlombok:lombok'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

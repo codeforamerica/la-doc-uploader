@@ -11,7 +11,7 @@ public class EncryptSSNBeforeSaving implements Action {
   private final StringEncryptor encryptor;
 
   public EncryptSSNBeforeSaving() {
-    encryptor = new StringEncryptor(System.getenv("ENCRYPTION_KEY"));
+    encryptor = new StringEncryptor(System.getenv("ENCRYPTION_KEYSET"));
   }
 
   public void run(Submission submission) {
