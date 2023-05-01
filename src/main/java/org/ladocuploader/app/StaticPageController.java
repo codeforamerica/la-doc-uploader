@@ -3,6 +3,8 @@ package org.ladocuploader.app;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,11 +35,17 @@ public class StaticPageController {
     // start new session
     httpSession.setAttribute("ref_id", ref_id);
 
-    return new ModelAndView("index");
+    Map<String, Object> model = new HashMap();
+    model.put("screen", "/");
+
+    return new ModelAndView("index", model);
   }
 
   @GetMapping("/privacy")
-  String getPrivacy() {
-    return "privacy";
+  ModelAndView getPrivacy() {
+    Map<String, Object> model = new HashMap();
+    model.put("screen", "privacy");
+
+    return new ModelAndView("privacy", model);
   }
 }
