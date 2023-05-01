@@ -14,8 +14,8 @@ flow:
     nextScreens:
       - name: docSubmitConfirmation
   docSubmitConfirmation:
-    onPostAction: SetSubmittedAt
     nextScreens:
       - name: finalConfirmation
   finalConfirmation:
+    beforeDisplayAction: SetSubmittedAt
     nextScreens: null
