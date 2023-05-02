@@ -31,13 +31,13 @@ jobs:
         run: |
           ssh-keyscan beta.aptible.com >> ~/.ssh/known_hosts
           git remote add aptible-staging ${{ vars.APTIBLE_REMOTE_URL_STAGING }}
-          git push aptible-staging ${APTIBLE_BRANCH}:${GITHUB_SHA}
+          git push aptible-staging ${APTIBLE_BRANCH}:${GITHUB_SHA}-staging
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
           sudo dpkg -i aptible-package
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
-          aptible deploy --app app-staging --git-commitish ${GITHUB_SHA} \
+          aptible deploy --app app-staging --git-commitish ${GITHUB_SHA}-staging \
           'SPRING_PROFILES_ACTIVE=staging' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_STAGING }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
