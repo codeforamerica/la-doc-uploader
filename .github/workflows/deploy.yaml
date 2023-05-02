@@ -1,11 +1,11 @@
-name: Deploy to Aptible Staging
+name: Deploy to Aptible
 
 on:
-  workflow_run:
-    workflows: ["Run tests"]
-    types: [completed]
-    branches: [staging]
-  workflow_dispatch:
+ workflow_run:
+   workflows: ["Run tests"]
+   types: [completed]
+   branches: [main]
+ workflow_dispatch:
     inputs: { }
 
 env:
@@ -30,20 +30,20 @@ jobs:
       - name: Push to Aptible remote branch
         run: |
           ssh-keyscan beta.aptible.com >> ~/.ssh/known_hosts
-          git remote add aptible-staging ${{ vars.APTIBLE_REMOTE_URL_STAGING }}
-          git push aptible-staging ${APTIBLE_BRANCH}:${GITHUB_SHA}-staging
+          git remote add aptible ${{ vars.APTIBLE_REMOTE_URL }}
+          git push aptible ${APTIBLE_BRANCH}:${GITHUB_SHA}
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
           sudo dpkg -i aptible-package
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
-          aptible deploy --app app-staging --git-commitish ${GITHUB_SHA}-staging \
-          'SPRING_PROFILES_ACTIVE=staging' \
-          'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_STAGING }}' \
+          aptible deploy --app app-prod --git-commitish ${GITHUB_SHA} \
+          'SPRING_PROFILES_ACTIVE=demo' \
+          'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
           'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
           'FORCE_SSL=true' \
           'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
-          'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_STAGING }}' \
-          'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_STAGING }}' \
+          'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
+          'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'demo=true'
