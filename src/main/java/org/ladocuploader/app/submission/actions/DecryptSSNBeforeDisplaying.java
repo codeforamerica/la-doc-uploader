@@ -14,7 +14,7 @@ public class DecryptSSNBeforeDisplaying implements Action {
   private final StringEncryptor encryptor;
 
   public DecryptSSNBeforeDisplaying() {
-    encryptor = new StringEncryptor(System.getenv("ENCRYPTION_KEY"));
+    encryptor = new StringEncryptor(System.getenv("ENCRYPTION_KEYSET"));
   }
 
   public void run(Submission submission) {

@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.3'
+    id 'org.springframework.boot' version '3.0.5'
     id 'io.spring.dependency-management' version '1.0.13.RELEASE'
     id 'java'
     id 'com.adarshr.test-logger' version '3.2.0'
@@ -28,12 +28,13 @@ repositories {
 }
 
 def profile = props.getProperty('SPRING_PROFILES_ACTIVE')
-def formFlowLibraryVersion = '0.0.2-SNAPSHOT'
+def formFlowLibraryVersion = '0.0.3-SNAPSHOT'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation("com.mixpanel:mixpanel-java:1.5.1")
 
     implementation 'org.flywaydb:flyway-core'
 
@@ -44,6 +45,8 @@ dependencies {
         implementation "org.codeforamerica.platform:form-flow:${formFlowLibraryVersion}"
         println "📚Using form flow library ${formFlowLibraryVersion}"
     }
+
+    implementation 'com.google.crypto.tink:tink:1.9.0'
 
     compileOnly 'org.projectlombok:lombok'
 
@@ -71,8 +74,9 @@ tasks.named('test') {
 }
 
 test {
-    environment("ENCRYPTION_KEY", "this-is-a-dummy-key-for-la-tests")
+    environment("ENCRYPTION_KEYSET", "{\"primaryKeyId\":2135185311,\"key\":[{\"keyData\":{\"typeUrl\":\"type.googleapis.com/google.crypto.tink.AesGcmKey\",\"value\":\"GiCRKaXiJ/zlDHAZfRQf1rCIbIY4fFmLqLWYIPLNXpOx4A==\",\"keyMaterialType\":\"SYMMETRIC\"},\"status\":\"ENABLED\",\"keyId\":2135185311,\"outputPrefixType\":\"TINK\"}]}")
     environment("DEFAULT_LOCALE", "en")
+    environment("MIXPANEL_API_KEY", "this-is-a-dummy-key-for-la-tests")
 }
 
 jar {

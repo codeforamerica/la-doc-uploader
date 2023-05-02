@@ -41,10 +41,10 @@ public class Page {
 
   public void clickButton(String buttonText) {
     checkForBadMessageKeys();
-    WebElement buttonToClick = driver.findElements(By.className("button")).stream()
-        .filter(button -> button.getText().contains(buttonText))
-        .findFirst()
-        .orElseThrow(() -> new RuntimeException("No button found containing text: " + buttonText));
+    WebElement buttonToClick = findElementsByButtonText(buttonText);
+    if (buttonToClick == null) {
+      throw new RuntimeException("No button found containing text: " + buttonText);
+    }
     buttonToClick.click();
   }
 
@@ -272,8 +272,11 @@ public class Page {
     return driver.findElement(By.id(id));
   }
 
-  public List<WebElement> findElementsByClass(String className) {
-    return driver.findElements(By.className(className));
+  public WebElement findElementsByButtonText(String buttonText) {
+    return driver.findElements(By.className("button")).stream()
+        .filter(button -> button.getText().contains(buttonText))
+        .findFirst()
+        .orElse(null);
   }
 
   public boolean elementDoesNotExistById(String id) {
