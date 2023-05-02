@@ -17,5 +17,4 @@ flow:
     nextScreens:
       - name: finalConfirmation
   finalConfirmation:
-    beforeDisplayAction: SetSubmittedAt
     nextScreens: null
