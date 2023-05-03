@@ -48,6 +48,10 @@ dependencies {
 
     implementation 'com.google.crypto.tink:tink:1.9.0'
 
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.18.1'
+
+    implementation 'io.sentry:sentry-logback:6.18.1'
+
     compileOnly 'org.projectlombok:lombok'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
