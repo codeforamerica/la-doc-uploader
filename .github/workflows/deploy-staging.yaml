@@ -11,7 +11,7 @@ on:
 env:
   USERNAME: ${{ secrets.GPR_USER }}
   TOKEN: ${{ secrets.GPR_KEY }}
-  APTIBLE_BRANCH: ${{ vars.APTIBLE_REMOTE_BRANCH }}
+  APTIBLE_BRANCH: ${{ vars.APTIBLE_REMOTE_BRANCH_STAGING }}
 
 jobs:
   deploy:
