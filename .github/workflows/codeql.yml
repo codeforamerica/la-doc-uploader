@@ -52,6 +52,7 @@ jobs:
 
     - run: |
        echo "Run, Build Application using script"
+       chmod +x ./.github/workflows/codeql_buildscript.sh
        ./.github/workflows/codeql_buildscript.sh
 #
     - name: Perform CodeQL Analysis
