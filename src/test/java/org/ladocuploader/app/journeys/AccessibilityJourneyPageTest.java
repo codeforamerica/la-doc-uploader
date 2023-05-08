@@ -41,7 +41,7 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
     }
 
     @Test
-    void userCanCompleteTheNonExpeditedHouseholdFlow() {
+    void userCanCompleteDocumentUploadFlow() {
         testPage.clickElementById("translate-button");
         testPage.clickLink("Español");
         testPage.clickElementById("translate-button");
