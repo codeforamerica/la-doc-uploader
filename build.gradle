@@ -84,6 +84,9 @@ def axeAccessibilityTest = tasks.register("accessibilityTest", Test) {
             JUnitPlatformOptions options ->
                 options.includeTags 'a11y'
         }
+        environment("ENCRYPTION_KEYSET", "{\"primaryKeyId\":2135185311,\"key\":[{\"keyData\":{\"typeUrl\":\"type.googleapis.com/google.crypto.tink.AesGcmKey\",\"value\":\"GiCRKaXiJ/zlDHAZfRQf1rCIbIY4fFmLqLWYIPLNXpOx4A==\",\"keyMaterialType\":\"SYMMETRIC\"},\"status\":\"ENABLED\",\"keyId\":2135185311,\"outputPrefixType\":\"TINK\"}]}")
+        environment("DEFAULT_LOCALE", "en")
+        environment("MIXPANEL_API_KEY", "this-is-a-dummy-key-for-la-tests")
 }
 
 test {

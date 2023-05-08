@@ -96,8 +96,6 @@ jobs:
         run: chmod +x gradlew
       - name: Test with Gradle
         run: ./gradlew accessibilityTest
-        env:
-          DEFAULT_LOCALE: en
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
