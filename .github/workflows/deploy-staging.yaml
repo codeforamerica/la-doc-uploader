@@ -11,8 +11,7 @@ on:
 env:
   USERNAME: ${{ secrets.GPR_USER }}
   TOKEN: ${{ secrets.GPR_KEY }}
-  APTIBLE_BRANCH: ${{ vars.APTIBLE_REMOTE_BRANCH }}
-  DEPLOY_BRANCH: "staging-$(date "+%s")"
+  APTIBLE_BRANCH: staging
 jobs:
   deploy:
     name: Deploy to Aptible
@@ -31,13 +30,13 @@ jobs:
         run: |
           ssh-keyscan beta.aptible.com >> ~/.ssh/known_hosts
           git remote add aptible ${{ vars.APTIBLE_REMOTE_URL_STAGING }}
-          git push aptible ${APTIBLE_BRANCH}:${DEPLOY_BRANCH}
+          git push aptible ${APTIBLE_BRANCH}:${GITHUB_SHA}
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
           sudo dpkg -i aptible-package
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
-          aptible deploy --app app-staging --git-commitish ${DEPLOY_BRANCH} \
+          aptible deploy --app app-staging --git-commitish ${GITHUB_SHA} \
           'SPRING_PROFILES_ACTIVE=staging' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_STAGING }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
