@@ -6,17 +6,6 @@
     </encoder>
   </appender>
 
-<!--  <appender name="HostedConsole" class="ch.qos.logback.core.ConsoleAppender">-->
-
-<!--      <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">-->
-<!--        <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">-->
-<!--          <prettyPrint>false</prettyPrint>-->
-<!--        </jsonFormatter>-->
-<!--        <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>-->
-<!--        <appendLineSeparator>false</appendLineSeparator>-->
-<!--      </layout>-->
-<!--  </appender>-->
-
   <appender name="JsonConsole" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
       <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
@@ -26,19 +15,9 @@
     </layout>
   </appender>
 
-<!--  <appender name="HostedConsole" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--    <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">-->
-<!--      <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">-->
-<!--        <prettyPrint>false</prettyPrint>-->
-<!--      </jsonFormatter>-->
-<!--      <appendLineSeparator>true</appendLineSeparator>-->
-<!--      <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>-->
-<!--    </layout>-->
-<!--  </appender>-->
-
   <springProfile name="dev | test">
     <root level="INFO">
-      <appender-ref ref="JsonConsole"/>
+      <appender-ref ref="LocalConsole"/>
     </root>
   </springProfile>
 
