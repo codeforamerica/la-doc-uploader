@@ -76,3 +76,10 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+
+    - name: Save results
+      uses: actions/upload-artifact@v3
+      with:
+        name: CodeQL results
+        path: /home/runner/work/la-doc-uploader/results/java.sarif
+        retention-days: 14
