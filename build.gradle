@@ -64,6 +64,9 @@ dependencies {
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.3.2'
     testImplementation 'com.deque.html.axe-core:selenium:4.2.1'
 
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+
     runtimeOnly 'org.postgresql:postgresql'
 }
 
