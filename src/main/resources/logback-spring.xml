@@ -1,12 +1,50 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <configuration>
-  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="LocalConsole" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %X, logger=%logger{36}, level=%-5level, msg=%msg%n</pattern>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
 
-  <root level="INFO">
-    <appender-ref ref="console"/>
-  </root>
+<!--  <appender name="HostedConsole" class="ch.qos.logback.core.ConsoleAppender">-->
+
+<!--      <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">-->
+<!--        <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">-->
+<!--          <prettyPrint>false</prettyPrint>-->
+<!--        </jsonFormatter>-->
+<!--        <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>-->
+<!--        <appendLineSeparator>false</appendLineSeparator>-->
+<!--      </layout>-->
+<!--  </appender>-->
+
+  <appender name="JsonConsole" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+      <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+        <prettyPrint>true</prettyPrint>
+      </jsonFormatter>
+      <timestampFormat>yyyy-MM-dd' 'HH:mm:ss</timestampFormat>
+    </layout>
+  </appender>
+
+<!--  <appender name="HostedConsole" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--    <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">-->
+<!--      <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">-->
+<!--        <prettyPrint>false</prettyPrint>-->
+<!--      </jsonFormatter>-->
+<!--      <appendLineSeparator>true</appendLineSeparator>-->
+<!--      <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>-->
+<!--    </layout>-->
+<!--  </appender>-->
+
+  <springProfile name="dev | test">
+    <root level="INFO">
+      <appender-ref ref="JsonConsole"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="staging | demo | production">
+    <root level="INFO">
+      <appender-ref ref="JsonConsole"/>
+    </root>
+  </springProfile>
 </configuration>
