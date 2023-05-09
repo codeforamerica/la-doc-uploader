@@ -81,5 +81,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: CodeQL results
-        path: ../results
+        path: /home/runner/work/la-doc-uploader/results
         retention-days: 14
