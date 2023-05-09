@@ -18,9 +18,14 @@ jobs:
     name: Deploy to Aptible (en)
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch Latest Release
+        id: fetch-latest-release
+        uses: thebritican/fetch-latest-release@v2.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.inputs.branch }}
+          ref: ${{ steps.fetch-latest-release.outputs.tag_name }}
           fetch-depth: 0
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2.3.1
@@ -31,7 +36,7 @@ jobs:
         run: |
           ssh-keyscan beta.aptible.com >> ~/.ssh/known_hosts
           git remote add aptible ${{ vars.APTIBLE_REMOTE_URL }}
-          git push aptible ${APTIBLE_BRANCH}:${GITHUB_SHA}
+          git push aptible ${GITHUB_SHA}:${APTIBLE_BRANCH}
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb

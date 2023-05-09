@@ -14,7 +14,7 @@ env:
   APTIBLE_BRANCH: staging
 jobs:
   deploy:
-    name: Deploy to Aptible
+    name: Deploy to Aptible Staging
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -27,10 +27,7 @@ jobs:
           key: ${{ secrets.APTIBLE_SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.APTIBLE_KNOWN_HOSTS }}
       - name: Push to Aptible remote branch
-        run: |
-          ssh-keyscan beta.aptible.com >> ~/.ssh/known_hosts
-          git remote add aptible ${{ vars.APTIBLE_REMOTE_URL_STAGING }}
-          git push aptible ${APTIBLE_BRANCH}:${GITHUB_SHA}
+        run: git push --force ${{ vars.APTIBLE_REMOTE_URL_STAGING }} "${GITHUB_SHA}:staging-deploy"
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
@@ -38,6 +35,7 @@ jobs:
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
           aptible deploy --app app-staging --git-commitish ${GITHUB_SHA} \
           'SPRING_PROFILES_ACTIVE=staging' \
+          'DEFAULT_LOCALE=en' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_STAGING }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
           'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
@@ -46,10 +44,32 @@ jobs:
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_STAGING }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_STAGING }}' \
           'demo=true'
-  merge_to_staging:
+  draft-release:
+    name: Draft a new release
     needs: deploy
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create tag name
+        id: create-tagname
+        run: echo "::set-output name=TAG_NAME::$(date +'%Y-%m-%d-%H%M')"
+      - name: Draft Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release-${{ steps.create-tagname.outputs.TAG_NAME }}
+          release_name: release-${{ steps.create-tagname.outputs.TAG_NAME }}
+          commitish: ${{ github.event.inputs.branch }}
+          body: |
+            Fill in details about this release
+          draft: true
+          prerelease: true
+  merge_to_staging:
     name: Merge main -> staging
+    needs: deploy
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
