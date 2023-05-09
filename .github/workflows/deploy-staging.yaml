@@ -11,8 +11,7 @@ on:
 env:
   USERNAME: ${{ secrets.GPR_USER }}
   TOKEN: ${{ secrets.GPR_KEY }}
-  APTIBLE_BRANCH: ${{ vars.APTIBLE_REMOTE_BRANCH_STAGING }}
-
+  APTIBLE_BRANCH: staging
 jobs:
   deploy:
     name: Deploy to Aptible
