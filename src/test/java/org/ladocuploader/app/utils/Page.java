@@ -12,10 +12,12 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class Page {
 
   protected final RemoteWebDriver driver;
+  protected final Percy percy;
 
 
   public Page(RemoteWebDriver driver) {
     this.driver = driver;
+    this.percy = new Percy(driver);
   }
 
   public String getTitle() {

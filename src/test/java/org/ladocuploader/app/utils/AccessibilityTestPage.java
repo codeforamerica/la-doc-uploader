@@ -1,5 +1,4 @@
-package pages;
-import org.ladocuploader.app.utils.Page;
+package org.ladocuploader.app.utils;
 import com.deque.html.axecore.results.Results;
 import com.deque.html.axecore.results.Rule;
 import com.deque.html.axecore.selenium.AxeBuilder;

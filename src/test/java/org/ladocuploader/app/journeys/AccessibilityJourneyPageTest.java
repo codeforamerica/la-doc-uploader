@@ -6,7 +6,7 @@ import com.deque.html.axecore.selenium.AxeBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
-import pages.AccessibilityTestPage;
+import org.ladocuploader.app.utils.AccessibilityTestPage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,10 +24,10 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
     @Override
     @BeforeEach
     public void setUp() throws IOException {
+        log.info("RUNNING BEFORE EACH");
         super.setUp();
         testPage = new AccessibilityTestPage(driver);
     }
-
     @AfterEach
     void afterEach() {
         AxeBuilder builder = new AxeBuilder();
@@ -42,6 +42,7 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
 
     @Test
     void userCanCompleteDocumentUploadFlow() {
+        log.info("USER CAN COMPLETE UPLOAD FLOW");
         testPage.clickElementById("translate-button");
         testPage.clickLink("Español");
         testPage.clickElementById("translate-button");
@@ -78,7 +79,7 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
         List<Rule> violations = results.getViolations();
         log.info("Found " + violations.size() + " accessibility related issues.");
         if (results.getViolations().size() > 0) {
-            violations.stream().forEach(violation -> {
+            violations.forEach(violation -> {
                 log.info("Rule at issue: " + violation.getId());
                 log.info("Rule description: " + violation.getDescription());
                 log.info("Rule help text: " + violation.getHelp());

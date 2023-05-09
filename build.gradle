@@ -82,8 +82,19 @@ springBoot {
     buildInfo()
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+test {
+    useJUnitPlatform {
+        JUnitPlatformOptions options ->
+            options.excludeTags("a11y")
+    }
+}
+
+def unitTest = tasks.register("unitTest", Test) {
+    Test task ->
+        task.useJUnitPlatform {
+            JUnitPlatformOptions options ->
+                options.excludeTags("a11y")
+        }
 }
 
 def axeAccessibilityTest = tasks.register("accessibilityTest", Test) {
@@ -97,10 +108,20 @@ def axeAccessibilityTest = tasks.register("accessibilityTest", Test) {
         environment("MIXPANEL_API_KEY", "this-is-a-dummy-key-for-la-tests")
 }
 
-test {
-    environment("ENCRYPTION_KEYSET", "{\"primaryKeyId\":2135185311,\"key\":[{\"keyData\":{\"typeUrl\":\"type.googleapis.com/google.crypto.tink.AesGcmKey\",\"value\":\"GiCRKaXiJ/zlDHAZfRQf1rCIbIY4fFmLqLWYIPLNXpOx4A==\",\"keyMaterialType\":\"SYMMETRIC\"},\"status\":\"ENABLED\",\"keyId\":2135185311,\"outputPrefixType\":\"TINK\"}]}")
-    environment("DEFAULT_LOCALE", "en")
-    environment("MIXPANEL_API_KEY", "this-is-a-dummy-key-for-la-tests")
+tasks.withType(Test).configureEach {
+    Test task ->
+        task.testLogging {
+            exceptionFormat = "full"
+            events = ["failed", "skipped"]
+            showStackTraces = true
+            showCauses = true
+            showExceptions = true
+            // uncomment the following line to print stdout and stderr for every test
+//             showStandardStreams = true
+        }
+        environment("ENCRYPTION_KEYSET", "{\"primaryKeyId\":2135185311,\"key\":[{\"keyData\":{\"typeUrl\":\"type.googleapis.com/google.crypto.tink.AesGcmKey\",\"value\":\"GiCRKaXiJ/zlDHAZfRQf1rCIbIY4fFmLqLWYIPLNXpOx4A==\",\"keyMaterialType\":\"SYMMETRIC\"},\"status\":\"ENABLED\",\"keyId\":2135185311,\"outputPrefixType\":\"TINK\"}]}")
+        environment("DEFAULT_LOCALE", "en")
+        environment("MIXPANEL_API_KEY", "this-is-a-dummy-key-for-la-tests")
 }
 
 jar {
