@@ -81,5 +81,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: CodeQL results
-        path: results/java.sarif
+        path: ../results
         retention-days: 14
