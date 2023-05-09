@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["Run tests"]
     types: [completed]
-    branches: [staging]
+    branches: [main]
   workflow_dispatch:
     inputs: { }
 
@@ -46,3 +46,21 @@ jobs:
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_STAGING }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_STAGING }}' \
           'demo=true'
+  merge_to_staging:
+    needs: deploy
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Merge main -> staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+          ref: main
+      - uses: MaximeHeckel/github-action-merge-fast-forward@v1.1.0
+        with:
+          branchtomerge: main
+          branch: staging
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
