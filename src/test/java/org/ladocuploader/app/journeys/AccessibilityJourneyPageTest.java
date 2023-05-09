@@ -24,7 +24,6 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
     @Override
     @BeforeEach
     public void setUp() throws IOException {
-        log.info("RUNNING BEFORE EACH");
         super.setUp();
         testPage = new AccessibilityTestPage(driver);
     }
@@ -42,7 +41,6 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
 
     @Test
     void userCanCompleteDocumentUploadFlow() {
-        log.info("USER CAN COMPLETE UPLOAD FLOW");
         testPage.clickElementById("translate-button");
         testPage.clickLink("Español");
         testPage.clickElementById("translate-button");
