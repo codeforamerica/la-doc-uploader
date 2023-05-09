@@ -59,10 +59,10 @@ spring:
     multipart:
       max-file-size: ${form-flow.uploads.max-file-size}MB
       max-request-size: ${form-flow.uploads.max-file-size}MB
-logging:
-  level:
-    root: INFO
-    org.springframework.web: ERROR
+#logging:
+#  level:
+#    root: INFO
+#    org.springframework.web: ERROR
 server:
   tomcat:
     max-http-form-post-size: ${form-flow.uploads.max-file-size}MB
@@ -72,3 +72,6 @@ server:
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+sentry:
+  dsn: https://7ec67ddbbdd446108d1c39239a26eb4d@o88043.ingest.sentry.io/4505121197588480
+  traces-sample-rate: 0.6
