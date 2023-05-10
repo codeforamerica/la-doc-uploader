@@ -76,6 +76,7 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+        queries: security-extended,security-and-quality
 
     - name: Save results
       uses: actions/upload-artifact@v3
