@@ -8,46 +8,46 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="'fragments/icons' :: matchInfo"></th:block>
+        <th:block th:replace="fragments/icons :: matchInfo"></th:block>
         <th:block
-            th:replace="'fragments/cardHeader' :: cardHeader(header=#{client-info.header}, subtext=#{client-info.subtext})"/>
+            th:replace="fragments/cardHeader :: cardHeader(header=#{client-info.header}, subtext=#{client-info.subtext})"/>
         <th:block
-            th:replace="'fragments/form' :: form(action=${formAction}, content=~{::clientInfoFormContents})">
+            th:replace="fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})">
           <th:block th:ref="clientInfoFormContents">
             <div class="form-card__content">
-              <th:block th:replace="'fragments/inputs/text' ::
+              <th:block th:replace="fragments/inputs/text ::
                   text(inputName='firstName',
                   label=#{client-info.first-name-question},
                   helpText=#{client-info.name-subtext})"/>
-              <th:block th:replace="'fragments/inputs/text' ::
+              <th:block th:replace="fragments/inputs/text ::
                   text(inputName='lastName',
                   label=#{client-info.last-name-question},
                   helpText=#{client-info.name-subtext})"/>
 
-              <th:block th:replace="'fragments/inputs/date' ::
+              <th:block th:replace="fragments/inputs/date ::
                   date(inputName='birthDate',
                   label=#{client-info.date-of-birth},
                   helpText='client-info.date-of-birth.help')"/>
 
               <th:block
-                th:replace="'fragments/inputs/ssn' :: ssn(
+                th:replace="fragments/inputs/ssn :: ssn(
                 inputName='ssn',
                 label=#{client-info.ssn},
                 helpText=#{client-info.ssn.help})"/>
 
               <th:block
-                  th:replace="'fragments/inputs/phone' :: phone(
+                  th:replace="fragments/inputs/phone :: phone(
                   inputName='phoneNumber',
                   label=#{client-info.phone-number},
                   helpText=#{client-info.phone-number-subtext},
                   placeholder=#{client-info.phone-number-placeholder})"/>
 
-              <th:block th:replace="'fragments/inputs/text' ::
+              <th:block th:replace="fragments/inputs/text ::
                   text(inputName='emailAddress',
                   label=#{client-info.email-address},
                   helpText=#{client-info.email-address-subtext})"/>
 
-                <th:block th:replace="'fragments/inputs/text' ::
+                <th:block th:replace="fragments/inputs/text ::
                   text(inputName='caseNumber',
                   label=#{client-info.case-number},
                   helpText=#{client-info.case-number-subtext})" />
