@@ -29,7 +29,7 @@
            th:value="${inputData.getOrDefault(inputName, '')}"
            inputmode="numeric">
     <th:block
-        th:replace="fragments/inputError :: validationError(inputName=${inputName})"></th:block>
+        th:replace="~{fragments/inputError :: validationError(inputName=${inputName})}"></th:block>
   </div>
 </th:block>
 </body>
