@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{doc-submit-confirmation.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{doc-submit-confirmation.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
       <th:block th:replace="~{fragments/form :: form(action=('/flow/' + ${flow} + '/'+ ${screen} + '/submit' ), content=~{::docSubmitConfirmation})}">
         <th:block th:ref="docSubmitConfirmation">
           <div class="form-card__content">
-            <th:block th:replace="fragments/icons :: 'fileWithCheckmark'"></th:block>
-            <th:block th:replace="fragments/cardHeader :: cardHeader(header=#{doc-submit-confirmation.header})" />
+            <th:block th:replace="~{fragments/icons :: 'fileWithCheckmark'}"></th:block>
+            <th:block th:replace="~{fragments/cardHeader :: cardHeader(header=#{doc-submit-confirmation.header})}" />
           </div>
           <div class="form-card__footer">
             <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(

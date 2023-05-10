@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{index.title})"
+<head th:replace="~{fragments/head :: head(title=#{index.title})}"
 </head>
 <body class="template--static-page">
 <div class="page-wrapper">
-  <th:block th:replace="fragments/toolbar :: toolbar"/>
+  <th:block th:replace="~{fragments/toolbar :: toolbar}"/>
   <main id="content" role="main">
     <section class="slab slab--white">
       <div class="grid">
@@ -84,13 +84,13 @@
 
       <div class="grid">
         <div class="grid__item width-five-twelfths">
-          <th:block th:replace="fragments/icons :: smallMoneyIcon"/>
+          <th:block th:replace="~{fragments/icons :: smallMoneyIcon}"/>
           <p class="spacing-below-5 spacing-above-10" th:utext="#{index.non-work-income}"></p>
           <p th:text="#{index.non-work-income-examples}"></p>
         </div>
 
         <div class="grid__item width-five-twelfths shift-one-twelfth">
-          <th:block th:replace="fragments/icons :: monetization"/>
+          <th:block th:replace="~{fragments/icons :: monetization}"/>
           <p class="spacing-below-5 spacing-above-10" th:utext="#{index.expenses}"></p>
           <p th:text="#{index.expenses-examples}"></p>
         </div>
@@ -98,13 +98,13 @@
 
       <div class="grid">
         <div class="grid__item width-five-twelfths">
-          <th:block th:replace="fragments/icons :: airplane"/>
+          <th:block th:replace="~{fragments/icons :: airplane}"/>
           <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immigration-status}"></p>
           <p th:text="#{index.immigration-status-examples}"></p>
         </div>
 
         <div class="grid__item width-five-twelfths shift-one-twelfth">
-          <th:block th:replace="fragments/icons :: syringe"/>
+          <th:block th:replace="~{fragments/icons :: syringe}"/>
           <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immunization-records}"></p>
           <p th:text="#{index.immunization-record-examples}"></p>
         </div>
@@ -150,6 +150,6 @@
     </section>
   </main>
 </div>
-<th:block th:replace="fragments/footer :: footer"/>
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

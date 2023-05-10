@@ -3,15 +3,15 @@
 <head th:replace="fragments/head :: head(title=#{how-to-add-documents.title})"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block
-            th:replace="fragments/cardHeader :: cardHeader(header=#{how-to-add-documents.header})"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{how-to-add-documents.header})}"/>
         <div class="center">
-          <th:block th:replace="fragments/icons :: takingPicWithPhone"></th:block>
+          <th:block th:replace="~{fragments/icons :: takingPicWithPhone}"></th:block>
         </div>
         <ul class="list--bulleted">
           <li th:text="#{how-to-add-documents.take-photos}"></li>
@@ -19,12 +19,12 @@
           <li th:text="#{how-to-add-documents.take-screenshot}"></li>
         </ul>
         <div class="form-card__footer button--center">
-          <th:block th:replace="fragments/continueButton :: continue" />
+          <th:block th:replace="~{fragments/continueButton :: continue}" />
         </div>
       </main>
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
