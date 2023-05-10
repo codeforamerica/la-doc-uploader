@@ -71,12 +71,12 @@
           th:text="#{index.recommended-documents}"></h2>
       <div class="grid">
         <div class="grid__item width-five-twelfths">
-          <th:block th:replace="fragments/icons :: smallPersonIcon"/>
+          <th:block th:replace="~{fragments/icons :: smallPersonIcon}"/>
           <p class="spacing-below-5 spacing-above-10" th:utext="#{index.identity}"></p>
           <p th:text="#{index.identity-examples}"></p>
         </div>
         <div class="grid__item width-five-twelfths shift-one-twelfth">
-          <th:block th:replace="fragments/icons :: smallMoneyIcon"/>
+          <th:block th:replace="~{fragments/icons :: smallMoneyIcon}"/>
           <p class="spacing-below-5 spacing-above-10" th:utext="#{index.income}"></p>
           <p th:text="#{index.income-examples}"></p>
         </div>
