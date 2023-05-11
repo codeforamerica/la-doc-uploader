@@ -1,4 +1,7 @@
 name: Deploy to Aptible Staging
+# 1. Run tests on merges to main
+# 2. (Attempt) to deploy to staging
+# 3. if successful, draft release and merge main to staging branch
 
 on:
   workflow_run:
