@@ -54,7 +54,6 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/la-doc-uploader
     username: la-doc-uploader
-    password:
   servlet:
     multipart:
       max-file-size: ${form-flow.uploads.max-file-size}MB
