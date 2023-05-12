@@ -10,7 +10,7 @@ import org.ladocuploader.app.utils.AbstractBasePageTest;
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
-  void fullUploadDocumentFlow() throws InterruptedException {
+  void fullUploadDocumentFlow() {
     // Landing screen (language toggled)
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
     testPage.clickElementById("translate-button");
@@ -55,7 +55,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Yes, submit and finish");
 
     // Confirmation page
-    wait(300); // TODO-SP why does the submit take so long?
     assertThat(testPage.getTitle()).isEqualTo("documents sent");
   }
 }
