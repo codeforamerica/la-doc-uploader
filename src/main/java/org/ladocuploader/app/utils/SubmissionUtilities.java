@@ -79,7 +79,11 @@ public class SubmissionUtilities {
 
     // if they entered it by hand that takes precedence over individual totals.
     if (submission.getInputData().containsKey(REPORTED_TOTAL_ANNUAL_HOUSEHOLD_INCOME)) {
-      total = Double.valueOf((String) submission.getInputData().get(REPORTED_TOTAL_ANNUAL_HOUSEHOLD_INCOME));
+      try {
+        total = Double.valueOf((String) submission.getInputData().get(REPORTED_TOTAL_ANNUAL_HOUSEHOLD_INCOME));
+      } catch (NumberFormatException e){
+        // don't do anything yet
+      }
     } else if (submission.getInputData().containsKey(INCOME)) {
       List<Map<String, Object>> incomeSubflow =
           (List<Map<String, Object>>) submission.getInputData().get(INCOME);
@@ -90,7 +94,7 @@ public class SubmissionUtilities {
             try {
               amounts.add(Double.valueOf((String) value));
             } catch (NumberFormatException e) {
-              throw new RuntimeException(e);
+              // don't do anything yet
             }
 
           }
