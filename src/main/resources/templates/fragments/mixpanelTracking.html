@@ -8,12 +8,12 @@
   const pageName = window.location.pathname;
   const ref_id_param = window.location.href.includes("?ref_id=") ? window.location.href.split("?ref_id=")[1].split('&')[0] : null
   const ref_id = ref_id_param ? ref_id_param : '[[${submission == null ? "" : submission.getUrlParams().getOrDefault("ref_id", "")}]]'
-
+  const ref_id_sanitized = ref_id.replaceAll("[^a-zA-Z0-9]", "");
   if (document.referrer === ""){
       mixpanel.track('doc_uploader_start', {
           'page_name': pageName,
           'language': navigator.language,
-          'ref_id': ref_id
+          'ref_id': ref_id_sanitized
       });
   }
 
@@ -25,7 +25,7 @@
   mixpanel.track('page_view', {
     'page_name': window.location.pathname,
     'language': navigator.language,
-    'ref_id': ref_id
+    'ref_id': ref_id_sanitized
   });
 
   function buttonClickEvent() {
