@@ -121,36 +121,4 @@ public class SubmissionUtilities {
     }
     return (Integer.toString(familySize));
   }
-
-  /**
-   * Returns the max income threshold for a family of a certain size as an Integer.
-   *
-   * @param submission submission containing input data to use
-   * @return an Integer containing the value
-   */
-  public static Integer getIncomeThresholdByFamilySizeValue(Submission submission) {
-    Integer defaultThreshold = 116775 + ((Integer.parseInt(getFamilySize(submission)) - 8) * 11800);
-    return switch (Integer.parseInt(getFamilySize(submission))) {
-      case 1 -> 33975;
-      case 2 -> 45775;
-      case 3 -> 57575;
-      case 4 -> 69375;
-      case 5 -> 81175;
-      case 6 -> 92975;
-      case 7 -> 104775;
-      case 8 -> 116775;
-      default -> defaultThreshold;
-    };
-  }
-
-  /**
-   * Returns the max income threshold for a family of a certain size as a String value The string will be formatted for USD dollar
-   * amounts, meaning that the Integer value 33975 will be returned as "33,975"
-   *
-   * @param submission submission containing input data to use
-   * @return a String containing the value
-   */
-  public static String getIncomeThresholdByFamilySize(Submission submission) {
-    return decimalFormat.format(getIncomeThresholdByFamilySizeValue(submission));
-  }
 }
