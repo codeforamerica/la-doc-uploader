@@ -2,8 +2,8 @@ package org.ladocuploader.app.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import io.percy.selenium.Percy;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -21,11 +21,12 @@ public class Page {
   }
 
   public String getTitle() {
+    checkForBadMessageKeys();
     return driver.getTitle();
   }
 
   private void checkForBadMessageKeys() {
-    assertThat(getTitle()).doesNotContain("??");
+    assertThat(driver.getTitle()).doesNotContain("??");
     assertThat(driver.findElement(By.xpath("/html")).getText()).doesNotContain("??");
   }
 
