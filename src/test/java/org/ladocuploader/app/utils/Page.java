@@ -26,7 +26,7 @@ public class Page {
   }
 
   private void checkForBadMessageKeys() {
-    assertThat(getTitle()).doesNotContain("??");
+    assertThat(driver.getTitle()).doesNotContain("??");
     assertThat(driver.findElement(By.xpath("/html")).getText()).doesNotContain("??");
   }
 
