@@ -1,8 +1,11 @@
 name: Deploy to Aptible Prod
 
 on:
- workflow_dispatch:
+  workflow_dispatch:
     inputs: { }
+  push:
+    tags:
+      - release-**
 
 env:
   USERNAME: ${{ secrets.GPR_USER }}
