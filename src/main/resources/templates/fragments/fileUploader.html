@@ -142,9 +142,8 @@
       var numberOfAddedFilesDiv = document.getElementById(
           "number-of-uploaded-files-" + [[${inputName}]]);
       var multipleFilesAddedMsg = `[[${#messages.msg('general.files.file-added.other', '${numberOfAddedFiles}')}]]`;
-      var numberOfUploadsString = numberOfAddedFiles === 1 ? [[#{general.files.file-added.one}]]
+      numberOfAddedFilesDiv.innerHTML = numberOfAddedFiles === 1 ? [[#{general.files.file-added.one}]]
           : multipleFilesAddedMsg.replaceAll('"', '');
-      numberOfAddedFilesDiv.innerHTML = numberOfUploadsString;
     }
 
     function setDefaultThumbnail(file) {
