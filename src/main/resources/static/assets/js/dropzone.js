@@ -913,7 +913,7 @@ function (_Emitter) {
           if (file.previewElement) {
             file.previewElement.classList.add("dz-error");
 
-            if (typeof message !== "string" && message.error) {
+            if (typeof message !== "String" && message.error) {
               message = message.error;
             }
 
@@ -3823,7 +3823,7 @@ function __guard__(value, transform) {
 
 function __guardMethod__(obj, methodName, transform) {
   if (typeof obj !== 'undefined' && obj !== null && typeof obj[methodName] === 'function') {
-    return transform(obj);
+    return transform(obj, methodName);
   } else {
     return undefined;
   }
