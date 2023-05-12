@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 @Tag("staticPagesJourney")
 public class StaticPagesJourneyTest extends AbstractBasePageTest {
 
+  @Override
   protected void initTestPage() {
     testPage = new Page(driver);
   }

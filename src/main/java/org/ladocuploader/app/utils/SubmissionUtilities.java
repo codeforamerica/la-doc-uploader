@@ -1,6 +1,8 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
+import lombok.extern.slf4j.Slf4j;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+@Slf4j
 public class SubmissionUtilities {
 
   public static DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
@@ -84,7 +87,12 @@ public class SubmissionUtilities {
       incomeSubflow.forEach(iteration -> {
         iteration.forEach((key, value) -> {
           if (key.contains("Amount")) {
-            amounts.add(Double.valueOf((String) value));
+            try {
+              amounts.add(Double.valueOf((String) value));
+            } catch (NumberFormatException e) {
+              throw new RuntimeException(e);
+            }
+
           }
         });
       });

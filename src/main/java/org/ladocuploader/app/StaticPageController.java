@@ -20,12 +20,10 @@ public class StaticPageController {
    * Renders the website index page.
    *
    * @param request  The current request, not null
-   * @param response The current request response
    * @return the static page template
    */
   @GetMapping("/")
   ModelAndView getIndex(HttpServletRequest request,
-      HttpServletResponse response,
       @RequestParam(required = false) String ref_id) {
     // For dev, reset session if you visit home
     HttpSession httpSession = request.getSession();
