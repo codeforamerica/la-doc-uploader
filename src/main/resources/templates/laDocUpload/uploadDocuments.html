@@ -30,16 +30,16 @@
 <script>
   $(document).ready(function () {
     $("#form-submit-button").click(function () {
-      uploadedFiles = {
+      const uploadedFiles = {
         'pdf': 0,
         'jpg': 0,
         'png': 0,
         'gif': 0
       }
       $(".filename-text-ext").each(function () {
-        var fileExt = this.textContent;
+        let fileExt = this.textContent;
         fileExt = fileExt.substring(1, fileExt.length);
-        var count = uploadedFiles[fileExt];
+        const count = uploadedFiles[fileExt];
         uploadedFiles[fileExt] = count + 1;
       });
 
