@@ -4,8 +4,7 @@ on:
   workflow_run:
     workflows: ["Run tests"]
     types: [completed]
-  schedule:
-    - cron: '38 10 * * 5'
+  pull_request:
 
 jobs:
   analyze:
