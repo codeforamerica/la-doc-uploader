@@ -7,21 +7,29 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.util.Objects;
 
 @Slf4j
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
-  void clientDetailsFlow() {
+  void clientDetailsFlow() throws IOException, UnsupportedFlavorException {
     testPage.navigateToFlowScreen("clientInfo");
 
+    WebElement ssnInput = testPage.findElementById("ssn");
     // SSN input
 
     // SSN field should be displayed
-    assert(testPage.findElementById("ssn").getAttribute("class").contains("ssn-input"));
-    assert(testPage.findElementById("ssn").getAttribute("inputmode").equals("numeric"));
+    assert(ssnInput.getAttribute("class").contains("ssn-input"));
+    assert(ssnInput.getAttribute("inputmode").equals("numeric"));
 
     // SSN label text
     assert(testPage.getInputLabel("ssn").equals("What's your social security number?"));
@@ -31,6 +39,26 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("ssn");
     assertThat(String.valueOf(driver.switchTo().activeElement().getAttribute("id"))).isEqualTo("ssn");
     driver.switchTo().defaultContent();
+
+    // Copy and paste into field is working - not possible in headless mode
+
+    // entering letters does not display anything in the input
+    testPage.enter("ssn", "ABCD");
+    assertThat(testPage.getInputValue("ssn")).isEqualTo("");
+
+    // entering special characters does not display anything in the input
+    testPage.enter("ssn", "*&#^!");
+    assertThat(testPage.getInputValue("ssn")).isEqualTo("");
+
+    // entering digits displays digits from keyboard
+    testPage.enter("ssn", "1234");
+    assertThat(testPage.getInputValue("ssn")).isEqualTo("123-4");
+
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText("Make sure your SSN has 9 digits."));
+
+
 
   }
 
