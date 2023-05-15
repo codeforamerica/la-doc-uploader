@@ -9,6 +9,7 @@ import org.ladocuploader.app.utils.AbstractBasePageTest;
 import org.ladocuploader.app.utils.AccessibilityTestPage;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
 
     @Override
     @BeforeEach
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, URISyntaxException {
         super.setUp();
         testPage = new AccessibilityTestPage(driver);
     }

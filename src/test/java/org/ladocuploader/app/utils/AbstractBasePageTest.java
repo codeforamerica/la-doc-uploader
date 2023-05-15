@@ -6,9 +6,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
+import org.apache.http.client.utils.URIBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -27,6 +30,8 @@ import org.springframework.test.context.ActiveProfiles;
 public abstract class AbstractBasePageTest {
   
   private static final String UPLOADED_JPG_FILE_NAME = "test.jpeg";
+
+  private static final String VALID_REF_ID = "T9203206181";
   
   @Autowired
   protected RemoteWebDriver driver;
@@ -42,9 +47,9 @@ public abstract class AbstractBasePageTest {
   protected Page testPage;
 
   @BeforeEach
-  protected void setUp() throws IOException {
+  protected void setUp() throws IOException, URISyntaxException {
     initTestPage();
-    baseUrl = "http://localhost:%s".formatted(localServerPort);
+    baseUrl = "http://localhost:%s/?ref_id=%s".formatted(localServerPort, VALID_REF_ID);
     driver.navigate().to(baseUrl);
   }
 
