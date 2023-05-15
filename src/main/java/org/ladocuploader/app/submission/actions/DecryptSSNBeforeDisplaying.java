@@ -17,6 +17,7 @@ public class DecryptSSNBeforeDisplaying implements Action {
     encryptor = new StringEncryptor(System.getenv("ENCRYPTION_KEYSET"));
   }
 
+  @Override
   public void run(Submission submission) {
     String encryptedSSN = (String) submission.getInputData().remove("encryptedSSN");
     if (encryptedSSN != null) {

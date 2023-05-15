@@ -20,7 +20,7 @@ public abstract class TrackClientInfo implements Action {
     Map<String, String> formData = new HashMap<>();
     formSubmission.getFormData().forEach((k, v) -> {
       String value = v.toString();
-      if (!value.equals("") && !value.equals("[]")) {
+      if (!(value.length() == 0) && !value.equals("[]")) {
         formData.put(k, value);
       }
     });
