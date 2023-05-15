@@ -13,8 +13,11 @@ import java.util.List;
 public class AccessibilityTestPage extends Page {
     public List<Rule> resultsList = new ArrayList<>();
 
-    public AccessibilityTestPage(RemoteWebDriver driver) {
-        super(driver);
+    protected final String localServerPort;
+
+    public AccessibilityTestPage(RemoteWebDriver driver, String localServerPort) {
+        super(driver, localServerPort);
+        this.localServerPort = localServerPort;
     }
 
     public void clickLink(String linkText) {

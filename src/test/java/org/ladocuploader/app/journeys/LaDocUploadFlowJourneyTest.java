@@ -4,10 +4,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
 
+import java.util.Objects;
+
+@Slf4j
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
+
+  @Test
+  void clientDetailsFlow() {
+    testPage.navigateToFlowScreen("clientInfo");
+    // SSN field should be displayed
+    assert(testPage.findElementById("ssn").getAttribute("class").contains("ssn-input"));
+    assert(testPage.findElementById("ssn").getAttribute("inputmode").equals("numeric"));
+
+    // SSN label text
+    assert(testPage.getInputLabel("ssn").equals("What's your social security number?"));
+    assert(testPage.findElementTextById("ssn-help-text").equals("Optional."));
+
+//    assert(Objects.equals(testPage.getElementText("ssn"), "What's your social security number?\n" +
+//            "Optional."));
+  }
 
   @Test
   void fullUploadDocumentFlow() {

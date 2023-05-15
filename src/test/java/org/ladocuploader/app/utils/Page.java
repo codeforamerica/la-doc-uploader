@@ -8,16 +8,22 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.boot.test.web.server.LocalServerPort;
 
 public class Page {
 
   protected final RemoteWebDriver driver;
   protected final Percy percy;
 
+  protected final String localServerPort;
 
-  public Page(RemoteWebDriver driver) {
+  private static final String DOC_UPLOAD_FLOW = "laDocUpload";
+
+
+  public Page(RemoteWebDriver driver, String localServerPort) {
     this.driver = driver;
     this.percy = new Percy(driver);
+    this.localServerPort = localServerPort;
   }
 
   public String getTitle() {
@@ -188,6 +194,13 @@ public class Page {
         .getAttribute("value");
   }
 
+  public String getInputLabel(String inputName){
+    return driver.findElement(
+            By.xpath(
+                    String.format("//input[@name='%s']//preceding::*[2]", inputName)))
+            .getAttribute("innerHTML");
+  }
+
   public String getRadioValue(String inputName) {
     return driver.findElements(By.cssSelector(String.format("input[name='%s[]']", inputName)))
         .stream()
@@ -298,11 +311,9 @@ public class Page {
     inputToSelect.click();
   }
 
-//  public void chooseSentiment(Sentiment sentiment) {
-//    driver.findElement(
-//            By.cssSelector(String.format("label[for='%s']", sentiment.name().toLowerCase())))
-//        .click();
-//  }
+  public void navigateToFlowScreen(String flowScreen) {
+    driver.navigate().to("http://localhost:%s/flow/%s/%s".formatted(localServerPort, DOC_UPLOAD_FLOW, flowScreen));
+  }
 
   enum FormInputHtmlTag {
     input,

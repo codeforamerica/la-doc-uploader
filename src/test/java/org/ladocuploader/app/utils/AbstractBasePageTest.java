@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import org.apache.http.client.utils.URIBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -54,7 +53,7 @@ public abstract class AbstractBasePageTest {
   }
 
   protected void initTestPage() {
-    testPage = new Page(driver);
+    testPage = new Page(driver, localServerPort);
   }
 
   @SuppressWarnings("unused")
