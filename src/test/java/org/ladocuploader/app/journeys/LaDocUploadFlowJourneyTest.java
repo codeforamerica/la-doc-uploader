@@ -16,6 +16,9 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   @Test
   void clientDetailsFlow() {
     testPage.navigateToFlowScreen("clientInfo");
+
+    // SSN input
+
     // SSN field should be displayed
     assert(testPage.findElementById("ssn").getAttribute("class").contains("ssn-input"));
     assert(testPage.findElementById("ssn").getAttribute("inputmode").equals("numeric"));
@@ -24,8 +27,11 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     assert(testPage.getInputLabel("ssn").equals("What's your social security number?"));
     assert(testPage.findElementTextById("ssn-help-text").equals("Optional."));
 
-//    assert(Objects.equals(testPage.getElementText("ssn"), "What's your social security number?\n" +
-//            "Optional."));
+    // SSN activates when clicked
+    testPage.clickElementById("ssn");
+    assertThat(String.valueOf(driver.switchTo().activeElement().getAttribute("id"))).isEqualTo("ssn");
+    driver.switchTo().defaultContent();
+
   }
 
   @Test
