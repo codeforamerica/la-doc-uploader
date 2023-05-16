@@ -36,6 +36,26 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
+  void lastNameInputFlow() {
+    testPage.navigateToFlowScreen("clientInfo");
+
+    // SSN input
+    WebElement firstNameInput = testPage.findElementById("lastName");
+    assertThat(firstNameInput).isNotNull();
+
+    assert(testPage.getInputLabel("lastName").equals("What's your last name?"));
+    assert(testPage.findElementTextById("lastName-help-text").equals("Legally as it appears on your ID."));
+
+    // firstName activates when clicked
+    testPage.clickElementById("lastName");
+    assertThat(testPage.isInputActive("lastName")).isTrue();
+
+    // entering ssn fewer than 9 digits results in custom error message
+    testPage.clickContinue();
+    assert(testPage.hasErrorText("Make sure you provide a last name"));
+  }
+
+  @Test
   void ssnInputFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
@@ -72,8 +92,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     // entering ssn fewer than 9 digits results in custom error message
     testPage.clickContinue();
     assert(testPage.hasErrorText("Make sure your SSN has 9 digits."));
-
-
 
   }
 
