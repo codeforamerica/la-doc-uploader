@@ -4,9 +4,8 @@ on:
   workflow_run:
     workflows: ["Run tests"]
     types: [completed]
-    branches:
-      - '**'
-  pull_requests:
+    branches: ['**']
+  pull_request:
 
 jobs:
   analyze:
