@@ -52,9 +52,9 @@ dependencies {
     }
 
     implementation 'com.google.crypto.tink:tink:1.9.0'
-    testImplementation 'org.projectlombok:lombok:1.18.22'
+    testImplementation 'org.projectlombok:lombok:1.18.26'
 
-    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.18.1'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.19.0'
 
     implementation 'io.sentry:sentry-logback:6.18.1'
 
