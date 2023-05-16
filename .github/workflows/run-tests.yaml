@@ -2,8 +2,6 @@ name: Run tests
 
 on:
   push:
-    branches: [ main, staging ]
-  pull_request:
 
 env:
   USERNAME: ${{ secrets.GPR_USER }}

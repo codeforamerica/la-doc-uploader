@@ -5,6 +5,7 @@ on:
     workflows: ["Run tests"]
     types: [completed]
     branches: *
+  pull_requests:
 
 jobs:
   analyze:
