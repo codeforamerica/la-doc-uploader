@@ -1,11 +1,11 @@
 package org.ladocuploader.app.journeys;
 
+import org.junit.jupiter.api.Test;
+import org.ladocuploader.app.utils.AbstractBasePageTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-
-import org.junit.jupiter.api.Test;
-import org.ladocuploader.app.utils.AbstractBasePageTest;
 
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
@@ -14,9 +14,15 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     // Landing screen (language toggled)
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
     testPage.clickElementById("translate-button");
+    String languages = testPage.getElementText("menu2");
+    assertThat(languages).contains("Español");
+    assertThat(languages).contains("English");
+    assertThat(languages).contains("Tiếng Việt");
     testPage.clickLink("Español");
     assertThat(testPage.getElementText("translate-button")).contains("Traducir");
-    // TODO add other assert for page content
+    testPage.clickElementById("translate-button");
+    testPage.clickLink("Tiếng Việt");
+    assertThat(testPage.getElementText("translate-button")).contains("Phiên dịch");
     testPage.clickElementById("translate-button");
     testPage.clickLink("English");
 
