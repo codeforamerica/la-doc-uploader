@@ -33,24 +33,24 @@
                 th:replace="~{fragments/inputs/ssn :: ssn(
                 inputName='ssn',
                 label=#{client-info.ssn},
-                helpText=#{client-info.ssn.help})}"/>
+                helpText=#{general.optional})}"/>
 
               <th:block
                   th:replace="~{fragments/inputs/phone :: phone(
                   inputName='phoneNumber',
                   label=#{client-info.phone-number},
-                  helpText=#{client-info.phone-number-subtext},
+                  helpText=#{client-info.contact-subtext},
                   placeholder=#{client-info.phone-number-placeholder})}"/>
 
               <th:block th:replace="~{fragments/inputs/text ::
                   text(inputName='emailAddress',
                   label=#{client-info.email-address},
-                  helpText=#{client-info.email-address-subtext})}"/>
+                  helpText=#{client-info.contact-subtext})}"/>
 
                 <th:block th:replace="~{fragments/inputs/text ::
                   text(inputName='caseNumber',
                   label=#{client-info.case-number},
-                  helpText=#{client-info.case-number-subtext})}" />
+                  helpText=#{general.optional})}" />
 
               <div th:class="'form-group display-none'">
                 <label>
