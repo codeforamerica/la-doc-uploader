@@ -10,6 +10,24 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
+  void uploadDocumentButton() {
+    // Landing page
+    assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
+
+    testPage.clickButton("Upload documents");
+    assertThat(testPage.getElementText("header")).isEqualTo("Before you start, we need to match your documents to your application");
+    testPage.goBack();
+
+    testPage.clickButton("Subir documentos");
+    assertThat(testPage.getElementText("header")).isEqualTo("Antes de comenzar necesitamos vincular sus caso con sus documentos");
+    takeSnapShot("temp.png");
+    testPage.clickLink("< Volver");
+
+    testPage.clickButton("Tải lên tài liệu");
+    assertThat(testPage.getElementText("header")).isEqualTo("Trước khi quý vị bắt đầu, chúng tôi cần khớp tài liệu của quý vị với đơn của quý vị");
+  }
+
+  @Test
   void fullUploadDocumentFlow() {
     // Landing screen (language toggled)
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
