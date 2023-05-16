@@ -179,6 +179,12 @@ public class Page {
         .getAttribute("value");
   }
 
+  public Boolean isInputActive(String inputName){
+    Boolean isActive = String.valueOf(driver.switchTo().activeElement().getAttribute("id")).equals(inputName);
+    driver.switchTo().defaultContent();
+    return isActive;
+  }
+
   public String getElementText(String inputId) {
     return driver.findElement(By.id(inputId)).getText();
   }

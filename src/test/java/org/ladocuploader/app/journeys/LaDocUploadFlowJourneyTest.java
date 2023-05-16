@@ -16,11 +16,32 @@ import java.io.IOException;
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
-  void clientDetailsFlow() {
+  void firstNameInputFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
-    WebElement ssnInput = testPage.findElementById("ssn");
     // SSN input
+    WebElement firstNameInput = testPage.findElementById("firstName");
+    assertThat(firstNameInput).isNotNull();
+
+    assert(testPage.getInputLabel("firstName").equals("What's your first name?"));
+    assert(testPage.findElementTextById("firstName-help-text").equals("Legally as it appears on your ID."));
+
+    // firstName activates when clicked
+    testPage.clickElementById("firstName");
+    assertThat(testPage.isInputActive("firstName")).isTrue();
+
+    // entering ssn fewer than 9 digits results in custom error message
+    testPage.clickContinue();
+    assert(testPage.hasErrorText("Make sure you provide a first name"));
+  }
+
+  @Test
+  void ssnInputFlow() {
+    testPage.navigateToFlowScreen("clientInfo");
+
+    // SSN input
+    WebElement ssnInput = testPage.findElementById("ssn");
+    assertThat(ssnInput).isNotNull();
 
     // SSN field should be displayed
     assert(ssnInput.getAttribute("class").contains("ssn-input"));
@@ -32,8 +53,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
     // SSN activates when clicked
     testPage.clickElementById("ssn");
-    assertThat(String.valueOf(driver.switchTo().activeElement().getAttribute("id"))).isEqualTo("ssn");
-    driver.switchTo().defaultContent();
+    assertThat(testPage.isInputActive("ssn")).isTrue();
 
     // Copy and paste into field is working - not possible in headless mode
 
