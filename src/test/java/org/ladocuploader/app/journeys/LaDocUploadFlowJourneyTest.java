@@ -7,21 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import java.util.Objects;
 
 @Slf4j
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
-  void clientDetailsFlow() throws IOException, UnsupportedFlavorException {
+  void clientDetailsFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
     WebElement ssnInput = testPage.findElementById("ssn");
@@ -54,8 +49,8 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("ssn", "1234");
     assertThat(testPage.getInputValue("ssn")).isEqualTo("123-4");
 
+    // entering ssn fewer than 9 digits results in custom error message
     testPage.clickContinue();
-
     assert(testPage.hasErrorText("Make sure your SSN has 9 digits."));
 
 
