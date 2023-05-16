@@ -10,6 +10,7 @@ on:
 jobs:
   analyze:
     name: Analyze
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: 'ubuntu-latest'
     permissions:
       actions: read
@@ -25,12 +26,10 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
-
     strategy:
       fail-fast: false
       matrix:
         language: [ 'java', 'javascript' ]
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
