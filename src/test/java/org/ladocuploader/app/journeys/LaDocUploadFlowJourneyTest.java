@@ -14,6 +14,10 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     // Landing screen (language toggled)
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
     testPage.clickElementById("translate-button");
+    String languages = testPage.getElementText("menu2");
+    assertThat(languages).contains("Español");
+    assertThat(languages).contains("English");
+    assertThat(languages).contains("Tiếng Việt");
     testPage.clickLink("Español");
     assertThat(testPage.getElementText("translate-button")).contains("Traducir");
     testPage.clickElementById("translate-button");
