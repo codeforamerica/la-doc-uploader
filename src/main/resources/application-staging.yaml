@@ -6,3 +6,5 @@ spring:
 form-flow:
   aws:
     s3_bucket_name: 'la-doc-uploader-staging'
+sentry:
+  environment: staging
