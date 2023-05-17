@@ -18,33 +18,26 @@ public abstract class TrackClientInfo implements Action {
 
   @Override
   public void run(Submission submission) {
-    Map<String, Object> properties = new HashMap<>();
-    Map<String, String> formData = new HashMap<>();
-    submission.getInputData().forEach((k, v) -> {
-      String value = v.toString();
-      if (!(value.length() == 0) && !value.equals("[]")) {
-        formData.put(k, value);
-      }
-    });
-
-    trackProperties(properties, formData, submission.getId().toString());
+    Map<String, Object> inputData = submission.getInputData();
+    trackProperties(inputData, submission.getId().toString());
   }
 
   @Override
   public void run(FormSubmission formSubmission) {
-    Map<String, Object> properties = new HashMap<>();
+    Map<String, Object> inputData = formSubmission.getFormData();
+    trackProperties(inputData, (String) inputData.get("submissionId"));
+  }
+
+  private void trackProperties(Map<String, Object> inputData, String submissionId) {
     Map<String, String> formData = new HashMap<>();
-    formSubmission.getFormData().forEach((k, v) -> {
+    inputData.forEach((k, v) -> {
       String value = v.toString();
       if (!(value.length() == 0) && !value.equals("[]")) {
         formData.put(k, value);
       }
     });
 
-    trackProperties(properties, formData, formData.get("submissionId"));
-  }
-
-  private void trackProperties(Map<String, Object> properties, Map<String, String> formData, String submissionId) {
+    Map<String, Object> properties = new HashMap<>();
     properties.put("first_name", formData.containsKey("firstName"));
     properties.put("last_name", formData.containsKey("lastName"));
     properties.put("birth_date", formData.containsKey("birthDate"));
