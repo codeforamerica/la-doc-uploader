@@ -200,10 +200,17 @@ public class Page {
         .getAttribute("value");
   }
 
-  public String getInputLabel(String inputName){
+  public String getInputLabel(String inputName, Number index) {
     return driver.findElement(
-            By.xpath(
-                    String.format("//input[@name='%s']//preceding::*[2]", inputName)))
+                    By.xpath(
+                            String.format("//input[@name='%s']//preceding::*[%s]", inputName, index)))
+            .getAttribute("innerHTML");
+  }
+
+  public String getInputLabel(String inputName) {
+    return driver.findElement(
+                    By.xpath(
+                            String.format("//input[@name='%s']//preceding::*[%s]", inputName, 2)))
             .getAttribute("innerHTML");
   }
 
