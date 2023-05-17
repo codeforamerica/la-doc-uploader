@@ -70,6 +70,7 @@ public class Page {
 
   public void clickContinue() {
     clickButton("Continue");
+    checkForBadMessageKeys(); // introduce delay
   }
 
   public void enter(String inputName, String value) {

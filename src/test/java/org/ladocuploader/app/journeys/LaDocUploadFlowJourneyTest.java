@@ -8,16 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.ladocuploader.app.utils.AbstractBasePageTest;
 import org.openqa.selenium.WebElement;
 
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Slf4j
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
