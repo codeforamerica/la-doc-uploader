@@ -117,6 +117,7 @@ tasks.withType(Test).configureEach {
         }
         environment("ENCRYPTION_KEYSET", "{\"primaryKeyId\":2135185311,\"key\":[{\"keyData\":{\"typeUrl\":\"type.googleapis.com/google.crypto.tink.AesGcmKey\",\"value\":\"GiCRKaXiJ/zlDHAZfRQf1rCIbIY4fFmLqLWYIPLNXpOx4A==\",\"keyMaterialType\":\"SYMMETRIC\"},\"status\":\"ENABLED\",\"keyId\":2135185311,\"outputPrefixType\":\"TINK\"}]}")
         environment("DEFAULT_LOCALE", "en")
+        environment("SENTRY_DSN", "")
         environment("MIXPANEL_API_KEY", "this-is-a-dummy-key-for-la-tests")
 }
 
