@@ -158,10 +158,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("birthDate", "12/02/1981");
 //    assertThat(testPage.getInputValue("birthDate")).isEqualTo("12/2/1981"); TODO: figure out why this only stores month
 
-
-
-
-
   }
 
   @Test
@@ -173,12 +169,12 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     assertThat(ssnInput).isNotNull();
 
     // SSN field should be displayed
-    assert(ssnInput.getAttribute("class").contains("ssn-input"));
-    assert(ssnInput.getAttribute("inputmode").equals("numeric"));
+    assert (ssnInput.getAttribute("class").contains("ssn-input"));
+    assert (ssnInput.getAttribute("inputmode").equals("numeric"));
 
     // SSN label text
-    assert(testPage.getInputLabel("ssn").equals("What's your social security number?"));
-    assert(testPage.findElementTextById("ssn-help-text").equals("Optional."));
+    assert (testPage.getInputLabel("ssn").equals("What's your social security number?"));
+    assert (testPage.findElementTextById("ssn-help-text").equals("Optional."));
 
     // SSN activates when clicked
     testPage.clickElementById("ssn");
@@ -200,9 +196,9 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
     // entering ssn fewer than 9 digits results in custom error message
     testPage.clickContinue();
-    assert(testPage.hasErrorText("Make sure your SSN has 9 digits."));
+    assert (testPage.hasErrorText("Make sure your SSN has 9 digits."));
 
-public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
+  }
 
   @Test
   void uploadDocumentButton() {
@@ -262,7 +258,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none")).isTrue();
     uploadJpgFile();
     boolean isHidden = testPage.findElementsByButtonText("I'm finished uploading").getAttribute("class").contains("display-none");
-    if (isHidden) { 
+    if (isHidden) {
       takeSnapShot("flakeyTestScreenshot.jpg");
     }
     assertFalse(isHidden);
