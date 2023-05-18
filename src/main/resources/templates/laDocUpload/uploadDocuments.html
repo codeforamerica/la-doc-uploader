@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title=#{upload-documents.title})}"></head>
+<head th:replace="~{fragments/head :: head(title=#{upload-documents.title}, useDropzone=true)}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
