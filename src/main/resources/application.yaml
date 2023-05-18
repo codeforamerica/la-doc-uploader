@@ -58,10 +58,15 @@ spring:
     multipart:
       max-file-size: ${form-flow.uploads.max-file-size}MB
       max-request-size: ${form-flow.uploads.max-file-size}MB
-#logging:
-#  level:
-#    root: INFO
-#    org.springframework.web: ERROR
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure:
+            security:
+              servlet:
+                UserDetailsServiceAutoConfiguration=OFF:
 server:
   tomcat:
     max-http-form-post-size: ${form-flow.uploads.max-file-size}MB
