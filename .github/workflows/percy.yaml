@@ -1,0 +1,45 @@
+name: Run Percy visual diff testing
+
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs: { }
+
+jobs:
+  percy:
+    name: Run Percy
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: la-doc-uploader-test
+          POSTGRES_DB: la-doc-uploader-test
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up ChromeDriver
+        uses: nanasess/setup-chromedriver@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v3.10.0
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+          cache: 'gradle'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: '14.x'
+      - name: Install percy from npm
+        run: npm install -g @percy/cli
+      - name: Run journey test and send to Percy
+        run: percy exec -- ./gradlew clean test --tests LaDocUploadFlowJourneyTest.fullUploadDocumentFlow
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
