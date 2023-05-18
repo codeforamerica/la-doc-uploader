@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<link href="/webjars/form-flow/0.0.1/css/customDropzone.css" rel="preload" as="style"/>
-<link href="/webjars/form-flow/0.0.1/css/customDropzone.css" rel="stylesheet"/>
-<script src="/webjars/form-flow/0.0.1/js/formFlowDropZone.js"></script>
-<head th:replace="~{fragments/head :: head(title=#{upload-documents.title})}"></head>
+<head th:replace="~{fragments/head :: head(title=#{upload-documents.title}, useDropzone=true)}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
