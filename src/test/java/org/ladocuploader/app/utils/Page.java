@@ -8,16 +8,22 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.boot.test.web.server.LocalServerPort;
 
 public class Page {
 
   protected final RemoteWebDriver driver;
   protected final Percy percy;
 
+  protected final String localServerPort;
 
-  public Page(RemoteWebDriver driver) {
+  private static final String DOC_UPLOAD_FLOW = "laDocUpload";
+
+
+  public Page(RemoteWebDriver driver, String localServerPort) {
     this.driver = driver;
     this.percy = new Percy(driver);
+    this.localServerPort = localServerPort;
   }
 
   public String getTitle() {
@@ -64,6 +70,7 @@ public class Page {
 
   public void clickContinue() {
     clickButton("Continue");
+    checkForBadMessageKeys(); // introduce delay
   }
 
   public void enter(String inputName, String value) {
@@ -173,6 +180,12 @@ public class Page {
         .getAttribute("value");
   }
 
+  public Boolean isInputActive(String inputName){
+    Boolean isActive = String.valueOf(driver.switchTo().activeElement().getAttribute("id")).equals(inputName);
+    driver.switchTo().defaultContent();
+    return isActive;
+  }
+
   public String getElementText(String inputId) {
     return driver.findElement(By.id(inputId)).getText();
   }
@@ -186,6 +199,20 @@ public class Page {
             By.cssSelector(
                 String.format("input[name='%s[]']:nth-of-type(%s)", inputName, datePart.getPosition())))
         .getAttribute("value");
+  }
+
+  public String getInputLabel(String inputName, Number index) {
+    return driver.findElement(
+                    By.xpath(
+                            String.format("//input[@name='%s']//preceding::*[%s]", inputName, index)))
+            .getAttribute("innerHTML");
+  }
+
+  public String getInputLabel(String inputName) {
+    return driver.findElement(
+                    By.xpath(
+                            String.format("//input[@name='%s']//preceding::*[%s]", inputName, 2)))
+            .getAttribute("innerHTML");
   }
 
   public String getRadioValue(String inputName) {
@@ -298,11 +325,9 @@ public class Page {
     inputToSelect.click();
   }
 
-//  public void chooseSentiment(Sentiment sentiment) {
-//    driver.findElement(
-//            By.cssSelector(String.format("label[for='%s']", sentiment.name().toLowerCase())))
-//        .click();
-//  }
+  public void navigateToFlowScreen(String flowScreen) {
+    driver.navigate().to("http://localhost:%s/flow/%s/%s".formatted(localServerPort, DOC_UPLOAD_FLOW, flowScreen));
+  }
 
   enum FormInputHtmlTag {
     input,

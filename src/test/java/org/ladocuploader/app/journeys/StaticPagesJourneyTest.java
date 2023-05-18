@@ -12,7 +12,7 @@ public class StaticPagesJourneyTest extends AbstractBasePageTest {
 
   @Override
   protected void initTestPage() {
-    testPage = new Page(driver);
+    testPage = new Page(driver, localServerPort);
   }
 
   @Test
