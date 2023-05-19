@@ -54,7 +54,7 @@ dependencies {
 
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.19.0'
 
-    implementation 'io.sentry:sentry-logback:6.19.0'
+    implementation 'io.sentry:sentry-logback:6.19.1'
 
     compileOnly 'org.projectlombok:lombok'
 
