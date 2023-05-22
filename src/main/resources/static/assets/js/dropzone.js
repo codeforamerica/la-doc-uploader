@@ -357,7 +357,7 @@ function (_Emitter) {
          * [`accept`](https://developer.mozilla.org/en-US/docs/HTML/Element/input#attr-accept)
          * parameter on the hidden file input as well.
          */
-        acceptedFiles: ["image/*", "file/*"],
+        acceptedFiles: null,
 
         /**
          * **Deprecated!**
@@ -1402,8 +1402,7 @@ function (_Emitter) {
         return _this3.listeners.push({
           element: clickableElement,
           events: {
-            "click": function click(evt) {
-              // Only the actual dropzone or the message element should trigger file selection
+            "click": function click(evt) {// Only the actual dropzone or the message element should trigger file selection
               if (clickableElement !== _this3.element || evt.target === _this3.element || Dropzone.elementInside(evt.target, _this3.element.querySelector(".dz-message"))) {
                 _this3.hiddenFileInput.click(); // Forward the click
 
