@@ -6,7 +6,6 @@
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-<!--      <div th:replace="~{fragments/goBack :: goBackLink}"></div>-->
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: documentsSent}"></th:block>
         <th:block
@@ -17,10 +16,9 @@
         <br>
         <a th:href="#{final-confirmation.dcfs-phone}"
            th:text="#{final-confirmation.dcfs-call}"></a>
+        <hr>
 
         <div id="client-feedback">
-
-            <hr>
 
             <p th:text="#{final-confirmation.provide-feedback}"></p>
 
@@ -52,20 +50,32 @@
                       text=#{final-confirmation.feedback-submit-feedback})}"/>
             </div>
         </div>
-          </th:block>
-        </th:block>
-        </th:block>
-      </main>
-    </div>
+        <div id="feedback-submitted" class="spacing-above-15 display-none">
+          <th:block th:replace="~{'fragments/icons' :: checkbox}"></th:block>
+          <p th:text="#{final-confirmation.feedback-submitted}" class="spacing-above-15"></p>
+        </div>
+      </th:block>
+    </th:block>
+  </th:block>
+</main>
+</div>
   </section>
 </div>
 <th:block th:replace="~{fragments/footer :: footer}" />
 <script>
     $(document).ready(function () {
+
+        const radioButtonSelected = document.getElementsByClassName('radio-button is-selected');
+        if (radioButtonSelected.length > 0){
+            $(document.getElementById('client-feedback')).addClass("display-none");
+            $(document.getElementById('feedback-submitted')).removeClass("display-none");
+        }
+
         $("#form-submit-button").click(function () {
             const radioButtonSelected = document.getElementsByClassName('radio-button is-selected');
             if (radioButtonSelected.length > 0){
-                document.getElementById('client-feedback').style.display = 'none';
+                $(document.getElementById('client-feedback')).addClass("display-none");
+                $(document.getElementById('feedback-submitted')).removeClass("display-none");
             }
         })
     });
