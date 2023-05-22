@@ -17,4 +17,5 @@ flow:
     nextScreens:
       - name: finalConfirmation
   finalConfirmation:
-    nextScreens: null
+    nextScreens:
+      - name: finalConfirmation
