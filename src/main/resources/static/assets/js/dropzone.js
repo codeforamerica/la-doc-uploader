@@ -357,7 +357,7 @@ function (_Emitter) {
          * [`accept`](https://developer.mozilla.org/en-US/docs/HTML/Element/input#attr-accept)
          * parameter on the hidden file input as well.
          */
-        acceptedFiles: null,
+        acceptedFiles: ["image/*", "file/*"],
 
         /**
          * **Deprecated!**
