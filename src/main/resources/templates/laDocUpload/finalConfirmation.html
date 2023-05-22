@@ -63,20 +63,19 @@
 </div>
 <th:block th:replace="~{fragments/footer :: footer}" />
 <script>
-    $(document).ready(function () {
-
+    function checkSurveyCompletion(){
         const radioButtonSelected = document.getElementsByClassName('radio-button is-selected');
         if (radioButtonSelected.length > 0){
             $(document.getElementById('client-feedback')).addClass("display-none");
             $(document.getElementById('feedback-submitted')).removeClass("display-none");
         }
+    }
+    $(document).ready(function () {
+
+        checkSurveyCompletion();
 
         $("#form-submit-button").click(function () {
-            const radioButtonSelected = document.getElementsByClassName('radio-button is-selected');
-            if (radioButtonSelected.length > 0){
-                $(document.getElementById('client-feedback')).addClass("display-none");
-                $(document.getElementById('feedback-submitted')).removeClass("display-none");
-            }
+            checkSurveyCompletion();
         })
     });
 </script>
