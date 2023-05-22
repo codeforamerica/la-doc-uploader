@@ -2,11 +2,11 @@
   <header class="main-header toolbar__wrapper" id="main-header">
     <div class="toolbar" id="toolbar">
       <a href="#content" id="skip-to-content" class="button button--small">Skip to content</a>
-      <a class="logo" href="/">
-        <img src="/assets/images/dcfs-logo-white.png"
-             alt="DCFS logo"
-             class="max-width-logo"/>
-      </a>
+
+      <picture>
+        <source srcset="/assets/images/dcfs-logo-white.webp" type="image/webp" class="max-width-logo">
+        <img src="/assets/images/dcfs-logo-white.png" alt="DCFS logo" class="max-width-logo"/>
+      </picture>
       <script>
           $(document).ready(function () {
               $("a[rel~='keep-params']").each(function (e) {
