@@ -49,7 +49,7 @@
               maxLength=100)}"/>
               <div class="form-card__footer">
                 <th:block th:replace="~{'fragments/inputs/submitButton' :: submitButton(
-                      text=#{final-confirmation.feedback-submit-feedback}, classes='button button--center')}"/>
+                      text=#{final-confirmation.feedback-submit-feedback}, classes='button button--primary center')}"/>
               </div>
             </div>
             <div th:if="${inputData.get('uploadDocumentsFeedback') != null}" id="feedback-submitted" class="spacing-above-15">
