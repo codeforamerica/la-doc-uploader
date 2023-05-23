@@ -9,76 +9,61 @@
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: documentsSent}"></th:block>
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{final-confirmation.header})}"/>
-        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
+          th:replace="~{fragments/cardHeader :: cardHeader(header=#{final-confirmation.header})}"/>
+        <th:block
+          th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
           <th:block th:ref="clientInfoFormContents">
-        <p th:text="#{final-confirmation.questions}"></p>
-        <br>
-        <a th:href="#{final-confirmation.dcfs-phone}"
-           th:text="#{final-confirmation.dcfs-call}"></a>
-        <hr>
+            <p th:text="#{final-confirmation.questions}"></p>
+            <br>
+            <a th:href="#{final-confirmation.dcfs-phone}"
+               th:text="#{final-confirmation.dcfs-call}"></a>
+            <hr>
 
-        <div id="client-feedback">
+            <div th:if="${inputData.get('uploadDocumentsFeedback') == null}" id="client-feedback">
 
-            <p th:text="#{final-confirmation.provide-feedback}"></p>
+              <p th:text="#{final-confirmation.provide-feedback}"></p>
 
-            <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
+              <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
                           radioFieldset(inputName='uploadDocumentsFeedback',
                           label=#{final-confirmation.feedback-input},
                           content=~{::feedbackOptions})}">
-                          <th:block th:ref="feedbackOptions">
-                            <!-- Copy the below input if you want to add more -->
-                            <th:block
-                                th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o1}, label=#{final-confirmation.feedback-input.o1})}"/>
-                            <th:block
-                                th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o2}, label=#{final-confirmation.feedback-input.o2})}"/>
-                            <th:block
-                                th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o3}, label=#{final-confirmation.feedback-input.o3})}"/>
-                            <th:block
-                                th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o4}, label=#{final-confirmation.feedback-input.o4})}"/>
-                            <th:block
-                                th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o5}, label=#{final-confirmation.feedback-input.o5})}"/>
-                          </th:block>
+                <th:block th:ref="feedbackOptions">
+                  <!-- Copy the below input if you want to add more -->
+                  <th:block
+                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o1}, label=#{final-confirmation.feedback-input.o1})}"/>
+                  <th:block
+                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o2}, label=#{final-confirmation.feedback-input.o2})}"/>
+                  <th:block
+                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o3}, label=#{final-confirmation.feedback-input.o3})}"/>
+                  <th:block
+                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o4}, label=#{final-confirmation.feedback-input.o4})}"/>
+                  <th:block
+                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='uploadDocumentsFeedback',value=#{final-confirmation.feedback-input.o5}, label=#{final-confirmation.feedback-input.o5})}"/>
+                </th:block>
               </th:block>
-            <th:block th:replace="~{'fragments/inputs/textArea' ::
+              <th:block th:replace="~{'fragments/inputs/textArea' ::
               textArea(inputName='uploadDocumentsFeedbackDetail',
               rows=3,
               label=#{final-confirmation.additional-comments},
               ariaLabel='uploadDocumentsFeedback',
-              maxLength=100)}" />
-            <div class="form-card__footer">
-              <th:block th:replace="~{'fragments/inputs/submitButton' :: submitButton(
+              maxLength=100)}"/>
+              <div class="form-card__footer">
+                <th:block th:replace="~{'fragments/inputs/submitButton' :: submitButton(
                       text=#{final-confirmation.feedback-submit-feedback})}"/>
+              </div>
             </div>
-        </div>
-        <div id="feedback-submitted" class="spacing-above-15 display-none">
-          <th:block th:replace="~{'fragments/icons' :: checkbox}"></th:block>
-          <p th:text="#{final-confirmation.feedback-submitted}" class="spacing-above-35" style="font-weight: bold;"></p>
-        </div>
-      </th:block>
-    </th:block>
-  </th:block>
-</main>
-</div>
+            <div th:if="${inputData.get('uploadDocumentsFeedback') != null}" id="feedback-submitted" class="spacing-above-15">
+              <th:block th:replace="~{'fragments/icons' :: checkbox}"></th:block>
+              <p th:text="#{final-confirmation.feedback-submitted}" class="spacing-above-35"
+                 style="font-weight: bold;"></p>
+            </div>
+          </th:block>
+        </th:block>
+        </th:block>
+      </main>
+    </div>
   </section>
 </div>
-<th:block th:replace="~{fragments/footer :: footer}" />
-<script>
-    function checkSurveyCompletion(){
-        const radioButtonSelected = document.getElementsByClassName('radio-button is-selected');
-        if (radioButtonSelected.length > 0){
-            $(document.getElementById('client-feedback')).addClass("display-none");
-            $(document.getElementById('feedback-submitted')).removeClass("display-none");
-        }
-    }
-    $(document).ready(function () {
-
-        checkSurveyCompletion();
-
-        $("#form-submit-button").click(function () {
-            checkSurveyCompletion();
-        })
-    });
-</script>
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>
