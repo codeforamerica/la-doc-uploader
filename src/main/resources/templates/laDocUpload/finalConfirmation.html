@@ -19,7 +19,7 @@
                th:text="#{final-confirmation.dcfs-call}"></a>
             <hr>
 
-            <div th:if="${inputData.get('uploadDocumentsFeedback') == null}" id="client-feedback">
+            <div th:if="${(inputData.get('uploadDocumentsFeedback') == null or inputData.get('uploadDocumentsFeedback') == '')}" id="client-feedback">
 
               <p th:text="#{final-confirmation.provide-feedback}"></p>
 
@@ -52,7 +52,7 @@
                       text=#{final-confirmation.feedback-submit-feedback}, classes='button button--primary center')}"/>
               </div>
             </div>
-            <div th:if="${inputData.get('uploadDocumentsFeedback') != null}" id="feedback-submitted" class="spacing-above-15">
+            <div th:if="${inputData.get('uploadDocumentsFeedback') != null and inputData.get('uploadDocumentsFeedback') != ''}" id="feedback-submitted" class="spacing-above-15">
               <th:block th:replace="~{'fragments/icons' :: checkbox}"></th:block>
               <p th:text="#{final-confirmation.feedback-submitted}" class="spacing-above-35"
                  style="font-weight: bold;"></p>
