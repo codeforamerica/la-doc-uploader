@@ -68,7 +68,7 @@ jobs:
           key: ${{ secrets.APTIBLE_SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.APTIBLE_KNOWN_HOSTS }}
       - name: Push to Aptible remote branch
-        run: run: git push --force ${{ vars.APTIBLE_REMOTE_URL_ES }} "${GITHUB_SHA}:prod-es-deploy"
+        run: git push --force ${{ vars.APTIBLE_REMOTE_URL_ES }} "${GITHUB_SHA}:prod-es-deploy"
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
