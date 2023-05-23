@@ -210,7 +210,12 @@ body {
 }
 
 .button--center {
-  text-align: center;
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto;
+  width: 50%;
+  color: #FFF;
+  background-color: var(--primary);
 }
 
 .display-inline-grid {
