@@ -2,10 +2,13 @@
   <header class="main-header toolbar__wrapper" id="main-header">
     <div class="toolbar" id="toolbar">
       <a href="#content" id="skip-to-content" class="button button--small">Skip to content</a>
+
       <a class="logo" href="/">
-        <img src="/assets/images/dcfs-logo-white.png"
-             alt="DCFS logo"
-             class="max-width-logo"/>
+        <picture>
+          <source srcset="/assets/images/dcfs-logo-white.webp" type="image/webp">
+          <source srcset="/assets/images/dcfs-logo-white.png" type="image/png">
+          <img src="/assets/images/dcfs-logo-white.png" alt="DCFS logo" class="max-width-logo"/>
+        </picture>
       </a>
       <script>
           $(document).ready(function () {
