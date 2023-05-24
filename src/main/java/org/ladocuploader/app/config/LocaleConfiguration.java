@@ -36,6 +36,7 @@ public class LocaleConfiguration implements WebMvcConfigurer {
   @Bean
   public LocaleChangeInterceptor localeChangeInterceptor() {
     LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+    interceptor.setIgnoreInvalidLocale(true);
     interceptor.setParamName("lang");
     return interceptor;
   }
