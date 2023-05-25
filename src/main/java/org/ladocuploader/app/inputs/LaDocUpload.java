@@ -1,10 +1,8 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,5 +41,9 @@ public class LaDocUpload extends FlowInputs {
 
   // We're passing this from the form for associating the mixpanel "user" in the TrackClient actions
   private String submissionId;
+  @NotBlank(message = "{final-confirmation.answer-feedback-question}")
+  private String uploadDocumentsFeedback;
+
+  private String uploadDocumentsFeedbackDetail;
 }
 
