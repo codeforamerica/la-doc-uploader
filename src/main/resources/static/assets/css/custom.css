@@ -208,7 +208,7 @@ body {
 
 .center {
   display: block;
-  margin-left: auto;
+  margin-left: auto !important;
   margin-right: auto;
   width: 50%;
 }
