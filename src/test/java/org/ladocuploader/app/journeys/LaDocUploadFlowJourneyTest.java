@@ -260,6 +260,9 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
     // Confirm submit
     assertThat(testPage.getTitle()).isEqualTo("Doc submit confirmation");
+    testPage.clickButton("No, add more documents");
+    assertThat(testPage.getTitle()).isEqualTo("Upload documents");
+    testPage.clickButton("I'm finished uploading");
     testPage.clickButton("Yes, submit and finish");
 
     // Confirmation page
