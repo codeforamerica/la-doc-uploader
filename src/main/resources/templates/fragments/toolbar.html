@@ -16,6 +16,14 @@
                   const params = window.location.search.replace('?', '&').replace(/&lang=\S{2}/, "");
                   $(this).attr('href', $(this).attr('href') + params);
               })
+
+              $("#caseNumber").on("input", function (e) {
+                  var val = $(this).val();
+                  if (val !== null && val.length >= 9) {
+                      $(this).val(val.slice(0,9));
+                  }
+              })
+
           });
       </script>
       <div th:replace="~{fragments/localeSelect :: localeSelect}"></div>

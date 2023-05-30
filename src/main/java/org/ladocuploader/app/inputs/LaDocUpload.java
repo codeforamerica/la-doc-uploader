@@ -1,6 +1,7 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -10,7 +11,6 @@ import org.ladocuploader.app.data.validators.Date;
 import org.ladocuploader.app.data.validators.DateWithinRange;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,7 +29,7 @@ public class LaDocUpload extends FlowInputs {
   @Date(message = "{client-info.date-format-validation}")
   private List<String> birthDate;
 
-  @Pattern(regexp = "^[\\w-\\.]+@[\\w-\\.]+\\.[\\w-]{2,4}$", message = "{client-info.provide-correct-email}")
+  @Email(message = "{client-info.provide-correct-email}")
   private String emailAddress;
 
   @Size(min = 14, max = 14, message = "{client-info.provide-10-digit-phone}")
