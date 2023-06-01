@@ -11,6 +11,7 @@ import org.ladocuploader.app.data.validators.Date;
 import org.ladocuploader.app.data.validators.DateWithinRange;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
