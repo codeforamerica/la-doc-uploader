@@ -39,7 +39,7 @@ public class LocaleConfiguration implements WebMvcConfigurer {
     @Override
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public boolean preHandle(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler)
-            throws ServletException {
+            throws RuntimeException {
 
       String newLocale = request.getParameter("lang");
       if (newLocale != null && LOCALE_MAP.containsKey(newLocale )) {
