@@ -2,10 +2,6 @@ package org.ladocuploader.app.filters;
 
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -13,7 +9,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
@@ -30,9 +25,6 @@ public class LoggingFilter implements Filter {
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
       FilterChain filterChain) throws ServletException, IOException {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
-    HttpServletResponse response = (HttpServletResponse) servletResponse;
-    response.addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-    response.addHeader(HttpHeaders.ACCEPT_CHARSET, StandardCharsets.UTF_8.name());
     MDC.put("sessionId", request.getSession().getId());
     MDC.put("sessionCreatedAt", new DateTime(request.getSession().getCreationTime()).toString("HH:mm:ss.SSS"));
     MDC.put("method", request.getMethod());
