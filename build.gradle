@@ -39,8 +39,8 @@ dependencies {
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.7'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.1'
     implementation group: 'org.springframework.vault', name: 'spring-vault-core', version: '3.0.2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
 
     if (profile == 'dev' || useLocalLibrary == 'true') {
         implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
@@ -51,11 +51,11 @@ dependencies {
     }
 
     implementation 'com.google.crypto.tink:tink:1.9.0'
-    testImplementation 'org.projectlombok:lombok:1.18.26'
+    testImplementation 'org.projectlombok:lombok:1.18.28'
 
-    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.19.1'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.21.0'
 
-    implementation 'io.sentry:sentry-logback:6.19.1'
+    implementation 'io.sentry:sentry-logback:6.22.0'
 
     compileOnly 'org.projectlombok:lombok'
 
