@@ -119,6 +119,8 @@ tasks.withType(Test).configureEach {
         environment("DEFAULT_LOCALE", "en")
         environment("SENTRY_DSN", "")
         environment("MIXPANEL_API_KEY", "this-is-a-dummy-key-for-la-tests")
+        environment("DEFAULT_USER", "user1")
+        environment("DEFAULT_PASSWORD", "password")
 }
 
 jar {

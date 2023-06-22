@@ -39,6 +39,11 @@ spring:
       demo:
         - demo
         - form-flow-library
+  security:
+    user:
+      name: ${DEFAULT_USER}
+      password: ${DEFAULT_PASSWORD}
+      roles: USER
   thymeleaf:
     cache: false
     template-resolver-order: 0
