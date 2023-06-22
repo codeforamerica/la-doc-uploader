@@ -23,7 +23,7 @@ public abstract class TrackClientInfo implements Action {
   }
 
   @Override
-  public void run(FormSubmission formSubmission) {
+  public void run(FormSubmission formSubmission, Submission submission) {
     Map<String, Object> inputData = formSubmission.getFormData();
     trackProperties(inputData, (String) inputData.get("submissionId"));
   }
