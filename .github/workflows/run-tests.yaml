@@ -76,7 +76,7 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up ChromeDriver
         uses: nanasess/setup-chromedriver@v2.0.0
       - name: Set up JDK
@@ -84,7 +84,7 @@ jobs:
         with:
           java-version: '17'
       - name: Cache Gradle packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
