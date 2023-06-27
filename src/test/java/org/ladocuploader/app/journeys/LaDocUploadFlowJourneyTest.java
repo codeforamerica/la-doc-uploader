@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
