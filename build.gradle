@@ -41,13 +41,16 @@ dependencies {
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
 
-    if (profile == 'dev' || useLocalLibrary == 'true') {
-        implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
-        println "📦 Using local library"
-    } else {
-        implementation "org.codeforamerica.platform:form-flow:${formFlowLibraryVersion}"
-        println "📚Using form flow library ${formFlowLibraryVersion}"
-    }
+    implementation "org.codeforamerica.platform:form-flow:${formFlowLibraryVersion}"
+    println "📚Using form flow library ${formFlowLibraryVersion}"
+
+//    if (profile == 'dev' || useLocalLibrary == 'true') {
+//        implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
+//        println "📦 Using local library"
+//    } else {
+//        implementation "org.codeforamerica.platform:form-flow:${formFlowLibraryVersion}"
+//        println "📚Using form flow library ${formFlowLibraryVersion}"
+//    }
 
     implementation 'com.google.crypto.tink:tink:1.9.0'
     testImplementation 'org.projectlombok:lombok:1.18.28'
