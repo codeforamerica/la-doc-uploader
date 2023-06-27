@@ -19,7 +19,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authorize) -> {
                     try {
-                        authorize.anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+                        authorize.anyRequest().authenticated();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
