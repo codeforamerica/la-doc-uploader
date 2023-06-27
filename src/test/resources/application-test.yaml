@@ -21,3 +21,8 @@ spring:
       ddl-auto: create-drop
   main:
     allow-circular-references: true
+  session:
+    store-type: jdbc
+    timeout: 72h
+    jdbc:
+      initialize-schema: always
