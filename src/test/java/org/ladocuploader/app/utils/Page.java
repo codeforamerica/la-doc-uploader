@@ -326,7 +326,7 @@ public class Page {
   }
 
   public void navigateToFlowScreen(String flowScreen) {
-    driver.navigate().to("http://user1:password@localhost:%s/flow/%s/%s".formatted(localServerPort, DOC_UPLOAD_FLOW, flowScreen));
+    driver.navigate().to("http://localhost:%s/flow/%s/%s".formatted(localServerPort, DOC_UPLOAD_FLOW, flowScreen));
   }
 
   enum FormInputHtmlTag {

@@ -11,6 +11,8 @@ spring:
     username: la-doc-uploader-test
     password: postgres
   flyway:
+    baselineOnMigrate: true
+    clean-on-validation-error: true
     placeholders:
       uuid_function: "gen_random_uuid"
     clean-disabled: false
