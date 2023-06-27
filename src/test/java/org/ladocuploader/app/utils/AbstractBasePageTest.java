@@ -48,7 +48,7 @@ public abstract class AbstractBasePageTest {
   @BeforeEach
   protected void setUp() throws IOException, URISyntaxException {
     initTestPage();
-    baseUrl = "http://user1:password@localhost:%s/?ref_id=%s".formatted(localServerPort, VALID_REF_ID);
+    baseUrl = "http://localhost:%s/?ref_id=%s".formatted(localServerPort, VALID_REF_ID);
     driver.navigate().to(baseUrl);
   }
 

@@ -18,7 +18,6 @@ import java.time.format.DateTimeFormatter;
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
-  @WithMockUser(username = "user1", password = "password", roles = "USER")
   void firstNameInputFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
@@ -39,7 +38,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  @WithMockUser(username = "user1", password = "password", roles = "USER")
   void lastNameInputFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
@@ -60,7 +58,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  @WithMockUser(username = "user1", password = "password", roles = "USER")
   void emailAddressInputFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
@@ -82,7 +79,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  @WithMockUser(username = "user1", password = "password", roles = "USER")
   void caseNumberInputFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
@@ -103,7 +99,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  @WithMockUser(username = "user1", password = "password", roles = "USER")
   void birthDateInputFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
@@ -161,7 +156,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  @WithMockUser(username = "user1", password = "password", roles = "USER")
   void ssnInputFlow() {
     testPage.navigateToFlowScreen("clientInfo");
 
@@ -202,7 +196,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  @WithMockUser(username = "user1", password = "password", roles = "USER")
   void uploadDocumentButton() {
     // Landing page
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
@@ -220,7 +213,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  @WithMockUser(username = "user1", password = "password", roles = "USER")
   void fullUploadDocumentFlow() {
     // Landing screen (language toggled)
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
