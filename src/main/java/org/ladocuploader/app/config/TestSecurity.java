@@ -9,7 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@Profile("test")
+@Profile({"test", "demo", "dev"})
 public class TestSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
