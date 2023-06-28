@@ -48,6 +48,8 @@ jobs:
           'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_STAGING }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_STAGING }}' \
+          'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
+          'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
           'demo=true'
   draft-release:
     name: Draft a new release

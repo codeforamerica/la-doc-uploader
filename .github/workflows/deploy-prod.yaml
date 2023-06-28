@@ -49,6 +49,8 @@ jobs:
           'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
+          'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
+          'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
           'demo=true'
   deploy_es:
     name: Deploy to Aptible (es)
@@ -87,4 +89,6 @@ jobs:
           'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
+          'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
+          'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
           'demo=true'
