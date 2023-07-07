@@ -11,7 +11,7 @@ public class EncryptSSNBeforeSaving implements Action {
   private final StringEncryptor encryptor;
 
   public EncryptSSNBeforeSaving() {
-    encryptor = new StringEncryptor(System.getenv("ENCRYPTION_KEY"));
+    encryptor = new StringEncryptor(System.getenv("ARN"));
   }
 
   public void run(Submission submission) {
@@ -19,7 +19,6 @@ public class EncryptSSNBeforeSaving implements Action {
     if (ssnInput != null) {
       String encryptedSSN = encryptor.encrypt(ssnInput);
       submission.getInputData().put("encryptedSSN", encryptedSSN);
-      submission.getInputData().put("encryptedSSN_iv", encryptor.getIV());
     }
   }
 }

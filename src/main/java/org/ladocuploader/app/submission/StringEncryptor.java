@@ -1,78 +1,64 @@
 package org.ladocuploader.app.submission;
 
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import javax.crypto.BadPaddingException;
+import com.amazonaws.encryptionsdk.AwsCrypto;
+import com.amazonaws.encryptionsdk.CommitmentPolicy;
+import com.amazonaws.encryptionsdk.CryptoResult;
+import com.amazonaws.encryptionsdk.kms.KmsMasterKey;
+import com.amazonaws.encryptionsdk.kms.KmsMasterKeyProvider;
+
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.codec.binary.Base64;
+import java.util.Collections;
+import java.util.Map;
 
 public class StringEncryptor {
 
-  public static final int BLOCK_SIZE = 128;
-
-  private final SecretKey secretKey;
-  private final IvParameterSpec ivParameterSpec;
-
+  final AwsCrypto crypto;
+  final KmsMasterKeyProvider keyProvider;
+  final Map<String, String> encryptionContext;
   Cipher desCipher;
 
-  public StringEncryptor(String key) {
-    try {
-      secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
-      desCipher = Cipher.getInstance("AES/GCM/NoPadding");
-      ivParameterSpec = new IvParameterSpec(getRandomIv());
-    } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-      throw new IllegalStateException("Unable to initialize encryptor", e);
+  public StringEncryptor(String keyArn) {
+    // 1. Instantiate the SDK
+    // This builds the AwsCrypto client with the RequireEncryptRequireDecrypt commitment policy,
+    // which enforces that this client only encrypts using committing algorithm suites and enforces
+    // that this client will only decrypt encrypted messages that were created with a committing algorithm suite.
+    // This is the default commitment policy if you build the client with `AwsCrypto.builder().build()`
+    // or `AwsCrypto.standard()`.
+    crypto = AwsCrypto.builder()
+        .withCommitmentPolicy(CommitmentPolicy.RequireEncryptRequireDecrypt)
+        .build();
+    // 2. Instantiate an AWS KMS master key provider in strict mode using buildStrict().
+    // In strict mode, the AWS KMS master key provider encrypts and decrypts only by using the key
+    // indicated by keyArn.
+    // To encrypt and decrypt with this master key provider, use an &KMS; key ARN to identify the &KMS; keys.
+    // In strict mode, the decrypt operation requires a key ARN.
+    keyProvider = KmsMasterKeyProvider.builder().buildStrict(keyArn);
+    encryptionContext = Collections.singletonMap("ExampleContextKey", "ExampleContextValue");
+  }
+
+  public String decrypt(String ciphertext) {
+    // 5. Decrypt the data
+    final CryptoResult<byte[], KmsMasterKey> decryptResult = crypto.decryptData(keyProvider, ciphertext.getBytes());
+    // 6. Verify that the encryption context in the result contains the
+    // encryption context supplied to the encryptData method. Because the
+    // SDK can add values to the encryption context, don't require that
+    // the entire context matches.
+    if (!encryptionContext.entrySet().stream()
+        .allMatch(
+            e -> e.getValue().equals(decryptResult.getEncryptionContext().get(e.getKey())))) {
+      throw new IllegalStateException("Wrong Encryption Context!");
     }
+    return new String(decryptResult.getResult());
   }
 
-  public StringEncryptor(String key, byte[] iv) {
-    try {
-      secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
-      desCipher = Cipher.getInstance("AES/GCM/NoPadding");
-      ivParameterSpec = new IvParameterSpec(iv);
-    } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-      throw new IllegalStateException("Unable to initialize encryptor", e);
-    }
-  }
-
-  public String decrypt(String input) {
-    byte[] bytes = runEncryption(Cipher.DECRYPT_MODE, Base64.decodeBase64(input),
-        ivParameterSpec.getIV());
-    return new String(bytes);
-  }
-
-  public String encrypt(String input) {
-    byte[] bytes = runEncryption(Cipher.ENCRYPT_MODE, input.getBytes(), ivParameterSpec.getIV());
-    return new String(Base64.encodeBase64(bytes));
-  }
-
-  private byte[] runEncryption(int mode, byte[] input, byte[] iv) {
-    try {
-      desCipher.init(mode, secretKey, new GCMParameterSpec(BLOCK_SIZE, iv));
-      return desCipher.doFinal(input);
-    } catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException |
-             InvalidAlgorithmParameterException e) {
-      throw new IllegalStateException(e);
-    }
-  }
-
-  private byte[] getRandomIv() {
-    SecureRandom randomSecureRandom = new SecureRandom();
-    byte[] iv = new byte[BLOCK_SIZE];
-    randomSecureRandom.nextBytes(iv);
-    return iv;
-  }
-
-  public byte[] getIV() {
-    return ivParameterSpec.getIV();
+  public String encrypt(String plaintext) {
+    // 3. Create an encryption context
+    // Most encrypted data should have an associated encryption context
+    // to protect integrity. This sample uses placeholder values.
+    // For more information see:
+    // blogs.aws.amazon.com/security/post/Tx2LZ6WBJJANTNW/How-to-Protect-the-Integrity-of-Your-Encrypted-Data-by-Using-AWS-Key-Management
+    // 4. Encrypt the data
+    final CryptoResult<byte[], KmsMasterKey> encryptResult = crypto.encryptData(keyProvider, plaintext.getBytes(), encryptionContext);
+    return new String(encryptResult.getResult());
   }
 }

@@ -11,15 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class DecryptSSNBeforeDisplaying implements Action {
 
-  private StringEncryptor getEncryptor(byte[] iv) {
-    return new StringEncryptor(System.getenv("ENCRYPTION_KEY"), iv);
+  private StringEncryptor getEncryptor() {
+    return new StringEncryptor(System.getenv("ARN"));
   }
 
   public void run(Submission submission) {
     String encryptedSSN = (String) submission.getInputData().remove("encryptedSSN");
-    byte[] encryptedSSN_iv = (byte[]) submission.getInputData().remove("encryptedSSN_iv");
     if (encryptedSSN != null) {
-      String decryptedSSN = getEncryptor(encryptedSSN_iv).decrypt(encryptedSSN);
+      String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
       submission.getInputData().put("ssn", decryptedSSN);
     }
   }
