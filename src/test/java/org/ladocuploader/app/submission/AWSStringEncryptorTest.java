@@ -3,14 +3,14 @@ package org.ladocuploader.app.submission;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-class StringEncryptorTest {
+class AWSStringEncryptorTest {
 
   void testEncryptDecrypt() {
     String keyARN = "put arn here";
     String accessKey = "put access key here";
     String secretKey = "put secret key here";
-    StringEncryptor encryptor = new StringEncryptor(keyARN, accessKey, secretKey);
-    StringEncryptor encryptor2 = new StringEncryptor(keyARN, accessKey, secretKey);
+    StringEncryptor encryptor = new AWSStringEncryptor(keyARN, accessKey, secretKey);
+    StringEncryptor encryptor2 = new AWSStringEncryptor(keyARN, accessKey, secretKey);
 
     String input = "this is not encrypted";
     String encrypted = encryptor.encrypt(input);
