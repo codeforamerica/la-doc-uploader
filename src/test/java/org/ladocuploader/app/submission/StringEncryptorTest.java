@@ -9,8 +9,8 @@ class StringEncryptorTest {
 
   @Test
   void testEncryptDecrypt() {
-    StringEncryptor encryptor = new StringEncryptor("some-secret-key-that-is-32-bytes");
-    StringEncryptor encryptor2 = new StringEncryptor("some-secret-key-that-is-32-bytes");
+    StringEncryptor encryptor = new StringEncryptor("arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab");
+    StringEncryptor encryptor2 = new StringEncryptor("arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab");
 
     String input = "this is not encrypted";
     String encrypted = encryptor.encrypt(input);
