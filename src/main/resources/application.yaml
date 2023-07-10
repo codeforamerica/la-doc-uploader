@@ -21,6 +21,7 @@ form-flow:
     s3_bucket_name: 'la-doc-uploader'
     access_key: ${AWS_ACCESS_KEY}
     secret_key: ${AWS_SECRET_KEY}
+    cmk: ${AWS_CMK}
   address:
     disabled: true
     smarty:
