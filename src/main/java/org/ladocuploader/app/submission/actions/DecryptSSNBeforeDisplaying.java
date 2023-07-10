@@ -21,6 +21,7 @@ public class DecryptSSNBeforeDisplaying implements Action {
     return encryptor;
   }
 
+  @Override
   public void run(Submission submission) {
     String encryptedSSN = (String) submission.getInputData().remove("encryptedSSN");
     if (encryptedSSN != null) {

@@ -31,6 +31,7 @@ public class AWSStringEncryptor implements StringEncryptor {
     this.keyArn = keyArn;
   }
 
+  @Override
   public String decrypt(String ciphertext) {
     DecryptRequest decryptRequest = new DecryptRequest()
         .withEncryptionAlgorithm("RSAES_OAEP_SHA_256")
@@ -41,6 +42,7 @@ public class AWSStringEncryptor implements StringEncryptor {
     return new String(plaintext.array());
   }
 
+  @Override
   public String encrypt(String plaintext) {
     EncryptRequest req = new EncryptRequest()
         .withEncryptionAlgorithm("RSAES_OAEP_SHA_256")
