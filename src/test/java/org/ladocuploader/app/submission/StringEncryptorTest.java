@@ -2,15 +2,19 @@ package org.ladocuploader.app.submission;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.spy;
 
 import org.junit.jupiter.api.Test;
+import org.ladocuploader.app.utils.MockKMSClient;
 
 class StringEncryptorTest {
 
   @Test
   void testEncryptDecrypt() {
-    StringEncryptor encryptor = new StringEncryptor("arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab");
-    StringEncryptor encryptor2 = new StringEncryptor("arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab");
+    MockKMSClient client = spy(new MockKMSClient());
+    String key1 = client.createKey().getKeyMetadata().getArn();
+    StringEncryptor encryptor = new StringEncryptor(key1);
+    StringEncryptor encryptor2 = new StringEncryptor(key1);
 
     String input = "this is not encrypted";
     String encrypted = encryptor.encrypt(input);
