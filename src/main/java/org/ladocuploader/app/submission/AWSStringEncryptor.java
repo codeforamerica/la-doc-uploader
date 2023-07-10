@@ -7,7 +7,7 @@ import com.amazonaws.services.kms.AWSKMS;
 import com.amazonaws.services.kms.AWSKMSClientBuilder;
 import com.amazonaws.services.kms.model.DecryptRequest;
 import com.amazonaws.services.kms.model.EncryptRequest;
-import com.google.crypto.tink.subtle.Hex;
+import com.google.crypto.tink.subtle.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class AWSStringEncryptor implements StringEncryptor {
     DecryptRequest decryptRequest = new DecryptRequest()
         .withEncryptionAlgorithm("RSAES_OAEP_SHA_256")
         .withKeyId(keyArn)
-        .withCiphertextBlob(ByteBuffer.wrap(Hex.decode(ciphertext)));
+        .withCiphertextBlob(ByteBuffer.wrap(Base64.decode(ciphertext)));
 
     ByteBuffer plaintext = kmsClient.decrypt(decryptRequest).getPlaintext();
     return new String(plaintext.array());
@@ -48,6 +48,6 @@ public class AWSStringEncryptor implements StringEncryptor {
         .withPlaintext(ByteBuffer.wrap(plaintext.getBytes()));
 
     ByteBuffer ciphertext = kmsClient.encrypt(req).getCiphertextBlob();
-    return Hex.encode(ciphertext.array());
+    return Base64.encode(ciphertext.array());
   }
 }
