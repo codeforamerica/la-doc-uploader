@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class DecryptSSNBeforeDisplaying implements Action {
 
   private StringEncryptor getEncryptor() {
-    return new StringEncryptor(System.getenv("ARN"));
+    return new StringEncryptor(System.getenv("ARN"), null, null);
   }
 
   public void run(Submission submission) {
