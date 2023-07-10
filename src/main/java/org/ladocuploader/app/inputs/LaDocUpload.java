@@ -1,7 +1,6 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
-import formflow.library.inputs.Encrypted;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -39,9 +38,9 @@ public class LaDocUpload extends FlowInputs {
   @Pattern(regexp = "^[0-9]*$", message = "{client-info.number-format}")
   private String caseNumber;
 
-  @Encrypted
   @Size(min=11, max=11, message="{client-info.provide-9-digit-ssn}")
   private String ssn;
+  private String ssn_iv;
 
   // We're passing this from the form for associating the mixpanel "user" in the TrackClient actions
   private String submissionId;

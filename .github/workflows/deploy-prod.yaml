@@ -43,6 +43,7 @@ jobs:
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
           'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
+          'AWS_CMK=${{ secrets.AWS_CMK_PROD }}' \
           'SENTRY_DSN=${{ secrets.SENTRY_DSN }}' \
           'SENTRY_ENVIRONMENT=prod' \
           'FORCE_SSL=true' \
