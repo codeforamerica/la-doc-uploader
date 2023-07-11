@@ -8,7 +8,6 @@ on:
 env:
   USERNAME: ${{ secrets.GPR_USER }}
   TOKEN: ${{ secrets.GPR_KEY }}
-  ENCRYPTION_KEYSET: ${{ vars.TEST_ENCRYPTION_KEYSET }}
 
 jobs:
   test:

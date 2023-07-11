@@ -2,6 +2,8 @@ name: laDocUpload
 flow:
   clientInfo:
     onPostAction: TrackClientInfoEvent
+    beforeSaveAction: EncryptSSNBeforeSaving
+    beforeDisplayAction: DecryptSSNBeforeDisplaying
     nextScreens:
       - name: howToAddDocuments
   howToAddDocuments:
