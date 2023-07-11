@@ -52,16 +52,6 @@
                   label=#{client-info.case-number},
                   helpText=#{general.optional})}" />
 
-              <div th:class="'form-group display-none'">
-                <label>
-                  <input type="text" class="text-input"
-                         aria-hidden="true"
-                         th:name="'submissionId'"
-                         th:value="${submission.getId()}">
-                </label>
-              </div>
-
-
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
