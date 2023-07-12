@@ -8,3 +8,6 @@ form-flow:
     s3_bucket_name: 'la-doc-uploader-staging'
 sentry:
   environment: staging
+management:
+  endpoints:
+    enabled-by-default: false
