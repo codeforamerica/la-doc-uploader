@@ -15,8 +15,6 @@ spring:
     clean-on-validation-error: true
     placeholders:
       uuid_function: "gen_random_uuid"
-      rpa_username: rpa_user
-      rpa_password: postgres
     clean-disabled: false
   thymeleaf:
     prefix: classpath:/templates/
