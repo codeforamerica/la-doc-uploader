@@ -38,7 +38,7 @@ jobs:
           sudo dpkg -i aptible-package
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
           aptible deploy --app app-prod --git-commitish ${GITHUB_SHA} \
-          'SPRING_PROFILES_ACTIVE=demo' \
+          'SPRING_PROFILES_ACTIVE=prod' \
           'DEFAULT_LOCALE=en' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
@@ -52,7 +52,7 @@ jobs:
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
           'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
-          'demo=true'
+          'demo=false'
   deploy_es:
     name: Deploy to Aptible (es)
     runs-on: ubuntu-latest
@@ -79,7 +79,7 @@ jobs:
           sudo dpkg -i aptible-package
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
           aptible deploy --app app-prod-es --git-commitish ${GITHUB_SHA} \
-          'SPRING_PROFILES_ACTIVE=demo' \
+          'SPRING_PROFILES_ACTIVE=prod' \
           'DEFAULT_LOCALE=es' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
@@ -93,4 +93,4 @@ jobs:
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
           'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
-          'demo=true'
+          'demo=false'
