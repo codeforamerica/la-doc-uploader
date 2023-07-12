@@ -85,3 +85,6 @@ sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6
   environment: production
+management:
+  endpoints:
+    enabled-by-default: false
