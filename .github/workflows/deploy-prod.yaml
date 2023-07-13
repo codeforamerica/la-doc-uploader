@@ -54,6 +54,8 @@ jobs:
           'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
           'demo=false'
   deploy_es:
+    needs:
+      - deploy_en
     name: Deploy to Aptible (es)
     runs-on: ubuntu-latest
     steps:
