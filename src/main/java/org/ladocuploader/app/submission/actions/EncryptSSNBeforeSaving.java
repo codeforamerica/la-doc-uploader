@@ -17,7 +17,7 @@ public class EncryptSSNBeforeSaving implements Action {
   @Override
   public void run(Submission submission) {
     String ssnInput = (String) submission.getInputData().remove("ssn");
-    if (ssnInput != null) {
+    if (ssnInput != null && !ssnInput.isEmpty()) {
       String encryptedSSN = encryptor.encrypt(ssnInput);
       submission.getInputData().put("encryptedSSN", encryptedSSN);
     }
