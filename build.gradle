@@ -68,7 +68,7 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.10.0'
     testImplementation 'io.percy:percy-java-selenium:1.3.2'
     testImplementation 'org.awaitility:awaitility'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.4.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.4.1'
     testImplementation 'com.deque.html.axe-core:selenium:4.7.0'
 
     testAnnotationProcessor 'org.projectlombok:lombok'
