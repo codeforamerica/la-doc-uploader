@@ -17,7 +17,7 @@ form-flow:
     api-key: ${MIXPANEL_API_KEY}
   aws:
     region: 'us-east-1'
-    s3_bucket_name: 'la-doc-uploader'
+    s3_bucket_name: ${AWS_BUCKET}
     access_key: ${AWS_ACCESS_KEY}
     secret_key: ${AWS_SECRET_KEY}
     cmk: ${AWS_CMK}
@@ -84,7 +84,6 @@ server:
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6
-  environment: production
 management:
   endpoints:
     enabled-by-default: false

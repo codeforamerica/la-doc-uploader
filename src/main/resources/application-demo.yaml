@@ -3,8 +3,3 @@ spring:
     cache: true
   datasource:
     url: jdbc:postgresql://host.docker.internal:5432/la-doc-uploader
-form-flow:
-  aws:
-    s3_bucket_name: 'la-doc-uploader-demo'
-sentry:
-  environment: demo
