@@ -204,7 +204,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickLink("< Quay lại");
 
     testPage.clickButton("Subir documentos");
-    assertThat(testPage.getElementText("header")).isEqualTo("Antes de comenzar necesitamos vincular sus caso con sus documentos");
+    assertThat(testPage.getElementText("header")).isEqualTo("Antes de comenzar necesitamos vincular su caso con sus documentos");
     testPage.clickLink("< Volver");
 
     testPage.clickButton("Upload documents");
