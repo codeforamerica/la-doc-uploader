@@ -22,7 +22,7 @@
         </ul>
         <span class="spacing-left-1_5" th:utext="${#messages.msg('how-to-add-documents.you-can-upload', maxFiles)}"></span>
         <br/>
-        <span class="spacing-left-1_5" th:utext="${#messages.msg('how-to-add-documents.each-file', '5')}"></span>
+        <span class="spacing-left-1_5" th:utext="${#messages.msg('how-to-add-documents.each-file', maxSize)}"></span>
 
         <div class="form-card__footer">
           <th:block th:replace="~{fragments/continueButton :: continue}" />
