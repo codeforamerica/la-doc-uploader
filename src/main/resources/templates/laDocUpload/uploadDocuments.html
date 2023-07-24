@@ -29,21 +29,43 @@
 <script>FormFlowDZ.hideContinueIfNoFiles("uploadDocuments", "form-submit-button")</script>
 <script>
   $(document).ready(function () {
-    $("#form-submit-button").click(function () {
-      const uploadedFiles = {
-        'pdf': 0,
-        'jpg': 0,
-        'png': 0,
-        'gif': 0
-      }
-      $(".filename-text-ext").each(function () {
-        let fileExt = this.textContent;
-        fileExt = fileExt.substring(1, fileExt.length);
-        const count = uploadedFiles[fileExt];
-        uploadedFiles[fileExt] = count + 1;
-      });
+      async function handlePermissions (permissionName){
+          try {
+              const permission = await navigator.permissions.query({
+                  name: permissionName,
+              });
+              if (permission.state === "granted")
+                  console.log(`Permission granted for ${permissionName}`);
+              if (permission.state === "prompt")
+                  console.log(`Prompt for permissions for ${permissionName}`);
+              if (permission.state === "denied")
+                  console.log(`Permissions have been denied for ${permissionName}`);
 
-      mixpanel.track('file_upload_finished', uploadedFiles);
+          } catch (error) {
+              console.error(`Error while fetching storage permissions for ${permissionName}: `, error.message);
+          }
+
+      }
+      $("#upload-button-inner-uploadDocuments").click(async function (){
+
+         await Promise.all([handlePermissions("persistent-storage"), handlePermissions("camera")]);
+
+      });
+    $("#form-submit-button").click(function () {
+        const uploadedFiles = {
+            'pdf': 0,
+            'jpg': 0,
+            'png': 0,
+            'gif': 0
+        }
+        $(".filename-text-ext").each(function () {
+            let fileExt = this.textContent;
+            fileExt = fileExt.substring(1, fileExt.length);
+            const count = uploadedFiles[fileExt];
+            uploadedFiles[fileExt] = count + 1;
+        });
+
+        mixpanel.track('file_upload_finished', uploadedFiles);
     })
   });
 </script>
