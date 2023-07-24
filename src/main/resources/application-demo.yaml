@@ -3,3 +3,6 @@ spring:
     cache: true
   datasource:
     url: jdbc:postgresql://host.docker.internal:5432/la-doc-uploader
+form-flow:
+  uploads:
+    max-file-size: '4'

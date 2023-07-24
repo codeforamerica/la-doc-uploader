@@ -6,3 +6,6 @@ spring:
 management:
   endpoints:
     enabled-by-default: false
+form-flow:
+  uploads:
+    max-file-size: '4'
