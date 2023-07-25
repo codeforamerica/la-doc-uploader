@@ -29,21 +29,32 @@
 <script>FormFlowDZ.hideContinueIfNoFiles("uploadDocuments", "form-submit-button")</script>
 <script>
   $(document).ready(function () {
-      async function handlePermissions (permissionName){
-          try {
-              const permission = await navigator.permissions.query({
-                  name: permissionName,
-              });
-              if (permission.state === "granted")
-                  console.log(`Permission granted for ${permissionName}`);
-              if (permission.state === "prompt")
-                  console.log(`Prompt for permissions for ${permissionName}`);
-              if (permission.state === "denied")
-                  console.log(`Permissions have been denied for ${permissionName}`);
 
-          } catch (error) {
-              console.error(`Error while fetching storage permissions for ${permissionName}: `, error.message);
+      function report(state) {
+          console.log(`Permission ${state}`);
+      }
+
+      function requestPermission(permissionName) {
+          if (permissionName === "persistent-storage"){
+              navigator.storage.getDirectory();
+          } else if (permissionName === "camera"){
+              navigator.mediaDevices.getUserMedia({video: true})
           }
+      }
+      async function handlePermissions (permissionName){
+          navigator.permissions.query({ name: permissionName }).then((result) => {
+              if (result.state === "granted") {
+                  report(result.state);
+              } else if (result.state === "prompt") {
+                  requestPermission(permissionName);
+                  report(result.state);
+              } else if (result.state === "denied") {
+                  report(result.state);
+              }
+              result.addEventListener("change", () => {
+                  report(result.state);
+              });
+          });
 
       }
       $("#upload-button-inner-uploadDocuments").click(async function (){
