@@ -71,7 +71,7 @@ logging:
           autoconfigure:
             security:
               servlet:
-                UserDetailsServiceAutoConfiguration=OFF:
+                UserDetailsServiceAutoConfiguration: OFF
 server:
   tomcat:
     max-http-form-post-size: ${form-flow.uploads.max-file-size}MB
