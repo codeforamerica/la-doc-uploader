@@ -32,9 +32,6 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
             var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
-//            if (!parsedUrl.get("flow").equals("pebt")) {
-//                return true; // Only enforce data requirements in PEBT flow.
-//            }
             var requiredData = REQUIRED_DATA.get(parsedUrl.get("screen"));
             if (requiredData == null) {
                 return true; // There are no data requirements for this page
@@ -43,7 +40,8 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
             var session = request.getSession(false);
             if (session == null) {
                 log.info("No session present (missing field data %s), redirecting to clientInfo page".formatted(requiredData));
-                response.sendRedirect("/");
+                // TODO: error display before redirect
+                response.sendRedirect("/flow/laDocUpload/clientInfo");
                 return false;
             }
 
@@ -54,17 +52,17 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
                     var submission = submissionMaybe.get();
                     if (submission.getInputData().getOrDefault(requiredData, "").toString().isBlank()) {
                         log.error("Submission %s missing field data %s, redirecting to clientInfo page".formatted(submissionId, requiredData));
-                        response.sendRedirect("/");
+                        response.sendRedirect("/flow/laDocUpload/clientInfo");
                         return false;
                     }
                 } else {
                     log.error("Submission %s not found in database (required field %s), redirecting to clientInfo page".formatted(submissionId, requiredData));
-                    response.sendRedirect("/");
+                    response.sendRedirect("/flow/laDocUpload/clientInfo");
                     return false;
                 }
             } else {
                 log.error("No submission ID in session (required field %s), redirecting to clientInfo page".formatted(requiredData));
-                response.sendRedirect("/");
+                response.sendRedirect("/flow/laDocUpload/clientInfo");
                 return false;
             }
 
