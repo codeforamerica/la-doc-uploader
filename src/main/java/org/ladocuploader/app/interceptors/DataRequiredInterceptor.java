@@ -30,6 +30,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String redirect_url = "/flow/laDocUpload/clientInfo?intercepted=true";
         try {
             var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
             var requiredData = REQUIRED_DATA.get(parsedUrl.get("screen"));
@@ -40,8 +41,8 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
             var session = request.getSession(false);
             if (session == null) {
                 log.info("No session present (missing field data %s), redirecting to clientInfo page".formatted(requiredData));
-                // TODO: error display before redirect
-                response.sendRedirect("/flow/laDocUpload/clientInfo");
+                response.sendRedirect(redirect_url);
+
                 return false;
             }
 
@@ -52,17 +53,17 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
                     var submission = submissionMaybe.get();
                     if (submission.getInputData().getOrDefault(requiredData, "").toString().isBlank()) {
                         log.error("Submission %s missing field data %s, redirecting to clientInfo page".formatted(submissionId, requiredData));
-                        response.sendRedirect("/flow/laDocUpload/clientInfo");
+                        response.sendRedirect(redirect_url);
                         return false;
                     }
                 } else {
                     log.error("Submission %s not found in database (required field %s), redirecting to clientInfo page".formatted(submissionId, requiredData));
-                    response.sendRedirect("/flow/laDocUpload/clientInfo");
+                    response.sendRedirect(redirect_url);
                     return false;
                 }
             } else {
                 log.error("No submission ID in session (required field %s), redirecting to clientInfo page".formatted(requiredData));
-                response.sendRedirect("/flow/laDocUpload/clientInfo");
+                response.sendRedirect(redirect_url);
                 return false;
             }
 
