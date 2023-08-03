@@ -8,7 +8,7 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <div class="example-container">
+        <div class="intercept-error-container">
           <div class="flash flash--error" th:if="${param.intercepted != null}" >
             <p class="flash__message" th:text="#{general.missing-info}"></p>
             <a href="#" class="flash__dismiss" aria-label="Dismiss"><span class="icon icon-close"></span></a>
