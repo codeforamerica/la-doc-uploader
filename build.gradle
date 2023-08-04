@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.amazonaws:aws-encryption-sdk-java:2.4.0'
     testImplementation 'org.projectlombok:lombok:1.18.28'
 
-    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.26.0'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.28.0'
 
     implementation 'io.sentry:sentry-logback:6.28.0'
 
