@@ -30,10 +30,10 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String redirect_url = "/flow/laDocUpload/clientInfo?intercepted=true";
         try {
             var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
             var requiredData = REQUIRED_DATA.get(parsedUrl.get("screen"));
+            String redirect_url = String.format("/flow/laDocUpload/clientInfo?intercepted=%s", parsedUrl.get("screen"));
             if (requiredData == null) {
                 return true; // There are no data requirements for this page
             }
