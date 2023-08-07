@@ -29,6 +29,7 @@ public class LoggingFilter implements Filter {
     MDC.put("sessionCreatedAt", new DateTime(request.getSession().getCreationTime()).toString("HH:mm:ss.SSS"));
     MDC.put("method", request.getMethod());
     MDC.put("request", request.getRequestURI());
+    MDC.put("ip", request.getRemoteAddr());
     filterChain.doFilter(servletRequest, servletResponse);
     MDC.clear();
   }
