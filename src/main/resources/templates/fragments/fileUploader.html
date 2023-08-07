@@ -63,7 +63,7 @@
     window['myDropZone' + [[${inputName}]]] = null;
     window['userFileIds' + [[${inputName}]]] = [];
     window['cancelledFiles' + [[${inputName}]]] = [];
-    var userFiles = [[${session.userFiles}]]
+    var userFiles = [[${session.userFiles ?: ''}]]
     var thumbnailWidthFromAppYml = [[${@environment.getProperty('form-flow.uploads.thumbnail-width')}]];
     var thumbnailHeightFromAppYml = [[${@environment.getProperty('form-flow.uploads.thumbnail-height')}]];
     var thumbnailWidth = thumbnailWidthFromAppYml ? thumbnailWidthFromAppYml : '64';
@@ -235,7 +235,6 @@
     }
 
     $("#document-upload-" + [[${inputName}]]).dropzone({
-      // TODO: use a variable? Use to get it from the id being on the form element
       url: "/file-upload",
       uploadMultiple: false,
       previewsContainer: [[${'#document-upload-' + inputName}]] + " .preview-container",
@@ -431,7 +430,8 @@
       },
       error: function (file, errorMessage, xhr) {
         if (xhr && xhr.response) {
-          file.previewElement.getElementsByClassName("text--error")[0].innerText = xhr.response;
+          // redirect to client info page with intercepted param for error popup
+          location.href = "/flow/laDocUpload/clientInfo?intercepted=uploadDocuments"
         } else {
           var message = errorMessage.error ? errorMessage.error : errorMessage;
           file.previewElement.getElementsByClassName("text--error")[0].innerText = message;
