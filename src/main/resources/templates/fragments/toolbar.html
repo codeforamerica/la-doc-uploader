@@ -24,6 +24,10 @@
                   }
               })
 
+              $(".flash__dismiss").on("click", function (e) {
+                $(this).parent()[0].setAttribute("class", "display-none");
+              })
+
           });
       </script>
       <div th:replace="~{fragments/localeSelect :: localeSelect}"></div>
