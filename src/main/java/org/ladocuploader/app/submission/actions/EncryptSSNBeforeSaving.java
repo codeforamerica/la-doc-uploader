@@ -10,14 +10,14 @@ public class EncryptSSNBeforeSaving implements Action {
 
   private final StringEncryptor encryptor;
 
-  public EncryptSSNBeforeSaving() {
-    encryptor = new StringEncryptor(System.getenv("ENCRYPTION_KEYSET"));
+  public EncryptSSNBeforeSaving(StringEncryptor stringEncryptor) {
+    encryptor = stringEncryptor;
   }
 
   @Override
   public void run(Submission submission) {
     String ssnInput = (String) submission.getInputData().remove("ssn");
-    if (ssnInput != null) {
+    if (ssnInput != null && !ssnInput.isEmpty()) {
       String encryptedSSN = encryptor.encrypt(ssnInput);
       submission.getInputData().put("encryptedSSN", encryptedSSN);
     }

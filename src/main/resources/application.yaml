@@ -3,7 +3,6 @@ form-flow:
     path: ~
   inputs: 'org.ladocuploader.app.inputs.'
   path: 'flows-config.yaml'
-  encryption_key: ${ENCRYPTION_KEYSET}
   uploads:
     accepted-file-types: '.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
     thumbnail-width: '64'
@@ -13,14 +12,15 @@ form-flow:
     # 20 MB file size limit
     # If this is not set then the server values below for servlet max-file-size and tomcat max POST size will not be set
     # which will cause the server to use the default values of 1MB preventing uploads larger than that.
-    max-file-size: '5'
+    max-file-size: '4'
   mixpanel:
     api-key: ${MIXPANEL_API_KEY}
   aws:
     region: 'us-east-1'
-    s3_bucket_name: 'la-doc-uploader'
+    s3_bucket_name: ${AWS_BUCKET}
     access_key: ${AWS_ACCESS_KEY}
     secret_key: ${AWS_SECRET_KEY}
+    cmk: ${AWS_CMK}
   address:
     disabled: true
     smarty:
@@ -39,6 +39,11 @@ spring:
       demo:
         - demo
         - form-flow-library
+  security:
+    user:
+      name: ${DEFAULT_USER}
+      password: ${DEFAULT_PASSWORD}
+      roles: USER
   thymeleaf:
     cache: false
     template-resolver-order: 0
@@ -70,7 +75,7 @@ logging:
           autoconfigure:
             security:
               servlet:
-                UserDetailsServiceAutoConfiguration=OFF:
+                UserDetailsServiceAutoConfiguration: OFF
 server:
   tomcat:
     max-http-form-post-size: ${form-flow.uploads.max-file-size}MB
@@ -83,4 +88,6 @@ server:
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6
-  environment: production
+management:
+  endpoints:
+    enabled-by-default: false

@@ -3,8 +3,9 @@ spring:
     cache: true
   datasource:
     url: jdbc:postgresql://host.docker.internal:5432/la-doc-uploader
+management:
+  endpoints:
+    enabled-by-default: false
 form-flow:
-  aws:
-    s3_bucket_name: 'la-doc-uploader-staging'
-sentry:
-  environment: staging
+  uploads:
+    max-file-size: '4'

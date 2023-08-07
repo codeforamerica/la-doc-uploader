@@ -8,6 +8,12 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
+        <div class="intercept-error-container">
+          <div class="flash flash--error" id="client-info-missing" th:if="${param.intercepted != null}" >
+            <p class="flash__message" th:text="#{general.missing-info}"></p>
+            <a href="#" class="flash__dismiss" aria-label="Dismiss"><span class="icon icon-close"></span></a>
+          </div>
+        </div>
         <th:block th:replace="~{fragments/icons :: matchInfo}"></th:block>
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{client-info.header}, subtext=#{client-info.subtext})}"/>
@@ -51,16 +57,6 @@
                   number(inputName='caseNumber',
                   label=#{client-info.case-number},
                   helpText=#{general.optional})}" />
-
-              <div th:class="'form-group display-none'">
-                <label>
-                  <input type="text" class="text-input"
-                         aria-hidden="true"
-                         th:name="'submissionId'"
-                         th:value="${submission.getId()}">
-                </label>
-              </div>
-
 
             </div>
             <div class="form-card__footer">

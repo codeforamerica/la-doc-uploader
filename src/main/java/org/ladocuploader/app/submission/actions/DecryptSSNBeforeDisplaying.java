@@ -13,15 +13,19 @@ public class DecryptSSNBeforeDisplaying implements Action {
 
   private final StringEncryptor encryptor;
 
-  public DecryptSSNBeforeDisplaying() {
-    encryptor = new StringEncryptor(System.getenv("ENCRYPTION_KEYSET"));
+  public DecryptSSNBeforeDisplaying(StringEncryptor stringEncryptor) {
+    encryptor = stringEncryptor;
+  }
+
+  private StringEncryptor getEncryptor() {
+    return encryptor;
   }
 
   @Override
   public void run(Submission submission) {
     String encryptedSSN = (String) submission.getInputData().remove("encryptedSSN");
     if (encryptedSSN != null) {
-      String decryptedSSN = encryptor.decrypt(encryptedSSN);
+      String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
       submission.getInputData().put("ssn", decryptedSSN);
     }
   }

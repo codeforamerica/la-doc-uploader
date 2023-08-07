@@ -41,8 +41,6 @@ public class LaDocUpload extends FlowInputs {
   @Size(min=11, max=11, message="{client-info.provide-9-digit-ssn}")
   private String ssn;
 
-  // We're passing this from the form for associating the mixpanel "user" in the TrackClient actions
-  private String submissionId;
   @NotBlank(message = "{final-confirmation.answer-feedback-question}")
   private String uploadDocumentsFeedback;
 
