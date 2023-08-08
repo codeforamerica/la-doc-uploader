@@ -24,9 +24,10 @@ public class StaticPageController {
   @GetMapping("/")
   ModelAndView getIndex(HttpServletRequest request,
       @RequestParam(required = false) String ref_id) {
-    // For dev, reset session if you visit home
-    HttpSession httpSession = request.getSession();
+    HttpSession httpSession = request.getSession(false);
+    if (httpSession != null) {
     httpSession.invalidate();
+    }
     httpSession = request.getSession(true);
 
     // start new session
