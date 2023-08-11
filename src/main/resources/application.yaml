@@ -4,7 +4,7 @@ form-flow:
   inputs: 'org.ladocuploader.app.inputs.'
   path: 'flows-config.yaml'
   uploads:
-    accepted-file-types: '.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
+    accepted-file-types: 'image/*,.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
     thumbnail-width: '64'
     thumbnail-height: '60'
     # 20 files maximum
