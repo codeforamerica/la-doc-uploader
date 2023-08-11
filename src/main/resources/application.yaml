@@ -54,6 +54,9 @@ spring:
       static-locations: file:src/main/resources/static/
       cache:
         period: 0
+        cachecontrol:
+          max-age: 7d
+
     locale: ${DEFAULT_LOCALE}
     locale-resolver: fixed
   datasource:
@@ -81,6 +84,9 @@ server:
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+  servlet:
+    session:
+      persistent: true
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6

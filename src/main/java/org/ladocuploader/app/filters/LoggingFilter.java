@@ -37,7 +37,7 @@ public class LoggingFilter implements Filter {
     MDC.put("ip", request.getRemoteAddr());
     MDC.put("method", request.getMethod());
     MDC.put("request", request.getRequestURI());
-    MDC.put("sessionId", request.getSession().getId());
+    MDC.put("sessionId", session == null? "null" : session.getId());
     MDC.put("sessionCreatedAt", sessionCreatedAt);
     MDC.put("submissionId", subId == null ? "null" : subId.toString());
     filterChain.doFilter(servletRequest, servletResponse);
