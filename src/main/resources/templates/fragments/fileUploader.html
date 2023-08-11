@@ -236,6 +236,9 @@
 
     $("#document-upload-" + [[${inputName}]]).dropzone({
       url: "/file-upload",
+      params: {
+          accept: "image/*"
+      },
       uploadMultiple: false,
       previewsContainer: [[${'#document-upload-' + inputName}]] + " .preview-container",
       autoProcessQueue: false,
