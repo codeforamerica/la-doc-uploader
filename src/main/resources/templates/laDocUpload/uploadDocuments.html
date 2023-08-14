@@ -29,21 +29,22 @@
 <script>FormFlowDZ.hideContinueIfNoFiles("uploadDocuments", "form-submit-button")</script>
 <script>
   $(document).ready(function () {
-    $("#form-submit-button").click(function () {
-      const uploadedFiles = {
-        'pdf': 0,
-        'jpg': 0,
-        'png': 0,
-        'gif': 0
-      }
-      $(".filename-text-ext").each(function () {
-        let fileExt = this.textContent;
-        fileExt = fileExt.substring(1, fileExt.length);
-        const count = uploadedFiles[fileExt];
-        uploadedFiles[fileExt] = count + 1;
-      });
 
-      mixpanel.track('file_upload_finished', uploadedFiles);
+    $("#form-submit-button").click(function () {
+        const uploadedFiles = {
+            'pdf': 0,
+            'jpg': 0,
+            'png': 0,
+            'gif': 0
+        }
+        $(".filename-text-ext").each(function () {
+            let fileExt = this.textContent;
+            fileExt = fileExt.substring(1, fileExt.length);
+            const count = uploadedFiles[fileExt];
+            uploadedFiles[fileExt] = count + 1;
+        });
+
+        mixpanel.track('file_upload_finished', uploadedFiles);
     })
   });
 </script>
