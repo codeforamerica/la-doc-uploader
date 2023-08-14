@@ -50,7 +50,8 @@ jobs:
           'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_STAGING }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_STAGING }}' \
-          'demo=true'
+          'demo=true' \
+          'RELEASE_HEALTHCHECK_TIMEOUT=900'
   draft-release:
     name: Draft a new release
     needs: deploy

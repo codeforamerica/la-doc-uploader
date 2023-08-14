@@ -53,7 +53,8 @@ jobs:
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
           'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
-          'demo=false'
+          'demo=false' \
+          'RELEASE_HEALTHCHECK_TIMEOUT=900'
   deploy_es:
     needs:
       - deploy_en
@@ -97,4 +98,5 @@ jobs:
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
           'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
-          'demo=false'
+          'demo=false' \
+          'RELEASE_HEALTHCHECK_TIMEOUT=900'
