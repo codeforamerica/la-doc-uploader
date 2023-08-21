@@ -19,3 +19,8 @@ flow:
   finalConfirmation:
     nextScreens:
       - name: finalConfirmation
+---
+name: laDigitalAssister
+flow:
+  howThisWorks:
+    nextScreens: null
