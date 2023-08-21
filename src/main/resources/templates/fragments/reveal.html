@@ -1,0 +1,16 @@
+<th:block
+    th:fragment="reveal"
+    th:with="controlId=${controlId == null ? 'r1' : controlId}, forceShowContent=${forceShowContent == null ? '' : 'force-show-content'}"
+    th:assert="
+      ${!#strings.isEmpty(linkLabel)},
+      ${!#strings.isEmpty(content)}">
+  <div class="reveal reveal-adjacent reveal__border" th:classappend="${forceShowContent}">
+    <a href="#" class="reveal__link reveal__link__header-adjacent" aria-expanded="false"
+       aria-controls="reveal-content">
+      <th:block th:replace="${linkLabel}"></th:block>
+    </a>
+    <div class="reveal__content reveal__content-adjacent" id="controlId">
+      <th:block th:replace="${content}"/>
+    </div>
+  </div>
+</th:block>
