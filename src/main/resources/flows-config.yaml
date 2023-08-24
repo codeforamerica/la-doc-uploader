@@ -26,4 +26,7 @@ flow:
     nextScreens:
       - name: timeoutNotice
   timeoutNotice:
+    nextScreens:
+      - name: languagePreference
+  languagePreference:
     nextScreens: null
