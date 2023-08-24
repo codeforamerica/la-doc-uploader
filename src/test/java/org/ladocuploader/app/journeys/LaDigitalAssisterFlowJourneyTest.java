@@ -3,7 +3,6 @@ package org.ladocuploader.app.journeys;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
-import org.openqa.selenium.WebElement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,8 +23,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Language preference");
     testPage.selectFromDropdown("languageRead", "Spanish");
     testPage.selectFromDropdown("languageSpeak", "Spanish");
-    WebElement needInterpreterYes = testPage.findElementById("needInterpreter-Yes");
-    needInterpreterYes.click();
+    testPage.selectRadio("needInterpreter", "Yes");
     testPage.clickContinue();
 
     // Choose programs
