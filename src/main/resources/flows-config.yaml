@@ -23,4 +23,7 @@ flow:
 name: laDigitalAssister
 flow:
   howThisWorks:
+    nextScreens:
+      - name: timeoutNotice
+  timeoutNotice:
     nextScreens: null
