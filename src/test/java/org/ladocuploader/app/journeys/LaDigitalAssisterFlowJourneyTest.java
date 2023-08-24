@@ -17,5 +17,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Timeout notice
     assertThat(testPage.getTitle()).isEqualTo("Timeout notice");
+    testPage.clickContinue();
+
+    // Language preference
+    assertThat(testPage.getTitle()).isEqualTo("Language preference");
   }
 }
