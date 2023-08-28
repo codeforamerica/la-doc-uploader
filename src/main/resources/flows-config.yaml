@@ -29,4 +29,7 @@ flow:
     nextScreens:
       - name: languagePreference
   languagePreference:
+    nextScreens:
+      - name: choosePrograms
+  choosePrograms:
     nextScreens: null
