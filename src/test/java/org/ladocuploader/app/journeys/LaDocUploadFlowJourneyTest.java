@@ -257,8 +257,9 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     uploadJpgFile();
 //    WebElement finishedUploading = testPage.findElementsByButtonText("I'm finished uploading");
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-    WebElement finishedUploading = wait.until(ExpectedConditions.visibilityOf(testPage.findElementsByButtonText("I'm finished uploading")));
-    boolean isHidden = finishedUploading.getAttribute("class").contains("display-none");
+    wait.until(ExpectedConditions.numberOfElementsToBe(By.id("form-submit-button")
+            , 1));
+    boolean isHidden = testPage.findElementsByButtonText("I'm finished uploading").getAttribute("class").contains("display-none");
     if (isHidden) {
       takeSnapShot("flakeyTestScreenshot.jpg");
     }
