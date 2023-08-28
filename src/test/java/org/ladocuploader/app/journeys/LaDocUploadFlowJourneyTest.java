@@ -1,28 +1,23 @@
 package org.ladocuploader.app.journeys;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
+import org.openqa.selenium.WebElement;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-
-import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Slf4j
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void firstNameInputFlow() {
-    testPage.navigateToFlowScreen("clientInfo");
+    testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
     // SSN input
     WebElement firstNameInput = testPage.findElementById("firstName");
@@ -255,11 +250,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Upload documents");
     assertThat(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none")).isTrue();
     uploadJpgFile();
-//    WebElement finishedUploading = testPage.findElementsByButtonText("I'm finished uploading");
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-    wait.until(ExpectedConditions.numberOfElementsToBe(By.id("form-submit-button")
-            , 1));
-    boolean isHidden = testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none");
+    boolean isHidden = testPage.findElementsByButtonText("I'm finished uploading").getAttribute("class").contains("display-none");
     if (isHidden) {
       takeSnapShot("flakeyTestScreenshot.jpg");
     }
