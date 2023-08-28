@@ -32,4 +32,6 @@ flow:
     nextScreens:
       - name: choosePrograms
   choosePrograms:
-    nextScreens: null
+    nextScreens:
+      - name: expeditedSnapNotice
+        condition: ProgramsIncludeSnap
