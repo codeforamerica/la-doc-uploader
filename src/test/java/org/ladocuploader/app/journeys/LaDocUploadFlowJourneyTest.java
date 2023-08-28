@@ -8,8 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -252,7 +256,9 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none")).isTrue();
     uploadJpgFile();
     WebElement finishedUploading = testPage.findElementsByButtonText("I'm finished uploading");
-    boolean isHidden = finishedUploading == null || finishedUploading.getAttribute("class").contains("display-none");
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    wait.until(ExpectedConditions.elementToBeClickable(finishedUploading));
+    boolean isHidden = finishedUploading.getAttribute("class").contains("display-none");
     if (isHidden) {
       takeSnapShot("flakeyTestScreenshot.jpg");
     }
