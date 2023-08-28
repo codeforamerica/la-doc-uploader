@@ -259,7 +259,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     wait.until(ExpectedConditions.numberOfElementsToBe(By.id("form-submit-button")
             , 1));
-    boolean isHidden = testPage.findElementsByButtonText("I'm finished uploading").getAttribute("class").contains("display-none");
+    boolean isHidden = testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none");
     if (isHidden) {
       takeSnapShot("flakeyTestScreenshot.jpg");
     }
