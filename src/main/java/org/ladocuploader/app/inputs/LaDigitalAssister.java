@@ -4,6 +4,8 @@ import formflow.library.data.FlowInputs;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class LaDigitalAssister extends FlowInputs {
@@ -13,5 +15,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String languageSpeak;
   private String needInterpreter;
 
+  // Choose programs
+  private List<String> programs;
 }
 

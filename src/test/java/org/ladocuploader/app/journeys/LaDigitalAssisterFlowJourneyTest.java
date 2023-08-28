@@ -21,5 +21,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Language preference
     assertThat(testPage.getTitle()).isEqualTo("Language preference");
+    testPage.selectFromDropdown("languageRead", "Spanish");
+    testPage.selectFromDropdown("languageSpeak", "Spanish");
+    testPage.selectRadio("needInterpreter", "Yes");
+    testPage.clickContinue();
+
+    // Choose programs
+    assertThat(testPage.getTitle()).isEqualTo("Choose programs");
+
   }
 }
