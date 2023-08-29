@@ -1,11 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <h1>To be continued</h1>
-</head>
+<html th:lang="${#locale.language}">
+<head th:replace="fragments/head :: head(title=#{signpost.title})"></head>
 <body>
-
+<div class="page-wrapper">
+  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <div class="grid__item spacing-above-35 text--centered">
+          <th:block th:replace="'fragments/icons' :: personMilestone"></th:block>
+          <p class="text--help spacing-below-10"
+             th:text="#{signpost.step}"></p>
+          <th:block
+              th:replace="'fragments/cardHeader' :: cardHeader(header=#{signpost.header})"/>
+        </div>
+        <div class="form-card__content">
+          <div class="grid__item intro-section boxed-content spacing-below-60">
+            <h2 class="h3 text--centered intro-box__title" th:text="#{signpost.well-ask-about}"></h2>
+            <ol class="list--numbered spacing-above-10">
+              <li th:text="#{signpost.your-personal-info}"></li>
+              <li th:text="#{signpost.current-living-address}"></li>
+              <li th:text="#{signpost.mailing-address}"></li>
+            </ol>
+          </div>
+        </div>
+        <div class="form-card__footer text--centered">
+          <th:block th:replace="'fragments/continueButton' :: continue"/>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="fragments/footer :: footer"/>
 </body>
 </html>
