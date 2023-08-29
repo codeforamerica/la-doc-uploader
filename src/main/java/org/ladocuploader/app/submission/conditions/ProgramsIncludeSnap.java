@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProgramsIncludeSnap implements Condition {
 
+    @Override
     public Boolean run(Submission submission) {
         var inputData = submission.getInputData();
         if (inputData.containsKey("programs[]")) {
