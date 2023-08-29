@@ -13,11 +13,28 @@
             th:replace="'fragments/cardHeader' :: cardHeader(header=#{expedited-snap.header})"/>
         <th:block th:replace="'fragments/honeycrisp/accordion' :: accordion(
           buttonLabel=#{expedited-snap.what-is},
-          content=~{::accordianOptions})">
-            <th:block th:ref="accordianOptions">
+          content=~{::expeditedSnapDescription})">
+            <th:block th:ref="expeditedSnapDescription">
+              <p th:utext="#{expedited-snap.what-is.content}"></p>
 
             </th:block>
         </th:block>
+        <th:block th:replace="'fragments/honeycrisp/accordion' :: accordion(
+          buttonLabel=#{expedited-snap.who-qualifies},
+          content=~{::expeditedSnapWhoQualifies})">
+          <th:block th:ref="expeditedSnapWhoQualifies">
+            <p th:utext="#{expedited-snap.who-qualifies.content}"></p>
+            <ul class="list--bulleted">
+              <li th:text="#{expedited-snap.who-qualifies.ul1}"></li>
+              <li th:text="#{expedited-snap.who-qualifies.ul2}"></li>
+              <li th:text="#{expedited-snap.who-qualifies.ul3}"></li>
+            </ul>
+
+          </th:block>
+        </th:block>
+        <div class="form-card__footer spacing-below-60">
+          <th:block th:replace="~{fragments/continueButton :: continue}"/>
+        </div>
           </th:block>
         </th:block>
       </main>
