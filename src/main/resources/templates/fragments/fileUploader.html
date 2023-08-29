@@ -428,10 +428,33 @@
           });
         }
       },
+
+    //     upload-documents.this-file-is-too-large=This file is too large and cannot be uploaded (max size: {0} MB)
+    // upload-documents.file-upload-error=There was an error uploading your file. If this persists, please try uploading a different file.
+    //     upload-documents.error-heic=We are unable to process HEIC files. Please convert your file to a JPG or PNG and try again.
+    //     upload-documents.error-tiff=We are unable to process TIFF files. Please convert your file to a JPG or PNG and try again.
+    //     upload-documents.error-invalid-file-type=We aren't able to upload this type of file. Please try another file that ends in one of the following:
+    // upload-documents.error-maximum-number-of-files=You have uploaded the maximum number of files. You will have the opportunity to share more with a caseworker later.
+    //     upload-documents.error-password-protected=We are unable to process password-protected PDF files. Please remove the password and try again or try another PDF file.
+    //     upload-documents.error-could-not-read-file=We could not read the uploaded file. Please try another file.
+    //     upload-documents.error-mime-type=File contents did not match accepted mime types.
       error: function (file, errorMessage, xhr) {
         if (xhr && xhr.response) {
-          // redirect to client info page with intercepted param for error popup
-          location.href = "/flow/laDocUpload/clientInfo?intercepted=uploadDocuments"
+            const knownXhrErrors = [`[[${#messages.msg('upload-documents.error-mime-type')}]]`,
+                `[[${#messages.msg('upload-documents.this-file-is-too-large')}]]`,
+                `[[${#messages.msg('upload-documents.error-could-not-read-file')}]]`,
+                `[[${#messages.msg('upload-documents.error-password-protected')}]]`,
+                `[[${#messages.msg('upload-documents.error-maximum-number-of-files')}]]`
+            ]
+
+            if (knownXhrErrors.includes(JSON.stringify(xhr.response))){
+                file.previewElement.getElementsByClassName("text--error")[0].innerText = xhr.response;
+
+            } else {
+                //redirect to client info page with intercepted param for error popup
+                location.href = "/flow/laDocUpload/clientInfo?intercepted=uploadDocuments"
+            }
+
         } else {
           var message = errorMessage.error ? errorMessage.error : errorMessage;
           file.previewElement.getElementsByClassName("text--error")[0].innerText = message;
