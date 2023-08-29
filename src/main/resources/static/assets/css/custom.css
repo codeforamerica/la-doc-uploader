@@ -306,12 +306,3 @@ input[type="number"] {
   position: relative;
   bottom: -1px;
 }
-
-.accordion__button--snap {
-  font-weight: normal;
-  padding-right: 1.5rem;
-}
-
-.accordion--snap {
-  font-weight: normal;
-}

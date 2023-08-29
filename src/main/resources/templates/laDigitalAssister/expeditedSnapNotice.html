@@ -11,27 +11,38 @@
         <th:block th:replace="'fragments/icons' :: groceries"></th:block>
         <th:block
             th:replace="'fragments/cardHeader' :: cardHeader(header=#{expedited-snap.header})"/>
-        <th:block th:replace="'fragments/honeycrisp/accordion' :: accordion(
-          buttonLabel=#{expedited-snap.what-is},
-          content=~{::expeditedSnapDescription})">
-            <th:block th:ref="expeditedSnapDescription">
-              <p th:utext="#{expedited-snap.what-is.content}"></p>
-
-            </th:block>
-        </th:block>
-        <th:block th:replace="'fragments/honeycrisp/accordion' :: accordion(
-          buttonLabel=#{expedited-snap.who-qualifies},
-          content=~{::expeditedSnapWhoQualifies})">
-          <th:block th:ref="expeditedSnapWhoQualifies">
-            <p th:utext="#{expedited-snap.who-qualifies.content}"></p>
-            <ul class="list--bulleted">
-              <li th:text="#{expedited-snap.who-qualifies.ul1}"></li>
-              <li th:text="#{expedited-snap.who-qualifies.ul2}"></li>
-              <li th:text="#{expedited-snap.who-qualifies.ul3}"></li>
-            </ul>
-
+        <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r1',
+                linkLabel=~{::revealLabel1},
+                content=~{::revealContent1},
+                forceShowContent='true')}">
+          <th:block th:ref="revealLabel1">
+            <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+            <th:span th:text="#{expedited-snap.what-is}"></th:span>
+          </th:block>
+          <th:block th:ref="revealContent1">
+            <p th:text="#{expedited-snap.what-is.content}"></p>
           </th:block>
         </th:block>
+        <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r2',
+                linkLabel=~{::revealLabel2},
+                content=~{::revealContent2},
+                forceShowContent='true')}">
+          <th:block th:ref="revealLabel2">
+            <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+            <th:span th:text="#{expedited-snap.who-qualifies}"></th:span>
+          </th:block>
+          <th:block th:ref="revealContent2">
+            <p th:text="#{expedited-snap.who-qualifies}"></p>
+            <ul class="list--bulleted">
+              <li th:utext="#{expedited-snap.who-qualifies.li1}"></li>
+              <li th:utext="#{expedited-snap.who-qualifies.li2}"></li>
+              <li th:utext="#{expedited-snap.who-qualifies.li3}"></li>
+            </ul>
+          </th:block>
+        </th:block>
+
         <div class="form-card__footer spacing-below-60">
           <th:block th:replace="~{fragments/continueButton :: continue}"/>
         </div>
