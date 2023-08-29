@@ -10,8 +10,8 @@ public class ProgramsIncludeSnap implements Condition {
 
     public Boolean run(Submission submission) {
         var inputData = submission.getInputData();
-        if (inputData.containsKey("programs")) {
-            var programArr = (ArrayList<String>) submission.getInputData().get("programs");
+        if (inputData.containsKey("programs[]")) {
+            var programArr = (ArrayList<String>) submission.getInputData().get("programs[]");
             return programArr.contains("SNAP");
         }
         return false;
