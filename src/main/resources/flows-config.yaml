@@ -37,6 +37,7 @@ flow:
         condition: ProgramsIncludeSnap
       - name: signPost
   expeditedSnapNotice:
-    nextScreens: null
+    nextScreens:
+      - name: signPost
   signPost:
     nextScreens: null
