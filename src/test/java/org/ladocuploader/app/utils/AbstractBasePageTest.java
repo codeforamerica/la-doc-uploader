@@ -72,14 +72,19 @@ public abstract class AbstractBasePageTest {
   protected void uploadFile(String filepath) {
     WebElement upload = driver.findElement(By.className("dz-hidden-input"));
     upload.sendKeys(TestUtils.getAbsoluteFilepathString(filepath));
-    await().until(
-        () -> !driver.findElements(By.className("file-details")).get(0).getAttribute("innerHTML")
-            .isBlank());
+    waitUntilFileIsUploaded();
   }
 
   protected void uploadJpgFile() {
     uploadFile(UPLOADED_JPG_FILE_NAME);
     assertThat(driver.findElement(By.id("file-preview-template-uploadDocuments")).getText().replace("\n", ""))
         .contains(UPLOADED_JPG_FILE_NAME);
+    waitUntilFileIsUploaded();
+  }
+
+  private void waitUntilFileIsUploaded() {
+    await().until(
+        () -> !driver.findElements(By.className("file-details")).get(0).getAttribute("innerHTML")
+            .isBlank());
   }
 }

@@ -1,14 +1,14 @@
 package org.ladocuploader.app.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import io.percy.selenium.Percy;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.springframework.boot.test.web.server.LocalServerPort;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class Page {
 
@@ -326,7 +326,7 @@ public class Page {
   }
 
   public void navigateToFlowScreen(String flowScreen) {
-    driver.navigate().to("http://localhost:%s/flow/%s/%s".formatted(localServerPort, DOC_UPLOAD_FLOW, flowScreen));
+    driver.navigate().to("http://localhost:%s/flow/%s".formatted(localServerPort, flowScreen));
   }
 
   enum FormInputHtmlTag {
