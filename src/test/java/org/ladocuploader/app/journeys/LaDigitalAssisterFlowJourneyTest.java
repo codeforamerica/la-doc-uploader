@@ -28,6 +28,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Choose programs
     assertThat(testPage.getTitle()).isEqualTo("Choose programs");
+    // Choose SNAP program
+    testPage.enter("programs", "SNAP");
+    assertThat(testPage.getTitle()).isEqualTo("Expedited notice");
 
   }
 }
