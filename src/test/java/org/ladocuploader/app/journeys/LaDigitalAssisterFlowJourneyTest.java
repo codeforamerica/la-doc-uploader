@@ -38,6 +38,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.goBack();
     testPage.clickElementById("programs-SNAP"); // unselect
     testPage.clickElementById("programs-CASH");
+    testPage.clickContinue();
     assertThat(testPage.getTitle()).isNotEqualTo("Expedited notice");
 
   }
