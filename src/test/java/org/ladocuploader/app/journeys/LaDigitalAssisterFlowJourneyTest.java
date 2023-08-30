@@ -3,6 +3,7 @@ package org.ladocuploader.app.journeys;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
+import org.openqa.selenium.WebElement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

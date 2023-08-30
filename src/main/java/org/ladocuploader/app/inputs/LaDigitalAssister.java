@@ -20,5 +20,20 @@ public class LaDigitalAssister extends FlowInputs {
   private List<String> programs;
   @NotBlank
   private String whosApplying;
+
+  @NotBlank
+  private String firstName;
+
+  @NotBlank
+  private String lastName;
+
+  private String highestEducation;
+
+  private String maritalStatus;
+
+  private String sex;
+
+  private String birthDate;
+
 }
 

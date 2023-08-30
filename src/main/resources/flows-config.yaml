@@ -46,9 +46,9 @@ flow:
     nextScreens:
       - name: applicantNotice
         condition: ApplicantIsNotSelf
-      - name: personalInfoPlaceholder
+      - name: personalInfo
   applicantNotice:
     nextScreens:
-      - name: personalInfoPlaceholder
-  personalInfoPlaceholder:
+      - name: personalInfo
+  personalInfo:
     nextScreens: null
