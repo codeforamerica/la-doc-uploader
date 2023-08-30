@@ -1,6 +1,11 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,5 +22,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   // Choose programs
   private List<String> programs;
+  @NotBlank
+  private String whosApplying;
 }
 

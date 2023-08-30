@@ -40,4 +40,7 @@ flow:
     nextScreens:
       - name: signPost
   signPost:
+    nextScreens:
+      - name: whosApplying
+  whosApplying:
     nextScreens: null
