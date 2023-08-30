@@ -26,4 +26,18 @@ flow:
     nextScreens:
       - name: timeoutNotice
   timeoutNotice:
+    nextScreens:
+      - name: languagePreference
+  languagePreference:
+    nextScreens:
+      - name: choosePrograms
+  choosePrograms:
+    nextScreens:
+      - name: expeditedSnapNotice
+        condition: ProgramsIncludeSnap
+      - name: signPost
+  expeditedSnapNotice:
+    nextScreens:
+      - name: signPost
+  signPost:
     nextScreens: null
