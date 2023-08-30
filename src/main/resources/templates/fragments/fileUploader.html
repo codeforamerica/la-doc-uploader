@@ -428,10 +428,24 @@
           });
         }
       },
+
       error: function (file, errorMessage, xhr) {
         if (xhr && xhr.response) {
-          // redirect to client info page with intercepted param for error popup
-          location.href = "/flow/laDocUpload/clientInfo?intercepted=uploadDocuments"
+            const knownXhrErrors = [`[[${#messages.msg('upload-documents.error-mime-type')}]]`,
+                `[[${#messages.msg('upload-documents.this-file-is-too-large')}]]`,
+                `[[${#messages.msg('upload-documents.error-could-not-read-file')}]]`,
+                `[[${#messages.msg('upload-documents.error-password-protected')}]]`,
+                `[[${#messages.msg('upload-documents.error-maximum-number-of-files')}]]`
+            ]
+
+            if (knownXhrErrors.includes(JSON.stringify(xhr.response))){
+                file.previewElement.getElementsByClassName("text--error")[0].innerText = xhr.response;
+
+            } else {
+                // redirect to client info page with intercepted param for error popup
+                location.href = "/flow/laDocUpload/clientInfo?intercepted=uploadDocuments"
+            }
+
         } else {
           var message = errorMessage.error ? errorMessage.error : errorMessage;
           file.previewElement.getElementsByClassName("text--error")[0].innerText = message;

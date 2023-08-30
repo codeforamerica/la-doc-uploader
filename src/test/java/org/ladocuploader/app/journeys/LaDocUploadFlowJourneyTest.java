@@ -1,24 +1,23 @@
 package org.ladocuploader.app.journeys;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Slf4j
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void firstNameInputFlow() {
-    testPage.navigateToFlowScreen("clientInfo");
+    testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
     // SSN input
     WebElement firstNameInput = testPage.findElementById("firstName");
@@ -38,7 +37,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void lastNameInputFlow() {
-    testPage.navigateToFlowScreen("clientInfo");
+    testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
     // SSN input
     WebElement lastNameInput = testPage.findElementById("lastName");
@@ -58,7 +57,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void emailAddressInputFlow() {
-    testPage.navigateToFlowScreen("clientInfo");
+    testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
     // SSN input
     WebElement emailAddressInput = testPage.findElementById("emailAddress");
@@ -79,7 +78,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void caseNumberInputFlow() {
-    testPage.navigateToFlowScreen("clientInfo");
+    testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
     // SSN input
     WebElement caseNumberInput = testPage.findElementById("caseNumber");
@@ -99,7 +98,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void birthDateInputFlow() {
-    testPage.navigateToFlowScreen("clientInfo");
+    testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
     // birthdate inputs
     WebElement birthDateMonthInput = testPage.findElementById("birthDate-month");
@@ -156,7 +155,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void ssnInputFlow() {
-    testPage.navigateToFlowScreen("clientInfo");
+    testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
     // SSN input
     WebElement ssnInput = testPage.findElementById("ssn");
