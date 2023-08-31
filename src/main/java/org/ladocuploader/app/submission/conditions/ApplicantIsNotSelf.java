@@ -11,7 +11,7 @@ public class ApplicantIsNotSelf implements Condition {
     public Boolean run(Submission submission) {
         var inputData = submission.getInputData();
         if (inputData.containsKey("whosApplying")) {
-            return submission.getInputData().get("whosApplying").equals("Self");
+            return !submission.getInputData().get("whosApplying").equals("Self");
         }
         return false;
     }

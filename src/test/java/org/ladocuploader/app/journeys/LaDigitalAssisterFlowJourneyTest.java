@@ -45,8 +45,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     // Who's Applying
-    assertThat(testPage.getTitle()).isEqualTo("Who's Applying");
-    testPage.enter("whosApplying", "CommunityPartner");
+    assertThat(testPage.getTitle()).isEqualTo("Who's applying");
+    testPage.clickElementById("whosApplying-CommunityPartner");
     testPage.clickContinue();
 
     // Applicant is not self - check that flow next page is the notice
