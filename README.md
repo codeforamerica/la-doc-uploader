@@ -16,6 +16,19 @@ Example:
   "phoneNumber": "(123) 456-7890",
   "emailAddress": "itsbritney@example.com",
   "ssn": "some-encrypted-ssn",
-  "uploadDocuments": "[\"some-file-path\"]"
+  "uploadDocuments": "[\"some-file-path\"]",
+  "uploadDocumentsFeedback": "easy",
+  "uploadDocumentsFeedbackDetail": "this was super easy"
+}
+```
+---
+
+`url_params` are the params that are included in the requests 
+
+Example:
+``` json
+{
+  "lang": "en",
+  "ref_id": "1234"
 }
 ```

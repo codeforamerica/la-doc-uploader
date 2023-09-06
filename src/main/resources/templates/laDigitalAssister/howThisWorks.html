@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{how-this-works.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <script th:inline="javascript">
+          $(function() {
+              $('.reveal:not(.force-show-content)').removeClass('is-hiding-content');
+          });
+      </script>
+      <main id="content" role="main" class="form-card spacing-above-35"
+            th:with="maxFiles=${@environment.getProperty('form-flow.uploads.max-files')},
+                     maxSize=${@environment.getProperty('form-flow.uploads.max-file-size')}">
+        <th:block th:replace="~{fragments/icons :: prepareToApply}"></th:block>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{how-this-works.header}, subtext=#{how-this-works.subtext})}"/>
+        <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r1',
+                linkLabel=~{::revealLabel1},
+                content=~{::revealContent1})}">
+          <th:block th:ref="revealLabel1">
+            <span class="clipboard-icon">
+              <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+            </span>
+            <span th:text="#{how-this-works.we-will-ask}"></span>
+          </th:block>
+          <th:block th:ref="revealContent1">
+            <ul class="list--bulleted">
+              <li th:text="#{how-this-works.we-will-ask-l1}"></li>
+              <li th:text="#{how-this-works.we-will-ask-l2}"></li>
+              <li th:text="#{how-this-works.we-will-ask-l3}"></li>
+              <li th:text="#{how-this-works.we-will-ask-l4}"></li>
+              <li th:text="#{how-this-works.we-will-ask-l5}"></li>
+            </ul>
+          </th:block>
+        </th:block>
+
+        <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r2',
+                linkLabel=~{::revealLabel2},
+                content=~{::revealContent2})}">
+          <th:block th:ref="revealLabel2">
+            <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+            <span th:text="#{how-this-works.submitting-an-incomplete-app}"></span>
+          </th:block>
+          <th:block th:ref="revealContent2">
+            <p th:text="#{how-this-works.submitting-an-incomplete-app-l1}"></p>
+            <p th:text="#{how-this-works.submitting-an-incomplete-app-l2}"></p>
+          </th:block>
+        </th:block>
+
+        <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r3',
+                linkLabel=~{::revealLabel3},
+                content=~{::revealContent3})}">
+          <th:block th:ref="revealLabel3">
+            <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+            <span th:text="#{how-this-works.adding-documents}"></span>
+          </th:block>
+          <th:block th:ref="revealContent3">
+            <ul class="list--bulleted">
+              <li th:text="#{how-this-works.adding-documents-l1}"></li>
+              <li th:text="#{how-this-works.adding-documents-l2}"></li>
+              <li th:text="#{how-this-works.adding-documents-l3}"></li>
+            </ul>
+          </th:block>
+        </th:block>
+
+        <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r4',
+                linkLabel=~{::revealLabel4},
+                content=~{::revealContent4},
+                forceShowContent='true')}">
+          <th:block th:ref="revealLabel4">
+            <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+            <th:span th:text="#{how-this-works.after-you-submit}"></th:span>
+          </th:block>
+          <th:block th:ref="revealContent4">
+            <p th:text="#{how-this-works.after-you-submit-l1}"></p>
+            <p th:utext="#{how-this-works.after-you-submit-l2}"></p>
+            <p th:text="#{how-this-works.after-you-submit-l3}"></p>
+          </th:block>
+        </th:block>
+
+        <div class="form-card__footer spacing-below-60">
+          <th:block th:replace="~{fragments/continueButton :: continue}"/>
+        </div>
+
+        <div class="display-flex">
+          <div class="spacing-right-10">
+            <th:block th:replace="'fragments/icons' :: filledLock"></th:block>
+          </div>
+          <p class="text--small" th:utext="#{how-this-works.your-information-is-secure}"></p>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>
