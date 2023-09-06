@@ -51,5 +51,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Applicant is not self - check that flow next page is the notice
     assertThat(testPage.getTitle()).isEqualTo("Applicant notice");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Personal info");
+    testPage.enter("firstName", "test");
+    testPage.enter("lastName", "test2");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Contact info");
   }
 }
