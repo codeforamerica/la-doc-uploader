@@ -51,4 +51,7 @@ flow:
     nextScreens:
       - name: personalInfo
   personalInfo:
+    nextScreens:
+      - name: contactInfo
+  contactInfo:
     nextScreens: null

@@ -39,5 +39,9 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String birthDate;
 
+  private String phoneNumber;
+
+  private String emailAddress;
+
 }
 
