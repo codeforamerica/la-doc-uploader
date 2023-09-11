@@ -2,10 +2,6 @@ package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.jetbrains.annotations.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -45,5 +41,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String emailAddress;
 
+  private String multiplePersonHousehold;
 }
 
