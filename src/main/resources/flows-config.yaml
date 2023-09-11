@@ -56,4 +56,9 @@ flow:
   contactInfo:
     nextScreens: null
   multiplePersonHousehold:
+    nextScreens:
+      - name: householdSignPost
+        condition: IsMultiplePersonHousehold
+      - name: householdSignPost
+  householdSignPost:
     nextScreens: null
