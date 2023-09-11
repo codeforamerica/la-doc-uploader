@@ -63,5 +63,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     // Household
     testPage.navigateToFlowScreen("laDigitalAssister/multiplePersonHousehold");
     assertThat(testPage.getTitle()).isEqualTo("Multiple person household");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    testPage.clickContinue();
   }
 }
