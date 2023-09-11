@@ -21,7 +21,7 @@ jobs:
         uses: thebritican/fetch-latest-release@v2.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ steps.fetch-latest-release.outputs.tag_name }}
           fetch-depth: 0
@@ -66,7 +66,7 @@ jobs:
         uses: thebritican/fetch-latest-release@v2.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ steps.fetch-latest-release.outputs.tag_name }}
           fetch-depth: 0
