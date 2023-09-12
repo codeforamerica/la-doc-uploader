@@ -61,4 +61,12 @@ flow:
         condition: IsMultiplePersonHousehold
       - name: householdSignPost
   householdSignPost:
+    nextScreens:
+      - name: householdInfo
+  householdInfo:
     nextScreens: null
+
+subflows:
+  household:
+    entryScreen: multiplePersonHousehold
+    iterationStartScreen: housemateInfo
