@@ -69,4 +69,6 @@ flow:
 subflows:
   household:
     entryScreen: multiplePersonHousehold
-    iterationStartScreen: housemateInfo
+    iterationStartScreen: householdInfo
+    reviewScreen: householdList
+    deleteConfirmationScreen: householdDeleteConfirmation
