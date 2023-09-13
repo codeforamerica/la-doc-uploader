@@ -26,6 +26,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   @NotBlank
   private String lastName;
+  private String otherNames;
 
   private String highestEducation;
 
