@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
     protected static List<Rule> resultsList = new ArrayList<>();
     protected static Results results;
-    protected AccessibilityTestPage testPage;
 
     @Override
     @BeforeEach
@@ -32,7 +31,7 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
     void afterEach() {
         AxeBuilder builder = new AxeBuilder();
         results = builder.analyze(driver);
-        resultsList.addAll(testPage.resultsList);
+        resultsList.addAll(((AccessibilityTestPage)testPage).resultsList);
     }
 
     @AfterAll
