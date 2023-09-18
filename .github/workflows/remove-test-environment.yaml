@@ -10,5 +10,5 @@ jobs:
     steps:
       - uses: strumwolf/delete-deployment-environment@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ENV_PAT }}
           environment: test-la-doc-uploader-pr-${{ github.event.number }}
