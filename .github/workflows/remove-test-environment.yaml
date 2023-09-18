@@ -1,9 +1,8 @@
 name: Delete Environment
 
 on:
-  delete:
-    branches-ignore:
-      - main
+  pull_request:
+    types: [ closed ]
 
 jobs:
   delete:
