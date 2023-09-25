@@ -158,6 +158,15 @@ public class Page {
     selectFromDropdown(driver.findElement(By.name(inputName)), optionText);
   }
 
+  public void selectRadio(String inputName, String optionText) {
+    List<WebElement> webElements = driver.findElements(By.name(inputName));
+    WebElement optionToSelect = webElements.stream()
+        .filter(option -> option.getAttribute("value").equals(optionText))
+        .findFirst()
+        .orElseThrow();
+    optionToSelect.click();
+  }
+
   private void selectFromDropdown(WebElement webElement, String optionText) {
     WebElement optionToSelect = webElement
         .findElements(By.tagName("option")).stream()

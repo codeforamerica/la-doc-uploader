@@ -3,7 +3,6 @@ package org.ladocuploader.app.journeys;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
-import org.openqa.selenium.WebElement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,8 +23,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Language preference");
     testPage.selectFromDropdown("languageRead", "Spanish");
     testPage.selectFromDropdown("languageSpeak", "Spanish");
-    WebElement needInterpreterYes = testPage.findElementById("needInterpreter-Yes");
-    needInterpreterYes.click();
+    testPage.selectRadio("needInterpreter", "Yes");
     testPage.clickContinue();
 
     // Choose programs
@@ -42,6 +40,33 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Signpost
     assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    testPage.clickContinue();
+
+    // Who's Applying
+    assertThat(testPage.getTitle()).isEqualTo("Who's applying");
+    testPage.clickElementById("whosApplying-CommunityPartner");
+    testPage.clickContinue();
+
+    // Applicant is not self - check that flow next page is the notice
+    assertThat(testPage.getTitle()).isEqualTo("Applicant notice");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Personal info");
+    testPage.enter("firstName", "test");
+    testPage.enter("lastName", "test2");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Contact info");
+
+    // Household
+    testPage.navigateToFlowScreen("laDigitalAssister/multiplePersonHousehold");
+    assertThat(testPage.getTitle()).isEqualTo("Multiple person household");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Housemate info");
     testPage.clickContinue();
   }
 }

@@ -43,4 +43,32 @@ flow:
     nextScreens:
       - name: whosApplying
   whosApplying:
+    nextScreens:
+      - name: applicantNotice
+        condition: ApplicantIsNotSelf
+      - name: personalInfo
+  applicantNotice:
+    nextScreens:
+      - name: personalInfo
+  personalInfo:
+    nextScreens:
+      - name: contactInfo
+  contactInfo:
     nextScreens: null
+  multiplePersonHousehold:
+    nextScreens:
+      - name: householdSignPost
+        condition: IsMultiplePersonHousehold
+      - name: householdSignPost
+  householdSignPost:
+    nextScreens:
+      - name: householdInfo
+  householdInfo:
+    nextScreens: null
+
+subflows:
+  household:
+    entryScreen: multiplePersonHousehold
+    iterationStartScreen: householdInfo
+    reviewScreen: householdList
+    deleteConfirmationScreen: householdDeleteConfirmation
