@@ -53,6 +53,18 @@ flow:
   personalInfo:
     nextScreens:
       - name: homeAddress
+  cashAssistanceLegalNotice:
+    nextScreens:
+      - name: cashAssistanceChildSupportNotice
+  cashAssistanceChildSupportNotice:
+    nextScreens:
+      - name: cashAssistanceFamilyViolenceNotice
+  cashAssistanceMedicalPaymentsNotice:
+    nextScreens:
+      - name: cashAssistanceFamilyViolenceNotice
+  cashAssistanceFamilyViolenceNotice:
+    nextScreens:
+      - name: homeAddress
   homeAddress:
     nextScreens:
       - name: contactInfo
