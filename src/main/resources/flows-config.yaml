@@ -52,8 +52,17 @@ flow:
       - name: personalInfo
   personalInfo:
     nextScreens:
+      - name: homeAddress
+  homeAddress:
+    nextScreens:
       - name: contactInfo
   contactInfo:
+    nextScreens:
+      - name: reviewContactInfo
+  phoneNumberNudge:
+    nextScreens:
+      - name: reviewContactInfo
+  reviewContactInfo:
     nextScreens: null
   multiplePersonHousehold:
     nextScreens:
