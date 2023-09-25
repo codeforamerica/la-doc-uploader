@@ -310,3 +310,15 @@ input[type="number"] {
   position: relative;
   bottom: -1px;
 }
+
+.btn-group {
+  float: left;
+}
+
+.btn-group button {
+  display: block; /* Make the buttons appear below each other */
+}
+
+.btn-group button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}

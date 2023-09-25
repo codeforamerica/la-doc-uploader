@@ -65,6 +65,11 @@ flow:
       - name: householdInfo
   householdInfo:
     nextScreens: null
+  specialSituations:
+    nextScreens:
+     - name: school
+  school:
+    nextScreens: null
 
 subflows:
   household:
