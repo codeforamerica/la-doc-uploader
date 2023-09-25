@@ -64,6 +64,96 @@ flow:
     nextScreens:
       - name: householdInfo
   householdInfo:
+    nextScreens:
+     - name: ssnForm
+  ssnForm:
+    nextScreens:
+     - name: ssnFaqs
+  ssnFaqs:
+    nextScreens:
+      - name: specialSituations
+  specialSituations:
+    nextScreens:
+      - name: school
+  school:
+    nextScreens:
+      - name: pregnancy
+  pregnancy:
+    nextScreens:
+      - name: outOfStateBenefits
+  outOfStateBenefits:
+    nextScreens:
+    - name: seasonalFarmWorker
+  seasonFarmWorker:
+    nextScreens:
+      - name: usCitizen
+  usCitizen:
+    nextScreens:
+      - name: householdCount
+  householdCount:
+    nextScreens:
+      - name: usVeteran
+  usVeteran:
+    nextScreens:
+      - name: fosterSystem
+  fosterSystem:
+    nextScreens:
+      - name: fosterCareUntilAdult
+  fosterCareUntilAdult:
+    nextScreens:
+      - name: rentedRoom
+  rentedRoom:
+    nextScreens:
+      - name: payForMeals
+  payForMeals:
+    nextScreens:
+      - name: minorNotInSchoolNotUpToDate
+  minorNotInSchoolNotUpToDate:
+    nextScreens:
+      - name: immunizationSchoolProof
+  immunizationSchoolProof:
+    nextScreens:
+      - name: requestChildcareHelp
+  requestChildcareHelp:
+    nextScreens:
+      - name: childCareWho
+  childCareWho:
+    nextScreens:
+      - name: childrenWithParentOutsideHome
+  childrenWithParentOutsideHome:
+    nextScreens:
+      - name: additionalParent
+  additionalParent:
+    nextScreens:
+      - name: custodyOfChild
+  custodyOfChild:
+    nextScreens:
+      - name: whoCustody
+  whoCustody:
+    nextScreens:
+      - name: parentsList
+  parentsList:
+    nextScreens:
+      - name: sensitiveQuestions
+  sensitiveQuestions:
+    nextScreens:
+      - name: personalSituations
+  personalSituations:
+    nextScreens:
+      - name: whichPersonalSituations
+  whichPersonalSituations:
+    nextScreens:
+      - name: moreInfoPersonalSituations
+  moreInfoPersonalSituations:
+    nextScreens:
+      - name: victimOfDomesticViolence
+  victimOfDomesticViolence:
+    nextScreens:
+      - name: sensitiveQuestionsCriminalJustice
+  sensitiveQuestionsCriminalJustice:
+    nextScreens:
+      - name: criminalJusticeSituations
+  criminalJusticeSituations:
     nextScreens: null
 
 subflows:
