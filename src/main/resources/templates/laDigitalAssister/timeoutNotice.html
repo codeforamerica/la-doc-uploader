@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{~{fragments/head :: head(title=#{timeout-notice.title})}}"></head>
+<head th:replace="~{fragments/head :: head(title=#{timeout-notice.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="~{~{fragments/toolbar :: toolbar}}"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="~{~{fragments/goBack :: goBackLink}}"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{~{fragments/icons :: timeoutClock}}"></th:block>
+        <th:block th:replace="~{fragments/icons :: timeoutClock}"></th:block>
         <th:block
-            th:replace="~{~{fragments/cardHeader :: cardHeader(header=#{timeout-notice.header}, subtext=#{timeout-notice.subtext})}}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{timeout-notice.header}, subtext=#{timeout-notice.subtext})}"/>
         <div class="form-card__footer">
-          <th:block th:replace="~{~{fragments/continueButton :: continue}}" />
+          <th:block th:replace="~{fragments/continueButton :: continue}" />
         </div>
       </main>
     </div>

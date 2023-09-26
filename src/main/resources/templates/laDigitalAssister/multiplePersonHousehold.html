@@ -3,15 +3,15 @@
 <head th:replace="~{fragments/head :: head(title=#{multiple-person-household.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="~{~{fragments/toolbar :: toolbar}}"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="~{~{fragments/goBack :: goBackLink}}"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{~{fragments/icons :: householdBlue}}"></th:block>
+        <th:block th:replace="~{fragments/icons :: householdBlue}"></th:block>
         <th:block
-            th:replace="~{~{fragments/cardHeader :: cardHeader(header=#{multiple-person-household.header})}}"/>
-          <th:block th:replace="~{~{fragments/form :: form(action=${formAction}, content=~{::formContent})}}">
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{multiple-person-household.header})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
             <th:block th:ref="formContent">
               <div class="form-card__content">
                 <ul class="list--bulleted">
@@ -52,6 +52,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="~{~{fragments/footer :: footer}}" />
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>

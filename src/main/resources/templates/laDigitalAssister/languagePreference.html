@@ -6,55 +6,55 @@
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="~{~{fragments/goBack :: goBackLink}}"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{~{fragments/icons :: languagePreferences}}"></th:block>
+        <th:block th:replace="~{fragments/icons :: languagePreferences}"></th:block>
         <th:block
             th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{language-preference.title})}"/>
           <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContents})}">
             <th:block th:ref="formContents">
               <div class="form-card__content">
                 <th:block
-                    th:replace="~{~{fragments/inputs/select :: select(label=#{language-preference.language-to-read-label}, inputName='languageRead', helpText=#{language-preference.language-to-read-help}, content=~{::languageToReadContent})}}">
+                    th:replace="~{fragments/inputs/select :: select(label=#{language-preference.language-to-read-label}, inputName='languageRead', helpText=#{language-preference.language-to-read-help}, content=~{::languageToReadContent})}">
                   <th:block th:ref="languageToReadContent">
                     <th:block
-                        th:replace="~{~{fragments/inputs/selectOption :: selectOption(value='English', optionText=#{language-preference.english})}}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='English', optionText=#{language-preference.english})}"/>
                     <th:block
-                        th:replace="~{~{fragments/inputs/selectOption :: selectOption(value='Spanish', optionText=#{language-preference.spanish})}}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Spanish', optionText=#{language-preference.spanish})}"/>
                     <th:block
-                        th:replace="~{~{fragments/inputs/selectOption :: selectOption(value='Vietnamese', optionText=#{language-preference.vietnamese})}}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Vietnamese', optionText=#{language-preference.vietnamese})}"/>
                   </th:block>
                 </th:block>
 
                 <th:block
-                    th:replace="~{~{fragments/inputs/select :: select(label=#{language-preference.language-to-speak-label}, inputName='languageSpeak', helpText=#{language-preference.language-to-speak-help}, content=~{::languageToSpeakContent})}}">
+                    th:replace="~{fragments/inputs/select :: select(label=#{language-preference.language-to-speak-label}, inputName='languageSpeak', helpText=#{language-preference.language-to-speak-help}, content=~{::languageToSpeakContent})}">
                   <th:block th:ref="languageToSpeakContent">
                     <th:block
-                        th:replace="~{~{fragments/inputs/selectOption :: selectOption(value='English', optionText=#{language-preference.english})}}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='English', optionText=#{language-preference.english})}"/>
                     <th:block
-                        th:replace="~{~{fragments/inputs/selectOption :: selectOption(value='Spanish', optionText=#{language-preference.spanish})}}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Spanish', optionText=#{language-preference.spanish})}"/>
                     <th:block
-                        th:replace="~{~{fragments/inputs/selectOption :: selectOption(value='Vietnamese', optionText=#{language-preference.vietnamese})}}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Vietnamese', optionText=#{language-preference.vietnamese})}"/>
                   </th:block>
                 </th:block>
 
-                <th:block th:replace="~{~{fragments/inputs/radioFieldset ::
+                <th:block th:replace="~{fragments/inputs/radioFieldset ::
                             radioFieldset(inputName='needInterpreter',
                             label=#{language-preference.need-interpreter-label},
                             fieldsetHelpText=#{language-preference.need-interpreter-help},
-                            content=~{::needInterpreterContent})}}">
+                            content=~{::needInterpreterContent})}">
                   <th:block th:ref="needInterpreterContent">
                     <th:block
-                        th:replace="~{~{fragments/inputs/radio :: radio(inputName='needInterpreter',value='Yes', label=#{general.inputs.yes})}}"/>
+                        th:replace="~{fragments/inputs/radio :: radio(inputName='needInterpreter',value='Yes', label=#{general.inputs.yes})}"/>
                     <th:block
-                        th:replace="~{~{fragments/inputs/radio :: radio(inputName='needInterpreter',value='No', label=#{general.inputs.no})}}"/>
+                        th:replace="~{fragments/inputs/radio :: radio(inputName='needInterpreter',value='No', label=#{general.inputs.no})}"/>
                   </th:block>
                 </th:block>
 
               </div>
             <div class="form-card__footer">
-              <th:block th:replace="~{~{fragments/inputs/submitButton :: submitButton(
-                  text=#{general.inputs.continue})}}"/>
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>

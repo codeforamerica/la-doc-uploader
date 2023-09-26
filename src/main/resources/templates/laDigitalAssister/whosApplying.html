@@ -11,7 +11,7 @@
           <th:block
               th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{whos-applying.header})}"/>
         <th:block
-            th:replace="~{~{fragments/form :: form(action=${formAction}, content=~{::whosApplyingForm})}}">
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::whosApplyingForm})}">
           <th:block th:ref="whosApplyingForm">
         <div class="form-card__content">
           <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
@@ -32,8 +32,8 @@
                       </th:block>
         </div>
         <div class="form-card__footer">
-          <th:block th:replace="~{~{fragments/inputs/submitButton :: submitButton(
-                  text=#{general.inputs.continue})}}"/>
+          <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
         </div>
           </th:block>
 
