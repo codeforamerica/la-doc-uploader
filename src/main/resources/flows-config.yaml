@@ -55,3 +55,228 @@ flow:
       - name: homeAddress
   homeAddress:
     nextScreens: null
+  cashAssistanceLegalNotice:
+    nextScreens:
+      - name: cashAssistanceChildSupportNotice
+  cashAssistanceChildSupportNotice:
+    nextScreens:
+      - name: cashAssistanceFamilyViolenceNotice
+  cashAssistanceMedicalPaymentsNotice:
+    nextScreens:
+      - name: cashAssistanceFamilyViolenceNotice
+  cashAssistanceFamilyViolenceNotice:
+    nextScreens:
+      - name: homeAddress
+  homeAddress:
+    nextScreens:
+      - name: contactInfo
+  contactInfo:
+    nextScreens:
+      - name: reviewContactInfo
+  phoneNumberNudge:
+    nextScreens:
+      - name: reviewContactInfo
+  reviewContactInfo:
+    nextScreens: null
+  multiplePersonHousehold:
+    nextScreens:
+      - name: householdSignPost
+        condition: IsMultiplePersonHousehold
+      - name: householdSignPost
+  householdSignPost:
+    nextScreens:
+      - name: householdInfo
+  householdInfo:
+    nextScreens:
+      - name: householdList
+  householdList:
+    nextScreens:
+     - name: ssnForm
+  ssnForm:
+    nextScreens:
+     - name: ssnFaqs
+  ssnFaqs:
+    nextScreens:
+      - name: specialSituations
+  specialSituations:
+    nextScreens:
+      - name: school
+  school:
+    nextScreens:
+      - name: pregnancy
+  pregnancy:
+    nextScreens:
+      - name: outOfStateBenefits
+  outOfStateBenefits:
+    nextScreens:
+    - name: seasonalFarmWorker
+  seasonFarmWorker:
+    nextScreens:
+      - name: usCitizen
+  usCitizen:
+    nextScreens:
+      - name: householdCount
+  householdCount:
+    nextScreens:
+      - name: usVeteran
+  usVeteran:
+    nextScreens:
+      - name: fosterSystem
+  fosterSystem:
+    nextScreens:
+      - name: fosterCareUntilAdult
+  fosterCareUntilAdult:
+    nextScreens:
+      - name: rentedRoom
+  rentedRoom:
+    nextScreens:
+      - name: payForMeals
+  payForMeals:
+    nextScreens:
+      - name: minorNotInSchoolNotUpToDate
+  minorNotInSchoolNotUpToDate:
+    nextScreens:
+      - name: immunizationSchoolProof
+  immunizationSchoolProof:
+    nextScreens:
+      - name: requestChildcareHelp
+  requestChildcareHelp:
+    nextScreens:
+      - name: childCareWho
+  childCareWho:
+    nextScreens:
+      - name: childrenWithParentOutsideHome
+  childrenWithParentOutsideHome:
+    nextScreens:
+      - name: additionalParent
+  additionalParent:
+    nextScreens:
+      - name: custodyOfChild
+  custodyOfChild:
+    nextScreens:
+      - name: whoCustody
+  whoCustody:
+    nextScreens:
+      - name: parentsList
+  parentsList:
+    nextScreens:
+      - name: sensitiveQuestions
+  sensitiveQuestions:
+    nextScreens:
+      - name: personalSituations
+  personalSituations:
+    nextScreens:
+      - name: whichPersonalSituations
+  whichPersonalSituations:
+    nextScreens:
+      - name: moreInfoPersonalSituations
+  moreInfoPersonalSituations:
+    nextScreens:
+      - name: victimOfDomesticViolence
+  victimOfDomesticViolence:
+    nextScreens:
+      - name: sensitiveQuestionsCriminalJustice
+  sensitiveQuestionsCriminalJustice:
+    nextScreens:
+      - name: criminalJusticeSituations
+  criminalJusticeSituations:
+    nextScreens: null
+  nextStep:
+    nextScreens:
+      - name: householdSchool
+  householdSchool:
+    nextScreens:
+      - name: householdSchoolWho
+  householdSchoolWho:
+    nextScreens:
+      - name: householdPregnancy
+  householdPregnancy:
+    nextScreens:
+      - name: householdPregnancyWho
+  householdPregnancyWho:
+    nextScreens:
+      - name: householdBenefits
+  householdBenefits:
+    nextScreens:
+      - name: householdBenefitsWho
+  householdBenefitsWho:
+    nextScreens:
+      - name: householdPrepareFood
+  householdPrepareFood:
+    nextScreens:
+      - name: householdPrepareFoodWho
+  householdPrepareFoodWho:
+    nextScreens:
+      - name: householdSeasonalFarmWorker
+  householdSeasonalFarmWorker:
+    nextScreens:
+      - name: householdCitizenship
+  householdCitizenship:
+    nextScreens:
+      - name: householdNonCitizenWho
+  householdNonCitizenWho:
+    nextScreens:
+      - name: householdCitizenshipNumber
+  householdCitizenshipNumber:
+    nextScreens:
+      - name: householdVeteran
+  householdVeteran:
+    nextScreens:
+      - name: householdVeteranWho
+  householdVeteranWho:
+    nextScreens:
+      - name: householdFoster
+  householdFoster:
+    nextScreens:
+      - name: householdFosterWho
+  householdFosterWho:
+    nextScreens:
+      - name: householdFosterAgedOut
+  householdFosterAgedOut:
+    nextScreens:
+      - name: householdFosterAgedOutWho
+  householdFosterAgedOutWho:
+    nextScreens:
+      - name: householdRoomRental
+  householdRoomRental:
+    nextScreens:
+      - name: householdRoomRentalWho
+  householdRoomRentalWho:
+    nextScreens:
+      - name: householdMeals
+  householdMeals:
+    nextScreens:
+      - name: householdMealsWho
+  householdMealsWho:
+    nextScreens:
+      - name: householdSensitiveQuestions
+  householdSensitiveQuestions:
+    nextScreens:
+      - name: householdPersonalSituations
+  householdPersonalSituations:
+    nextScreens:
+      - name: householdPersonalSituationsWho
+  householdPersonalSituationsWho:
+    nextScreens:
+      - name: householdWhichPersonalSituations
+  householdWhichPersonalSituations:
+    nextScreens:
+      - name: householdMoreInfoPersonalSituations
+  householdMoreInfoPersonalSituations:
+    nextScreens:
+      - name: householdVictimOfDomesticViolence
+  householdVictimOfDomesticViolence:
+    nextScreens:
+      - name: householdSensitiveQuestionsCriminalJustice
+  householdSensitiveQuestionsCriminalJustice:
+    nextScreens:
+      - name: householdCriminalJusticeSituations
+  householdCriminalJusticeSituations:
+    nextScreens: null
+
+subflows:
+  household:
+    entryScreen: multiplePersonHousehold
+    iterationStartScreen: householdInfo
+    reviewScreen: householdList
+    deleteConfirmationScreen: householdDeleteConfirmation

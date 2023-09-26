@@ -3,7 +3,6 @@ package org.ladocuploader.app.journeys;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
-import org.openqa.selenium.WebElement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
-  void fullUploadDocumentFlow() {
+  void fullDigitalAssisterFlow() {
     // How this works
     testPage.navigateToFlowScreen("laDigitalAssister/howThisWorks");
     testPage.clickContinue();
@@ -50,5 +49,34 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Applicant is not self - check that flow next page is the notice
     assertThat(testPage.getTitle()).isEqualTo("Applicant notice");
+    testPage.clickContinue();
+
+    // Personal Info
+    assertThat(testPage.getTitle()).isEqualTo("Personal info");
+    testPage.enter("firstName", "test");
+    testPage.enter("lastName", "test2");
+    testPage.clickContinue();
+
+    // Home Address
+    assertThat(testPage.getTitle()).isEqualTo("Home Address");
+
+    // Contact Info
+    testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
+    assertThat(testPage.getTitle()).isEqualTo("Contact info");
+    testPage.clickContinue();
+
+    // Review Contact Info
+    assertThat(testPage.getTitle()).isEqualTo("Review Contact Information");
+
+    // Household
+    testPage.navigateToFlowScreen("laDigitalAssister/multiplePersonHousehold");
+    assertThat(testPage.getTitle()).isEqualTo("Multiple person household");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Housemate info");
+    testPage.clickContinue();
   }
 }
