@@ -31,13 +31,13 @@ jobs:
           key: ${{ secrets.APTIBLE_SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.APTIBLE_KNOWN_HOSTS }}
       - name: Push to Aptible remote branch
-        run: git push --force ${{ vars.APTIBLE_REMOTE_URL }} "${GITHUB_SHA}}:prod-deploy"
+        run: git push --force ${{ vars.APTIBLE_REMOTE_URL }} "${GITHUB_SHA}:prod-deploy"
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
           sudo dpkg -i aptible-package
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
-          aptible deploy --app app-prod --git-commitish ${GITHUB_SHA}} \
+          aptible deploy --app app-prod --git-commitish ${GITHUB_SHA} \
           'SPRING_PROFILES_ACTIVE=prod' \
           'DEFAULT_LOCALE=en' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
@@ -76,13 +76,13 @@ jobs:
           key: ${{ secrets.APTIBLE_SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.APTIBLE_KNOWN_HOSTS }}
       - name: Push to Aptible remote branch
-        run: git push --force ${{ vars.APTIBLE_REMOTE_URL_ES }} "${GITHUB_SHA}}:prod-es-deploy"
+        run: git push --force ${{ vars.APTIBLE_REMOTE_URL_ES }} "${GITHUB_SHA}:prod-es-deploy"
       - name: Set Aptible environment variables and deploy
         run: |
           wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
           sudo dpkg -i aptible-package
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
-          aptible deploy --app app-prod-es --git-commitish ${GITHUB_SHA}} \
+          aptible deploy --app app-prod-es --git-commitish ${GITHUB_SHA} \
           'SPRING_PROFILES_ACTIVE=prod' \
           'DEFAULT_LOCALE=es' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
