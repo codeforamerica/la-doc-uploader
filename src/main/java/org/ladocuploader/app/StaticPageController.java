@@ -46,4 +46,12 @@ public class StaticPageController {
 
     return new ModelAndView("privacy", model);
   }
+
+  @GetMapping("/ssnFAQs")
+  ModelAndView getSSNFaqs() {
+    Map<String, Object> model = new HashMap();
+    model.put("screen", "ssnFAQs");
+
+    return new ModelAndView("ssnFAQs", model);
+  }
 }
