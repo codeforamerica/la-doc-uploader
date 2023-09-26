@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
-  void fullUploadDocumentFlow() {
+  void fullDigitalAssisterFlow() {
     // How this works
     testPage.navigateToFlowScreen("laDigitalAssister/howThisWorks");
     testPage.clickContinue();

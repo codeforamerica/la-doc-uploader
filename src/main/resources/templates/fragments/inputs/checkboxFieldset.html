@@ -30,7 +30,7 @@
            th:text="${fieldsetHelpText}"></p>
       </legend>
       <input type="hidden" th:id="${inputName} + 'Hidden'" th:name="${inputName} + '[]'" value="">
-      <th:block th:replace="~{${content}"/>
+      <th:block th:replace="${content}"/>
       <th:block
           th:replace="~{fragments/inputError :: validationError(inputName=${inputName})}"></th:block>
     </fieldset>
