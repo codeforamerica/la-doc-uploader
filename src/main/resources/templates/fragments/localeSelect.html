@@ -6,7 +6,7 @@
           class="button"
           aria-haspopup="true"
           aria-controls="menu2">
-    <th:block th:replace="~{fragments/icons :: translation}"></th:block>
+    <th:block th:replace="~{~{fragments/icons :: translation}}"></th:block>
     <span>
       <strong th:text="#{language-preferences.button}"></strong>
         <span th:if="${lang.equals('en')}" class="small-text" aria-hidden="true"

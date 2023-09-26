@@ -75,7 +75,7 @@
              th:value="${dateComponents.get(2)}"/>
     </fieldset>
     <th:block
-      th:replace="~{fragments/inputError :: validationError(inputName=${inputName})}">
+      th:replace="~{~{fragments/inputError :: validationError(inputName=${inputName})}}">
     </th:block>
   </div>
 </th:block>

@@ -25,6 +25,6 @@
             aria-invalid=${hasError}"
            th:value="${inputData.getOrDefault(inputName, '')}">
     <th:block
-        th:replace="~{fragments/inputError :: validationError(inputName=${inputName})}"></th:block>
+        th:replace="~{~{fragments/inputError :: validationError(inputName=${inputName})}}"></th:block>
   </div>
 </th:block>

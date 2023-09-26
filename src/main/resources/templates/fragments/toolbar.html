@@ -30,9 +30,9 @@
 
           });
       </script>
-      <div th:replace="~{fragments/localeSelect :: localeSelect}"></div>
-      <th:block th:replace="~{fragments/localeSelect :: translate_noscript}"></th:block>
+      <div th:replace="~{~{fragments/localeSelect :: localeSelect}}"></div>
+      <th:block th:replace="~{~{fragments/localeSelect :: translate_noscript}}"></th:block>
     </div>
   </header>
-  <th:block th:replace="~{fragments/demoBanner :: demoBanner(demoText=#{demo.banner-text}, demoProfile=${@environment.getProperty('demo')})}"/>
+  <th:block th:replace="~{~{fragments/demoBanner :: demoBanner(demoText=#{demo.banner-text}, demoProfile=${@environment.getProperty('demo')})}}"/>
 </th:block>

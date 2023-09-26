@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{expedited-snap.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{expedited-snap.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="'fragments/icons' :: groceries"></th:block>
+        <th:block th:replace="~{'fragments/icons' :: groceries}"></th:block>
         <th:block
-            th:replace="'fragments/cardHeader' :: cardHeader(header=#{expedited-snap.header})"/>
-        <th:block th:replace="~{'fragments/reveal' :: reveal(
+            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{expedited-snap.header})}"/>
+        <th:block th:replace="~{~{'fragments/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
-                forceShowContent='true')}">
+                forceShowContent='true')}}">
           <th:block th:ref="revealLabel1">
-            <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+            <th:block th:replace="~{~{'fragments/icons' :: clipboardCheck}}"></th:block>
             <th:span th:text="#{expedited-snap.what-is}"></th:span>
           </th:block>
           <th:block th:ref="revealContent1">
             <p th:text="#{expedited-snap.what-is.content}"></p>
           </th:block>
         </th:block>
-        <th:block th:replace="~{'fragments/reveal' :: reveal(
+        <th:block th:replace="~{~{'fragments/reveal' :: reveal(
                 controlId='r2',
                 linkLabel=~{::revealLabel2},
                 content=~{::revealContent2},
-                forceShowContent='true')}">
+                forceShowContent='true')}}">
           <th:block th:ref="revealLabel2">
-            <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+            <th:block th:replace="~{~{'fragments/icons' :: clipboardCheck}}"></th:block>
             <th:span th:text="#{expedited-snap.who-qualifies}"></th:span>
           </th:block>
           <th:block th:ref="revealContent2">
@@ -44,7 +44,7 @@
         </th:block>
 
         <div class="form-card__footer spacing-below-60">
-          <th:block th:replace="~{fragments/continueButton :: continue}"/>
+          <th:block th:replace="~{~{fragments/continueButton :: continue}}"/>
         </div>
           </th:block>
         </th:block>
@@ -52,6 +52,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
