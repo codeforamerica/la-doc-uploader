@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{signpost.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{signpost.title})}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -25,12 +25,12 @@
           </div>
         </div>
         <div class="form-card__footer text--centered">
-          <th:block th:replace="'fragments/continueButton' :: continue"/>
+          <th:block th:replace="~{'fragments/continueButton' :: continue}"/>
         </div>
       </main>
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer"/>
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

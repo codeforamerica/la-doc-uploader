@@ -1,103 +1,103 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{personal-info.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{personal-info.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: face}"></th:block>
         <th:block
-            th:replace="'fragments/cardHeader' :: cardHeader(header=#{personal-info.header})"/>
-          <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::personalInfo})">
+            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{personal-info.header})}"/>
+          <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::personalInfo})}">
             <th:block th:ref="personalInfo">
               <div class="form-card__content">
-                <th:block th:replace="'fragments/inputs/text' ::
+                <th:block th:replace="~{'fragments/inputs/text' ::
                   text(inputName='firstName',
                   label=#{personal-info.firstname},
-                  helpText=#{personal-info.firstname-help})" />
+                  helpText=#{personal-info.firstname-help})}" />
                 
-                <th:block th:replace="'fragments/inputs/text' ::
+                <th:block th:replace="~{'fragments/inputs/text' ::
                   text(inputName='lastName',
                   label=#{personal-info.lastname},
-                  helpText=#{personal-info.lastname-help})" />
+                  helpText=#{personal-info.lastname-help})}" />
                 
-                <th:block th:replace="'fragments/inputs/text' ::
+                <th:block th:replace="~{'fragments/inputs/text' ::
                   text(inputName='otherNames',
                   label=#{personal-info.othernames},
-                  helpText=#{personal-info.othernames-help})" />
+                  helpText=#{personal-info.othernames-help})}" />
                 
-                <th:block th:replace="'fragments/inputs/date' ::
+                <th:block th:replace="~{'fragments/inputs/date' ::
                   date(inputName='birthDate',
                   label=#{personal-info.birthdate},
-                  helpText='personal-info.date-of-birth.help')"/>
+                  helpText='personal-info.date-of-birth.help')}"/>
 
-                <th:block th:replace="'fragments/inputs/radioFieldset' ::
+                <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
                               radioFieldset(inputName='sex',
                               label=#{personal-info.sex},
                               fieldsetHelpText=#{personal-info.sex-help},
-                              content=~{::sexOptions})">
+                              content=~{::sexOptions})}">
                               <th:block th:ref="sexOptions">
                                 <!-- Copy the below input if you want to add more -->
                                 <th:block
-                                    th:replace="'fragments/inputs/radio' :: radio(inputName='sex',value='F', label=#{personal-info.sex-female})"/>
+                                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='sex',value='F', label=#{personal-info.sex-female})}"/>
 
                                 <th:block
-                                    th:replace="'fragments/inputs/radio' :: radio(inputName='sex',value='M', label=#{personal-info.sex-male})"/>
+                                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='sex',value='M', label=#{personal-info.sex-male})}"/>
                               </th:block>
                             </th:block>
-                <th:block th:replace="'fragments/inputs/radioFieldset' ::
+                <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
                               radioFieldset(inputName='maritalStatus',
                               label=#{personal-info.marital-status},
                               fieldsetHelpText=#{personal-info.marital-status-help},
-                              content=~{::maritalStatusOptions})">
+                              content=~{::maritalStatusOptions})}">
                               <th:block th:ref="maritalStatusOptions">
                                 <!-- Copy the below input if you want to add more -->
                                 <th:block
-                                    th:replace="'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='NeverMarried', label=#{personal-info.never-married})"/>
+                                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='NeverMarried', label=#{personal-info.never-married})}"/>
                                 <th:block
-                                    th:replace="'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='MarriedLivingWithSpouse', label=#{personal-info.married-living-with-spouse})"/>
+                                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='MarriedLivingWithSpouse', label=#{personal-info.married-living-with-spouse})}"/>
                                 <th:block
-                                    th:replace="'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='MarriedNotLivingWithSpouse', label=#{personal-info.married-not-living-with-spouse})"/>
+                                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='MarriedNotLivingWithSpouse', label=#{personal-info.married-not-living-with-spouse})}"/>
                                 <th:block
-                                    th:replace="'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='LegallySeparated', label=#{personal-info.legally-separated})"/>
+                                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='LegallySeparated', label=#{personal-info.legally-separated})}"/>
                                 <th:block
-                                    th:replace="'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='Divorced', label=#{personal-info.divorced})"/>
+                                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='Divorced', label=#{personal-info.divorced})}"/>
                                 <th:block
-                                    th:replace="'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='Widowed', label=#{personal-info.widowed})"/>
+                                    th:replace="~{'fragments/inputs/radio' :: radio(inputName='maritalStatus',value='Widowed', label=#{personal-info.widowed})}"/>
                               </th:block>
                             </th:block>
                 <th:block
-                  th:replace="'fragments/inputs/select' :: select(label=#{personal-info.highest-education}, inputName='highestEducation', helpText=#{personal-info.highest-education-help}, content=~{::highestEducation})">
+                  th:replace="~{'fragments/inputs/select' :: select(label=#{personal-info.highest-education}, inputName='highestEducation', helpText=#{personal-info.highest-education-help}, content=~{::highestEducation})}">
                   <th:block th:ref="highestEducation">
                     <!-- Copy the below option if you want more options -->
                     <!-- If you want a placeholder option you can use the cfa:selectOptionPlaceholder live template -->
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='firstGrade', optionText=#{personal-info.first-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='secondGrade', optionText=#{personal-info.second-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='thirdGrade', optionText=#{personal-info.third-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='fourthGrade', optionText=#{personal-info.fourth-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='fifthGrade', optionText=#{personal-info.fifth-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='sixthGrade', optionText=#{personal-info.sixth-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='seventhGrade', optionText=#{personal-info.seventh-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='eighthGrade', optionText=#{personal-info.eighth-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='ninthGrade', optionText=#{personal-info.ninth-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='tenthGrade', optionText=#{personal-info.tenth-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='eleventhGrade', optionText=#{personal-info.eleventh-grade})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='highSchoolOrEquivalent', optionText=#{personal-info.high-school-or-equivalent})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='associatesDegree', optionText=#{personal-info.associates-degree})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='bachelorsDegree', optionText=#{personal-info.bachelors-degree})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='graduateDegree', optionText=#{personal-info.graduate-degree})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='certificateOrDiploma', optionText=#{personal-info.certificate-or-diploma})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='noFormalEducation', optionText=#{personal-info.no-formal-education})"/>
-                    <th:block th:replace="'fragments/inputs/selectOption' :: selectOption(value='notSure', optionText=#{personal-info.not-sure})"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='firstGrade', optionText=#{personal-info.first-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='secondGrade', optionText=#{personal-info.second-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='thirdGrade', optionText=#{personal-info.third-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='fourthGrade', optionText=#{personal-info.fourth-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='fifthGrade', optionText=#{personal-info.fifth-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='sixthGrade', optionText=#{personal-info.sixth-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='seventhGrade', optionText=#{personal-info.seventh-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='eighthGrade', optionText=#{personal-info.eighth-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='ninthGrade', optionText=#{personal-info.ninth-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='tenthGrade', optionText=#{personal-info.tenth-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='eleventhGrade', optionText=#{personal-info.eleventh-grade})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='highSchoolOrEquivalent', optionText=#{personal-info.high-school-or-equivalent})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='associatesDegree', optionText=#{personal-info.associates-degree})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='bachelorsDegree', optionText=#{personal-info.bachelors-degree})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='graduateDegree', optionText=#{personal-info.graduate-degree})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='certificateOrDiploma', optionText=#{personal-info.certificate-or-diploma})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='noFormalEducation', optionText=#{personal-info.no-formal-education})}"/>
+                    <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='notSure', optionText=#{personal-info.not-sure})}"/>
                   </th:block>
                 </th:block>
               </div>
             <div class="form-card__footer">
-              <th:block th:replace="fragments/inputs/submitButton :: submitButton(
-                  text=#{general.inputs.continue})"/>
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>
@@ -105,6 +105,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
