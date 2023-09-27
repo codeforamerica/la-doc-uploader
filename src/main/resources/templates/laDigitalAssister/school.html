@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title='Scaffold')}"></head>
+<head th:replace="~{fragments/head :: head(title=#{school.title})}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -8,15 +8,44 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})}"/>-->
+        <th:block th:replace="~{'fragments/icons' :: school}"></th:block>
+                <th:block
+                    th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{school.header})}"/>
         <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
             <div class="form-card__content">
+              <p th:text="#{school.content.p1}"></p>
+              <p th:text="#{school.content.p2}"></p>
+              <ul class="list--bulleted">
+                <li th:text="#{school.content.li1}"></li>
+                <li th:text="#{school.content.li2}"></li>
+              </ul>
 
             </div>
             <div class="form-card__footer">
-
+              <th:block
+                  th:with="
+              inputName='goingToSchool',
+              ariaDescribe='header',
+              hasHelpText=${!#strings.isEmpty(helpText)},
+              hasAriaDescribe=${!#strings.isEmpty(ariaDescribe)}"
+                  th:assert="${!#strings.isEmpty(inputName)}, ${hasAriaDescribe}">
+                <button
+                    th:name="${inputName}"
+                    th:aria-describedby="${hasHelpText ? inputName + '-help-text' : ariaDescribe}"
+                    type="submit"
+                    value="true"
+                    class="button button--primary">
+                  <span th:text="#{general.inputs.yes}"></span>
+                </button>
+                <button
+                    th:name="${inputName}"
+                    th:aria-describedby="${hasHelpText ? inputName + '-help-text' : ariaDescribe}"
+                    value="false"
+                    class="button spacing-left-0">
+                  <span th:text="#{general.inputs.no}"></span>
+                </button>
+              </th:block>
             </div>
           </th:block>
         </th:block>
