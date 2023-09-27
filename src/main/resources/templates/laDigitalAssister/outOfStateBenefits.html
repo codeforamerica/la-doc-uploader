@@ -14,29 +14,9 @@
         <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
             <div class="form-card__footer">
-              <th:block
-                  th:with="
-              inputName='receivedOutOfStateBenefits',
-              ariaDescribe='header',
-              hasHelpText=${!#strings.isEmpty(helpText)},
-              hasAriaDescribe=${!#strings.isEmpty(ariaDescribe)}"
-                  th:assert="${!#strings.isEmpty(inputName)}, ${hasAriaDescribe}">
-                <button
-                    th:name="${inputName}"
-                    th:aria-describedby="${hasHelpText ? inputName + '-help-text' : ariaDescribe}"
-                    type="submit"
-                    value="true"
-                    class="button button--primary">
-                  <span th:text="#{general.inputs.yes}"></span>
-                </button>
-                <button
-                    th:name="${inputName}"
-                    th:aria-describedby="${hasHelpText ? inputName + '-help-text' : ariaDescribe}"
-                    value="false"
-                    class="button spacing-left-0">
-                  <span th:text="#{general.inputs.no}"></span>
-                </button>
-              </th:block>
+              <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
+                inputName='receivedOutOfStateBenefits',
+                ariaDescribe='header')}"/>
 
             </div>
           </th:block>
