@@ -144,7 +144,6 @@ flow:
     - name: seasonalFarmWorker
       condition: ProgramsIncludeSnap
     - name: immunizationSchoolProof
-      condition: ProgramsIncludeKscpOrFitap
   seasonalFarmWorker:
     nextScreens:
       - name: usCitizen
