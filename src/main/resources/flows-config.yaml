@@ -75,7 +75,41 @@ flow:
     nextScreens:
       - name: reviewContactInfo
   reviewContactInfo:
-    nextScreens: null
+    nextScreens:
+      - name: expeditedSnapStart
+  expeditedSnapStart:
+    nextScreens:
+      - name: livesWithOthers
+  livesWithOthers:
+    nextScreens:
+      - name: incomeReceivedLastMonth
+  incomeReceivedLastMonth:
+    nextScreens:
+      - name: hasMoneyOnHand
+  hasMoneyOnHand:
+    nextScreens:
+      - name: moneyOnHandAmount
+  moneyOnHandAmount:
+    nextScreens:
+      - name: hasHousingPayment
+  hasHousingPayment:
+    nextScreens:
+      - name: housingPaymentAmount
+  housingPaymentAmount:
+    nextScreens:
+      - name: housingUtilityExpenses
+  housingUtilityExpenses:
+    nextScreens:
+      - name: seasonalWorker
+  seasonalWorker:
+    nextScreens:
+      - name: qualificationNotice
+  qualificationNotice:
+    nextScreens:
+      - name: null
+  deniedNotice:
+    nextScreens:
+      - name: null
   multiplePersonHousehold:
     nextScreens:
       - name: householdSignPost
