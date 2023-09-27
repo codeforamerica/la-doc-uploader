@@ -10,7 +10,6 @@
        class="text--help spacing-below-25"></p>
   </div>
   <button
-      style="display:block;"
       th:name="${inputName}"
       th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"      type="submit"
       value="true"
@@ -19,7 +18,6 @@
   </button>
   <button
       th:name="${inputName}"
-      style="display:block; margin-left:0;"
       th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"      value="false"
       th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
       class="button button--secondary">
