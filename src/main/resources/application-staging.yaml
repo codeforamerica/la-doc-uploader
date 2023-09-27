@@ -8,4 +8,4 @@ management:
     enabled-by-default: false
 form-flow:
   uploads:
-    max-file-size: '4'
+    max-file-size: '5'

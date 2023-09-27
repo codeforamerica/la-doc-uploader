@@ -9,10 +9,10 @@ form-flow:
     thumbnail-height: '60'
     # 20 files maximum
     max-files: '20'
-    # 20 MB file size limit
+    # file size limit in MB
     # If this is not set then the server values below for servlet max-file-size and tomcat max POST size will not be set
     # which will cause the server to use the default values of 1MB preventing uploads larger than that.
-    max-file-size: '4'
+    max-file-size: '5'
   mixpanel:
     api-key: ${MIXPANEL_API_KEY}
   aws:
@@ -56,7 +56,6 @@ spring:
         period: 0
         cachecontrol:
           max-age: 7d
-
     locale: ${DEFAULT_LOCALE}
     locale-resolver: fixed
   datasource:
