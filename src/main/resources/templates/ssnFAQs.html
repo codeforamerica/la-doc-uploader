@@ -6,7 +6,6 @@
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
                 <th:block
                     th:replace="'fragments/cardHeader' :: cardHeader(header=#{ssn-faqs.header})"/>
@@ -48,7 +47,7 @@
           <th:block th:ref="revealContent3">
             <p th:text="#{ssn-faqs.accordion3.expanded}"></p>
             <ul class="list--bulleted">
-              <li th:text="#{ssn-faqs.accordion3.expanded.li1}"></li>
+              <li th:utext="#{ssn-faqs.accordion3.expanded.li1}"></li>
               <li th:text="#{ssn-faqs.accordion3.expanded.li2}"></li>
               <li th:text="#{ssn-faqs.accordion3.expanded.li3}"></li>
               <li th:text="#{ssn-faqs.accordion3.expanded.li4}"></li>
