@@ -139,7 +139,9 @@ flow:
   outOfStateBenefits:
     nextScreens:
     - name: seasonalFarmWorker
-  seasonFarmWorker:
+      condition: ProgramsIncludeSnap
+    - name: immunizationSchoolProof
+  seasonalFarmWorker:
     nextScreens:
       - name: usCitizen
   usCitizen:

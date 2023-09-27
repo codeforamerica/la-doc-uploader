@@ -5,7 +5,11 @@ form-flow:
     thumbnail-height: '50'
     max-files: '5' # 5 files maximum
     max-file-size: '1' # 1 MB file size limit
+  address-validation:
+    disabled: true
 spring:
+  messages:
+    basename: messages, messages-form-flow
   datasource:
     url: jdbc:postgresql://localhost:5432/la-doc-uploader-test
     username: la-doc-uploader-test
