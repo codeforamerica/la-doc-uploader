@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Home Address</title>
-</head>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{home-address.title})}"></head>
 <body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block th:replace="~{fragments/icons :: county}"></th:block>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{home-address.header})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::homeAddress})}">
+          <th:block th:ref="homeAddress">
+            <div class="form-card__content">
+              <th:block th:replace="~{fragments/inputs/checkbox ::
+                  checkbox(inputName='noHomeAddress',
+                  label=#{home-address.no-permanent-address},
+                 value='true'
+                 )}"/>
 
+
+              <th:block th:replace="~{fragments/inputs/address ::
+                                  address(
+                                    validate=false,
+                                    inputName='homeAddress'
+                                  )}" />
+            </div>
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
