@@ -83,5 +83,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("Household list");
     testPage.clickButton("Yes, this is everyone");
+
+    assertThat(testPage.getTitle()).isEqualTo("SSN");
+    testPage.clickContinue();
   }
 }

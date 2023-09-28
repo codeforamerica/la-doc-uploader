@@ -8,8 +8,9 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-                <th:block
-                    th:replace="'fragments/cardHeader' :: cardHeader(header=#{ssn-faqs.header})"/>
+        <th:block th:replace="~{fragments/icons :: authorizedRep}"></th:block>
+        <th:block
+            th:replace="'fragments/cardHeader' :: cardHeader(header=#{ssn-faqs.header})"/>
         <th:block th:replace="~{'fragments/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
@@ -58,13 +59,13 @@
           </th:block>
         </th:block>
         <div class="form-card__footer">
-          <a class="button button--primary"  th:href="'/flow/laDigitalAssister/ssnForm'"
-             th:text="#{general.go-back}"></a>
+          <a class="button button--primary" th:href="'/flow/laDigitalAssister/ssnForm'"
+             th:text="#{general.back}"></a>
         </div>
       </main>
     </div>
   </section>
 </div>
-<th:block th:replace="~{fragments/footer :: footer}" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>
