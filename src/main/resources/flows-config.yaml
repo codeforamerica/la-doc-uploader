@@ -9,7 +9,7 @@ flow:
   howToAddDocuments:
     beforeDisplayAction: TrackClientSuccessEvent
     nextScreens:
-     - name: uploadDocuments
+      - name: uploadDocuments
   uploadDocuments:
     nextScreens:
       - name: docSubmitConfirmation
@@ -115,20 +115,18 @@ flow:
       - name: householdSignPost
         condition: IsMultiplePersonHousehold
       - name: ssnForm
-  householdSignPost:
-    nextScreens:
-      - name: householdInfo
-  householdInfo:
-    nextScreens:
-      - name: householdList
-  householdList:
-    nextScreens:
-     - name: ssnForm
   ssnForm:
     nextScreens:
-     - name: specialSituations
+      - name: householdSpecialSituations
+        condition: IsMultiplePersonHousehold
+      - name: specialSituations
   specialSituations:
     nextScreens:
+      - name: nextStep
+  nextStep:
+    nextScreens:
+      - name: householdSchool
+        condition: IsMultiplePersonHousehold
       - name: school
   school:
     nextScreens:
@@ -138,9 +136,9 @@ flow:
       - name: outOfStateBenefits
   outOfStateBenefits:
     nextScreens:
-    - name: seasonalFarmWorker
-      condition: ProgramsIncludeSnap
-    - name: immunizationSchoolProof
+      - name: seasonalFarmWorker
+        condition: ProgramsIncludeSnap
+      - name: immunizationSchoolProof
   seasonalFarmWorker:
     nextScreens:
       - name: usCitizen
@@ -212,7 +210,17 @@ flow:
       - name: criminalJusticeSituations
   criminalJusticeSituations:
     nextScreens: null
-  nextStep:
+  householdSignPost:
+    nextScreens:
+      - name: householdInfo
+  householdInfo:
+    subflow: household
+    nextScreens:
+      - name: householdList
+  householdList:
+    nextScreens:
+      - name: ssnForm
+  householdSpecialSituations:
     nextScreens:
       - name: householdSchool
   householdSchool:
