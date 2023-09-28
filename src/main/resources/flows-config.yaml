@@ -114,7 +114,7 @@ flow:
     nextScreens:
       - name: householdSignPost
         condition: IsMultiplePersonHousehold
-      - name: householdSignPost
+      - name: ssnForm
   householdSignPost:
     nextScreens:
       - name: householdInfo
@@ -126,10 +126,7 @@ flow:
      - name: ssnForm
   ssnForm:
     nextScreens:
-     - name: ssnFaqs
-  ssnFaqs:
-    nextScreens:
-      - name: specialSituations
+     - name: specialSituations
   specialSituations:
     nextScreens:
       - name: school

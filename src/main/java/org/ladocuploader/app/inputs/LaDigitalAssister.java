@@ -47,6 +47,8 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String householdMemberLastName;
 
+  private String ssns;
+
   private String homeAddressZipCode;
 
   private String homeAddressState;
