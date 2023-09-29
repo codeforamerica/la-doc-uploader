@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Phone Number Nudge</title>
-</head>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title=#{phone-number-nudge.title})}"></head>
 <body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{phone-number-nudge.header}, subtext=#{phone-number-nudge.p1})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
+            <th:block th:ref="formContent">
+              <div class="form-card__content">
 
+              </div>
+            <div class="form-card__footer">
+              <button class="button button--primary" th:onclick="'window.history.back(); return false;'"  >
+                <span th:text="#{phone-number-nudge.add-phone-number}"></span>
+              </button>
+              <button class="button button--secondary" th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'" >
+                <span th:text="#{phone-number-nudge.skip-phone-number}"></span>
+              </button>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>

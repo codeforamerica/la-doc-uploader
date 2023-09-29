@@ -63,6 +63,8 @@ flow:
       - name: contactInfo
   contactInfo:
     nextScreens:
+      - name: phoneNumberNudge
+        condition: PhoneNumberMissing
       - name: reviewContactInfo
   phoneNumberNudge:
     nextScreens:
