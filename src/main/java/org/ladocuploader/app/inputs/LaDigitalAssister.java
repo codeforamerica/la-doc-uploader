@@ -67,5 +67,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String receivedOutOfStateBenefits;
 
+  private String migrantOrSeasonalFarmWorkerInd;
 }
 

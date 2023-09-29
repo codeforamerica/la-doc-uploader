@@ -89,5 +89,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("Next step");
     testPage.clickContinue();
+
+    // SNAP
+    testPage.navigateToFlowScreen("laDigitalAssister/householdSeasonalFarmWorker");
+    assertThat(testPage.getTitle()).isEqualTo("Seasonal farm worker");
   }
 }
