@@ -86,5 +86,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("SSN");
     testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Next step");
+    testPage.clickContinue();
   }
 }
