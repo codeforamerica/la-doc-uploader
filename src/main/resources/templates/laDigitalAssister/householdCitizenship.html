@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title='Scaffold')}"></head>
+<head th:replace="~{fragments/head :: head(title=#{citizenship.title})}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -8,15 +8,36 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})}"/>-->
+        <th:block th:replace="~{fragments/icons :: passport}"></th:block>
+        <th:block
+            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{citizenship.header})}"/>
         <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
             <div class="form-card__content">
-
+              <div class="notice--warning" th:utext="#{citizenship.note}"></div>
+              <p th:text="#{citizenship.content}"></p>
+              <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r1',
+                linkLabel=~{::revealLabel1},
+                content=~{::revealContent1},
+                forceShowContent='true')}">
+                <th:block th:ref="revealLabel1">
+                  <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+                  <th:span th:text="#{citizenship.why-provide}"></th:span>
+                </th:block>
+                <th:block th:ref="revealContent1">
+                  <ul class="list--bulleted">
+                    <li th:utext="#{citizenship.l1}"></li>
+                    <li th:utext="#{citizenship.l2}"></li>
+                    <li th:utext="#{citizenship.l3}"></li>
+                  </ul>
+                </th:block>
+              </th:block>
             </div>
             <div class="form-card__footer">
-
+              <th:block th:replace="fragments/inputs/yesOrNo :: yesOrNo(
+                inputName='citizenshipInd',
+                ariaDescribe='header')"/>
             </div>
           </th:block>
         </th:block>
@@ -24,6 +45,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="~{fragments/footer :: footer}" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>
