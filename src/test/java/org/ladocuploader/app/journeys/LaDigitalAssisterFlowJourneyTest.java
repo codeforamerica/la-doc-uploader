@@ -65,7 +65,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Contact info");
     testPage.clickContinue();
 
-    // Review Contact Info
+    // Phone Number Nudge
+    assertThat(testPage.getTitle()).isEqualTo("Phone number nudge");
+    testPage.clickButton("Add a phone number");
+
+    assertThat(testPage.getTitle()).isEqualTo("Contact info");
+    testPage.enter("phoneNumber", "123-456-7891");
+    testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Review Contact Information");
 
     // Sensitive Questions

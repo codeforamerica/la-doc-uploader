@@ -19,7 +19,7 @@
               <button class="button button--primary" th:onclick="'window.history.back(); return false;'"  >
                 <span th:text="#{phone-number-nudge.add-phone-number}"></span>
               </button>
-              <button class="button button--secondary" th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'" >
+              <button style="margin-left:0;" class="button button--secondary" th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'" >
                 <span th:text="#{phone-number-nudge.skip-phone-number}"></span>
               </button>
             </div>
