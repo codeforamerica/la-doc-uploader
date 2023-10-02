@@ -129,6 +129,8 @@ flow:
       - name: householdCitizenship
   householdCitizenship:
     nextScreens:
+      - name: householdVeteran
+        condition: AllUsCitizens
       - name: householdNonCitizenWho
   householdNonCitizenWho:
     nextScreens:
