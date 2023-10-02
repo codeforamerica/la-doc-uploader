@@ -73,7 +73,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Personal Information");
+    assertThat(testPage.getTitle()).isEqualTo("Household Personal Situations");
 
 
     // Household

@@ -83,8 +83,8 @@ flow:
       - name: ssnFaq
   ssnFaq:
     nextScreens:
-      - name: specialSituations
-  specialSituations:
+      - name: householdSpecialSituations
+  householdSpecialSituations:
     nextScreens:
       - name: householdSchool
         condition: IsMultiplePersonHousehold
@@ -167,8 +167,8 @@ flow:
       - name: householdMealsWho
   householdMealsWho:
     nextScreens:
-      - name: householdSensitiveQuestions
-  householdSensitiveQuestions:
+      - name: sensitiveQuestions
+  sensitiveQuestions:
     nextScreens:
       - name: householdPersonalSituations
   householdPersonalSituations:
@@ -315,23 +315,23 @@ flow:
       - name: utilitiesOther
   utilitiesOther:
     nextScreens:
-      - name: dependentCare
-  dependentCare:
+      - name: expensesDependentCare
+  expensesDependentCare:
     nextScreens:
-      - name: dependentCareAmount
-  dependentCareAmount:
+      - name: expensesDependentCareAmount
+  expensesDependentCareAmount:
     nextScreens:
-      - name: insuranceExpenses
-  insuranceExpenses:
+      - name: expensesInsurance
+  expensesInsurance:
     nextScreens:
-      - name: insuranceExpensesAmount
-  insuranceExpensesAmount:
+      - name: expensesInsuranceAmount
+  expensesInsuranceAmount:
     nextScreens:
-      - name: elderlyCare
-  elderlyCare:
+      - name: expensesElderlyCare
+  expensesElderlyCare:
     nextScreens:
-      - name: elderlyCareAmount
-  elderlyCareAmount:
+      - name: expensesElderlyCareAmount
+  expensesElderlyCareAmount:
     nextScreens:
       - name: finalSignPost
   finalSignPost:

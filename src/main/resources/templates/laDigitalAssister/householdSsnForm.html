@@ -14,19 +14,19 @@
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContents})}">
           <th:block th:ref="formContents">
             <div class="form-card__content">
-                <th:block th:replace="'fragments/inputs/text' ::
+              <th:block th:replace="'fragments/inputs/text' ::
                     text(inputName='ssns',
                     value=${inputData.get('ssns') == null ? ' ' : inputData.ssns.get(0)},
                     label=#{ssn-form.ssn-question(${inputData.firstName})})"/>
               <th:block
                   th:if="${fieldData.containsKey('household')}">
                 <div th:each="householdMember, iter: ${fieldData.household}" class="spacing-below-15">
-                    <th:block th:with="value=${(inputData.get('ssns') == null) ? ' ' : (inputData.ssns.get(iter.index + 1))}">
+                  <th:block th:with="value=${(inputData.get('ssns') == null) ? ' ' : (inputData.ssns.get(iter.index + 1))}">
                     <th:block th:replace="'fragments/inputs/text' ::
                       text(inputName='ssns',
                       value=${value},
                       label=#{ssn-form-household.ssn-question(${householdMember.householdMemberFirstName})})"/>
-                    </th:block>
+                  </th:block>
                 </div>
               </th:block>
             </div>
