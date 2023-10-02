@@ -53,19 +53,12 @@ flow:
   personalInfo:
     nextScreens:
       - name: homeAddress
-  cashAssistanceLegalNotice:
-    nextScreens:
-      - name: cashAssistanceChildSupportNotice
-  cashAssistanceChildSupportNotice:
-    nextScreens:
-      - name: cashAssistanceFamilyViolenceNotice
-  cashAssistanceMedicalPaymentsNotice:
-    nextScreens:
-      - name: cashAssistanceFamilyViolenceNotice
-  cashAssistanceFamilyViolenceNotice:
-    nextScreens:
-      - name: homeAddress
   homeAddress:
+    nextScreens:
+      - name: mailingAddress
+  confirmNoAddress:
+    nextScreens: null
+  mailingAddress:
     nextScreens:
       - name: contactInfo
   contactInfo:
@@ -76,40 +69,10 @@ flow:
       - name: reviewContactInfo
   reviewContactInfo:
     nextScreens:
-      - name: expeditedSnapStart
-  expeditedSnapStart:
-    nextScreens:
       - name: livesWithOthers
   livesWithOthers:
     nextScreens:
-      - name: incomeReceivedLastMonth
-  incomeReceivedLastMonth:
-    nextScreens:
-      - name: hasMoneyOnHand
-  hasMoneyOnHand:
-    nextScreens:
-      - name: moneyOnHandAmount
-  moneyOnHandAmount:
-    nextScreens:
-      - name: hasHousingPayment
-  hasHousingPayment:
-    nextScreens:
-      - name: housingPaymentAmount
-  housingPaymentAmount:
-    nextScreens:
-      - name: housingUtilityExpenses
-  housingUtilityExpenses:
-    nextScreens:
-      - name: seasonalWorker
-  seasonalWorker:
-    nextScreens:
-      - name: qualificationNotice
-  qualificationNotice:
-    nextScreens:
-      - name: null
-  deniedNotice:
-    nextScreens:
-      - name: null
+      - name: multiplePersonHousehold
   multiplePersonHousehold:
     nextScreens:
       - name: householdSignPost
@@ -117,94 +80,15 @@ flow:
       - name: ssnForm
   ssnForm:
     nextScreens:
-      - name: specialSituations
-  specialSituations:
+      - name: ssnFaq
+  ssnFaq:
+    nextScreens:
+      - name: householdSpecialSituations
+  householdSpecialSituations:
     nextScreens:
       - name: householdSchool
         condition: IsMultiplePersonHousehold
       - name: school
-  school:
-    nextScreens:
-      - name: pregnancy
-  pregnancy:
-    nextScreens:
-      - name: outOfStateBenefits
-  outOfStateBenefits:
-    nextScreens:
-      - name: seasonalFarmWorker
-        condition: ProgramsIncludeSnap
-      - name: immunizationSchoolProof
-  seasonalFarmWorker:
-    nextScreens:
-      - name: usCitizen
-  usCitizen:
-    nextScreens:
-      - name: householdCount
-  householdCount:
-    nextScreens:
-      - name: usVeteran
-  usVeteran:
-    nextScreens:
-      - name: fosterSystem
-  fosterSystem:
-    nextScreens:
-      - name: fosterCareUntilAdult
-  fosterCareUntilAdult:
-    nextScreens:
-      - name: rentedRoom
-  rentedRoom:
-    nextScreens:
-      - name: payForMeals
-  payForMeals:
-    nextScreens:
-      - name: minorNotInSchoolNotUpToDate
-  minorNotInSchoolNotUpToDate:
-    nextScreens:
-      - name: immunizationSchoolProof
-  immunizationSchoolProof:
-    nextScreens:
-      - name: requestChildcareHelp
-  requestChildcareHelp:
-    nextScreens:
-      - name: childCareWho
-  childCareWho:
-    nextScreens:
-      - name: childrenWithParentOutsideHome
-  childrenWithParentOutsideHome:
-    nextScreens:
-      - name: additionalParent
-  additionalParent:
-    nextScreens:
-      - name: custodyOfChild
-  custodyOfChild:
-    nextScreens:
-      - name: whoCustody
-  whoCustody:
-    nextScreens:
-      - name: parentsList
-  parentsList:
-    nextScreens:
-      - name: sensitiveQuestions
-  sensitiveQuestions:
-    nextScreens:
-      - name: personalSituations
-  personalSituations:
-    nextScreens:
-      - name: whichPersonalSituations
-  whichPersonalSituations:
-    nextScreens:
-      - name: moreInfoPersonalSituations
-  moreInfoPersonalSituations:
-    nextScreens:
-      - name: victimOfDomesticViolence
-  victimOfDomesticViolence:
-    nextScreens:
-      - name: sensitiveQuestionsCriminalJustice
-  sensitiveQuestionsCriminalJustice:
-    nextScreens:
-      - name: criminalJusticeSituations
-  criminalJusticeSituations:
-    nextScreens: null
   householdSignPost:
     nextScreens:
       - name: householdInfo
@@ -214,7 +98,10 @@ flow:
       - name: householdList
   householdList:
     nextScreens:
-      - name: ssnForm
+      - name: householdSsnForm
+  householdSsnForm:
+    nextScreens:
+      - name: ssnFaq
   householdSchool:
     nextScreens:
       - name: householdSchoolWho
@@ -280,8 +167,8 @@ flow:
       - name: householdMealsWho
   householdMealsWho:
     nextScreens:
-      - name: householdSensitiveQuestions
-  householdSensitiveQuestions:
+      - name: sensitiveQuestions
+  sensitiveQuestions:
     nextScreens:
       - name: householdPersonalSituations
   householdPersonalSituations:
@@ -303,8 +190,183 @@ flow:
     nextScreens:
       - name: householdCriminalJusticeSituations
   householdCriminalJusticeSituations:
+    nextScreens:
+      - name: incomeSignPost
+  incomeSignPost:
+    nextScreens:
+      - name: householdJobSearch
+  householdJobSearch:
+    nextScreens:
+      - name: householdJobSearchWho
+  householdJobSearchWho:
+    nextScreens:
+      - name: householdWorkDisqualifications
+  householdWorkDisqualifications:
+    nextScreens:
+      - name: householdEmploymentStatus
+  householdEmploymentStatus:
+    nextScreens:
+      - name: householdIncomeByJob
+  householdIncomeByJob:
+    nextScreens:
+      - name: householdIncomeWho
+  householdIncomeWho:
     nextScreens: null
-
+  householdAnnualIncome:
+    nextScreens:
+      - name: householdIncomeList
+  householdEmployerName:
+    nextScreens: null
+  householdSelfEmployment:
+    nextScreens: null
+  jobPaidByHour:
+    nextScreens: null
+  jobHourlyWage:
+    nextScreens:
+      - name: jobHoursPerWeek
+  jobHoursPerWeek:
+    nextScreens:
+      - name: householdIncomeConfirmation
+  jobPayPeriod:
+    nextScreens: null
+  jobWeeklyPay:
+    nextScreens:
+      - name: householdIncomeConfirmation
+  jobBiWeeklyPay:
+    nextScreens:
+      - name: householdIncomeConfirmation
+  jobBiMonthlyPay:
+    nextScreens:
+      - name: householdIncomeConfirmation
+  jobMonthlyPay:
+    nextScreens:
+      - name: householdIncomeConfirmation
+  jobVariablePay:
+    nextScreens:
+      - name: householdIncomeConfirmation
+  householdIncomeConfirmation:
+    nextScreens:
+      - name: householdIncomeList
+  householdIncomeList:
+    nextScreens:
+      - name: householdAdditionalIncome
+  householdAdditionalIncome:
+    nextScreens:
+      - name: householdMoneyOnHand
+  householdMoneyOnHand:
+    nextScreens:
+      - name: expensesSignPost
+  expensesSignPost:
+    nextScreens:
+      - name: householdHomeExpenses
+  expensesHome:
+    nextScreens:
+      - name: utilities
+  expensesRent:
+    nextScreens:
+     - name: expensesMortgage
+  expensesMortgage:
+    nextScreens:
+      - name: expensesHomeownerInsurance
+  expensesHomeownerInsurance:
+    nextScreens:
+      - name: expensesPropertyTax
+  expensesPropertyTax:
+    nextScreens:
+      - name: expensesCondoFees
+  expensesCondoFees:
+    nextScreens:
+      - name: expensesLotRent
+  expensesLotRent:
+    nextScreens:
+      - name: expensesFloodInsurance
+  expensesFloodInsurance:
+    nextScreens:
+      - name: expensesOther
+  expensesOther:
+    nextScreens:
+      - name: utilities
+  utilities:
+    nextScreens:
+      - name: utilitiesHeating
+  utilitiesHeating:
+    nextScreens:
+      - name: utilitiesCooling
+  utilitiesCooling:
+    nextScreens:
+      - name: utilitiesElectricity
+  utilitiesElectricity:
+    nextScreens:
+      - name: utilitiesWater
+  utilitiesWater:
+    nextScreens:
+      - name: utilitiesPhone
+  utilitiesPhone:
+    nextScreens:
+      - name: utilitiesGarbage
+  utilitiesGarbage:
+    nextScreens:
+      - name: utilitiesSewer
+  utilitiesSewer:
+    nextScreens:
+      - name: utilitiesCookingFuel
+  utilitiesCookingFuel:
+    nextScreens:
+      - name: utilitiesOther
+  utilitiesOther:
+    nextScreens:
+      - name: expensesDependentCare
+  expensesDependentCare:
+    nextScreens:
+      - name: expensesDependentCareAmount
+  expensesDependentCareAmount:
+    nextScreens:
+      - name: expensesInsurance
+  expensesInsurance:
+    nextScreens:
+      - name: expensesInsuranceAmount
+  expensesInsuranceAmount:
+    nextScreens:
+      - name: expensesElderlyCare
+  expensesElderlyCare:
+    nextScreens:
+      - name: expensesElderlyCareAmount
+  expensesElderlyCareAmount:
+    nextScreens:
+      - name: finalSignPost
+  finalSignPost:
+    nextScreens:
+      - name: authorizedRepCommunication
+  authorizedRepCommunication:
+    nextScreens:
+      - name: authorizedRepMail
+  authorizedRepMail:
+    nextScreens:
+      - name: authorizedRepSpending
+  authorizedRepSpending:
+    nextScreens:
+      - name: authorizedRepContactInfo
+  authorizedRepContactInfo:
+    nextScreens:
+      - name: medicaid
+  medicaid:
+    nextScreens:
+      - name: registerToVote
+  registerToVote:
+    nextScreens:
+      - name: registerToVoteHelp
+  registerToVoteHelp:
+    nextScreens:
+      - name: raceEthnicityAsk
+  raceEthnicityAsk:
+    nextScreens:
+      - name: raceEthnicitySelection
+  raceEthnicitySelection:
+    nextScreens:
+      - name: legalStuff
+  legalStuff:
+    nextScreens:
+      - name: signature
 subflows:
   household:
     entryScreen: multiplePersonHousehold
