@@ -148,6 +148,8 @@ flow:
   householdFoster:
     nextScreens:
       - name: householdFosterWho
+        condition: IsFosterPerson
+      - name: householdFosterAgedOut
   householdFosterWho:
     nextScreens:
       - name: householdFosterAgedOut
