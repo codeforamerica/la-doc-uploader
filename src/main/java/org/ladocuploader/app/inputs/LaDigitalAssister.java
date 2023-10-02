@@ -73,5 +73,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String nonCitizens;
 
+  private String citizenshipNumber;
+
 }
 
