@@ -59,6 +59,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Home Address
     assertThat(testPage.getTitle()).isEqualTo("Home Address");
+    testPage.clickContinue();
+
+    // Mailing Address
+    assertThat(testPage.getTitle()).isEqualTo("Mailing address");
+    testPage.clickContinue();
 
     // Contact Info
     testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
