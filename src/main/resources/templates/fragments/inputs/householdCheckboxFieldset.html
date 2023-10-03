@@ -1,0 +1,16 @@
+<th:block th:fragment="householdCheckboxFieldset">
+  <th:block th:replace="~{'fragments/inputs/checkboxFieldset' ::
+                    checkboxFieldset(inputName=${inputName},
+                    ariaLabel='header',
+                    content=~{::householdMembers})}">
+    <th:block th:ref="householdMembers">
+      <p th:text="#{general.check-all-that-apply}"></p>
+      <th:block
+          th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName=${inputName}, value='you', label=${inputData.firstName + ' ' + inputData.lastName} + ' ' + #{general.you})}"/>
+      <th:block th:each="householdMember, iter: ${inputData.household}" class="spacing-below-15">
+        <th:block
+            th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName=${inputName},value=${householdMember.uuid}, label=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName})}"/>
+      </th:block>
+    </th:block>
+  </th:block>
+</th:block>
