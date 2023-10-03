@@ -93,9 +93,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Yes, this is everyone");
 
     assertThat(testPage.getTitle()).isEqualTo("SSN");
+    testPage.clickLink("Learn why we ask for SSNs");
+    assertThat(testPage.getTitle()).isEqualTo("SSN faqs");
+    testPage.clickButton("Back");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("SSN FAQ");
+    assertThat(testPage.getTitle()).isEqualTo("Next step");
+    testPage.clickContinue();
 
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdSeasonalFarmWorker");
