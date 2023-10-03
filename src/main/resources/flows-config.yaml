@@ -80,7 +80,7 @@ flow:
       - name: ssnForm
   ssnForm:
     nextScreens:
-      - name: ssnFaq
+      - name: householdSpecialSituations
   ssnFaq:
     nextScreens:
       - name: householdSpecialSituations
@@ -98,10 +98,7 @@ flow:
       - name: householdList
   householdList:
     nextScreens:
-      - name: householdSsnForm
-  householdSsnForm:
-    nextScreens:
-      - name: ssnFaq
+      - name: ssnForm
   householdSchool:
     nextScreens:
       - name: householdSchoolWho
