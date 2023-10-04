@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Review Contact Information</title>
-</head>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title=#{review-contact-info.title})}"></head>
 <body>
-
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{review-contact-info.header})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::reviewContent})}">
+            <th:block th:ref="reviewContent">
+              <div class="form-card__content">
+                <b th:text="#{review-contact-info.name}"></b>
+                <div class="spacing-above-15">
+                  <p th:text="${fieldData.firstName} + ' ' + ${fieldData.lastName}"></p>
+                </div>
+                <hr class="spacing-below-35 spacing-above-35">
+                <b th:text="#{review-contact-info.mailing-address}"></b>
+                <div class="spacing-above-15">
+                  <p class="spacing-below-5" th:text="${fieldData.homeAddressStreetAddress1}"></p>
+                  <p class="spacing-below-5" th:text="${fieldData.homeAddressStreetAddress2}"></p>
+                  <p class="spacing-below-5" th:text="${fieldData.homeAddressCity} + ', ' + ${fieldData.homeAddressState}"></p>
+                  <p th:text="${fieldData.homeAddressZipCode}"></p>
+                </div>
+                <hr class="spacing-below-35 spacing-above-35">
+                <b th:text="#{review-contact-info.contact-information}"></b>
+                <div class="spacing-above-15">
+                  <p class="spacing-below-5" th:text="${fieldData.phoneNumber}"></p>
+                  <p class="spacing-below-5" th:text="${fieldData.emailAddress}"></p>
+                </div>
+                <hr class="spacing-below-35 spacing-above-35">
+                
+              </div>
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{review-contact-info.this-looks-correct})}"/>
+              <button class="button button--secondary" th:text="#{review-contact-info.edit}" th:href="'/flow/' + ${flow} + '/contactInfo'"></button>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
