@@ -141,6 +141,8 @@ flow:
   householdVeteran:
     nextScreens:
       - name: householdVeteranWho
+        condition: IsVeteran
+      - name: householdFoster
   householdVeteranWho:
     nextScreens:
       - name: householdFoster
