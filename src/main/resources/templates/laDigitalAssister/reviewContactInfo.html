@@ -37,7 +37,8 @@
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{review-contact-info.this-looks-correct})}"/>
-              <button class="button button--secondary" th:text="#{review-contact-info.edit}" th:href="'/flow/' + ${flow} + '/contactInfo'"></button>
+              <a class="button button--secondary" th:text="#{review-contact-info.edit}"
+                      th:href="'/flow/' + ${flow} + '/personalInfo'"></a>
             </div>
           </th:block>
         </th:block>
