@@ -2,6 +2,8 @@ csvFile="${1:-"/Users/lkemperman/Desktop/digital-assister-all-designs-phase-1-mu
 declare -A fieldMappings
 while IFS="," read -r id frame group layer_name figma_text
 
+# TODO: identify duplicate figma text elements and make them general
+
 do
   propertyName=${frame// /}
   propertyName=$(echo $propertyName | sed -e 's/  */ /g' | tr A-Z a-z)
