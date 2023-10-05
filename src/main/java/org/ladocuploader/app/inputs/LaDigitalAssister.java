@@ -93,6 +93,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String fosters;
 
+  private String fosterAgedOutInd;
+
+  private String fostersAgedOut;
+
   private String veteranInd;
 
   private String veterans;
