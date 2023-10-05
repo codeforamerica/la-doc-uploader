@@ -157,6 +157,8 @@ flow:
   householdFosterAgedOut:
     nextScreens:
       - name: householdFosterAgedOutWho
+        condition: FostersAgedOut
+      - name: householdRoomRental
   householdFosterAgedOutWho:
     nextScreens:
       - name: householdHomeless
