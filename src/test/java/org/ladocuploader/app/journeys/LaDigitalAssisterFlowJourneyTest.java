@@ -110,5 +110,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdSeasonalFarmWorker");
     assertThat(testPage.getTitle()).isEqualTo("Seasonal farm worker");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Citizenship");
+    testPage.clickButton("Yes");
+
   }
 }
