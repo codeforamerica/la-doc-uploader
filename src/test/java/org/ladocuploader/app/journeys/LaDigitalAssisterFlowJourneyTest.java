@@ -114,6 +114,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Citizenship");
     testPage.clickButton("Yes");
 
+    testPage.navigateToFlowScreen("laDigitalAssister/householdHomeless");
+    assertThat(testPage.getTitle()).isEqualTo("Homeless");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Homelessness who");
+    testPage.clickContinue();
+
     // Sensitive Questions
     testPage.navigateToFlowScreen("laDigitalAssister/sensitiveQuestions");
     assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
