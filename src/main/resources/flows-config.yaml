@@ -71,9 +71,6 @@ flow:
       - name: reviewContactInfo
   reviewContactInfo:
     nextScreens:
-      - name: livesWithOthers
-  livesWithOthers:
-    nextScreens:
       - name: multiplePersonHousehold
   multiplePersonHousehold:
     nextScreens:
