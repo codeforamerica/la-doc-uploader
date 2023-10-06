@@ -194,6 +194,8 @@ flow:
   householdJobSearch:
     nextScreens:
       - name: householdJobSearchWho
+        condition: HouseholdJobSearch
+      - name: householdWorkDisqualifications
   householdJobSearchWho:
     nextScreens:
       - name: householdWorkDisqualifications
