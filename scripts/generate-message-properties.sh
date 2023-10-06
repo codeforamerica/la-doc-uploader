@@ -31,7 +31,7 @@ do
   fi
   echo "${fieldName}${fieldMappings[$fieldName]}=${figma_text}" | tr -d "0" | tr -d '"' >> $outfileFilepath
 done < <(sort -u -t, -k5,5 $csvFile) # this removes duplicate figma text
-# add page titles
+# adds page titles
 for title in "${!pageTitles[@]}"; do
   echo "${title} = ${pageTitles["${title}"]}" >> $outfileFilepath
 done
