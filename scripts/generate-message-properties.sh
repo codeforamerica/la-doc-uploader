@@ -11,7 +11,6 @@ preprocess_input () {
 
 while IFS="," read -r id frame group layer_name figma_text
 
-# TODO: add field names as titles
 # TODO: handle special characters
 # TODO: make the field names generic for duplicates
 
