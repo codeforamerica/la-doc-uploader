@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="fragments/head :: head(title=#{employment-status.title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,14 +8,47 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
+        <th:block th:replace="~{fragments/icons :: personWithDollarSign}"></th:block>
+                <th:block
+                    th:replace="'fragments/cardHeader' :: cardHeader(header=#{employment-status.header})"/>
         <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
           <th:block th:ref="formContent">
             <div class="form-card__content">
+              <p th:text="#{employment-status.p1}"></p>
+              <ul class="list--bulleted">
+                <li th:text="#{employment-status.li1}"></li>
+                <li th:text="#{employment-status.li2}"></li>
+                <li th:text="#{employment-status.li3}"></li>
+                <li th:text="#{employment-status.li4}"></li>
+                <li th:text="#{employment-status.li5}"></li>
+              </ul>
+
+              <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r1',
+                linkLabel=~{::revealLabel1},
+                content=~{::revealContent1},
+                forceShowContent='true')}">
+                <th:block th:ref="revealLabel1">
+                  <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+                  <th:span th:text="#{employment-status.more-info}"></th:span>
+                </th:block>
+                <th:block th:ref="revealContent1">
+                  <p th:text="#{employment-status.more-info.expanded.p1}"></p>
+                  <ul class="list--bulleted">
+                    <li th:text="#{employment-status.more-info.expanded.li1}"></li>
+                    <li th:text="#{employment-status.more-info.expanded.li2}"></li>
+                    <li th:text="#{employment-status.more-info.expanded.li3}"></li>
+                    <li th:text="#{employment-status.more-info.expanded.li4}"></li>
+                  </ul>
+                  <p th:utext="#{employment-status.more-info.expanded.p2}"></p>
+                </th:block>
+              </th:block>
 
             </div>
             <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
+                inputName='selfEmploymentIncome',
+                ariaDescribe='header')}"/>
 
             </div>
           </th:block>
