@@ -113,7 +113,16 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Household Personal Situations");
+    //    Case when no personal situations apply
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
 
+
+    testPage.navigateToFlowScreen("laDigitalAssister/householdPersonalSituations");
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations");
+
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations Who");
   }
 }

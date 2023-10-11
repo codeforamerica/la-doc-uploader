@@ -170,13 +170,12 @@ flow:
   householdPersonalSituations:
     nextScreens:
       - name: householdPersonalSituationsWho
+        condition: HouseholdHasPersonalSituations
+      - name: householdVictimOfDomesticViolence
   householdPersonalSituationsWho:
     nextScreens:
       - name: householdWhichPersonalSituations
   householdWhichPersonalSituations:
-    nextScreens:
-      - name: householdMoreInfoPersonalSituations
-  householdMoreInfoPersonalSituations:
     nextScreens:
       - name: householdVictimOfDomesticViolence
   householdVictimOfDomesticViolence:

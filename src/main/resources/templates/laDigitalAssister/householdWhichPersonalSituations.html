@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title='Scaffold')}"></head>
+<head th:replace="~{fragments/head :: head(title=#{personal-situations-which.title})}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -8,22 +8,44 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})}"/>-->
-        <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContent})}">
-          <th:block th:ref="formContent">
-            <div class="form-card__content">
-
+        <th:block th:replace="~{fragments/icons :: briefcase}"></th:block>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{personal-situations-which.header})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::whichHouseholdSituations})}">
+          <th:block th:ref="whichHouseholdSituations">
+            <div th:each="individual, iter: ${inputData.get('affectedByPersonalSituations[]')}"
+                 class="spacing-below-15">
+              <th:block th:replace="~{'fragments/inputs/checkboxFieldset' ::
+                  checkboxFieldset(inputName='personalSituationsListed',
+                  ariaLabel='header',
+                  content=~{::whichPersonalSituations})}">
+                <th:block th:ref="whichPersonalSituations">
+                  <h2 th:text="#{personal-situations-which.subheader(${individual.firstName})}"></h2>
+                  <p th:text="#{general.check-all-that-apply}"></p>
+                  <th:block
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='homelessSwitch',value=${individual.uuid}, label=#{personal-situations.which.option1})}"/>
+                  <th:block
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='strugglingDrugsAlcohol',value=${individual.uuid}, label=#{personal-situations.which.option2})}"/>
+                  <th:block
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='domesticViolenceFlag',value=${individual.uuid}, label=#{personal-situations.which.option3})}"/>
+                  <th:block
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='personaIssueDisability',value=${individual.uuid}, label=#{personal-situations.which.option4})}"/>
+                  <th:block
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='otherIssue',value=${individual.uuid}, label=#{personal-situations.which.option5}, helptext=#{personal-situations.other.helptext})}"/>
+                </th:block>
+              </th:block>
             </div>
             <div class="form-card__footer">
-
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>
       </main>
     </div>
   </section>
+  <th:block th:replace="~{fragments/footer :: footer}"/>
 </div>
-<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
