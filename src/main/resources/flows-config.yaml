@@ -173,7 +173,7 @@ flow:
         condition: HouseholdHasPersonalSituations
       - name: householdVictimOfDomesticViolence
   householdPersonalSituationsWho:
-    beforeSaveAction: ReformatsUserDataBeforeDisplaying
+    beforeSaveAction: ReformatPersonalSituationUserData
     nextScreens:
       - name: householdWhichPersonalSituations
   householdWhichPersonalSituations:

@@ -3,7 +3,6 @@ package org.ladocuploader.app.submission.actions;
 import formflow.library.config.submission.Action;
 import formflow.library.data.Submission;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class ReformatsUserDataBeforeDisplaying implements Action {
+public class ReformatPersonalSituationUserData implements Action {
 
   @Override
   public void run(Submission submission) {
@@ -25,7 +24,7 @@ public class ReformatsUserDataBeforeDisplaying implements Action {
 
   private ArrayList<LinkedHashMap> reformatPersonalSituations(Map<String, Object> inputData) {
     ArrayList<LinkedHashMap> householdMembers = (ArrayList) inputData.get("household");
-    ArrayList<String> hasPersonalSituations = (ArrayList) inputData.get("uuidsByPersonalSituations[]");
+    ArrayList<String> hasPersonalSituations = (ArrayList) inputData.get("personalSituationsHouseholdUUID[]");
     ArrayList<LinkedHashMap> personalSituationsObject = new ArrayList<>();
 
     hasPersonalSituations.forEach((String id) -> {

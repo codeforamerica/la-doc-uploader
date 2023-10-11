@@ -73,14 +73,14 @@ public class LaDigitalAssister extends FlowInputs {
 
 //  Sensitive Questions
   private String householdHasPersonalSituations;
-  private String uuidsByPersonalSituations;
+  private String personalSituationsHouseholdUUID;
   private List<String> personalSituationsListed;
   private String householdHasDomesticViolenceSituation;
   private String householdHasCriminalJusticeSituation;
-  private String homelessSwitch;
-  private String otherIssue;
-  private String strugglingDrugsAlcohol;
-  private String domesticViolenceFlag;
-  private String personaIssueDisability;
+  private String personalSituationHomelessSwitch;
+  private String personalSituationOtherIssue;
+  private String personalSituationStrugglingDrugsAlcohol;
+  private String personalSituationDomesticViolenceFlag;
+  private String personalSituationDisability;
 }
 

@@ -22,15 +22,15 @@
                   <h2 th:text="#{personal-situations-which.subheader(${individual.firstName})}"></h2>
                   <p th:text="#{general.check-all-that-apply}"></p>
                   <th:block
-                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='homelessSwitch',value=${individual.uuid}, label=#{personal-situations.which.option1})}"/>
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='personalSituationHomelessSwitch',value=${individual.uuid}, label=#{personal-situations.which.option1})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='strugglingDrugsAlcohol',value=${individual.uuid}, label=#{personal-situations.which.option2})}"/>
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='personalSituationStrugglingDrugsAlcohol',value=${individual.uuid}, label=#{personal-situations.which.option2})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='domesticViolenceFlag',value=${individual.uuid}, label=#{personal-situations.which.option3})}"/>
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='personalSituationDomesticViolenceFlag',value=${individual.uuid}, label=#{personal-situations.which.option3})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='personaIssueDisability',value=${individual.uuid}, label=#{personal-situations.which.option4})}"/>
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='personalSituationDisability',value=${individual.uuid}, label=#{personal-situations.which.option4})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='otherIssue',value=${individual.uuid}, label=#{personal-situations.which.option5}, helptext=#{personal-situations.other.helptext})}"/>
+                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='personalSituationOtherIssue',value=${individual.uuid}, label=#{personal-situations.which.option5}, helptext=#{personal-situations.other.helptext})}"/>
                 </th:block>
               </th:block>
             </div>
