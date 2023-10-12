@@ -118,6 +118,8 @@ flow:
       - name: householdPrepareFood
   householdPrepareFood:
     nextScreens:
+      - name: householdSeasonalFarmWorker
+        condition: PreparesFoodTogether
       - name: householdPrepareFoodWho
   householdPrepareFoodWho:
     nextScreens:
