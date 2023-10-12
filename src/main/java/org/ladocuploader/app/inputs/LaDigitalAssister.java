@@ -71,5 +71,9 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String citizenshipInd;
 
+  private String householdSearchingForJob;
+
+  private String jobSearch;
+
 }
 
