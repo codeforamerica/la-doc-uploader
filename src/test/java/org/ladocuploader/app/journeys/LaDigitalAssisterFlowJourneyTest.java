@@ -72,7 +72,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Contact info");
     testPage.enter("phoneNumber", "123-456-7891");
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Review Contact Information");
+    assertThat(testPage.getTitle()).isEqualTo("Review contact information");
 
     // Household
     testPage.navigateToFlowScreen("laDigitalAssister/multiplePersonHousehold");
@@ -107,12 +107,26 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Job search who");
 
     // SNAP
-    testPage.navigateToFlowScreen("laDigitalAssister/householdSeasonalFarmWorker");
+    testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");
+    assertThat(testPage.getTitle()).isEqualTo("Prepare food");
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo("Prepare food who");
+    testPage.clickElementById("preparesFood-you");
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo("Seasonal farm worker");
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo("Citizenship");
     testPage.clickButton("Yes");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/householdHomeless");
+    assertThat(testPage.getTitle()).isEqualTo("Homeless");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Homelessness who");
+    testPage.clickContinue();
 
     // Sensitive Questions
     testPage.navigateToFlowScreen("laDigitalAssister/sensitiveQuestions");
