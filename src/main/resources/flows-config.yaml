@@ -188,13 +188,13 @@ flow:
   householdPersonalSituations:
     nextScreens:
       - name: householdPersonalSituationsWho
+        condition: HouseholdHasPersonalSituations
+      - name: householdVictimOfDomesticViolence
   householdPersonalSituationsWho:
+    beforeSaveAction: ReformatPersonalSituationUserData
     nextScreens:
       - name: householdWhichPersonalSituations
   householdWhichPersonalSituations:
-    nextScreens:
-      - name: householdMoreInfoPersonalSituations
-  householdMoreInfoPersonalSituations:
     nextScreens:
       - name: householdVictimOfDomesticViolence
   householdVictimOfDomesticViolence:

@@ -138,7 +138,33 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Household Personal Situations");
+    //    Case when no personal situations apply
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
 
+
+    testPage.navigateToFlowScreen("laDigitalAssister/householdPersonalSituations");
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations");
+
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations Who");
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Which Personal Situations");
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
+
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/householdVictimOfDomesticViolence");
+    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
   }
 }
