@@ -73,5 +73,13 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String selfEmploymentIncome;
 
+  private String householdMemberJobAdd;
+
+  private String employerName;
+
+  private String selfEmployed;
+
+  private String jobPaidByHour;
+
 }
 

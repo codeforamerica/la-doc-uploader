@@ -212,9 +212,11 @@ flow:
     nextScreens:
       - name: householdIncomeList
   householdEmployerName:
-    nextScreens: null
+    nextScreens:
+      - name: householdSelfEmployment
   householdSelfEmployment:
-    nextScreens: null
+    nextScreens:
+      - name: jobPaidByHour
   jobPaidByHour:
     nextScreens: null
   jobHourlyWage:
@@ -255,6 +257,9 @@ flow:
   expensesSignPost:
     nextScreens:
       - name: householdHomeExpenses
+  householdHomeExpenses:
+    nextScreens:
+      - name: householdEmployerName
   expensesHome:
     nextScreens:
       - name: utilities
