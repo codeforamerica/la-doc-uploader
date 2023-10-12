@@ -71,9 +71,6 @@ flow:
       - name: reviewContactInfo
   reviewContactInfo:
     nextScreens:
-      - name: livesWithOthers
-  livesWithOthers:
-    nextScreens:
       - name: multiplePersonHousehold
   multiplePersonHousehold:
     nextScreens:
@@ -154,6 +151,14 @@ flow:
       - name: householdFosterAgedOutWho
   householdFosterAgedOutWho:
     nextScreens:
+      - name: householdHomeless
+  householdHomeless:
+    nextScreens:
+      - name: householdHomelessnessWho
+        condition: IsHomeless
+      - name: householdRoomRental
+  householdHomelessnessWho:
+    nextScreens:
       - name: householdRoomRental
   householdRoomRental:
     nextScreens:
@@ -197,6 +202,8 @@ flow:
   householdJobSearch:
     nextScreens:
       - name: householdJobSearchWho
+        condition: HouseholdJobSearch
+      - name: householdWorkDisqualifications
   householdJobSearchWho:
     nextScreens:
       - name: householdWorkDisqualifications

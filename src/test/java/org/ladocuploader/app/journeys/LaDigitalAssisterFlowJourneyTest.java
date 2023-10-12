@@ -74,14 +74,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Review contact information");
 
-    // Sensitive Questions
-    testPage.navigateToFlowScreen("laDigitalAssister/sensitiveQuestions");
-    assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo("Household Personal Situations");
-
-
     // Household
     testPage.navigateToFlowScreen("laDigitalAssister/multiplePersonHousehold");
     assertThat(testPage.getTitle()).isEqualTo("Multiple person household");
@@ -104,11 +96,37 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Back");
     testPage.clickContinue();
 
+    // Special situations
     assertThat(testPage.getTitle()).isEqualTo("Next step");
     testPage.clickContinue();
+
+    // Job search
+    testPage.navigateToFlowScreen("laDigitalAssister/householdJobSearch");
+    assertThat(testPage.getTitle()).isEqualTo("Job search");
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Job search who");
 
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdSeasonalFarmWorker");
     assertThat(testPage.getTitle()).isEqualTo("Seasonal farm worker");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Citizenship");
+    testPage.clickButton("Yes");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/householdHomeless");
+    assertThat(testPage.getTitle()).isEqualTo("Homeless");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Homelessness who");
+    testPage.clickContinue();
+
+    // Sensitive Questions
+    testPage.navigateToFlowScreen("laDigitalAssister/sensitiveQuestions");
+    assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Household Personal Situations");
+
   }
 }
