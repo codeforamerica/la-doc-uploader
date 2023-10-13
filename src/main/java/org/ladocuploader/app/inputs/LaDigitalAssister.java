@@ -143,5 +143,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String hourlyWage;
 
   private String hoursPerWeek;
+
+  private String payPeriod;
 }
 

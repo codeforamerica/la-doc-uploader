@@ -3,9 +3,11 @@ import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JobPaidByTheHour extends BasicCondition {
-    @Override
-    public Boolean run(Submission submission) {
-        return run(submission, "jobPaidByHour", "true");
+public class JobPaidByTheHour extends AbstractSubflowCondition {
+    public Boolean run(Submission submission, String uuid) {
+        var item = currentIncomeSubflowItem(submission, uuid);
+
+        return item != null &&
+                item.getOrDefault("jobPaidByHour", "false").equals("true");
     }
 }

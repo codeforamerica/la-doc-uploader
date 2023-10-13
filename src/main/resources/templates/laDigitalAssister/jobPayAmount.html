@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:with="messageVariant=${fieldData.getOrDefault('householdMemberJobAdd', '') == 'you' ? 'self' : 'householdMember'}, payPeriod=${fieldData.getOrDefault('', '')}">
+  <head th:replace="~{fragments/head :: head(title=#{job-pay-period.title})}"></head>
+  <body>
+  <div class="page-wrapper">
+    <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+    <section class="slab">
+      <div class="grid">
+        <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+        <main id="content" role="main" class="form-card spacing-above-35">
+          <p th:text="${fieldData.get('employerName')}"></p>
+          <th:block
+              th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'self' ? #messages.msg('job-pay-period-self.header') : #messages.msgWithParams('job-pay-period-household.header', fieldData.get('householdMemberJobAdd'))})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
+            <th:block th:ref="content">
+              <div class="form-card__content">
+                <th:block th:replace="~{fragments/inputs/radioFieldset ::
+                              radioFieldset(inputName='payPeriod',
+                              ariaLabel='header',
+                              content=~{::radioContent})}">
+                  <th:block th:ref="radioContent">
+                    <!-- Copy the below input if you want to add more -->
+                    <th:block
+                        th:replace="~{fragments/inputs/radio :: radio(inputName='payPeriod',value=#{job-pay-period.every-week}, label=#{job-pay-period.every-week})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/radio :: radio(inputName='payPeriod',value=#{job-pay-period.every-two-weeks}, label=#{job-pay-period.every-two-weeks})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/radio :: radio(inputName='payPeriod',value=#{job-pay-period.twice-a-month}, label=#{job-pay-period.twice-a-month})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/radio :: radio(inputName='payPeriod',value=#{job-pay-period.every-month}, label=#{job-pay-period.every-month})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/radio :: radio(inputName='payPeriod',value=#{job-pay-period.it-varies}, label=#{job-pay-period.it-varies})}"/>
+                  </th:block>
+                </th:block>
+
+              </div>
+              <div class="form-card__footer">
+
+
+                <th:block th:replace="~{fragments/continueButton :: continue}" />
+
+              </div>
+            </th:block>
+          </th:block>
+        </main>
+      </div>
+    </section>
+  </div>
+  <th:block th:replace="~{fragments/footer :: footer}" />
+  </body>
+</th:block>
+</html>
