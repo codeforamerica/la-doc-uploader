@@ -105,6 +105,36 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Next step");
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo("School");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Pregnancy");
+    testPage.goBack();
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("School who");
+    testPage.clickElementById("students-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Pregnancy");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Out of state benefits");
+    testPage.goBack();
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Pregnancy who");
+    testPage.clickElementById("pregnancies-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Out of state benefits");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
+    testPage.goBack();
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Out of state benefits who");
+    testPage.clickElementById("outOfStateBenefitsRecipients-you");
+    testPage.clickContinue();
+
     // Job search
     testPage.navigateToFlowScreen("laDigitalAssister/householdJobSearch");
     assertThat(testPage.getTitle()).isEqualTo("Job search");
