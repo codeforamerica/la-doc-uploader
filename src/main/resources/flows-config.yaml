@@ -3,7 +3,7 @@ flow:
   clientInfo:
     onPostAction: TrackClientInfoEvent
     beforeSaveAction: EncryptSSNBeforeSaving
-    beforeDisplayAction: DecryptSSNBeforeDisplaying
+    beforeDisplayAction: ClientInfoBeforeDisplay
     nextScreens:
       - name: howToAddDocuments
   howToAddDocuments:
@@ -32,6 +32,7 @@ flow:
     nextScreens:
       - name: languagePreference
   languagePreference:
+    beforeDisplayAction: SetApplicantId
     nextScreens:
       - name: choosePrograms
   choosePrograms:

@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class LaDocUpload extends FlowInputs {
+  private String applicantId;
 
   MultipartFile uploadDocuments;
 

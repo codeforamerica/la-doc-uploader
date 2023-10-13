@@ -13,7 +13,7 @@
        th:text="${helpText}"
        class="text--help spacing-below-25"></p>
   </div>
-  <input type="hidden" name="applicantId" th:value="${applicantId}">
+  <input type="hidden" name="applicantId" th:value="${inputData.getOrDefault('applicantId', '')}">
   <button
       th:name="${inputName}"
       th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"
