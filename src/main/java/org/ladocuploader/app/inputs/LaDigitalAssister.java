@@ -139,5 +139,9 @@ public class LaDigitalAssister extends FlowInputs {
   private String personalSituationDomesticViolenceFlag;
   
   private String personalSituationDisability;
+
+  private String hourlyWage;
+
+  private String hoursPerWeek;
 }
 

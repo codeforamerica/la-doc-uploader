@@ -243,12 +243,14 @@ flow:
       - name: jobPaidByHour
   jobPaidByHour:
     subflow: income
-    nextScreens: null
+    nextScreens:
+      - name: jobHourlyWage
   jobHourlyWage:
     subflow: income
     nextScreens:
       - name: jobHoursPerWeek
   jobHoursPerWeek:
+    subflow: income
     nextScreens:
       - name: householdIncomeConfirmation
   jobPayPeriod:
