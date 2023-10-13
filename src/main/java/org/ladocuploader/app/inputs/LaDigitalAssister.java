@@ -109,6 +109,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String roomRentals;
 
+  private String mealInd;
+
+  private String meals;
+
   private String householdSearchingForJob;
 
   private String jobSearch;
