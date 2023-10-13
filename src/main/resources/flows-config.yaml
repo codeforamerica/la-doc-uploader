@@ -228,7 +228,8 @@ flow:
       - name: householdIncomeWho
   householdIncomeWho:
     subflow: income
-    nextScreens: null
+    nextScreens:
+     - name: householdEmployerName
   householdAnnualIncome:
     nextScreens:
       - name: householdIncomeList
