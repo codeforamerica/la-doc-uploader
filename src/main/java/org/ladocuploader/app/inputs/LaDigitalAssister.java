@@ -17,6 +17,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class LaDigitalAssister extends FlowInputs {
+  private String applicantId;
 
   MultipartFile uploadDocuments;
 
