@@ -217,19 +217,24 @@ flow:
     nextScreens:
       - name: householdIncomeWho
   householdIncomeWho:
+    subflow: income
     nextScreens: null
   householdAnnualIncome:
     nextScreens:
       - name: householdIncomeList
   householdEmployerName:
+    subflow: income
     nextScreens:
       - name: householdSelfEmployment
   householdSelfEmployment:
+    subflow: income
     nextScreens:
       - name: jobPaidByHour
   jobPaidByHour:
+    subflow: income
     nextScreens: null
   jobHourlyWage:
+    subflow: income
     nextScreens:
       - name: jobHoursPerWeek
   jobHoursPerWeek:
@@ -384,3 +389,8 @@ subflows:
     iterationStartScreen: householdInfo
     reviewScreen: householdList
     deleteConfirmationScreen: householdDeleteConfirmation
+  income:
+    entryScreen: householdIncomeByJob
+    iterationStartScreen: householdIncomeWho
+    reviewScreen: householdIncomeReview
+    deleteConfirmationScreen: householdIncomeDeleteConfirmation
