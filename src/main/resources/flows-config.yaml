@@ -273,6 +273,8 @@ flow:
   householdAdditionalIncome:
     nextScreens:
       - name: householdMoneyOnHand
+        condition: ProgramsIncludeSnap
+      - name: expensesSignPost
   householdMoneyOnHand:
     nextScreens:
       - name: expensesSignPost
