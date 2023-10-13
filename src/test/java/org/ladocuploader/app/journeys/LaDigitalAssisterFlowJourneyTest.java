@@ -179,7 +179,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("Room rental");
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Scaffold"); // Meals
+    assertThat(testPage.getTitle()).isEqualTo("Meals");
     testPage.goBack();
     testPage.clickButton("Yes");
 
@@ -187,8 +187,17 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("roomRentals-you");
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo("Meals");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
+    testPage.goBack();
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Meals who");
+    testPage.clickElementById("meals-you");
+    testPage.clickContinue();
+
     // Sensitive Questions
-    testPage.navigateToFlowScreen("laDigitalAssister/sensitiveQuestions");
     assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
     testPage.clickContinue();
 
