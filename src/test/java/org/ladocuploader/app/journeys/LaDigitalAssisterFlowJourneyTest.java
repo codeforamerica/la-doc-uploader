@@ -59,6 +59,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Home Address
     assertThat(testPage.getTitle()).isEqualTo("Home Address");
+    testPage.clickContinue();
+
+    // Mailing Address
+    assertThat(testPage.getTitle()).isEqualTo("Mailing address");
+    testPage.clickContinue();
 
     // Contact Info
     testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
@@ -107,7 +112,14 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Job search who");
 
     // SNAP
-    testPage.navigateToFlowScreen("laDigitalAssister/householdSeasonalFarmWorker");
+    testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");
+    assertThat(testPage.getTitle()).isEqualTo("Prepare food");
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo("Prepare food who");
+    testPage.clickElementById("preparesFood-you");
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo("Seasonal farm worker");
     testPage.clickButton("Yes");
 
@@ -126,7 +138,33 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Household Personal Situations");
+    //    Case when no personal situations apply
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
 
+
+    testPage.navigateToFlowScreen("laDigitalAssister/householdPersonalSituations");
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations");
+
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Personal Situations Who");
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Which Personal Situations");
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
+
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/householdVictimOfDomesticViolence");
+    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
   }
 }

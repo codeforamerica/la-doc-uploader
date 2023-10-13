@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="~{fragments/head :: head(title=#{mailing-address.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
-          <th:block th:ref="formContent">
+        <th:block th:replace="~{fragments/icons :: mail}"></th:block>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{mailing-address.header}, subtext=#{address.subtext})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::homeAddress})}">
+          <th:block th:ref="homeAddress">
             <div class="form-card__content">
 
+              <th:block th:replace="~{fragments/inputs/address ::
+                                  address(
+                                    validate=false,
+                                    inputName='mailingAddress',
+                                    streetAddress2HelpText=#{general.optional}
+                                  )}"/>
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="~{fragments/continueButton :: continue}" />
 
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>
@@ -25,6 +34,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

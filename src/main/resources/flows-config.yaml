@@ -118,6 +118,8 @@ flow:
       - name: householdPrepareFood
   householdPrepareFood:
     nextScreens:
+      - name: householdSeasonalFarmWorker
+        condition: PreparesFoodTogether
       - name: householdPrepareFoodWho
   householdPrepareFoodWho:
     nextScreens:
@@ -127,6 +129,8 @@ flow:
       - name: householdCitizenship
   householdCitizenship:
     nextScreens:
+      - name: householdVeteran
+        condition: AllUsCitizens
       - name: householdNonCitizenWho
   householdNonCitizenWho:
     nextScreens:
@@ -137,18 +141,24 @@ flow:
   householdVeteran:
     nextScreens:
       - name: householdVeteranWho
+        condition: IsVeteran
+      - name: householdFoster
   householdVeteranWho:
     nextScreens:
       - name: householdFoster
   householdFoster:
     nextScreens:
       - name: householdFosterWho
+        condition: IsFosterPerson
+      - name: householdFosterAgedOut
   householdFosterWho:
     nextScreens:
       - name: householdFosterAgedOut
   householdFosterAgedOut:
     nextScreens:
       - name: householdFosterAgedOutWho
+        condition: FostersAgedOut
+      - name: householdRoomRental
   householdFosterAgedOutWho:
     nextScreens:
       - name: householdHomeless
@@ -178,13 +188,13 @@ flow:
   householdPersonalSituations:
     nextScreens:
       - name: householdPersonalSituationsWho
+        condition: HouseholdHasPersonalSituations
+      - name: householdVictimOfDomesticViolence
   householdPersonalSituationsWho:
+    beforeSaveAction: ReformatPersonalSituationUserData
     nextScreens:
       - name: householdWhichPersonalSituations
   householdWhichPersonalSituations:
-    nextScreens:
-      - name: householdMoreInfoPersonalSituations
-  householdMoreInfoPersonalSituations:
     nextScreens:
       - name: householdVictimOfDomesticViolence
   householdVictimOfDomesticViolence:
