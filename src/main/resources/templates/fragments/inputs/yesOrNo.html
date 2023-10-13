@@ -2,7 +2,9 @@
     th:fragment="yesOrNo(inputName, ariaDescribe)"
     th:with="
       hasHelpText=${!#strings.isEmpty(helpText)},
-      hasAriaDescribe=${!#strings.isEmpty(ariaDescribe)}"
+      hasAriaDescribe=${!#strings.isEmpty(ariaDescribe)},
+      hasYesText=${!#strings.isEmpty(overrideYesText)},
+      hasNoText=${!#strings.isEmpty(overrideNoText)}"
     th:assert="${!#strings.isEmpty(inputName)}, ${hasAriaDescribe}">
   <div th:if="${hasHelpText}">
     <p th:id="${inputName + '-help-text'}"
@@ -11,17 +13,19 @@
   </div>
   <button
       th:name="${inputName}"
-      th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"      type="submit"
+      th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"
+      type="submit"
       value="true"
       class="button button--primary">
-    <span th:text="#{general.inputs.yes}"></span>
+    <span th:text="#{${hasYesText ? overrideYesText : 'general.inputs.yes'}}"></span>
   </button>
   <button
       th:name="${inputName}"
-      th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"      value="false"
+      th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"
+      value="false"
       th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
       class="button button--secondary">
-    <span th:text="#{general.inputs.no}"></span>
+    <span th:text="#{${hasNoText ? overrideNoText : 'general.inputs.no'}}"></span>
   </button>
 
 </th:block>
