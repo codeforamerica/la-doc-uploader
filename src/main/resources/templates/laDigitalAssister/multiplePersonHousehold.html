@@ -29,6 +29,7 @@
               hasHelpText=${!#strings.isEmpty(helpText)},
               hasAriaDescribe=${!#strings.isEmpty(ariaDescribe)}"
                   th:assert="${!#strings.isEmpty(inputName)}, ${hasAriaDescribe}">
+                <input type="hidden" name="applicantId" th:value="${inputData.getOrDefault('applicantId', '')}">
                 <button
                     th:name="${inputName}"
                     th:aria-describedby="${hasHelpText ? inputName + '-help-text' : ariaDescribe}"

@@ -1,7 +1,7 @@
 <th:block
     th:fragment="submitButton"
     th:with="text=${text} ? ${text} : #{general.inputs.submit}">
-  <input type="hidden" name="applicantId" th:value="${applicantId}">
+  <input type="hidden" name="applicantId" th:value="${inputData.getOrDefault('applicantId', '')}">
   <button id="form-submit-button"
           th:class="${classes != null ? classes : 'button button--primary'}"
           type="submit"

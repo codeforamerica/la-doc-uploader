@@ -4,7 +4,7 @@
 <th:block
     th:fragment="submitButton"
     th:with="text=${text} ? ${text} : #{general.inputs.submit}, isHidden=${isHidden} ? ${isHidden}: false">
-  <input type="hidden" name="applicantId" th:value="${applicantId}">
+  <input type="hidden" name="applicantId" th:value="${inputData.getOrDefault('applicantId', '')}">
   <button id="form-submit-button"
           class="button button--secondary"
           type="submit"
