@@ -32,6 +32,21 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        // submissionId --> parameter from session
+        // applicationId --> parameter from inputData
+        // Option 1: See if we're missing initial data (ex program selection) and check if submissionId is different than applicationId
+        // -> then do mitigation
+        // Option 2 (ideal): Always check if submissionId is different then applicationId
+        // -> then do mitigation
+
+
+        // Mitigation - the submissionId is different than applicationId
+        // Option 1 (ideal): Overwrite session id with previous session id (from applicationId)
+        // Option 2: Copy data associated with applicationId into new submission data - update db and update applicationId to match new session id
+        // --> Might have stray records which might affect analytics, maybe delete these?
+
+
         try {
             var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
             var requiredData = REQUIRED_DATA.get(parsedUrl.get("screen"));
