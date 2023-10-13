@@ -125,12 +125,66 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("Citizenship");
     testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Veteran");
+    testPage.goBack();
+    testPage.clickButton("No");
 
-    testPage.navigateToFlowScreen("laDigitalAssister/householdHomeless");
+    assertThat(testPage.getTitle()).isEqualTo("Non-citizen");
+    testPage.clickElementById("nonCitizens-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Citizenship number");
+    testPage.selectFromDropdown("citizenshipNumber", "1 people");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Veteran");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Foster");
+    testPage.goBack();
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Veteran who");
+    testPage.clickElementById("veterans-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Foster");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Foster aged out");
+    testPage.goBack();
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Foster who");
+    testPage.clickElementById("fosters-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Foster aged out");
+    testPage.clickButton("No");
     assertThat(testPage.getTitle()).isEqualTo("Homeless");
+    testPage.goBack();
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Foster aged out who");
+    testPage.clickElementById("fostersAgedOut-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Homeless");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Room rental");
+    testPage.goBack();
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo("Homelessness who");
+    testPage.clickElementById("homeless-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Room rental");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Scaffold"); // Meals
+    testPage.goBack();
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Room rental who");
+    testPage.clickElementById("roomRentals-you");
     testPage.clickContinue();
 
     // Sensitive Questions

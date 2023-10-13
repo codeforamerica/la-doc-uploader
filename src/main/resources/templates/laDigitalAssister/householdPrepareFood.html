@@ -13,9 +13,9 @@
             th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{household-prepare-food.header})}"/>
         <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
-            <th:block th:replace="fragments/inputs/yesOrNo :: yesOrNo(
+            <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
               inputName='buyPrepareMealsSeparateIndicator',
-              ariaDescribe='header')"/>
+              ariaDescribe='header')}"/>
           </th:block>
         </th:block>
       </main>
