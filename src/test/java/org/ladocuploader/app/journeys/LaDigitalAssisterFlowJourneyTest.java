@@ -135,11 +135,17 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("outOfStateBenefitsRecipients-you");
     testPage.clickContinue();
 
-    // Job search
-    testPage.navigateToFlowScreen("laDigitalAssister/householdJobSearch");
+    // Income - TODO move this after sensitive questions
+    testPage.navigateToFlowScreen("laDigitalAssister/incomeSignPost");
+    assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Job search");
     testPage.clickButton("Yes");
     assertThat(testPage.getTitle()).isEqualTo("Job search who");
+    testPage.clickElementById("jobSearch-you");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Work disqualifications");
+    testPage.clickButton("No");
 
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");
