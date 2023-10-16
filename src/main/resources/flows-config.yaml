@@ -398,5 +398,5 @@ subflows:
   income:
     entryScreen: householdIncomeByJob
     iterationStartScreen: householdIncomeWho
-    reviewScreen: householdIncomeReview
+    reviewScreen: householdIncomeList
     deleteConfirmationScreen: householdIncomeDeleteConfirmation
