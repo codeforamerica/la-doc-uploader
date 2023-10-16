@@ -99,6 +99,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String citizenshipNumber;
 
+  private String veteranInd;
+
+  private String veterans;
+
   private String fosterInd;
 
   private String fosters;
@@ -107,13 +111,17 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String fostersAgedOut;
 
-  private String veteranInd;
-
-  private String veterans;
-
   private String homelessInd;
 
   private String homeless;
+
+  private String roomRentalInd;
+
+  private String roomRentals;
+
+  private String mealInd;
+
+  private String meals;
 
   private String householdSearchingForJob;
 
@@ -140,6 +148,7 @@ public class LaDigitalAssister extends FlowInputs {
   
   private String personalSituationDisability;
 
+
   private String hourlyWage;
 
   private String hoursPerWeek;
@@ -147,5 +156,8 @@ public class LaDigitalAssister extends FlowInputs {
   private String payPeriod;
 
   private String payPeriodAmount;
+
+  private String moneyOnHand;
+
 }
 
