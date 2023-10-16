@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
-<th:block th:with="messageVariant=${fieldData.getOrDefault('householdMemberJobAdd', '') == 'you' ? 'self' : 'householdMember'}">
+<th:block th:with="messageVariant=${fieldData.getOrDefault('payPeriod', 'It varies') == 'It varies' ? 'variable' : 'fixed'}">
   <head th:replace="~{fragments/head :: head(title=#{job-pay-amount.title})}"></head>
   <body>
   <div class="page-wrapper">
@@ -11,7 +11,7 @@
         <main id="content" role="main" class="form-card spacing-above-35">
           <p th:text="${fieldData.get('employerName')}"></p>
           <th:block
-              th:replace="~{fragments/cardHeader :: cardHeader(header=${#messages.msgWithParams('job-pay-amount.header', fieldData.getOrDefault('payPeriod', 'in the last 30 days').toLowerCase())})}"/>
+              th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'fixed' ? #messages.msgWithParams('job-pay-amount.fixed.header', fieldData.getOrDefault('payPeriod', 'in the last 30 days').toLowerCase()) : #messages.msg('job-pay-amount.variable.header')}, subtext=#{job-pay-amount.subtext})}"/>
           <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
             <th:block th:ref="content">
               <div class="form-card__content">

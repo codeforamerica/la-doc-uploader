@@ -38,7 +38,7 @@ public class IncomeCalculator {
       } else if (payPeriod == "Every month"){
         return payPeriodAmount * 12;
       }
-      // 30D estimate
+      // based on 30D estimate
       return payPeriodAmount * 12;
     }
   }
