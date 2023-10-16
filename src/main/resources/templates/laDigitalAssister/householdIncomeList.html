@@ -20,9 +20,11 @@
                 <ul class="subflow-list">
                   <li th:each="incomeItem, iter: ${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdIncomeReviewItems(submission)}" class="subflow-list__item">
                     <th:block th:if="${incomeItem.get('itemType').equals('job')}">
+
                       <i th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__icon icon-person-outline"></i>
                       <div th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__item-title">
-                        <strong><span th:text="${incomeItem.name}"></span></strong>
+                        <th:block th:replace="~{fragments/icons :: smallPersonIcon}"></th:block>
+                        <strong><span class="spacing-left-10" style="color:grey; text-transform:uppercase;" th:text="${incomeItem.name}"></span></strong>
                         <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>
                       </div>
 
@@ -35,12 +37,14 @@
 <!--                      TODO: make the links colored and add horizontal line between them -->
 
                       <div class="subflow-list__item-actions">
-                        <a th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${incomeItem.uuid} + '/edit'"
+                        <a class="spacing-right-10" style="color:green" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${incomeItem.uuid} + '/edit'"
                            th:text="#{income-list.edit-job}"
                            th:id="'edit-iteration-' + ${incomeItem.uuid}">
-                          <hr>
-                        </a><a th:href="'/flow/laDigitalAssister/income/' + ${incomeItem.uuid} + '/deleteConfirmation'"
+                        </a>
+                        <th:block class="vertical"></th:block>
+                        <a th:href="'/flow/laDigitalAssister/income/' + ${incomeItem.uuid} + '/deleteConfirmation'"
                                th:text="#{income-list.delete-job}"
+                               style="color:red"
                                class="subflow-list__action-delete"
                                th:id="'delete-iteration-' + ${incomeItem.uuid}"></a>
                       </div>

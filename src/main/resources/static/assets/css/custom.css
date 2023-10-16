@@ -58,6 +58,14 @@ body {
   font-size: 16px;
 }
 
+.vertical {
+  border-left: 6px solid blue;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  margin-left: -3px;
+}
+
 .subflow-list__icon {
   position: absolute;
   line-height: 2.5rem;
@@ -84,6 +92,15 @@ body {
 
 .spacing-left-1_5 {
   padding-left: 1.5em;
+}
+
+.spacing-left-10 {
+  margin-left: 15px;
+}
+
+.job-item > p {
+  text-transform:uppercase;
+  !important color:grey;
 }
 
 .spacing-right-10 {
