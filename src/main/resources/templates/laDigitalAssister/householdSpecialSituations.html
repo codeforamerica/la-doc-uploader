@@ -10,7 +10,7 @@
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:unless="${fieldData.containsKey('household')}">
           <th:block
-              th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{special-situations.header}, subtext=#{special-situations.p1})}"/>
+              th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{special-situations.header}, subtext=#{special-situations-household.p1})}"/>
         </th:block>
         <th:block th:if="${fieldData.containsKey('household')}">
           <th:block

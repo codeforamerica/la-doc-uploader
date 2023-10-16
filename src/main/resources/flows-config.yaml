@@ -77,17 +77,6 @@ flow:
       - name: householdSignPost
         condition: IsMultiplePersonHousehold
       - name: ssnForm
-  ssnForm:
-    nextScreens:
-      - name: householdSpecialSituations
-  ssnFaq:
-    nextScreens:
-      - name: householdSpecialSituations
-  householdSpecialSituations:
-    nextScreens:
-      - name: householdSchool
-        condition: IsMultiplePersonHousehold
-      - name: school
   householdSignPost:
     nextScreens:
       - name: householdInfo
@@ -98,24 +87,43 @@ flow:
   householdList:
     nextScreens:
       - name: ssnForm
+  ssnForm:
+    nextScreens:
+      - name: householdSpecialSituations
+  ssnFaq:
+    nextScreens:
+      - name: householdSpecialSituations
+  householdSpecialSituations:
+    nextScreens:
+      - name: householdSchool
   householdSchool:
     nextScreens:
       - name: householdSchoolWho
+        condition: GoingToSchool
+      - name: householdPregnancy
   householdSchoolWho:
     nextScreens:
       - name: householdPregnancy
   householdPregnancy:
     nextScreens:
       - name: householdPregnancyWho
+        condition: IsPregnant
+      - name: householdBenefits
   householdPregnancyWho:
     nextScreens:
       - name: householdBenefits
   householdBenefits:
     nextScreens:
       - name: householdBenefitsWho
+        condition: OutOfStateBenefits
+      - name: householdPrepareFood
+        condition: ProgramsIncludeSnap
+      - name: sensitiveQuestions
   householdBenefitsWho:
     nextScreens:
       - name: householdPrepareFood
+        condition: ProgramsIncludeSnap
+      - name: sensitiveQuestions
   householdPrepareFood:
     nextScreens:
       - name: householdSeasonalFarmWorker
