@@ -297,6 +297,11 @@ input[type="number"] {
   color: var(--dark-grey)
 }
 
+.button--add-job {
+  color: black;
+  background-color: white;
+}
+
 
 /* TODO Consider pulling these out into variables in FFL itself */
 .toolbar__wrapper, .main-footer, .button--primary, .dz-button {
@@ -380,6 +385,10 @@ input[type="number"] {
   border-left: 3px solid white;
   height: 100px;
   top: 0;
+}
+
+p.employer-name {
+  color:slategray;
 }
 
 .privacy-policy-choices {

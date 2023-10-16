@@ -24,24 +24,21 @@
                       <i th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__icon icon-person-outline"></i>
                       <div th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__item-title">
                         <th:block th:replace="~{fragments/icons :: smallPersonIcon}"></th:block>
-                        <strong><span class="spacing-left-10" style="color:grey; text-transform:uppercase;" th:text="${incomeItem.name}"></span></strong>
+                        <strong><span class="spacing-left-10" th:text="${incomeItem.name}"></span></strong>
                         <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>
                       </div>
 
                       <div class="subflow-list__item-body">
-                        <div class="subflow-list__item-body__subtitle" th:text="${incomeItem.jobName}"></div>
+                        <strong><div class="subflow-list__item-body__subtitle spacing-above-5" style="color:darkslategrey" th:text="${incomeItem.jobName.toUpperCase()}"></div></strong>
                         <div><strong th:text="${incomeItem.income}"></strong></div>
                         <div><p th:text="${incomeItem.payPeriod}"></p></div>
                       </div>
 
-<!--                      TODO: make the links colored and add horizontal line between them -->
-
-                      <div class="subflow-list__item-actions">
+                      <div class="spacing-below-10 spacing-above-0">
                         <a class="spacing-right-10" style="color:green" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${incomeItem.uuid} + '/edit'"
                            th:text="#{income-list.edit-job}"
                            th:id="'edit-iteration-' + ${incomeItem.uuid}">
                         </a>
-                        <th:block class="vertical"></th:block>
                         <a th:href="'/flow/laDigitalAssister/income/' + ${incomeItem.uuid} + '/deleteConfirmation'"
                                th:text="#{income-list.delete-job}"
                                style="color:red"
@@ -53,11 +50,14 @@
                     <th:block th:if="${incomeItem.get('itemType').equals('no-jobs-added')}">
                       <i th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__icon icon-person-outline"></i>
                       <div class="subflow-list__item-title">
-                        <span th:text="${incomeItem.name}"></span>
-                        <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>
+                        <th:block th:replace="~{fragments/icons :: smallPersonIcon}"></th:block>
+                        <strong>
+                          <span th:text="${incomeItem.name}"></span>
+                          <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>
+                        </strong>
                       </div>
 
-                      <div class="subflow-list__item-body">
+                      <div class="subflow-list__item-body spacing-below-15">
                         <span th:text="#{income-list.no-jobs-added}"></span>
                       </div>
                     </th:block>
@@ -78,6 +78,8 @@
                     </th:block>
                   </li>
                 </ul>
+
+                <a class="button button--add-job" th:text="#{income-list.add-job}" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen}"></a>
 
               </div>
 

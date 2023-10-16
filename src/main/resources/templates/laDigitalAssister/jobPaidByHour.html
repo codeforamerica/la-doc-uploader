@@ -20,7 +20,7 @@
                 ariaDescribe='header')}"/>
 
               <span class="text--small spacing-below-0 spacing-above-5">
-                <a th:href="'/flow/' + ${flow} + '/payPeriodVaries'" th:text="#{job-paid-by-hour.link}"></a>
+                <a th:href="'/flow/' + ${flow} + '/jobPayAmount/' + ${uuid}" th:text="#{job-paid-by-hour.link}"></a>
               </span>
 
             </div>
