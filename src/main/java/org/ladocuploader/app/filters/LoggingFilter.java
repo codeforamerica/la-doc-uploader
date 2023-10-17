@@ -32,12 +32,10 @@ public class LoggingFilter implements Filter {
     HttpSession session = request.getSession(false);
     UUID subId = session != null ? (UUID) session.getAttribute("id") : null;
     String sessionCreatedAt = session != null ?
-        new DateTime(session.getCreationTime()).toString("HH:mm:ss.SSS") :
-        "no session";
-    MDC.put("ip", request.getRemoteAddr());
+        new DateTime(session.getCreationTime()).toString("HH:mm:ss.SSS") : "no session";
     MDC.put("method", request.getMethod());
     MDC.put("request", request.getRequestURI());
-    MDC.put("sessionId", session == null? "null" : session.getId());
+    MDC.put("sessionId", session == null ? "null" : session.getId());
     MDC.put("sessionCreatedAt", sessionCreatedAt);
     MDC.put("submissionId", subId == null ? "null" : subId.toString());
     filterChain.doFilter(servletRequest, servletResponse);
