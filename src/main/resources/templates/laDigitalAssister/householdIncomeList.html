@@ -30,18 +30,18 @@
                       <div class="subflow-list__item-body">
                         <strong><div class="subflow-list__item-body__subtitle spacing-above-5" style="color:darkslategrey" th:text="${incomeItem.jobName.toUpperCase()}"></div></strong>
                         <div><strong th:text="${incomeItem.income}"></strong></div>
-                        <div><p th:text="${incomeItem.payPeriod}"></p></div>
+                        <div><span th:text="${incomeItem.payPeriod}"></span></div>
                       </div>
 
                       <div class="subflow-list__item-actions">
-                        <a style="color:green" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${incomeItem.uuid} + '/edit'"
+                        <a th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${incomeItem.uuid} + '/edit'"
                            th:text="#{income-list.edit-job}"
+                           class="subflow-edit"
                            th:id="'edit-iteration-' + ${incomeItem.uuid}">
                         </a>
                         <a th:href="'/flow/laDigitalAssister/income/' + ${incomeItem.uuid} + '/deleteConfirmation'"
                                th:text="#{income-list.delete-job}"
-                               style="color:red"
-                               class="subflow-list__action-delete"
+                               class="subflow-delete"
                                th:id="'delete-iteration-' + ${incomeItem.uuid}"></a>
                       </div>
                     </th:block>

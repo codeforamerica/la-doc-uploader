@@ -24,6 +24,14 @@ body {
   content: "\e7ff"
 }
 
+.subflow-edit {
+  color: #008060 !important;
+}
+
+.subflow-delete {
+  color: #D13F00 !important;
+}
+
 .subflow-list__item-actions a:not(:last-child) {
   border-right: 1px solid #CFC5BF;
   padding-right: 2rem;
