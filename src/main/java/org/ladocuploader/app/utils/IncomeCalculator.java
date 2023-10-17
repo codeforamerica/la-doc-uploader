@@ -27,21 +27,21 @@ public class IncomeCalculator {
     if (job.getOrDefault("jobPaidByHour", "false").toString().equals("true")) {
       var hoursPerWeek = Double.parseDouble(job.get("hoursPerWeek").toString());
       var hourlyWage = Double.parseDouble(job.get("hourlyWage").toString());
-      return hoursPerWeek * hourlyWage * 52;
+      return hoursPerWeek * hourlyWage * (52.0 / 12);
     } else {
       var payPeriod = job.getOrDefault("payPeriod", "It varies");
       var payPeriodAmount = Double.parseDouble(job.get("payPeriodAmount").toString());
       if (payPeriod == "Every week"){
-        return payPeriodAmount * 52;
+        return payPeriodAmount * (52.0 / 12);
       } else if (payPeriod == "Every 2 weeks"){
-        return payPeriodAmount * 26;
+        return (payPeriodAmount * ((52.0 / 2) / 12));
       } else if (payPeriod == "Twice a month"){
-        return payPeriodAmount * 12 * 2;
+        return payPeriodAmount * 2;
       } else if (payPeriod == "Every month"){
-        return payPeriodAmount * 12;
+        return payPeriodAmount;
       }
       // based on 30D estimate
-      return payPeriodAmount * 12;
+      return payPeriodAmount;
     }
   }
 }
