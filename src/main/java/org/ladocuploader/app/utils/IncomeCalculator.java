@@ -1,11 +1,14 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+@Slf4j
 public class IncomeCalculator {
   Submission submission;
   public IncomeCalculator(Submission submission) {
@@ -27,19 +30,21 @@ public class IncomeCalculator {
     if (job.getOrDefault("jobPaidByHour", "false").toString().equals("true")) {
       var hoursPerWeek = Double.parseDouble(job.get("hoursPerWeek").toString());
       var hourlyWage = Double.parseDouble(job.get("hourlyWage").toString());
+      log.info("Returning hourly wage");
       return hoursPerWeek * hourlyWage * (52.0 / 12);
     } else {
-      var payPeriod = job.getOrDefault("payPeriod", "It varies");
+      var payPeriod = job.getOrDefault("payPeriod", "It varies").toString();
       var payPeriodAmount = Double.parseDouble(job.get("payPeriodAmount").toString());
-      if (payPeriod == "Every week"){
+      if (Objects.equals(payPeriod, "Every week")){
         return payPeriodAmount * (52.0 / 12);
-      } else if (payPeriod == "Every 2 weeks"){
+      } else if (Objects.equals(payPeriod, "Every 2 weeks")){
         return (payPeriodAmount * ((52.0 / 2) / 12));
-      } else if (payPeriod == "Twice a month"){
+      } else if (Objects.equals(payPeriod, "Twice a month")){
         return payPeriodAmount * 2;
-      } else if (payPeriod == "Every month"){
+      } else if (Objects.equals(payPeriod, "Every month")){
         return payPeriodAmount;
       }
+      log.info("Using 30D estimate");
       // based on 30D estimate
       return payPeriodAmount;
     }

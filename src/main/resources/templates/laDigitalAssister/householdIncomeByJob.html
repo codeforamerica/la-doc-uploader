@@ -12,9 +12,9 @@
                     th:replace="'fragments/cardHeader' :: cardHeader(header=#{income-by-job.header}, subtext=#{income-by-job.subheader})"/>
 
         <th:block th:replace="~{fragments/continueButton :: continue}" />
-        <span class="text--small spacing-below-0">
-          <a th:href="'/flow/' + ${flow} + '/householdAnnualIncome'" th:text="#{income-by-job.enter-directly}"></a>
-        </span>
+<!--        <span class="text&#45;&#45;small spacing-below-0">-->
+<!--          <a th:href="'/flow/' + ${flow} + '/householdAnnualIncome'" th:text="#{income-by-job.enter-directly}"></a>-->
+<!--        </span>-->
       </main>
     </div>
   </section>
