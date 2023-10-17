@@ -167,5 +167,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String moneyOnHand;
 
+  private String annualHouseholdIncome;
+
 }
 

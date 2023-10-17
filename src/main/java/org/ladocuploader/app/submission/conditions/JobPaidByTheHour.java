@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JobPaidByTheHour extends AbstractSubflowCondition {
+    @Override
     public Boolean run(Submission submission, String uuid) {
         var item = currentIncomeSubflowItem(submission, uuid);
 

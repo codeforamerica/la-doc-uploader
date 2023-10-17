@@ -242,6 +242,8 @@ flow:
     subflow: income
     nextScreens:
      - name: householdEmployerName
+  householdIncomeDeleteConfirmation:
+    nextScreens: null
   householdAnnualIncome:
     nextScreens:
       - name: householdIncomeList
