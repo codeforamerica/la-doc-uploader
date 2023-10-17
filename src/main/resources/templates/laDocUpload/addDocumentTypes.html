@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{upload-documents.title}, useDropzone=true)}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{upload-documents.header})}"/>
+        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
+          <th:block th:ref="clientInfoFormContents">
+            <div class="form-card__content">
+              <th:block th:replace="~{fragments/fileUploader :: fileUploader(inputName='uploadDocuments')}"></th:block>
+            </div>
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButtonSecondary :: submitButton(
+                  text=#{upload-documents.button-text}, isHidden=true)}"/>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}" />
+<script>FormFlowDZ.hideContinueIfNoFiles("uploadDocuments", "form-submit-button")</script>
+<script>
+  $(document).ready(function () {
+
+    $("#form-submit-button").click(function () {
+        const uploadedFiles = {
+            'pdf': 0,
+            'jpg': 0,
+            'png': 0,
+            'gif': 0
+        }
+        $(".filename-text-ext").each(function () {
+            let fileExt = this.textContent;
+            fileExt = fileExt.substring(1, fileExt.length);
+            const count = uploadedFiles[fileExt];
+            uploadedFiles[fileExt] = count + 1;
+        });
+
+        mixpanel.track('file_upload_finished', uploadedFiles);
+    })
+  });
+</script>
+</body>
+</html>

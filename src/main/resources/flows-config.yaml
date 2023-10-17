@@ -12,6 +12,12 @@ flow:
       - name: uploadDocuments
   uploadDocuments:
     nextScreens:
+      - name: addDocumentTypes
+  addDocumentTypes:
+    nextScreens:
+      - name: reviewDocumentTypes
+  reviewDocumentTypes:
+    nextScreens:
       - name: docSubmitConfirmation
   docSubmitConfirmation:
     nextScreens:
