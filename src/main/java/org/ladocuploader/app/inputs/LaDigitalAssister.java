@@ -85,6 +85,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String receivedOutOfStateBenefits;
 
+  // SNAP
   private String buyPrepareMealsSeparateIndicator;
 
   private String preparesFood;
@@ -131,9 +132,12 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String meals;
 
+  // Income
   private String householdSearchingForJob;
 
   private String jobSearch;
+
+  private String workDisqualificationInd;
   
   //  Sensitive Questions
   private String householdHasPersonalSituations;
