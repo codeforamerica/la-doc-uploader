@@ -169,7 +169,7 @@ public class LaDigitalAssister extends FlowInputs {
   @Money
   private String hourlyWage;
 
-  @Range(min=1, max=24)
+  @Range(min=1, max=100)
   private String hoursPerWeek;
 
   private String payPeriod;
