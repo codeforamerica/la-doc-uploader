@@ -93,7 +93,6 @@ public class SubmissionUtilities {
 
         // Set combineWithPrevious on items after the first one for the same person
         for (var i = 0; i < items.size(); i++) {
-            var item = items.get(i);
             var combineWithPrevious = (i > 0) && items.get(i - 1).get("name").equals(items.get(i).get("name"));
             items.get(i).put("combineWithPrevious", combineWithPrevious);
         }
