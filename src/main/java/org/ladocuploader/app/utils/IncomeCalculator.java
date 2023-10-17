@@ -23,7 +23,7 @@ public class IncomeCalculator {
     return total;
   }
 
-  public static double futureIncomeForJob(Map<String, Object> job) {
+  public static double futureIncomeForJob(Map<String, Object> job) throws NumberFormatException {
     if (job.getOrDefault("jobPaidByHour", "false").toString().equals("true")) {
       var hoursPerWeek = Double.parseDouble(job.get("hoursPerWeek").toString());
       var hourlyWage = Double.parseDouble(job.get("hourlyWage").toString());
