@@ -20,6 +20,10 @@ body {
   content: "\e7ff";
 }
 
+.icon-house-outline::before {
+  content: "\e7ff"
+}
+
 .subflow-list__item-actions a:not(:last-child) {
   border-right: 1px solid #CFC5BF;
   padding-right: 2rem;

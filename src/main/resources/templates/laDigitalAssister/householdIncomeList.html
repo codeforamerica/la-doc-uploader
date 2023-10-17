@@ -23,7 +23,6 @@
 
                       <i th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__icon icon-person-outline"></i>
                       <div th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__item-title">
-<!--                        <th:block th:replace="~{fragments/icons :: smallPersonIcon}"></th:block>-->
                         <strong><span th:text="${incomeItem.name}"></span></strong>
                         <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>
                       </div>
@@ -34,8 +33,8 @@
                         <div><p th:text="${incomeItem.payPeriod}"></p></div>
                       </div>
 
-                      <div class="spacing-below-10 spacing-above-0">
-                        <a class="spacing-right-10" style="color:green" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${incomeItem.uuid} + '/edit'"
+                      <div class="subflow-list__item-actions">
+                        <a style="color:green" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${incomeItem.uuid} + '/edit'"
                            th:text="#{income-list.edit-job}"
                            th:id="'edit-iteration-' + ${incomeItem.uuid}">
                         </a>
@@ -63,16 +62,19 @@
 
                     <th:block th:if="${incomeItem.get('itemType').equals('household-total')}">
                       <hr>
+                      <span class="subflow-list__icon">
+                    <th:block th:replace="~{'fragments/icons' :: iconHouseOutlineTiny}"/>
+                    </span>
 
                       <span class="subflow-list__icon">
                     </span>
                       <div class="subflow-list__item-title">
-                        <th:block th:replace="~{fragments/icons :: smallHouseIcon}"></th:block>
+                        <i class="subflow-list__icon icon-house-outline"></i>
                         <span th:text="#{income-list.total-monthly-pay}"></span>
                       </div>
 
                       <div class="subflow-list__item-body">
-                        <div><strong th:text="${incomeItem.income}"></strong></div>
+                        <div><span th:text="${incomeItem.income}"></span></div>
                       </div>
                     </th:block>
                   </li>
