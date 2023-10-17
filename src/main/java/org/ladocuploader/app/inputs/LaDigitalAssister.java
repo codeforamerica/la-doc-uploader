@@ -1,6 +1,7 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
+import formflow.library.data.validators.Money;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -161,6 +162,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String personalSituationDisability;
 
 
+  @Money
   private String hourlyWage;
 
   private String hoursPerWeek;

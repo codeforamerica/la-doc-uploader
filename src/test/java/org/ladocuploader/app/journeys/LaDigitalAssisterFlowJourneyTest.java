@@ -147,6 +147,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Work disqualifications");
     testPage.clickButton("No");
 
+    // household income
+    testPage.navigateToFlowScreen("laDigitalAssister/householdIncomeByJob");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("");
+
+
+
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");
     assertThat(testPage.getTitle()).isEqualTo("Prepare food");

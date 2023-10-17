@@ -9,7 +9,7 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <p th:text="${fieldData.get('employerName')}"></p>
+        <p class="employer-name" th:text="${fieldData.get('employerName')}"></p>
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'self' ? #messages.msg('job-paid-by-hour-self.header') : #messages.msgWithParams('job-paid-by-hour-househould.header', fieldData.get('householdMemberJobAdd'))})}"/>
           <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">

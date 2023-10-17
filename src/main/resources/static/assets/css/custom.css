@@ -388,7 +388,7 @@ input[type="number"] {
 }
 
 p.employer-name {
-  color:slategray;
+  color: #5F5854;
 }
 
 .privacy-policy-choices {
@@ -406,4 +406,8 @@ p.employer-name {
 .clipboard-icon {
   position: relative;
   bottom: -1px;
+}
+
+.text-input-group__postfix {
+  color: #5F5854;
 }

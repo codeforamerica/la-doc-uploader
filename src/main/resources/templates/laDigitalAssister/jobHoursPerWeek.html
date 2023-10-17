@@ -9,7 +9,7 @@
       <div class="grid">
         <div th:replace="~{fragments/goBack :: goBackLink}"></div>
         <main id="content" role="main" class="form-card spacing-above-35">
-          <p th:text="${fieldData.get('employerName')}"></p>
+          <p class="employer-name" th:text="${fieldData.get('employerName')}"></p>
           <th:block
               th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'self' ? #messages.msg('job-hours-per-week-self.header') : #messages.msgWithParams('job-hours-per-week-household.header', fieldData.get('householdMemberJobAdd'))})}"/>
           <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
@@ -17,7 +17,7 @@
               <div class="form-card__content">
                 <th:block th:replace="~{fragments/inputs/number ::
                   number(inputName='hoursPerWeek',
-                  ariaLabel='header')}" />
+                  ariaLabel='header', postfix='hrs')}" />
 
               </div>
               <div class="form-card__footer">

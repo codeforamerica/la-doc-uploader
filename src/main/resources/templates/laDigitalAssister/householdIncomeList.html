@@ -23,8 +23,8 @@
 
                       <i th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__icon icon-person-outline"></i>
                       <div th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__item-title">
-                        <th:block th:replace="~{fragments/icons :: smallPersonIcon}"></th:block>
-                        <strong><span class="spacing-left-10" th:text="${incomeItem.name}"></span></strong>
+<!--                        <th:block th:replace="~{fragments/icons :: smallPersonIcon}"></th:block>-->
+                        <strong><span th:text="${incomeItem.name}"></span></strong>
                         <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>
                       </div>
 
@@ -50,7 +50,6 @@
                     <th:block th:if="${incomeItem.get('itemType').equals('no-jobs-added')}">
                       <i th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__icon icon-person-outline"></i>
                       <div class="subflow-list__item-title">
-                        <th:block th:replace="~{fragments/icons :: smallPersonIcon}"></th:block>
                         <strong>
                           <span th:text="${incomeItem.name}"></span>
                           <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>
