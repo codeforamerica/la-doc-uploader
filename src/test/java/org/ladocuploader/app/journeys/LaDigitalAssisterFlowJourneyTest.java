@@ -166,6 +166,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Hours a week");
     testPage.enter("hoursPerWeek", "10");
     testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Income list");
 
 
     // SNAP
