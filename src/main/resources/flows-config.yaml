@@ -77,17 +77,6 @@ flow:
       - name: householdSignPost
         condition: IsMultiplePersonHousehold
       - name: ssnForm
-  ssnForm:
-    nextScreens:
-      - name: householdSpecialSituations
-  ssnFaq:
-    nextScreens:
-      - name: householdSpecialSituations
-  householdSpecialSituations:
-    nextScreens:
-      - name: householdSchool
-        condition: IsMultiplePersonHousehold
-      - name: school
   householdSignPost:
     nextScreens:
       - name: householdInfo
@@ -98,24 +87,43 @@ flow:
   householdList:
     nextScreens:
       - name: ssnForm
+  ssnForm:
+    nextScreens:
+      - name: householdSpecialSituations
+  ssnFaq:
+    nextScreens:
+      - name: householdSpecialSituations
+  householdSpecialSituations:
+    nextScreens:
+      - name: householdSchool
   householdSchool:
     nextScreens:
       - name: householdSchoolWho
+        condition: GoingToSchool
+      - name: householdPregnancy
   householdSchoolWho:
     nextScreens:
       - name: householdPregnancy
   householdPregnancy:
     nextScreens:
       - name: householdPregnancyWho
+        condition: IsPregnant
+      - name: householdBenefits
   householdPregnancyWho:
     nextScreens:
       - name: householdBenefits
   householdBenefits:
     nextScreens:
       - name: householdBenefitsWho
+        condition: OutOfStateBenefits
+      - name: householdPrepareFood
+        condition: ProgramsIncludeSnap
+      - name: sensitiveQuestions
   householdBenefitsWho:
     nextScreens:
       - name: householdPrepareFood
+        condition: ProgramsIncludeSnap
+      - name: sensitiveQuestions
   householdPrepareFood:
     nextScreens:
       - name: householdSeasonalFarmWorker
@@ -158,7 +166,7 @@ flow:
     nextScreens:
       - name: householdFosterAgedOutWho
         condition: FostersAgedOut
-      - name: householdRoomRental
+      - name: householdHomeless
   householdFosterAgedOutWho:
     nextScreens:
       - name: householdHomeless
@@ -173,12 +181,16 @@ flow:
   householdRoomRental:
     nextScreens:
       - name: householdRoomRentalWho
+        condition: HasRoomRental
+      - name: householdMeals
   householdRoomRentalWho:
     nextScreens:
       - name: householdMeals
   householdMeals:
     nextScreens:
       - name: householdMealsWho
+        condition: PayForMeals
+      - name: sensitiveQuestions
   householdMealsWho:
     nextScreens:
       - name: sensitiveQuestions
@@ -269,6 +281,8 @@ flow:
   householdAdditionalIncome:
     nextScreens:
       - name: householdMoneyOnHand
+        condition: ProgramsIncludeSnap
+      - name: expensesSignPost
   householdMoneyOnHand:
     nextScreens:
       - name: expensesSignPost

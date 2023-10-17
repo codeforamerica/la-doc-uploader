@@ -71,12 +71,21 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String mailingAddressStreetAddress1;
 
-  private String goingToSchool;
+  private String schoolInd;
 
-  private String isPregnant;
+  private String students;
+
+  private String pregnancyInd;
+
+  private String pregnancies;
+
+  private String outOfStateBenefitsInd;
+
+  private String outOfStateBenefitsRecipients;
 
   private String receivedOutOfStateBenefits;
 
+  // SNAP
   private String buyPrepareMealsSeparateIndicator;
 
   private String preparesFood;
@@ -89,6 +98,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String citizenshipNumber;
 
+  private String veteranInd;
+
+  private String veterans;
+
   private String fosterInd;
 
   private String fosters;
@@ -97,17 +110,24 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String fostersAgedOut;
 
-  private String veteranInd;
-
-  private String veterans;
-
   private String homelessInd;
 
   private String homeless;
 
+  private String roomRentalInd;
+
+  private String roomRentals;
+
+  private String mealInd;
+
+  private String meals;
+
+  // Income
   private String householdSearchingForJob;
 
   private String jobSearch;
+
+  private String workDisqualificationInd;
   
   //  Sensitive Questions
   private String householdHasPersonalSituations;
@@ -129,5 +149,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String personalSituationDomesticViolenceFlag;
   
   private String personalSituationDisability;
+
+  private String moneyOnHand;
 }
 
