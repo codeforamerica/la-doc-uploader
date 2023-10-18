@@ -55,9 +55,12 @@ flow:
       - name: homeAddress
   homeAddress:
     nextScreens:
+      - name: noPermanentAddress
+        condition: NoPermanentAddress
       - name: mailingAddress
-  confirmNoAddress:
-    nextScreens: null
+  noPermanentAddress:
+    nextScreens:
+      - name: contactInfo
   mailingAddress:
     nextScreens:
       - name: contactInfo
