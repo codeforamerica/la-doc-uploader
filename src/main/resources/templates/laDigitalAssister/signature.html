@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="fragments/head :: head(title=#{signature-title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,15 +8,17 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
-          <th:block th:ref="formContent">
+                <th:block
+                    th:replace="'fragments/cardHeader' :: cardHeader(header=#{signature-header})"/>
+        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::submitForm})">
+          <th:block th:ref="submitForm">
             <div class="form-card__content">
+              <th:block th:replace="'fragments/inputs/text' ::
+                text(inputName='signature', label=#{signature-subheader})" />
 
-            </div>
             <div class="form-card__footer">
-
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{signature-submit})}"/>
             </div>
           </th:block>
         </th:block>

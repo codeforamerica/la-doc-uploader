@@ -151,5 +151,15 @@ public class LaDigitalAssister extends FlowInputs {
   private String personalSituationDisability;
 
   private String moneyOnHand;
+
+  private String rightsAndResponsibilitiesAgree;
+
+  private String noIncorrectInformationAgree;
+
+  private String programsSharingDataAccessAgree;
+
+  private String nonDiscriminationStatementAgree;
+
+  private String signature;
 }
 
