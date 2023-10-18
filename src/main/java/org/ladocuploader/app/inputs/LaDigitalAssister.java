@@ -101,6 +101,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String selfEmploymentIncome;
 
+  @NotBlank
   private String householdMemberJobAdd;
 
   private String employerName;
@@ -167,11 +168,13 @@ public class LaDigitalAssister extends FlowInputs {
 
 
   @Money
+  @NotBlank
   private String hourlyWage;
 
   @Range(min=1, max=100)
   private String hoursPerWeek;
 
+  @NotBlank
   private String payPeriod;
 
   @Money
