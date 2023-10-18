@@ -4,10 +4,6 @@ name: Deploy to Aptible Staging
 # 3. if successful, draft release and merge main to staging branch
 
 on:
-  workflow_run:
-    workflows: ["Run tests"]
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
     inputs: { }
 
