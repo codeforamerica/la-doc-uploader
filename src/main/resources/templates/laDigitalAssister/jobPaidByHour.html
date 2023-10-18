@@ -14,13 +14,14 @@
             th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'self' ? #messages.msg('job-paid-by-hour-self.header') : #messages.msgWithParams('job-paid-by-hour-househould.header', fieldData.get('householdMemberJobAdd'))})}"/>
           <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
             <th:block th:ref="content">
-              <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
-                inputName='jobPaidByHour',
-                ariaDescribe='header')}"/>
-
-              <span class="text--small spacing-below-0 spacing-above-5">
+              <div class="spacing-below-5">
+                <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
+                  inputName='jobPaidByHour',
+                  ariaDescribe='header')}"/>
+              </div>
+              <div class="spacing-below-0">
                 <a th:href="'/flow/' + ${flow} + '/jobPayAmount/' + ${uuid}" th:text="#{job-paid-by-hour.link}"></a>
-              </span>
+              </div>
           </th:block>
         </th:block>
       </main>
