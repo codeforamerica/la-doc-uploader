@@ -324,5 +324,10 @@ public class LaDigitalAssister extends FlowInputs {
   private String hasElderlyCareExpenses;
 
   private String expensesElderlyCare;
+
+  @NotBlank(message = "{final-confirmation.answer-feedback-question}")
+  private String digitalAssisterFeedback;
+
+  private String digitalAssisterFeedbackDetail;
 }
 

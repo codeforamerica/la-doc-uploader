@@ -1,6 +1,5 @@
 package org.ladocuploader.app.journeys;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
@@ -405,9 +404,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo("Legal Stuff");
-
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo("Signature");
+    testPage.clickButton("Submit Application");
+
+    assertThat(testPage.getTitle()).isEqualTo("Confirmation");
   }
 }

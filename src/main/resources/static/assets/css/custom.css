@@ -24,6 +24,10 @@ body {
   content: "\e7ff"
 }
 
+.icon-large {
+  font-size: 3rem;
+}
+
 .subflow-edit {
   color: #008060 !important;
 }
@@ -190,6 +194,29 @@ input[type="number"] {
   padding: 20px 15px 0 15px;
 }
 
+.next-steps {
+  position: relative;
+}
+
+.next-steps::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  left: 50%;
+  background-color: #003865;
+}
+
+.notice-info {
+  background-color: #F7F5F4;
+  border: 1px solid #003865;
+  border-radius: 3px;
+  position: relative;
+  padding: 20px 15px 0 15px;
+}
+
 .steps-box {
   display: flex;
   align-items: flex-start;
@@ -200,9 +227,9 @@ input[type="number"] {
   flex-shrink: 0;
 }
 
-.vertical-steps .notice-blue {
-  margin-bottom: -10px;
-  margin-top: -10px;
+.vertical-steps__step {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .notice-blue .width-one-sixth {
