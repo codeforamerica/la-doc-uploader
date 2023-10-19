@@ -87,6 +87,8 @@ flow:
   householdList:
     nextScreens:
       - name: ssnForm
+        condition: ProgramsIncludeSnap
+      - name: householdSpecialSituations
   ssnForm:
     nextScreens:
       - name: householdSpecialSituations
