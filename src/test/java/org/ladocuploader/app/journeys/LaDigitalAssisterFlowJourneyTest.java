@@ -95,6 +95,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Household list");
     testPage.clickButton("Yes, this is everyone");
 
+    assertThat(testPage.getTitle()).isEqualTo("Next step");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/ssnForm");
     assertThat(testPage.getTitle()).isEqualTo("SSN");
     testPage.clickLink("Learn why we ask for SSNs");
     assertThat(testPage.getTitle()).isEqualTo("SSN faqs");
