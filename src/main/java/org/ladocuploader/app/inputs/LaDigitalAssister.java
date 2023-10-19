@@ -281,5 +281,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String signature;
 
+  private String hasDependentCareExpenses;
+
 }
 
