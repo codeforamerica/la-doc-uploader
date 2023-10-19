@@ -11,8 +11,108 @@ body {
   background-color: var(--light);
 }
 
+.subflow-list__item-actions {
+  margin-left: 3rem;
+  font-size: 16px;
+}
+
+.icon-person-outline::before {
+  content: "\e7ff";
+}
+
+.icon-house-outline::before {
+  content: "\e7ff"
+}
+
+.subflow-edit {
+  color: #008060 !important;
+}
+
+.subflow-delete {
+  color: #D13F00 !important;
+}
+
+.subflow-list__item-actions a:not(:last-child) {
+  border-right: 1px solid #CFC5BF;
+  padding-right: 2rem;
+  margin-right: 2rem;
+}
+
+.boxed-content {
+  padding: 2.5rem 1rem 2.5rem 1rem;
+  margin: 2.5rem auto;
+  border: 2px solid #AAAAAA;
+  border-radius: 3px;
+  max-width: 35rem;
+}
+
+.boxed-content hr {
+  margin: 2.5rem 0 3rem 0;
+}
+
+.subflow-list {
+  text-align: left;
+}
+
+.subflow-list--bulleted {
+  text-align: left;
+  padding-left: 3rem;
+  list-style: disc;
+}
+
+.subflow-list__item {
+  position: relative;
+  margin-bottom: 1.5em;
+}
+
+.subflow-list__subitem {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.vertical {
+  border-left: 6px solid blue;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  margin-left: -3px;
+}
+
+.subflow-list__icon {
+  position: absolute;
+  line-height: 2.5rem;
+}
+
+.subflow-list__item-title {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-left: 3rem;
+}
+
+.subflow-list__item-body {
+  margin-left: 3rem;
+  font-size: 16px;
+}
+
+.subflow-list__action-delete,
+.subflow-list__action-delete:focus,
+.subflow-list__action-delete:hover,
+.subflow-list__action-delete:visited,
+.subflow-list__action-delete:active {
+  color: #D13F00;
+}
+
 .spacing-left-1_5 {
   padding-left: 1.5em;
+}
+
+.spacing-left-10 {
+  margin-left: 15px;
+}
+
+.job-item > p {
+  text-transform:uppercase;
+  !important color:grey;
 }
 
 .spacing-right-10 {
@@ -209,6 +309,11 @@ input[type="number"] {
   color: var(--dark-grey)
 }
 
+.button--add-job {
+  color: black;
+  background-color: white;
+}
+
 
 /* TODO Consider pulling these out into variables in FFL itself */
 .toolbar__wrapper, .main-footer, .button--primary, .dz-button {
@@ -294,6 +399,10 @@ input[type="number"] {
   top: 0;
 }
 
+p.employer-name {
+  color: #5F5854;
+}
+
 .privacy-policy-choices {
   color: #388081
 }
@@ -309,4 +418,8 @@ input[type="number"] {
 .clipboard-icon {
   position: relative;
   bottom: -1px;
+}
+
+.text-input-group__postfix {
+  color: #5F5854;
 }
