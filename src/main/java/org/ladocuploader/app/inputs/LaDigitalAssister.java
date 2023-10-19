@@ -192,6 +192,7 @@ public class LaDigitalAssister extends FlowInputs {
   
   private String switchToIncomeByJob;
 
+  private List<String> householdHomeExpenses;
   // Final Screen
   private String authorizedRepresentative;
 

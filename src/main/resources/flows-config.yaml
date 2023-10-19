@@ -310,10 +310,7 @@ flow:
       - name: householdHomeExpenses
   householdHomeExpenses:
     nextScreens:
-      - name: householdEmployerName
-  expensesHome:
-    nextScreens:
-      - name: utilities
+      - name: expensesRent
   expensesRent:
     nextScreens:
      - name: expensesMortgage

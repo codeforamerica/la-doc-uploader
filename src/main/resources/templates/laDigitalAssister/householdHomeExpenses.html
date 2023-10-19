@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="fragments/head :: head(title=#{home-expenses.title})"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::whichHouseholdExpenses})}">
+          <th:block th:ref="whichHouseholdExpenses">
+              <th:block th:replace="'fragments/inputs/checkboxFieldset' ::
+                  checkboxFieldset(inputName='householdHomeExpenses',
+                  ariaLabel=#{home-expenses.header},
+                  content=~{::whichHomeExpenses})">
+                <th:block th:ref="whichHomeExpenses">
+                  <h2 th:text="#{home-expenses.header}"></h2>
+                  <p th:text="#{general.check-all-that-apply}"></p>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.rent}, label=#{home-expenses.rent})"/>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.mortgage}, label=#{home-expenses.mortgage})"/>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.homeinsurance}, label=#{home-expenses.homeinsurance})"/>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.tax}, label=#{home-expenses.tax})"/>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.tax}, label=#{home-expenses.tax})"/>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.condo-fees}, label=#{home-expenses.condo-fees})"/>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.lot-rent}, label=#{home-expenses.lot-rent})"/>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.floor-insurance}, label=#{home-expenses.floor-insurance})"/>
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.other}, label=#{home-expenses.other})"/>
+
+                </th:block>
+              </th:block>
+            <div class="form-card__footer">
+              <th:block th:replace="'fragments/inputs/submitButton' :: submitButton(
+                  text=#{general.inputs.continue})"/>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="fragments/footer :: footer" />
+</body>
+</html>
