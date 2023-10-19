@@ -17,7 +17,7 @@
       type="submit"
       value="true"
       class="button button--primary">
-    <span th:text="#{${hasYesText ? overrideYesText : 'general.inputs.yes'}}"></span>
+    <span th:text="${hasYesText ? overrideYesText : #messages.msg('general.inputs.yes')}"></span>
   </button>
   <button
       th:name="${inputName}"
@@ -25,7 +25,7 @@
       value="false"
       th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
       class="button button--secondary">
-    <span th:text="#{${hasNoText ? overrideNoText : 'general.inputs.no'}}"></span>
+    <span th:text="${hasNoText ? overrideNoText : #messages.msg('general.inputs.no')}"></span>
   </button>
 
 </th:block>

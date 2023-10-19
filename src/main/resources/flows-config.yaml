@@ -246,10 +246,12 @@ flow:
     nextScreens: null
   householdMonthlyIncome:
     nextScreens:
-      - name: householdIncomeList
+      - name: householdIncomeTotal
   householdIncomeTotal:
     nextScreens:
       - name: householdAdditionalIncome
+        condition: NonItemizedIncome
+      - name: householdIncomeWho
   householdEmployerName:
     subflow: income
     nextScreens:

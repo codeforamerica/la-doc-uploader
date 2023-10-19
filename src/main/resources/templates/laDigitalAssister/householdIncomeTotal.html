@@ -15,8 +15,8 @@
           <th:block th:ref="formContent">
             <div class="form-card__content">
               <div class="boxed-content text--centered">
+                <div class="subflow-list">
                 <th:block>
-                  <hr>
                   <span class="subflow-list__icon">
                 <th:block th:replace="~{'fragments/icons' :: iconHouseOutlineTiny}"/>
                 </span>
@@ -28,21 +28,21 @@
                   </div>
 
                   <div class="subflow-list__item-body">
-                    <div><span th:text="${fieldData.get('monthlyHouseholdIncome')}"></span></div>
+                    <div><span th:text="'$'+${fieldData.get('monthlyHouseholdIncome')}"></span></div>
                   </div>
                 </th:block>
+                </div>
 
               </div>
+              <p id="household-income-description" th:text="#{household-income-total.add-by-job}"></p>
 
             </div>
             <div class="form-card__footer">
-              <p id="household-income-description" th:text="#{household-income-total.add-by-job}"></p>
               <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
                 inputName='switchToIncomeByJob',
                 ariaDescribe='household-income-description',
-                overrideYesText=#{household-income-total.no},
-                overrideNoText=#{household-income-total.yes})}"/>
-
+                overrideNoText=#{household-income-total.yes},
+                overrideYesText=#{household-income-total.no})}"/>
             </div>
           </th:block>
         </th:block>
