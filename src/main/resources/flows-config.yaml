@@ -247,6 +247,9 @@ flow:
   householdMonthlyIncome:
     nextScreens:
       - name: householdIncomeList
+  householdIncomeTotal:
+    nextScreens:
+      - name: householdAdditionalIncome
   householdEmployerName:
     subflow: income
     nextScreens:

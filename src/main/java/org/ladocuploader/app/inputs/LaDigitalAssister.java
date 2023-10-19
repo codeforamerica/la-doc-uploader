@@ -187,5 +187,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String monthlyHouseholdIncome;
 
+  private String switchToIncomeByJob;
+
 }
 

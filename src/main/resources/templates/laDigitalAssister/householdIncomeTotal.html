@@ -15,71 +15,22 @@
           <th:block th:ref="formContent">
             <div class="form-card__content">
               <div class="boxed-content text--centered">
-<!--                <strong th:text="#{income-list.box-title}"></strong>-->
+                <th:block>
+                  <hr>
+                  <span class="subflow-list__icon">
+                <th:block th:replace="~{'fragments/icons' :: iconHouseOutlineTiny}"/>
+                </span>
 
-<!--                <ul class="subflow-list">-->
-<!--                  <li th:each="incomeItem, iter: ${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdIncomeReviewItems(submission)}" class="subflow-list__item">-->
-<!--                    <th:block th:if="${incomeItem.get('itemType').equals('job')}">-->
+                  <span class="subflow-list__icon">
+                </span>
+                  <div class="subflow-list__item-title">
+                    <span th:text="#{income-list.total-monthly-pay}"></span>
+                  </div>
 
-<!--                      <i th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__icon icon-person-outline"></i>-->
-<!--                      <div th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__item-title">-->
-<!--                        <strong><span th:text="${incomeItem.name}"></span></strong>-->
-<!--                        <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>-->
-<!--                      </div>-->
-
-<!--                      <div class="subflow-list__item-body">-->
-<!--                        <strong><div class="subflow-list__item-body__subtitle spacing-above-5" style="color:darkslategrey" th:text="${incomeItem.jobName.toUpperCase()}"></div></strong>-->
-<!--                        <div><strong th:text="${incomeItem.income}"></strong></div>-->
-<!--                        <div><span th:text="${incomeItem.payPeriod}"></span></div>-->
-<!--                      </div>-->
-
-<!--                      <div class="subflow-list__item-actions">-->
-<!--                        <a th:href="'/flow/laDigitalAssister/householdEmployerName/' + ${incomeItem.uuid} + '/edit'"-->
-<!--                           th:text="#{income-list.edit-job}"-->
-<!--                           class="subflow-edit"-->
-<!--                           th:id="'edit-iteration-' + ${incomeItem.uuid}">-->
-<!--                        </a>-->
-<!--                        <a th:href="'/flow/laDigitalAssister/income/' + ${incomeItem.uuid} + '/deleteConfirmation'"-->
-<!--                           th:text="#{income-list.delete-job}"-->
-<!--                           class="subflow-delete"-->
-<!--                           th:id="'delete-iteration-' + ${incomeItem.uuid}"></a>-->
-<!--                      </div>-->
-<!--                    </th:block>-->
-
-<!--                    <th:block th:if="${incomeItem.get('itemType').equals('no-jobs-added')}">-->
-<!--                      <i th:if="${!incomeItem.combineWithPrevious}" class="subflow-list__icon icon-person-outline"></i>-->
-<!--                      <div class="subflow-list__item-title">-->
-<!--                        <strong>-->
-<!--                          <span th:text="${incomeItem.name}"></span>-->
-<!--                          <span th:if="${incomeItem.isApplicant}" th:text="#{income-list.thats-you}"></span>-->
-<!--                        </strong>-->
-<!--                      </div>-->
-
-<!--                      <div class="subflow-list__item-body spacing-below-15">-->
-<!--                        <span th:text="#{income-list.no-jobs-added}"></span>-->
-<!--                      </div>-->
-<!--                    </th:block>-->
-
-                    <th:block th:if="${incomeItem.get('itemType').equals('household-total')}">
-                      <hr>
-                      <span class="subflow-list__icon">
-                    <th:block th:replace="~{'fragments/icons' :: iconHouseOutlineTiny}"/>
-                    </span>
-
-                      <span class="subflow-list__icon">
-                    </span>
-                      <div class="subflow-list__item-title">
-                        <span th:text="#{income-list.total-monthly-pay}"></span>
-                      </div>
-
-                      <div class="subflow-list__item-body">
-                        <div><span th:text="${incomeItem.income}"></span></div>
-                      </div>
-                    </th:block>
-<!--                  </li>-->
-<!--                </ul>-->
-
-<!--                <a class="button button&#45;&#45;add-job" th:text="#{income-list.add-job}" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen}"></a>-->
+                  <div class="subflow-list__item-body">
+                    <div><span th:text="${fieldData.get('monthlyHouseholdIncome')}"></span></div>
+                  </div>
+                </th:block>
 
               </div>
 
