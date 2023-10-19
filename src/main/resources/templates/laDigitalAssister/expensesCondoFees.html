@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="fragments/head :: head(title=#{home-expenses.condo-fees})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,15 +8,20 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
-          <th:block th:ref="formContent">
+        <p class="grey-text" th:text="#{home-expenses.condo-fees}"></p>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{home-expenses.question(#{home-expenses.condo-fees})})}"/>
+        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::condominiumFees})}">
+          <th:block th:ref="condominiumFees">
             <div class="form-card__content">
+              <th:block
+                  th:replace="~{fragments/inputs/money :: money(inputName='expensesCondoFees',
+                  ariaLabel='header')}"/>
 
             </div>
             <div class="form-card__footer">
-
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>

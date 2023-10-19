@@ -234,6 +234,22 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String raceSelected;
 
+  private String expensesRent;
+
+  private String expensesMortgage;
+
+  private String expensesHomeownerInsurance;
+
+  private String expensesPropertyTax;
+
+  private String expensesCondoFees;
+
+  private String expensesLotRental;
+
+  private String expensesFloodInsurance;
+
+  private String expensesOther;
+
   private String rightsAndResponsibilitiesAgree;
 
   private String noIncorrectInformationAgree;
@@ -243,5 +259,6 @@ public class LaDigitalAssister extends FlowInputs {
   private String nonDiscriminationStatementAgree;
 
   private String signature;
+
 }
 

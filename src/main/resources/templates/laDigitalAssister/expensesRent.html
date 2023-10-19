@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{home-expenses.other})"></head>
+<head th:replace="fragments/head :: head(title=#{home-expenses.rent})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,14 +8,14 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <p class="grey-text" th:text="#{home-expenses.other}"></p>
+        <p class="grey-text" th:text="#{home-expenses.rent}"></p>
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{home-expenses.question(#{home-expenses.other})})}"/>
-        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::otherExpenses})}">
-          <th:block th:ref="otherExpenses">
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{home-expenses.question(#{home-expenses.rent})})}"/>
+        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::rent})}">
+          <th:block th:ref="rent">
             <div class="form-card__content">
               <th:block
-                  th:replace="~{fragments/inputs/money :: money(inputName='expensesOther',
+                  th:replace="~{fragments/inputs/money :: money(inputName='expensesRent',
                   ariaLabel='header')}"/>
 
             </div>
