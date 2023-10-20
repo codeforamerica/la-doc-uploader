@@ -530,18 +530,47 @@ flow:
   expensesDependentCare:
     nextScreens:
       - name: expensesDependentCareAmount
+        condition: HasDependentCareExpenses
+      - name: expensesInsurance
   expensesDependentCareAmount:
     nextScreens:
       - name: expensesInsurance
   expensesInsurance:
     nextScreens:
-      - name: expensesInsuranceAmount
-  expensesInsuranceAmount:
+      - name: expensesMedicalInsurance
+        condition: ExpensesIncludeMedicalInsurancePremium
+      - name: expensesDentalInsurance
+        condition: ExpensesIncludeDentalInsurancePremium
+      - name: expensesVisionInsurance
+        condition: ExpensesIncludeVisionInsurancePremium
+      - name: expensesMedicalBills
+        condition: ExpensesIncludeMedicalBills
+  expensesMedicalInsurance:
+    nextScreens:
+      - name: expensesDentalInsurance
+        condition: ExpensesIncludeDentalInsurancePremium
+      - name: expensesVisionInsurance
+        condition: ExpensesIncludeVisionInsurancePremium
+      - name: expensesMedicalBills
+        condition: ExpensesIncludeMedicalBills
+  expensesDentalInsurance:
+    nextScreens:
+      - name: expensesVisionInsurance
+        condition: ExpensesIncludeVisionInsurancePremium
+      - name: expensesMedicalBills
+        condition: ExpensesIncludeMedicalBills
+  expensesVisionInsurance:
+    nextScreens:
+      - name: expensesMedicalBills
+        condition: ExpensesIncludeMedicalBills
+  expensesMedicalBills:
     nextScreens:
       - name: expensesElderlyCare
   expensesElderlyCare:
     nextScreens:
       - name: expensesElderlyCareAmount
+        condition: HasElderlyCareExpenses
+      - name: finalSignPost
   expensesElderlyCareAmount:
     nextScreens:
       - name: finalSignPost

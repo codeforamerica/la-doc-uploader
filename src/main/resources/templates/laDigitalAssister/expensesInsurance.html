@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="~{fragments/head :: head(title=#{insurance-expenses.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
-          <th:block th:ref="formContent">
-            <div class="form-card__content">
-
-            </div>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{insurance-expenses.header}, subtext=#{insurance-expenses.subheader})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::insuranceExpenses})}">
+            <th:block th:ref="insuranceExpenses">
+              <div class="form-card__content">
+                <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+                  checkboxFieldset(inputName='householdInsuranceExpenses',
+                  ariaLabel=#{insurance-expenses.header},
+                  content=~{::whichHouseholdExpenses})}">
+                    <th:block th:ref="whichHouseholdExpenses">
+                      <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.medical-insurance-premium}, label=#{insurance-expenses.medical-insurance-premium})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.dental-insurance-premium}, label=#{insurance-expenses.dental-insurance-premium})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.vision-insurance-premium}, label=#{insurance-expenses.vision-insurance-premium})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.medical-bills}, label=#{insurance-expenses.medical-bills})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.none}, label=#{insurance-expenses.none})}"/>
+                    </th:block>
+                </th:block>
+                
+              </div>
             <div class="form-card__footer">
-
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>
@@ -24,6 +42,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
