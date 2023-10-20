@@ -106,9 +106,12 @@ def axeAccessibilityTest = tasks.register("accessibilityTest", Test) {
 
 tasks.withType(Test).configureEach {
     Test task ->
-        task.testLogging {
-            exceptionFormat = "full"
-            events = ["failed", "skipped"]
+        testlogger {
+            showPassed false
+            showSkipped true
+            showFailed true
+            showOnlySlow false
+            showFullStackTraces true
             showStackTraces = true
             showCauses = true
             showExceptions = true
