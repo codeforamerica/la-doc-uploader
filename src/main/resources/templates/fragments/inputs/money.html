@@ -1,5 +1,5 @@
 <th:block
-    th:fragment="number"
+    th:fragment="money"
     th:with="
       hasHelpText=${!#strings.isEmpty(helpText)},
       hasLabel=${!#strings.isEmpty(label)},
@@ -16,7 +16,8 @@
        th:id="${inputName + '-help-text'}"
        th:text="${helpText}"></p>
     <div class="text-input-group form-width--med">
-      <input type="number" class="text-input form-width--med"
+      <div class="text-input-group__prefix">$</div>
+      <input type="text" class="text-input"
              th:id="${inputName}"
              th:name="${inputName}"
              th:placeholder="${placeholder}"
@@ -24,9 +25,9 @@
               aria-describedby=${hasHelpText ? inputName + '-help-text' : ''},
               aria-labelledby=${hasAriaLabel ? ariaLabel : ''},
               aria-invalid=${hasError}"
-             th:value="${inputData.getOrDefault(inputName, '')}">
-        <div th:if="${postfix != null}" th:text="${postfix}" class="text-input-group__postfix"></div>
-      </div>
+             th:value="${fieldData.getOrDefault(inputName, '')}">
+      <div th:if="${postfix != null}" th:text="${postfix}" class="text-input-group__postfix"></div>
+    </div>
     <th:block
         th:replace="~{fragments/inputError :: validationError(inputName=${inputName})}"></th:block>
   </div>

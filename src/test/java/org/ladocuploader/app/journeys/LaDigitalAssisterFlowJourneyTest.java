@@ -95,6 +95,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Household list");
     testPage.clickButton("Yes, this is everyone");
 
+    assertThat(testPage.getTitle()).isEqualTo("Next step");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/ssnForm");
     assertThat(testPage.getTitle()).isEqualTo("SSN");
     testPage.clickLink("Learn why we ask for SSNs");
     assertThat(testPage.getTitle()).isEqualTo("SSN faqs");
@@ -146,6 +149,30 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Work disqualifications");
     testPage.clickButton("No");
+
+    // household income
+    testPage.navigateToFlowScreen("laDigitalAssister/householdIncomeByJob");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Income who");
+    testPage.clickElementById("householdMemberJobAdd-you");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Employer name");
+    testPage.enter("employerName", "job1");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Self-employment");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Paid by the hour");
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Hourly wage");
+    testPage.enter("hourlyWage", "15");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Hours a week");
+    testPage.enter("hoursPerWeek", "10");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Income list");
+
 
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");

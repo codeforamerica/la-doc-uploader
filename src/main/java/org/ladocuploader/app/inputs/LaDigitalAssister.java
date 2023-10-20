@@ -1,9 +1,14 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
+import formflow.library.data.validators.Money;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.util.List;
 
@@ -94,6 +99,18 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String citizenshipInd;
 
+  private String selfEmploymentIncome;
+
+  @NotBlank
+  private String householdMemberJobAdd;
+
+  @NotBlank
+  private String employerName;
+
+  private String selfEmployed;
+
+  private String jobPaidByHour;
+
   private String nonCitizens;
 
   private String citizenshipNumber;
@@ -150,7 +167,25 @@ public class LaDigitalAssister extends FlowInputs {
   
   private String personalSituationDisability;
 
+
+  @Money
+  @NotBlank
+  private String hourlyWage;
+
+  @Range(min=1, max=100)
+  @NotBlank
+  private String hoursPerWeek;
+
+  @NotBlank
+  private String payPeriod;
+
+  @Money
+  @NotBlank
+  private String payPeriodAmount;
+
   private String moneyOnHand;
+  
+  private String monthlyHouseholdIncome;
 
   private String rightsAndResponsibilitiesAgree;
 

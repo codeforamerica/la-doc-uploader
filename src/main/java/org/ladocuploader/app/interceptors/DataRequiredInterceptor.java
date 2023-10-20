@@ -1,8 +1,10 @@
 package org.ladocuploader.app.interceptors;
 
+import formflow.library.FormFlowController;
 import formflow.library.data.SubmissionRepositoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -46,7 +48,13 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
                 return false;
             }
 
-            var submissionId = (UUID) session.getAttribute("id");
+            Map<String, UUID> submissionMap = (Map)session.getAttribute(FormFlowController.SUBMISSION_MAP_NAME);
+            UUID submissionId = null;
+
+            if (submissionMap != null && submissionMap.get(parsedUrl.get("flow")) != null) {
+                submissionId = submissionMap.get(parsedUrl.get("flow"));
+            }
+
             if (submissionId != null) {
                 var submissionMaybe = this.submissionRepositoryService.findById(submissionId);
                 if (submissionMaybe.isPresent()) {

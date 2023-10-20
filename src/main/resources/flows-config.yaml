@@ -87,7 +87,11 @@ flow:
   householdList:
     nextScreens:
       - name: ssnForm
+        condition: ProgramsIncludeSnap
+      - name: householdSpecialSituations
   ssnForm:
+    beforeSaveAction: EncryptSSNBeforeSaving
+    beforeDisplayAction: DecryptSSNBeforeDisplaying
     nextScreens:
       - name: householdSpecialSituations
   ssnFaq:
@@ -239,37 +243,42 @@ flow:
     nextScreens:
       - name: householdIncomeWho
   householdIncomeWho:
+    subflow: income
+    nextScreens:
+     - name: householdEmployerName
+  householdIncomeDeleteConfirmation:
     nextScreens: null
-  householdAnnualIncome:
+  householdMonthlyIncome:
     nextScreens:
       - name: householdIncomeList
   householdEmployerName:
-    nextScreens: null
+    subflow: income
+    nextScreens:
+      - name: householdSelfEmployment
   householdSelfEmployment:
-    nextScreens: null
+    subflow: income
+    nextScreens:
+      - name: jobPaidByHour
   jobPaidByHour:
-    nextScreens: null
+    subflow: income
+    nextScreens:
+      - name: jobHourlyWage
+        condition: JobPaidByTheHour
+      - name: jobPayPeriod
   jobHourlyWage:
+    subflow: income
     nextScreens:
       - name: jobHoursPerWeek
   jobHoursPerWeek:
+    subflow: income
     nextScreens:
       - name: householdIncomeConfirmation
   jobPayPeriod:
-    nextScreens: null
-  jobWeeklyPay:
+    subflow: income
     nextScreens:
-      - name: householdIncomeConfirmation
-  jobBiWeeklyPay:
-    nextScreens:
-      - name: householdIncomeConfirmation
-  jobBiMonthlyPay:
-    nextScreens:
-      - name: householdIncomeConfirmation
-  jobMonthlyPay:
-    nextScreens:
-      - name: householdIncomeConfirmation
-  jobVariablePay:
+     - name: jobPayAmount
+  jobPayAmount:
+    subflow: income
     nextScreens:
       - name: householdIncomeConfirmation
   householdIncomeConfirmation:
@@ -289,6 +298,9 @@ flow:
   expensesSignPost:
     nextScreens:
       - name: householdHomeExpenses
+  householdHomeExpenses:
+    nextScreens:
+      - name: householdEmployerName
   expensesHome:
     nextScreens:
       - name: utilities
@@ -405,3 +417,8 @@ subflows:
     iterationStartScreen: householdInfo
     reviewScreen: householdList
     deleteConfirmationScreen: householdDeleteConfirmation
+  income:
+    entryScreen: householdIncomeByJob
+    iterationStartScreen: householdIncomeWho
+    reviewScreen: householdIncomeList
+    deleteConfirmationScreen: householdIncomeDeleteConfirmation
