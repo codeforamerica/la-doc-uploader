@@ -183,7 +183,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
     testPage.clickButton("No");
     assertThat(testPage.getTitle()).isEqualTo("Income list");
-
+    testPage.clickButton("I'm done adding jobs");
+    assertThat(testPage.getTitle()).isEqualTo("Additional income");
 
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");

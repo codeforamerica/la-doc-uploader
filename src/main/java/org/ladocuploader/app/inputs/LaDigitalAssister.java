@@ -183,6 +183,9 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank
   private String payPeriodAmount;
 
+  private String additionalIncome;
+
+  @Money
   private String moneyOnHand;
 
   private String monthlyHouseholdIncome;
