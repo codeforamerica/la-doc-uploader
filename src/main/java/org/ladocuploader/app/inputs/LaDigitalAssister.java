@@ -189,5 +189,20 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String hasDependentCareExpenses;
 
+  private String expensesDependentCare;
+
+  private String householdInsuranceExpenses;
+
+  private String expensesMedicalInsurance;
+
+  private String expensesDentalInsurance;
+
+  private String expensesVisionInsurance;
+
+  private String expensesMedicalBills;
+
+  private String hasElderlyCareExpenses;
+
+  private String expensesElderlyCare;
 }
 
