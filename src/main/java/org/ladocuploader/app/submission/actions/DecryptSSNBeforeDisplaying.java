@@ -36,7 +36,7 @@ public class DecryptSSNBeforeDisplaying implements Action {
 
     // Digital Assister
     List<String> householdSsnInputs = new ArrayList<>();
-    encryptedSSN = (String) submission.getInputData().remove("encryptedSSNs");
+    encryptedSSN = (String) submission.getInputData().remove(ENCRYPTED_SSNS_INPUT_NAME);
     if (encryptedSSN != null) {
       String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
       householdSsnInputs.add(decryptedSSN);
@@ -49,7 +49,7 @@ public class DecryptSSNBeforeDisplaying implements Action {
         householdSsnInputs.add("");
       }
       for (int i = 0; i < householdMembers.size(); i++) {
-        encryptedSSN = (String) ((Map) householdMembers.get(i)).remove("encryptedSSNs");
+        encryptedSSN = (String) ((Map) householdMembers.get(i)).remove(ENCRYPTED_SSNS_INPUT_NAME);
         if (encryptedSSN != null) {
           String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
           householdSsnInputs.add(decryptedSSN);
