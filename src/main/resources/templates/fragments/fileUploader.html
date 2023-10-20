@@ -63,7 +63,7 @@
     window['myDropZone' + [[${inputName}]]] = null;
     window['userFileIds' + [[${inputName}]]] = [];
     window['cancelledFiles' + [[${inputName}]]] = [];
-    var userFiles = [[${session.userFiles ?: ''}]]
+    var userFiles = [[${session.userFiles}]] != null ? JSON.parse([[${session.userFiles}]]) : null;
     var thumbnailWidthFromAppYml = [[${@environment.getProperty('form-flow.uploads.thumbnail-width')}]];
     var thumbnailHeightFromAppYml = [[${@environment.getProperty('form-flow.uploads.thumbnail-height')}]];
     var thumbnailWidth = thumbnailWidthFromAppYml ? thumbnailWidthFromAppYml : '64';
@@ -219,11 +219,11 @@
       })
     }
 
-    function sendDeleteXhrRequest(id) {
+    function sendDeleteXhrRequest(id, flow) {
       var xhrRequest = new XMLHttpRequest();
       xhrRequest.open('POST',
           '/file-delete?' + id + '&returnPath=' + window.location.pathname + '&inputName='
-          + [[${inputName}]], true);
+          + [[${inputName}]] + '&flow=' + flow, true);
       xhrRequest.withCredentials = false;
       xhrRequest.setRequestHeader("Accept", "*/*");
       xhrRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -276,7 +276,8 @@
       init: function () {
         window[dropzonePrefix + [[${inputName}]]] = this;
         var dzInstance = [[${inputName}]]
-        var documents = userFiles !== null ? userFiles[dzInstance] : [];
+        var flow = [[${flow}]]
+        var documents = userFiles?.userFileMap?.[flow]?.[dzInstance] || [];
 
         if (documents != null && Object.entries(documents).length > this.options.maxFiles) {
           toggleMaxFileMessage('on');
@@ -377,7 +378,7 @@
             let confirmation = confirm(confirmMsg.replaceAll('"',''))
 
             if (confirmation) {
-              sendDeleteXhrRequest(id);
+              sendDeleteXhrRequest(id, [[${flow}]]);
                 mixpanel.track('file_upload_delete', {
                     'page_name': window.location.pathname,
                     'file_size': file.size,

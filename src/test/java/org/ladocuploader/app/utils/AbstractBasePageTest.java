@@ -79,7 +79,6 @@ public abstract class AbstractBasePageTest {
     uploadFile(UPLOADED_JPG_FILE_NAME);
     assertThat(driver.findElement(By.id("file-preview-template-uploadDocuments")).getText().replace("\n", ""))
         .contains(UPLOADED_JPG_FILE_NAME);
-    waitUntilFileIsUploaded();
   }
 
   private void waitUntilFileIsUploaded() {
