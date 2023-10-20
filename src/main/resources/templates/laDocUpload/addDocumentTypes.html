@@ -13,7 +13,7 @@
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
           <th:block th:ref="clientInfoFormContents">
             <div class="form-card__content">
-              <th:block th:replace="~{fragments/fileUploader :: fileUploader(inputName='uploadDocuments')}"></th:block>
+              <th:block th:replace="~{fragments/fileDocType :: fileDocType(inputName='uploadDocuments')}"></th:block>
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButtonSecondary :: submitButton(
