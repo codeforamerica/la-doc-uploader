@@ -90,6 +90,8 @@ flow:
         condition: ProgramsIncludeSnap
       - name: householdSpecialSituations
   ssnForm:
+    beforeSaveAction: EncryptSSNBeforeSaving
+    beforeDisplayAction: DecryptSSNBeforeDisplaying
     nextScreens:
       - name: householdSpecialSituations
   ssnFaq:
