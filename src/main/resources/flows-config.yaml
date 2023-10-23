@@ -365,6 +365,7 @@ flow:
     nextScreens:
       - name: expensesInsurance
   expensesInsurance:
+    beforeDisplayAction: ConfigureHouseholdExpenses
     nextScreens:
       - name: expensesMedicalInsurance
         condition: ExpensesIncludeMedicalInsurancePremium
