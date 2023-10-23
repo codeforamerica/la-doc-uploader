@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title=#{upload-documents.title}, useDropzone=true)}"></head>
+<head th:replace="~{fragments/head :: head(title=#{upload-documents.title}, useDropzone=false)}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -13,7 +13,13 @@
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
           <th:block th:ref="clientInfoFormContents">
             <div class="form-card__content">
-              <th:block th:replace="~{fragments/fileDocType :: fileDocType(inputName='uploadDocuments')}"></th:block>
+              <ul class="list--bulleted">
+                <li th:each="userFile, iter: objectMapper.readValue((String) httpSession.getAttribute(SESSION_USERFILES_KEY)[[${session.userFiles}]])">
+                  <img src="${userFile.thumbnailUrl}">
+                  <span th:text="${userFile}"></span>
+                </li>
+              </ul>
+<!--              <th:block th:replace="~{fragments/fileDocType :: fileDocType(inputName='uploadDocuments')}"></th:block>-->
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButtonSecondary :: submitButton(
@@ -26,27 +32,5 @@
   </section>
 </div>
 <th:block th:replace="~{fragments/footer :: footer}" />
-<script>FormFlowDZ.hideContinueIfNoFiles("uploadDocuments", "form-submit-button")</script>
-<script>
-  $(document).ready(function () {
-
-    $("#form-submit-button").click(function () {
-        const uploadedFiles = {
-            'pdf': 0,
-            'jpg': 0,
-            'png': 0,
-            'gif': 0
-        }
-        $(".filename-text-ext").each(function () {
-            let fileExt = this.textContent;
-            fileExt = fileExt.substring(1, fileExt.length);
-            const count = uploadedFiles[fileExt];
-            uploadedFiles[fileExt] = count + 1;
-        });
-
-        mixpanel.track('file_upload_finished', uploadedFiles);
-    })
-  });
-</script>
 </body>
 </html>
