@@ -55,9 +55,12 @@ flow:
       - name: homeAddress
   homeAddress:
     nextScreens:
+      - name: noPermanentAddress
+        condition: NoPermanentAddress
       - name: mailingAddress
-  confirmNoAddress:
-    nextScreens: null
+  noPermanentAddress:
+    nextScreens:
+      - name: contactInfo
   mailingAddress:
     nextScreens:
       - name: contactInfo
@@ -89,6 +92,8 @@ flow:
       - name: ssnForm
         condition: ProgramsIncludeSnap
       - name: householdSpecialSituations
+  householdMemberDeleteConfirmation:
+    nextScreens: null
   ssnForm:
     beforeSaveAction: EncryptSSNBeforeSaving
     beforeDisplayAction: DecryptSSNBeforeDisplaying
@@ -250,7 +255,12 @@ flow:
     nextScreens: null
   householdMonthlyIncome:
     nextScreens:
-      - name: householdIncomeList
+      - name: householdIncomeTotal
+  householdIncomeTotal:
+    nextScreens:
+      - name: householdAdditionalIncome
+        condition: NonItemizedIncome
+      - name: householdIncomeWho
   householdEmployerName:
     subflow: income
     nextScreens:
@@ -416,7 +426,7 @@ subflows:
     entryScreen: multiplePersonHousehold
     iterationStartScreen: householdInfo
     reviewScreen: householdList
-    deleteConfirmationScreen: householdDeleteConfirmation
+    deleteConfirmationScreen: householdMemberDeleteConfirmation
   income:
     entryScreen: householdIncomeByJob
     iterationStartScreen: householdIncomeWho

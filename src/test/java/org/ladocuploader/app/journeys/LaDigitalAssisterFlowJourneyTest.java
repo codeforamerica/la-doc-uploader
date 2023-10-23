@@ -60,13 +60,20 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     // Home Address
     assertThat(testPage.getTitle()).isEqualTo("Home Address");
     testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Mailing address");
+    testPage.goBack();
+    testPage.clickElementById("noHomeAddress-true");
+    testPage.clickContinue();
+
+    // Where to send mail
+    assertThat(testPage.getTitle()).isEqualTo("Where to send mail");
+    testPage.clickButton("Add a mailing address");
 
     // Mailing Address
     assertThat(testPage.getTitle()).isEqualTo("Mailing address");
     testPage.clickContinue();
 
     // Contact Info
-    testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
     assertThat(testPage.getTitle()).isEqualTo("Contact info");
     testPage.clickContinue();
 
@@ -152,6 +159,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // household income
     testPage.navigateToFlowScreen("laDigitalAssister/householdIncomeByJob");
+    testPage.clickLink("I already know my monthly household pre-tax income - I prefer to enter it directly.");
+    testPage.enter("monthlyHouseholdIncome", "200");
+    testPage.clickContinue();
+    testPage.clickButton("Yes, add income by job");
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Income who");
     testPage.clickElementById("householdMemberJobAdd-you");
@@ -172,7 +183,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
     testPage.clickButton("No");
     assertThat(testPage.getTitle()).isEqualTo("Income list");
-
+    testPage.clickButton("I'm done adding jobs");
+    assertThat(testPage.getTitle()).isEqualTo("Additional income");
 
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");
