@@ -152,6 +152,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // household income
     testPage.navigateToFlowScreen("laDigitalAssister/householdIncomeByJob");
+    testPage.clickLink("I already know my monthly household pre-tax income - I prefer to enter it directly.");
+    testPage.enter("monthlyHouseholdIncome", "200");
+    testPage.clickContinue();
+    testPage.clickButton("Yes, add income by job");
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Income who");
     testPage.clickElementById("householdMemberJobAdd-you");
