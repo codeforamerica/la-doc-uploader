@@ -304,5 +304,14 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
     testPage.clickButton("No");
     assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
+
+
+    //Signature Page
+    testPage.navigateToFlowScreen("laDigitalAssister/legalStuff");
+    assertThat(testPage.getTitle()).isEqualTo("Legal Stuff");
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Signature");
   }
 }

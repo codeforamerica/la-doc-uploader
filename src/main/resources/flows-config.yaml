@@ -419,6 +419,8 @@ flow:
   legalStuff:
     nextScreens:
       - name: signature
+  signature:
+    nextScreens: null
 subflows:
   household:
     entryScreen: multiplePersonHousehold

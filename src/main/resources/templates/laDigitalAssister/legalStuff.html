@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="fragments/head :: head(title=#{legal-title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,15 +8,98 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
-          <th:block th:ref="formContent">
+        <th:block th:replace="~{'fragments/icons' :: uploadDocuments}"></th:block>
+        <th:block
+            th:replace="'fragments/cardHeader' :: cardHeader(header=#{legal-header1}, subtext=#{legal-subheader})"/>
+        <p th:text="#{legal-main-body}"></p>
+        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::legalExpand1})">
+          <th:block th:ref="legalExpand1">
             <div class="form-card__content">
-
+              <th:block th:replace="'fragments/reveal' :: reveal(
+                controlId='r1',
+                linkLabel=~{::revealLabel1},
+                content=~{::revealContent1},
+                forceShowContent='true')">
+                <th:block th:ref="revealLabel1">
+                  <th:block th:replace="'fragments/icons' :: clipboardCheck"></th:block>
+                  <th:span th:text="#{legal-expanded.header1}"></th:span>
+                </th:block>
+                <th:block th:ref="revealContent1">
+                  <th:block th:utext="#{legal-expanded.body1}"></th:block>
+                </th:block>
+              </th:block>
+              <th:block th:replace="'fragments/inputs/checkbox' ::
+                checkbox(inputName='rightsAndResponsibilitiesAgree',
+                label=#{legal-agree},
+                value=true
+               )"/>
             </div>
-            <div class="form-card__footer">
+            <div class="form-card__content">
+              <th:block th:replace="'fragments/reveal' :: reveal(
+                controlId='r2',
+                linkLabel=~{::revealLabel2},
+                content=~{::revealContent2},
+                forceShowContent='true')">
+                <th:block th:ref="revealLabel2">
+                  <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+                  <th:span th:text="#{legal-expanded.header2}"></th:span>
+                </th:block>
+                <th:block th:ref="revealContent2">
+                  <th:block th:utext="#{legal-expanded.body2}"></th:block>
+                </th:block>
+              </th:block>
+              <th:block th:replace="'fragments/inputs/checkbox' ::
+                checkbox(inputName='noIncorrectInformationAgree',
+                label=#{legal-agree},
+                value=true
+               )"/>
+            </div>
 
+            <div class="form-card__content">
+              <th:block th:replace="'fragments/reveal' :: reveal(
+                controlId='r3',
+                linkLabel=~{::revealLabel3},
+                content=~{::revealContent3},
+                forceShowContent='true')">
+                <th:block th:ref="revealLabel3">
+                  <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+                  <th:span th:text="#{legal-expanded.header3}"></th:span>
+                </th:block>
+                <th:block th:ref="revealContent3">
+                  <th:block th:utext="#{legal-expanded.body3}"></th:block>
+                </th:block>
+              </th:block>
+              <th:block th:replace="'fragments/inputs/checkbox' ::
+                checkbox(inputName='programsSharingDataAccessAgree',
+                label=#{legal-agree},
+                value=true
+               )"/>
+            </div>
+
+            <div class="form-card__content">
+              <th:block th:replace="'fragments/reveal' :: reveal(
+                controlId='r4',
+                linkLabel=~{::revealLabel4},
+                content=~{::revealContent4},
+                forceShowContent='true')">
+                <th:block th:ref="revealLabel4">
+                  <th:block th:replace="~{'fragments/icons' :: clipboardCheck}"></th:block>
+                  <th:span th:text="#{legal-expanded.header4}"></th:span>
+                </th:block>
+                <th:block th:ref="revealContent4">
+                  <th:block th:utext="#{legal-expanded.body4}"></th:block>
+                </th:block>
+              </th:block>
+              <th:block th:replace="'fragments/inputs/checkbox' ::
+                checkbox(inputName='nonDiscriminationStatementAgree',
+                label=#{legal-agree},
+                value=true
+               )"/>
+            </div>
+
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>
