@@ -63,7 +63,7 @@
     window['myDropZone' + [[${inputName}]]] = null;
     window['userFileIds' + [[${inputName}]]] = [];
     window['cancelledFiles' + [[${inputName}]]] = [];
-    var userFiles = [[${session.userFiles}]] != null ? JSON.parse([[${session.userFiles}]]) : null;
+    var userFiles = [[${session.userFiles ?: ''}]]
     var thumbnailWidthFromAppYml = [[${@environment.getProperty('form-flow.uploads.thumbnail-width')}]];
     var thumbnailHeightFromAppYml = [[${@environment.getProperty('form-flow.uploads.thumbnail-height')}]];
     var thumbnailWidth = thumbnailWidthFromAppYml ? thumbnailWidthFromAppYml : '64';
@@ -276,8 +276,7 @@
       init: function () {
         window[dropzonePrefix + [[${inputName}]]] = this;
         var dzInstance = [[${inputName}]]
-        var flow = [[${flow}]]
-        var documents = userFiles?.userFileMap?.[flow]?.[dzInstance] || [];
+        var documents = userFiles !== null ? userFiles[dzInstance] : [];
 
         if (documents != null && Object.entries(documents).length > this.options.maxFiles) {
           toggleMaxFileMessage('on');
