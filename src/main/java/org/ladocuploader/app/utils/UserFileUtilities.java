@@ -9,11 +9,10 @@ import formflow.library.utils.UserFileMap;
 
 public class UserFileUtilities {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
+    public static Map<UUID, Map<String, String>> getUserFileMap(String userFileMapString, String flow, String inputName) throws JsonProcessingException {
 
-    public Map<UUID, Map<String, String>> getUserFileMap(String userFileMapString, String flow, String inputName) throws JsonProcessingException {
-
+        ObjectMapper objectMapper = new ObjectMapper();
         UserFileMap userFileMap = objectMapper.readValue(userFileMapString, UserFileMap.class);
         return userFileMap.getFiles(flow, inputName);
     }

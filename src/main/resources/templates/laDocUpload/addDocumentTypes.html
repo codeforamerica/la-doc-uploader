@@ -14,12 +14,10 @@
           <th:block th:ref="clientInfoFormContents">
             <div class="form-card__content">
               <ul class="list--bulleted">
-                <li th:each="userFile, iter: ${UserFileUtilities.getUserFileMap(session.userFiles, flow, 'uploadDocuments')}">
-                  <img src="${userFile.thumbnailUrl}">
-                  <span th:text="${userFile}"></span>
+                <li th:each="userFile, iter: ${T(org.ladocuploader.app.utils.UserFileUtilities).getUserFileMap(session.userFiles, flow, 'uploadDocuments')}">
+                  <img th:src="${userFile.getValue().get('thumbnailUrl')}"/>
                 </li>
               </ul>
-<!--              <th:block th:replace="~{fragments/fileDocType :: fileDocType(inputName='uploadDocuments')}"></th:block>-->
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButtonSecondary :: submitButton(
