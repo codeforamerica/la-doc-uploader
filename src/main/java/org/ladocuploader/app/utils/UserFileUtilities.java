@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import formflow.library.utils.UserFileMap;
+import org.springframework.util.unit.DataUnit;
 
 public class UserFileUtilities {
 
@@ -15,5 +16,10 @@ public class UserFileUtilities {
         ObjectMapper objectMapper = new ObjectMapper();
         UserFileMap userFileMap = objectMapper.readValue(userFileMapString, UserFileMap.class);
         return userFileMap.getFiles(flow, inputName);
+    }
+
+    public static String getFileMbFromBytes(String bytes){
+        Integer megaBytes = DataUnit.MEGABYTES.ordinal();
+        return String.valueOf(Double.parseDouble(bytes) / megaBytes);
     }
 }
