@@ -21,11 +21,11 @@
         </div>
         <div class="display-flex body-gray file-details">
           <div class="dz-size">
-            <strong th:text="${T(org.ladocuploader.app.utils.UserFileUtilities)(userFile.getValue().get('filesize'))}"></strong>
+            <strong th:text="${T(org.ladocuploader.app.utils.UserFileUtilities).getFileMbFromBytes(userFile.getValue().get('filesize'))}"></strong>
             MB
-            <span class="file-details-delimiter" aria-hidden="true">•</span>
-            <a class="dz-remove" href="javascript:undefined;">delete</a>
-          </div>
+            </div>
+          <span class="file-details-delimiter" aria-hidden="true">•</span>
+          <a class="dz-remove" href="javascript:undefined;">delete</a>
         </div>
       </div>
     </div>
