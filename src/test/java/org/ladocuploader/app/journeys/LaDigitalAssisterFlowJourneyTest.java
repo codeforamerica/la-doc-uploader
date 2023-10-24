@@ -1,5 +1,6 @@
 package org.ladocuploader.app.journeys;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
@@ -305,9 +306,59 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("No");
     assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
 
+  //    Final SignPost
+    testPage.navigateToFlowScreen("laDigitalAssister/finalSignPost");
+    assertThat(testPage.getTitle()).isEqualTo("Final Signpost");
+    testPage.clickContinue();
 
-    //Signature Page
-    testPage.navigateToFlowScreen("laDigitalAssister/legalStuff");
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Medicaid");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/authorizedRepAuthorization");
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Communication Authorization");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Mail");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Spending");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Contact Information");
+    testPage.enter("authorizedRepFirstName", "test");
+    testPage.enter("authorizedRepLastName", "test");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Medicaid");
+    testPage.clickButton("Yes, please share my info");
+
+
+    assertThat(testPage.getTitle()).isEqualTo("Register to Vote");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Help Registering to Vote");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Race and Ethnicity");
+    testPage.clickButton("No, skip this question");
+
+    assertThat(testPage.getTitle()).isEqualTo("Legal Stuff");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/raceEthnicityAsk");
+
+    assertThat(testPage.getTitle()).isEqualTo("Race and Ethnicity");
+    testPage.clickButton("Yes, continue");
+
+    assertThat(testPage.getTitle()).isEqualTo("Ethnicity Selection");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Race Selection");
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo("Legal Stuff");
 
     testPage.clickContinue();

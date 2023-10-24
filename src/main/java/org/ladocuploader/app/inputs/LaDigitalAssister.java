@@ -145,7 +145,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String jobSearch;
 
   private String workDisqualificationInd;
-  
+
   //  Sensitive Questions
   private String householdHasPersonalSituations;
   
@@ -191,6 +191,47 @@ public class LaDigitalAssister extends FlowInputs {
   private String monthlyHouseholdIncome;
   
   private String switchToIncomeByJob;
+
+  // Final Screen
+  private String authorizedRepresentative;
+
+  private String authorizedRepCommsAuthorization;
+
+  private String authorizedRepMailAuthorization;
+
+  private String authorizedRepSpendingAuthorization;
+
+  @NotBlank
+  private String authorizedRepFirstName;
+
+  @NotBlank
+  private String authorizedRepLastName;
+
+  private String authorizedRepOtherNames;
+
+  private String authorizedRepStreetAddress1;
+
+  private String authorizedRepStreetAddress2;
+
+  private String authorizedRepZipCode;
+
+  private String authorizedRepState;
+
+  private String authorizedRepCity;
+
+  private String authorizedRepPhoneNumber;
+
+  private String needsMedicaid;
+
+  private String votingRegistrationRequested;
+
+  private String votingRegistrationHelpRequested;
+
+  private String permissionToAskAboutRace;
+
+  private String ethnicitySelected;
+
+  private String raceSelected;
 
   private String rightsAndResponsibilitiesAgree;
 

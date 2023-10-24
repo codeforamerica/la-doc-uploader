@@ -388,7 +388,12 @@ flow:
       - name: finalSignPost
   finalSignPost:
     nextScreens:
-      - name: authorizedRepCommunication
+      - name: authorizedRepAuthorization
+  authorizedRepAuthorization:
+    nextScreens:
+    - name: authorizedRepCommunication
+      condition: AddingAuthorizedRepresentative
+    - name: medicaid
   authorizedRepCommunication:
     nextScreens:
       - name: authorizedRepMail
@@ -412,8 +417,13 @@ flow:
       - name: raceEthnicityAsk
   raceEthnicityAsk:
     nextScreens:
-      - name: raceEthnicitySelection
-  raceEthnicitySelection:
+    - name: ethnicitySelection
+      condition: ApplicantRaceEthnicityQuestionsAllowed
+    - name: legalStuff
+  ethnicitySelection:
+    nextScreens:
+      - name: raceSelection
+  raceSelection:
     nextScreens:
       - name: legalStuff
   legalStuff:

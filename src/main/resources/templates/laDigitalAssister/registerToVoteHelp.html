@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="fragments/head :: head(title=#{voter-registration-help.title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,15 +8,28 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
-          <th:block th:ref="formContent">
+        <th:block th:replace="~{'fragments/icons' :: medicalInOtherState}"></th:block>
+        <th:block
+            th:replace="'fragments/cardHeader' :: cardHeader(header=#{voter-registration-help.header}, subtext=#{voter-registration-help.subheader})"/>
+        <th:block
+            th:replace="'fragments/form' :: form(action=${formAction}, content=~{::voterRegistrationHelp})">
+          <th:block th:ref="voterRegistrationHelp">
             <div class="form-card__content">
-
+              <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
+                        radioFieldset(inputName='votingRegistrationHelpRequested',
+                        ariaLabel=#{voter-registration-help.header},
+                        content=~{::votingRegistrationHelpRequested})}">
+                <th:block th:ref="votingRegistrationHelpRequested">
+                  <th:block
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='votingRegistrationHelpRequested',value='Yes', label=#{voter-registration-help.yes})}"/>
+                  <th:block
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='votingRegistrationHelpRequested',value='No', label=#{voter-registration-help.no})}"/>
+                </th:block>
+              </th:block>
             </div>
             <div class="form-card__footer">
-
+              <th:block th:replace="'fragments/inputs/submitButton' :: submitButton(
+                text=#{general.inputs.continue})"/>
             </div>
           </th:block>
         </th:block>
