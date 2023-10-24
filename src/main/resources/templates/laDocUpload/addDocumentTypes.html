@@ -26,74 +26,40 @@
                    <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile})}"></th:block>
                 </th:block>
 
-                <th:block th:replace="~{fragments/inputs/select :: select(label=${label}, inputName=${inputName}, helpText=${helpText}, content=~{::docTypes})}">
+                <th:block th:replace="~{fragments/inputs/select :: select(
+                    inputName=${inputName + '_'+ userFile.getKey()},
+                    helpText=#{upload-documents.add-doc-type.doc-type-help-text},
+                    content=~{::docTypes})}">
                 <th:block th:ref="docTypes">
                   <th:block
-                      th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{state.placeholder})}"/>
+                      th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{upload-documents.doc-type-label.placeholder})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='AL', optionText=#{state.al})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='BirthCertificate', optionText=#{upload-documents.doc-type-label.permanent-documents.birth-certificate})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='AK', optionText=#{state.ak})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='DriversLicense', optionText=#{upload-documents.doc-type-label.permanent-documents.drivers-license})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='AZ', optionText=#{state.az})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='SocialSecurityCard', optionText=#{upload-documents.doc-type-label.permanent-documents.social-security-card})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='AR', optionText=#{state.ar})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='CheckStub', optionText=#{upload-documents.doc-type-label.income.check-stub})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='CA', optionText=#{state.ca})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='OtherIncome', optionText=#{upload-documents.doc-type-label.income.other-income})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='CO', optionText=#{state.co})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='Bill', optionText=#{upload-documents.doc-type-label.expenses.bills})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='CT', optionText=#{state.ct})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MedicalInfo', optionText=#{upload-documents.doc-type-label.medical.medical-info})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='DE', optionText=#{state.de})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='BankingInfo', optionText=#{upload-documents.doc-type-label.resources.banking-info})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='FL', optionText=#{state.fl})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MarriageLicense', optionText=#{upload-documents.doc-type-label.legal.marriage-license})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='GA', optionText=#{state.ga})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='DivorceDecree', optionText=#{upload-documents.doc-type-label.legal.divorce-decree})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='HI', optionText=#{state.hi})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='CourtOrder', optionText=#{upload-documents.doc-type-label.legal.court-order})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='ID', optionText=#{state.id})}"/>
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='Paternity', optionText=#{upload-documents.doc-type-label.paternity.ack-of-paternity})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='IL', optionText=#{state.il})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='IN', optionText=#{state.in})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='IA', optionText=#{state.ia})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='KS', optionText=#{state.ks})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='KY', optionText=#{state.ky})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='LA', optionText=#{state.la})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='ME', optionText=#{state.me})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MD', optionText=#{state.md})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MA', optionText=#{state.ma})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MI', optionText=#{state.mi})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MN', optionText=#{state.mn})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MS', optionText=#{state.ms})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MO', optionText=#{state.mo})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MT', optionText=#{state.mt})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='NE', optionText=#{state.ne})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='NV', optionText=#{state.nv})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='NH', optionText=#{state.nh})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='NJ', optionText=#{state.nj})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='NM', optionText=#{state.nm})}"/>
-                  <th:block
-                
+                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='Other', optionText=#{upload-documents.doc-type-label.correspondence.other})}"/>
+                </th:block>
               </div>
             </div>
             <div class="form-card__footer">
