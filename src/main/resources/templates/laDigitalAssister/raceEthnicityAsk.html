@@ -18,8 +18,8 @@
               <th:block th:replace="fragments/inputs/yesOrNo :: yesOrNo(
                 inputName='permissionToAskAboutRace',
                 ariaDescribe=#{race-ethnicity-ask.header},
-                overrideYesText='race-ethnicity-ask.yes',
-                overrideNoText='race-ethnicity-ask.no'
+                overrideYesText=#{'race-ethnicity-ask.yes'},
+                overrideNoText=#{'race-ethnicity-ask.no'}
                 )"/>
             </div>
           </th:block>

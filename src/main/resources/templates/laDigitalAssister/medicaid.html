@@ -18,8 +18,8 @@
               <th:block th:replace="fragments/inputs/yesOrNo :: yesOrNo(
                 inputName='needsMedicaid',
                 ariaDescribe='header',
-                overrideYesText='medicaid.yes',
-                overrideNoText='medicaid.no'
+                overrideYesText=#{'medicaid.yes'},
+                overrideNoText=#{'medicaid.no'}
                 )"/>
             </div>
           </th:block>
