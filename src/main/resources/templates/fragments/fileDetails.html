@@ -19,6 +19,14 @@
             <span class="filename-text-ext" th:text="${userFile.getValue().get('originalFilename').substring(extIndex)}"></span>
           </div>
         </div>
+        <div class="display-flex body-gray file-details">
+          <div class="dz-size">
+            <strong th:text="${T(java.lang.Double).valueOf(userFile.getValue().get('filesize')) / 1048576.0}"></strong>
+            MB
+            <span class="file-details-delimiter" aria-hidden="true">•</span>
+            <a class="dz-remove" href="javascript:undefined;">delete</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
