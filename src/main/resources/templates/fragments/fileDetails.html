@@ -1,0 +1,25 @@
+<!--
+ file name + type
+ Type: <file type>  (if present)
+ size . delete link
+-->
+<th:block
+  th:fragment="fileDetails(userFile)"
+  th:with="extIndex=${userFile.getValue().get('originalFilename').lastIndexOf('.')}">
+  <div class="dz-preview spacing-below-15 dz-success dz-complete dz-image-preview">
+    <div class="dz-details display-flex">
+      <div class="thumbnail" style="width: 64px; height: 60px;">
+        <img class="dz-thumb" data-dz-thumbnail th:alt="${userFile.getValue().get('originalFilename')}" th:src="${userFile.getValue().get('thumbnailUrl')}"/>
+      </div>
+      <div class="file">
+        <div class="dz-filename">
+          <div class="filename-text">
+            <!-- may need to split up file name and use ... if too long -->
+            <span class="filename-text-name" th:text="${userFile.getValue().get('originalFilename').substring(0, extIndex)}"></span>
+            <span class="filename-text-ext" th:text="${userFile.getValue().get('originalFilename').substring(extIndex)}"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
