@@ -193,6 +193,43 @@ public class LaDigitalAssister extends FlowInputs {
   private String switchToIncomeByJob;
 
   private List<String> householdHomeExpenses;
+
+  private String expensesRent;
+
+  private String expensesMortgage;
+
+  private String expensesHomeownerInsurance;
+
+  private String expensesPropertyTax;
+
+  private String expensesCondoFees;
+
+  private String expensesLotRental;
+
+  private String expensesFloodInsurance;
+
+  private String expensesOther;
+
+  private List<String> householdUtilitiesExpenses;
+
+  private String expensesUtilitiesHeating;
+
+  private String expensesUtilitiesCooling;
+
+  private String expensesUtilitiesElectricity;
+
+  private String expensesUtilitiesWater;
+
+  private String expensesUtilitiesPhone;
+
+  private String expensesUtilitiesGarbage;
+
+  private String expensesUtilitiesSewer;
+
+  private String expensesUtilitiesCookingFuel;
+
+  private String expensesUtilitiesOther;
+
   // Final Screen
   private String authorizedRepresentative;
 
@@ -233,22 +270,6 @@ public class LaDigitalAssister extends FlowInputs {
   private String ethnicitySelected;
 
   private String raceSelected;
-
-  private String expensesRent;
-
-  private String expensesMortgage;
-
-  private String expensesHomeownerInsurance;
-
-  private String expensesPropertyTax;
-
-  private String expensesCondoFees;
-
-  private String expensesLotRental;
-
-  private String expensesFloodInsurance;
-
-  private String expensesOther;
 
   private String rightsAndResponsibilitiesAgree;
 
