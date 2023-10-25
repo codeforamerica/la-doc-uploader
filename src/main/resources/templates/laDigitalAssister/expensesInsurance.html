@@ -27,7 +27,7 @@
                       <th:block
                           th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.medical-bills}, label=#{insurance-expenses.medical-bills})}"/>
                       <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.none}, label=#{insurance-expenses.none})}"/>
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.none}, label=#{insurance-expenses.none}, noneOfTheAbove=true)}"/>
                     </th:block>
                 </th:block>
                 

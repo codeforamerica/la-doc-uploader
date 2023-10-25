@@ -545,6 +545,7 @@ flow:
         condition: ExpensesIncludeVisionInsurancePremium
       - name: expensesMedicalBills
         condition: ExpensesIncludeMedicalBills
+      - name: expensesElderlyCare
   expensesMedicalInsurance:
     nextScreens:
       - name: expensesDentalInsurance
@@ -553,16 +554,19 @@ flow:
         condition: ExpensesIncludeVisionInsurancePremium
       - name: expensesMedicalBills
         condition: ExpensesIncludeMedicalBills
+      - name: expensesElderlyCare
   expensesDentalInsurance:
     nextScreens:
       - name: expensesVisionInsurance
         condition: ExpensesIncludeVisionInsurancePremium
       - name: expensesMedicalBills
         condition: ExpensesIncludeMedicalBills
+      - name: expensesElderlyCare
   expensesVisionInsurance:
     nextScreens:
       - name: expensesMedicalBills
         condition: ExpensesIncludeMedicalBills
+      - name: expensesElderlyCare
   expensesMedicalBills:
     nextScreens:
       - name: expensesElderlyCare
