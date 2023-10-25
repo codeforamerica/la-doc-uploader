@@ -306,8 +306,64 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("No");
     assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
 
-  //    Final SignPost
-    testPage.navigateToFlowScreen("laDigitalAssister/finalSignPost");
+
+  //    Expenses SignPost
+    testPage.navigateToFlowScreen("laDigitalAssister/expensesSignPost");
+    assertThat(testPage.getTitle()).isEqualTo("Expenses Signpost");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Home Expenses");;
+    testPage.clickElementById("householdHomeExpenses-Rent-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Rent");
+    testPage.goBack();
+
+    testPage.clickElementById("householdHomeExpenses-Other-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Rent");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Other");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Utilities");
+
+    testPage.clickElementById("householdUtilitiesExpenses-Water-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Water");
+    testPage.goBack();
+
+    testPage.clickElementById("householdUtilitiesExpenses-Water-label"); // none selected
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Dependent Care");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Dependent Care Amount");
+    testPage.goBack();
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo("Insurance Expenses");
+    testPage.clickElementById("householdInsuranceExpenses-Dental insurance premiums-label"); // none selected
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Dental insurance premiums");
+    testPage.goBack();
+
+    testPage.clickElementById("none__checkbox-label"); // none selected
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Elderly Care");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Elderly Care Amount");
+
+    testPage.goBack();
+    testPage.clickButton("No");
+
+    //    Final SignPost
     assertThat(testPage.getTitle()).isEqualTo("Final Signpost");
     testPage.clickContinue();
 
