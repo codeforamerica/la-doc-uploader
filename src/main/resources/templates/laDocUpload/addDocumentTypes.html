@@ -9,7 +9,7 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{upload-documents.add-type.header})}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{upload-documents.add-doc-type.header})}"/>
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
           <th:block th:ref="clientInfoFormContents"
              th:with="
@@ -24,41 +24,44 @@
               <div class="dropzone file-preview-template preview-container">
                 <th:block th:each="userFile, iter: ${userFiles}">
                    <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile})}"></th:block>
-                </th:block>
 
-                <th:block th:replace="~{fragments/inputs/select :: select(
-                    inputName=${inputName + '_'+ userFile.getKey()},
-                    helpText=#{upload-documents.add-doc-type.doc-type-help-text},
-                    content=~{::docTypes})}">
-                <th:block th:ref="docTypes">
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{upload-documents.doc-type-label.placeholder})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='BirthCertificate', optionText=#{upload-documents.doc-type-label.permanent-documents.birth-certificate})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='DriversLicense', optionText=#{upload-documents.doc-type-label.permanent-documents.drivers-license})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='SocialSecurityCard', optionText=#{upload-documents.doc-type-label.permanent-documents.social-security-card})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='CheckStub', optionText=#{upload-documents.doc-type-label.income.check-stub})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='OtherIncome', optionText=#{upload-documents.doc-type-label.income.other-income})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='Bill', optionText=#{upload-documents.doc-type-label.expenses.bills})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MedicalInfo', optionText=#{upload-documents.doc-type-label.medical.medical-info})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='BankingInfo', optionText=#{upload-documents.doc-type-label.resources.banking-info})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='MarriageLicense', optionText=#{upload-documents.doc-type-label.legal.marriage-license})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='DivorceDecree', optionText=#{upload-documents.doc-type-label.legal.divorce-decree})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='CourtOrder', optionText=#{upload-documents.doc-type-label.legal.court-order})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='Paternity', optionText=#{upload-documents.doc-type-label.paternity.ack-of-paternity})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='Other', optionText=#{upload-documents.doc-type-label.correspondence.other})}"/>
+                  <th:block th:replace="~{fragments/inputs/select :: select(
+                      inputName=${'docType_' + userFile.getKey()},
+                      helpText='',
+                      content=~{::docTypes},
+                      label='',
+                      ariaLabel='aria label')}">
+                    <th:block th:ref="docTypes">
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{upload-documents.doc-type-label.placeholder})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='BirthCertificate', optionText=#{upload-documents.doc-type-label.permanent-documents.birth-certificate})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='DriversLicense', optionText=#{upload-documents.doc-type-label.permanent-documents.drivers-license})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='SocialSecurityCard', optionText=#{upload-documents.doc-type-label.permanent-documents.social-security-card})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='CheckStub', optionText=#{upload-documents.doc-type-label.income.check-stub})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='OtherIncome', optionText=#{upload-documents.doc-type-label.income.other-income})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='Bill', optionText=#{upload-documents.doc-type-label.expenses.bills})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='MedicalInfo', optionText=#{upload-documents.doc-type-label.medical.medical-info})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='BankingInfo', optionText=#{upload-documents.doc-type-label.resources.banking-info})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='MarriageLicense', optionText=#{upload-documents.doc-type-label.legal.marriage-license})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='DivorceDecree', optionText=#{upload-documents.doc-type-label.legal.divorce-decree})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='CourtOrder', optionText=#{upload-documents.doc-type-label.legal.court-order})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='Paternity', optionText=#{upload-documents.doc-type-label.paternity.ack-of-paternity})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/selectOption :: selectOption(value='Other', optionText=#{upload-documents.doc-type-label.correspondence.other})}"/>
+                    </th:block>
+                  </th:block>
                 </th:block>
               </div>
             </div>
