@@ -30,7 +30,7 @@
                       helpText='',
                       content=~{::docTypes},
                       label='',
-                      ariaLabel='aria label')}">
+                      ariaLabel=${userFile.getValue().get('originalFilename')})}">
                     <th:block th:ref="docTypes">
                       <th:block
                           th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{upload-documents.doc-type-label.placeholder})}"/>
@@ -67,7 +67,7 @@
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButtonSecondary :: submitButton(
-                  text=#{upload-documents.button-text}, isHidden=true)}"/>
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>

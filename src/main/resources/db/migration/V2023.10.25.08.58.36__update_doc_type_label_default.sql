@@ -1,0 +1,1 @@
+UPDATE user_files SET doc_type_label='Other';

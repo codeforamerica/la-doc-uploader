@@ -37,6 +37,9 @@ form-flow:
       smarty_auth_token: ${SMARTY_AUTH_TOKEN}
       smarty_url: "https://us-street.api.smartystreets.com/street-address"
 spring:
+  flyway:
+    placeholders:
+      user_file_doc_type_default: "NotSet"
   profiles:
     group:
       test:

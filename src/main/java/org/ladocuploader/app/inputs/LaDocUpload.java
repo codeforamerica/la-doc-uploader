@@ -45,7 +45,5 @@ public class LaDocUpload extends FlowInputs {
   private String uploadDocumentsFeedback;
 
   private String uploadDocumentsFeedbackDetail;
-
-  private String docFileTypes;
 }
 

@@ -1,4 +1,7 @@
 spring:
+  flyway:
+    placeholders:
+      user_file_doc_type_default: "NotSet"
   thymeleaf:
     cache: true
   datasource:
