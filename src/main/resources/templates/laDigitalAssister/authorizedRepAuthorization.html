@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{medicaid.title})"></head>
+<head th:replace="fragments/head :: head(title=#{authorized-rep.title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,19 +8,17 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{'fragments/icons' :: healthcareCoverage}"></th:block>
+        <th:block th:replace="~{'fragments/icons' :: authorizedRep}"></th:block>
         <th:block
-            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{medicaid.header}, subtext=#{medicaid.subheader})}"/>
+            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{authorized-rep.header}, subtext=#{authorized-rep.subheader})}"/>
         <th:block
-            th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::needsMedicaid})}">
-          <th:block th:ref="needsMedicaid">
+            th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::authorizedRep})}">
+          <th:block th:ref="authorizedRep">
+
             <div class="form-card__footer">
               <th:block th:replace="fragments/inputs/yesOrNo :: yesOrNo(
-                inputName='needsMedicaid',
-                ariaDescribe='header',
-                overrideYesText=#{'medicaid.yes'},
-                overrideNoText=#{'medicaid.no'}
-                )"/>
+                inputName='authorizedRepresentative',
+                ariaDescribe='header')"/>
             </div>
           </th:block>
         </th:block>

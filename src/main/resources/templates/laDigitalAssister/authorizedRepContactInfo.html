@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="fragments/head :: head(title=#{authorized-rep-contact-info.title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,15 +8,39 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
-          <th:block th:ref="formContent">
+        <th:block th:replace="~{'fragments/icons' :: authorizedRep}"></th:block>
+        <th:block
+            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{authorized-rep-contact-info.header}, subtext=#{authorized-rep-contact-info.subheader})}"/>
+        <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::authorizedRepContact})}">
+          <th:block th:ref="authorizedRepContact">
             <div class="form-card__content">
+              <th:block th:replace="~{fragments/inputs/text ::
+                  text(inputName='authorizedRepFirstName',
+                  label=#{authorized-rep-contact-info.firstname-question},
+                  helpText=#{authorized-rep-contact-info.name-helptext})}"/>
+              <th:block th:replace="~{fragments/inputs/text ::
+                  text(inputName='authorizedRepLastName',
+                  label=#{authorized-rep-contact-info.lastname-question},
+                  helpText=#{authorized-rep-contact-info.name-helptext})}"/>
+              <th:block th:replace="~{fragments/inputs/text ::
+                  text(inputName='authorizedRepOtherNames',
+                  label=#{authorized-rep-contact-info.othername-question},
+                  helpText=#{authorized-rep-contact-info.othername-helptext})}"/>
+              <th:block th:replace="~{fragments/inputs/repAddress ::
+                                  address(
+                                    validate=false,
+                                    inputName='homeAddress'
+                                  )}" />
+              <th:block
+                  th:replace="~{'fragments/inputs/phone' :: phone(
+                  inputName='authorizedRepPhoneNumber',
+                  label=#{authorized-rep-contact-info.phone-number},
+                  helpText=#{authorized-rep-contact-info.phone-number.help})}"/>
 
             </div>
             <div class="form-card__footer">
-
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                text=#{general.inputs.continue})}" />
             </div>
           </th:block>
         </th:block>
