@@ -423,3 +423,7 @@ p.employer-name {
 .text-input-group__postfix {
   color: #5F5854;
 }
+
+button.button.button--secondary{
+  margin-left: 0;
+}
