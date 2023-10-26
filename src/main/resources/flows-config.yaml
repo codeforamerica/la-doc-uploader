@@ -323,7 +323,7 @@ flow:
       - name: expensesLotRent
         condition: ExpensesIncludeLotRent
       - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloorInsurance
+        condition: ExpensesIncludeFloodInsurance
       - name: expensesOther
         condition: ExpensesIncludeOther
       - name: utilities
@@ -340,7 +340,7 @@ flow:
       - name: expensesLotRent
         condition: ExpensesIncludeLotRent
       - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloorInsurance
+        condition: ExpensesIncludeFloodInsurance
       - name: expensesOther
         condition: ExpensesIncludeOther
       - name: utilities
@@ -355,7 +355,7 @@ flow:
       - name: expensesLotRent
         condition: ExpensesIncludeLotRent
       - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloorInsurance
+        condition: ExpensesIncludeFloodInsurance
       - name: expensesOther
         condition: ExpensesIncludeOther
       - name: utilities
@@ -368,7 +368,7 @@ flow:
       - name: expensesLotRent
         condition: ExpensesIncludeLotRent
       - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloorInsurance
+        condition: ExpensesIncludeFloodInsurance
       - name: expensesOther
         condition: ExpensesIncludeOther
       - name: utilities
@@ -379,7 +379,7 @@ flow:
       - name: expensesLotRent
         condition: ExpensesIncludeLotRent
       - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloorInsurance
+        condition: ExpensesIncludeFloodInsurance
       - name: expensesOther
         condition: ExpensesIncludeOther
       - name: utilities
@@ -388,14 +388,14 @@ flow:
       - name: expensesLotRent
         condition: ExpensesIncludeLotRent
       - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloorInsurance
+        condition: ExpensesIncludeFloodInsurance
       - name: expensesOther
         condition: ExpensesIncludeOther
       - name: utilities
   expensesLotRent:
     nextScreens:
       - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloorInsurance
+        condition: ExpensesIncludeFloodInsurance
       - name: expensesOther
         condition: ExpensesIncludeOther
       - name: utilities
