@@ -26,7 +26,7 @@
                    <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile})}"></th:block>
 
                   <th:block th:replace="~{fragments/inputs/select :: select(
-                      inputName=${'docType_' + userFile.getKey()},
+                      inputName=${'docType_wildcard' + userFile.getKey()},
                       helpText='',
                       content=~{::docTypes},
                       label='',
