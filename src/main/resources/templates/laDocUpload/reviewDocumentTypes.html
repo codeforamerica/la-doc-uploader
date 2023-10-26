@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title=#{upload-documents.title}, useDropzone=true)}"></head>
+<head th:replace="~{fragments/head :: head(title=#{review-documents.title}, useDropzone=false)}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -9,15 +9,28 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{upload-documents.header})}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{review-documents.header})}"/>
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
-          <th:block th:ref="clientInfoFormContents">
+          <th:block th:ref="clientInfoFormContents"
+                    th:with="
+                userFiles = ${T(org.ladocuploader.app.utils.UserFileUtilities).getUserFileMap(session.userFiles, flow, 'uploadDocuments')},
+                numberOfFiles = ${userFiles.keySet().size()},
+                maxFiles=${@environment.getProperty('form-flow.uploads.max-files')}">
+            <div th:id="upload-doc-div-details" class="spacing-below-25">
+              <p th:if="${numberOfFiles == 1}" th:id="upload-doc-text-details" class="upload-doc-text" th:text="#{general.files.file-added.one(${maxFiles})}"></p>
+              <p th:if="${numberOfFiles > 1}" th:id="upload-doc-text-details" class="upload-doc-text" th:text="#{general.files.file-added.other(${numberOfFiles}, ${maxFiles})}"></p>
+            </div>
             <div class="form-card__content">
-              <th:block th:replace="~{fragments/fileUploader :: fileUploader(inputName='uploadDocuments')}"></th:block>
+              <div class="dropzone file-preview-template preview-container">
+                <th:block th:each="userFile, iter: ${userFiles}">
+                  <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile})}"></th:block>
+
+                </th:block>
+              </div>
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButtonSecondary :: submitButton(
-                  text=#{upload-documents.button-text}, isHidden=true)}"/>
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>
@@ -26,27 +39,5 @@
   </section>
 </div>
 <th:block th:replace="~{fragments/footer :: footer}" />
-<script>FormFlowDZ.hideContinueIfNoFiles("uploadDocuments", "form-submit-button")</script>
-<script>
-  $(document).ready(function () {
-
-    $("#form-submit-button").click(function () {
-        const uploadedFiles = {
-            'pdf': 0,
-            'jpg': 0,
-            'png': 0,
-            'gif': 0
-        }
-        $(".filename-text-ext").each(function () {
-            let fileExt = this.textContent;
-            fileExt = fileExt.substring(1, fileExt.length);
-            const count = uploadedFiles[fileExt];
-            uploadedFiles[fileExt] = count + 1;
-        });
-
-        mixpanel.track('file_upload_finished', uploadedFiles);
-    })
-  });
-</script>
 </body>
 </html>

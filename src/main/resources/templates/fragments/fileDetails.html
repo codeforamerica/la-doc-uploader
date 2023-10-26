@@ -12,12 +12,21 @@
       <div class="thumbnail" style="width: 64px; height: 60px;">
         <img class="dz-thumb" data-dz-thumbnail th:alt="${userFile.getValue().get('originalFilename')}" th:src="${userFile.getValue().get('thumbnailUrl')}"/>
       </div>
+
       <div class="file">
         <div class="dz-filename">
+
           <div class="filename-text">
-            <!-- may need to split up file name and use ... if too long -->
             <span class="filename-text-name" th:text="${userFile.getValue().get('originalFilename').substring(0, extIndex)}"></span>
             <span class="filename-text-ext" th:text="${userFile.getValue().get('originalFilename').substring(extIndex)}"></span>
+
+            </span>
+          </div>
+        </div>
+        <div class="display-flex file-details">
+          <div class="dz-detail">
+<!--            th:if="${userFile.getValue().get('docTypeLabel') != @environment.getProperty('spring.flyway.placeholders.user_file_doc_type_default')}"-->
+            <span th:text="${'Type: ' + userFile.getValue().get('docTypeLabel')}"></span>
           </div>
         </div>
         <div class="display-flex body-gray file-details">
@@ -25,9 +34,10 @@
             <strong th:text="${T(org.ladocuploader.app.utils.UserFileUtilities).getFileMbFromBytes(userFile.getValue().get('filesize'))}"></strong>
             MB
             </div>
-          <span class="file-details-delimiter" aria-hidden="true">•</span>
-          <a class="dz-remove" href="javascript:undefined;">delete</a>
+<!--          <span class="file-details-delimiter" aria-hidden="true">•</span>-->
+<!--          <a class="dz-remove" href="javascript:undefined;">delete</a>-->
         </div>
+
       </div>
     </div>
   </div>
