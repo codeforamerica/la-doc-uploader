@@ -14,7 +14,6 @@
         <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
             <div class="form-card__content">
-              <th:block th:ref="formContent">
                 <ul class="list--bulleted spacing-above-0 spacing-below-60">
                   <li th:utext="#{citizenship-number.status1}"></li>
                   <li th:utext="#{citizenship-number.status2}"></li>
@@ -31,15 +30,14 @@
                       inputName='citizenshipNumber',
                       ariaLabel='header',
                       content=~{::selectContent})}">
-                  <th:block th:ref="selectContent">
-                    <th:block th:each="i : ${#numbers.sequence(0, inputData.household.size()+1)}"
+                  <th:block th:ref="selectContent" th:with="numPeople=${inputData.containsKey('household') ? inputData.household.size()+1 : 1}">
+                    <th:block th:each="i : ${#numbers.sequence(0, numPeople)}"
                               class="spacing-below-15">
                       <th:block
                           th:replace="~{fragments/inputs/selectOption :: selectOption(value=${i}, optionText=#{citizenship-number.people(${i})})}"/>
                     </th:block>
                   </th:block>
                 </th:block>
-              </th:block>
             </div>
             <div class="form-card__footer">
               <th:block th:replace="'fragments/continueButton' :: continue"/>
