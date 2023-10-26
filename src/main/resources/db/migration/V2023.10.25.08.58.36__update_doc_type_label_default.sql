@@ -1,1 +1,1 @@
-UPDATE user_files SET doc_type_label='Other';
+UPDATE user_files SET doc_type_label='${user_file_doc_type_default}';
