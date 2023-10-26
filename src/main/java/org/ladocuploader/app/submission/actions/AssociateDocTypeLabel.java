@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -23,8 +22,8 @@ public class AssociateDocTypeLabel implements Action {
     UserFileRepositoryService userFileRepositoryService;
 
     @Override
-    public void run(FormSubmission formSubmission, Submission submission){
-        Map<String, Object> docTypeEntries = formSubmission.getFormData().entrySet().stream()
+    public void run(Submission submission){
+        Map<String, Object> docTypeEntries = submission.getInputData().entrySet().stream()
                 .filter(entry -> entry.getKey().contains("docType_"))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
         docTypeEntries.forEach((inputName, inputValue) -> {
@@ -34,7 +33,7 @@ public class AssociateDocTypeLabel implements Action {
                 UserFile userFile = maybeUserFile.get();
                 userFile.setDocTypeLabel(String.valueOf(inputValue));
                 userFileRepositoryService.save(userFile);
-                formSubmission.getFormData().remove(inputName);
+                submission.getInputData().remove(inputName);
             }
 
         });
