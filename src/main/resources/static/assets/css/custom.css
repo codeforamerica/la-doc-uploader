@@ -420,6 +420,10 @@ p.employer-name {
   bottom: -1px;
 }
 
+.large-icon {
+  font-size: 3.5rem;
+}
+
 .text-input-group__postfix {
   color: #5F5854;
 }
