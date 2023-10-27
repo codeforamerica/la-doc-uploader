@@ -13,8 +13,9 @@
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
           <th:block th:ref="clientInfoFormContents"
              th:with="
-                userFiles = ${T(org.ladocuploader.app.utils.UserFileUtilities).getUserFileMap(session.userFiles, flow, 'uploadDocuments')},
-                numberOfFiles = ${userFiles.keySet().size()},
+                fileIds = ${T(org.ladocuploader.app.utils.UserFileUtilities).getUserFileIdsInOrder(userFiles)},
+                userFileInfo = ${T(org.ladocuploader.app.utils.UserFileUtilities).getUserFileInfo(session.userFiles, userFiles, flow, 'uploadDocuments')},
+                numberOfFiles = ${userFileInfo.keySet().size()},
                 maxFiles=${@environment.getProperty('form-flow.uploads.max-files')}">
             <div th:id="upload-doc-div-details" class="spacing-below-25">
               <p th:if="${numberOfFiles == 1}" th:id="upload-doc-text-details" class="upload-doc-text" th:text="#{general.files.file-added.one(${maxFiles})}"></p>
@@ -22,15 +23,19 @@
             </div>
             <div class="form-card__content">
               <div class="dropzone file-preview-template preview-container">
-                <th:block th:each="userFile, iter: ${userFiles}">
-                   <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile})}"></th:block>
+                <th:block th:each="fileId, iter: ${fileIds}">
+                  <th:block th:with="
+                              userFile=${userFileInfo.get(fileId)}">
+                   <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile}, showDocType=false)}"></th:block>
 
                   <th:block th:replace="~{fragments/inputs/select :: select(
-                      inputName=${'docType_wildcard' + userFile.getKey()},
+                      inputName=${'docType_wildcard' + fileId},
                       helpText='',
                       content=~{::docTypes},
                       label='',
-                      ariaLabel=${userFile.getValue().get('originalFilename')})}">
+                      ariaLabel=${userFile.get('originalFilename')})}">
+
+
                     <th:block th:ref="docTypes">
                       <th:block
                           th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{upload-documents.doc-type-label.placeholder})}"/>
@@ -62,12 +67,14 @@
                           th:replace="~{fragments/inputs/selectOption :: selectOption(value='Other', optionText=#{upload-documents.doc-type-label.correspondence.other})}"/>
                     </th:block>
                   </th:block>
+                  </th:block>
                 </th:block>
               </div>
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="~{fragments/inputs/submitButtonSecondary :: submitButton(
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{general.inputs.continue})}"/>
+            <a class="button button--secondary" th:href="'/flow/' + ${flow} + '/uploadDocuments'" th:text="#{general.add-or-delete-files}"></a>
             </div>
           </th:block>
         </th:block>
