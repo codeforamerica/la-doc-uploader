@@ -32,7 +32,6 @@ public class AssociateDocTypeLabel implements Action {
                 UserFile userFile = maybeUserFile.get();
                 userFile.setDocTypeLabel(String.valueOf(inputValue));
                 userFileRepositoryService.save(userFile);
-                submission.getInputData().remove(inputName);
             }
 
         });
