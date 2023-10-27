@@ -27,7 +27,7 @@
         <div class="display-flex file-details">
           <div class="dz-detail">
 <!--            th:if="${userFile.getValue().get('docTypeLabel') != @environment.getProperty('spring.flyway.placeholders.user_file_doc_type_default')}"-->
-            <span th:if="${docTypeInfo == true}" th:text="${'Type: ' + userFile.get('docTypeLabel')}"></span>
+            <span th:if="${docTypeInfo == true}" th:text="${'Type: ' + #messages.msg(T(org.ladocuploader.app.file.DocTypeEnum).findNameSrcForValue(userFile.get('docTypeLabel')))}"></span>
           </div>
         </div>
         <div class="display-flex body-gray file-details">
