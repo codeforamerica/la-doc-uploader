@@ -1,5 +1,9 @@
 package org.ladocuploader.app.journeys;
 
+import com.beust.ah.A;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -258,7 +262,21 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
         () -> !(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none"))
     );
 
-    testPage.clickButton("I'm finished uploading");
+    testPage.clickButton("Continue");
+
+    // Add document type
+    assertThat(testPage.getTitle()).isEqualTo("Select the document type");
+
+    assertThat(driver.findElements(By.className("filename-text-name")).get(0).getText()).isEqualTo("test.jpg");
+    WebElement docTypeSelect = driver.findElements(By.className("select__element")).get(0);
+    testPage.enter(docTypeSelect.getAttribute("name"), "DivorceDecree");
+    testPage.clickContinue();
+
+    // Doc type review page
+    assertThat(testPage.getTitle()).isEqualTo("Are these the right document types?");
+    assertThat(driver.findElement(By.className("filename-text-name")).getText()).isEqualTo("test");
+    assertThat(driver.findElement(By.className("filename-text-ext")).getText()).isEqualTo(".jpg");
+    assertThat(driver.findElement(By.className("dz-detail")).findElement(By.tagName("span")).getText()).isEqualTo("Divorce Decree");
 
     // Confirm submit
     assertThat(testPage.getTitle()).isEqualTo("Doc submit confirmation");
