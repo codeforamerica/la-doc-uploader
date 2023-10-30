@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="fragments/head :: head(title=#{additional-income.title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,15 +8,37 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
+        <th:block
+            th:replace="'fragments/cardHeader' :: cardHeader(header=#{additional-income.header}, subtext=#{additional-income.subtext})"/>
         <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
           <th:block th:ref="formContent">
             <div class="form-card__content">
-
+              <th:block th:replace="~{'fragments/inputs/checkboxFieldset' ::
+                  checkboxFieldset(inputName='additionalIncome',
+                  ariaLabel='header',
+                  content=~{::content})}">
+                <th:block th:ref="content">
+                  <th:block th:replace="~{'fragments/inputs/checkboxInSet' ::
+                    checkboxInSet(inputName='additionalIncome', value='SSI', label=#{additional-income.choice1})}"/>
+                  <th:block th:replace="~{'fragments/inputs/checkboxInSet' ::
+                    checkboxInSet(inputName='additionalIncome', value='SocialSecurity', label=#{additional-income.choice2})}"/>
+                  <th:block th:replace="~{'fragments/inputs/checkboxInSet' ::
+                    checkboxInSet(inputName='additionalIncome', value='Unemployment', label=#{additional-income.choice3})}"/>
+                  <th:block th:replace="~{'fragments/inputs/checkboxInSet' ::
+                    checkboxInSet(inputName='additionalIncome', value='WorkersCompensation', label=#{additional-income.choice4})}"/>
+                  <th:block th:replace="~{'fragments/inputs/checkboxInSet' ::
+                    checkboxInSet(inputName='additionalIncome', value='ChildSupport', label=#{additional-income.choice5})}"/>
+                  <th:block th:replace="~{'fragments/inputs/checkboxInSet' ::
+                    checkboxInSet(inputName='additionalIncome', value='VeteransBenefits', label=#{additional-income.choice6})}"/>
+                  <th:block th:replace="~{'fragments/inputs/checkboxInSet' ::
+                    checkboxInSet(inputName='additionalIncome', value='Contributions', label=#{additional-income.choice7})}"/>
+                  <th:block th:replace="~{'fragments/inputs/checkboxInSet' ::
+                    checkboxInSet(inputName='additionalIncome', value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)}"/>
+                </th:block>
+              </th:block>
             </div>
             <div class="form-card__footer">
-
+              <th:block th:replace="fragments/inputs/submitButton :: submitButton( text=#{general.inputs.continue})"/>
             </div>
           </th:block>
         </th:block>
@@ -24,6 +46,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="fragments/footer :: footer"/>
 </body>
 </html>

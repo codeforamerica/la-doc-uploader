@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:with="messageVariant=${fieldData.getOrDefault('payPeriod', 'It varies') == 'It varies' ? 'variable' : 'fixed'}">
+  <head th:replace="~{fragments/head :: head(title=#{job-pay-amount.title})}"></head>
+  <body>
+  <div class="page-wrapper">
+    <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+    <section class="slab">
+      <div class="grid">
+        <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+        <main id="content" role="main" class="form-card spacing-above-35">
+          <p class="grey-text" th:text="${fieldData.get('employerName')}"></p>
+          <th:block
+              th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'fixed' ? #messages.msgWithParams('job-pay-amount.fixed.header', fieldData.getOrDefault('payPeriod', 'in the last 30 days').toLowerCase()) : #messages.msg('job-pay-amount.variable.header')}, subtext=#{job-pay-amount.subtext})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
+            <th:block th:ref="content">
+              <div class="form-card__content">
+                <th:block
+                  th:replace="~{fragments/inputs/money :: money(inputName='payPeriodAmount',
+                  ariaLabel='header')}"/>
+
+              </div>
+              <div class="form-card__footer">
+
+
+                <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}" />
+
+              </div>
+            </th:block>
+          </th:block>
+        </main>
+      </div>
+    </section>
+  </div>
+  <th:block th:replace="~{fragments/footer :: footer}" />
+  </body>
+</th:block>
+</html>

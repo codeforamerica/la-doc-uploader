@@ -1,5 +1,6 @@
 package org.ladocuploader.app.journeys;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
@@ -60,13 +61,20 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     // Home Address
     assertThat(testPage.getTitle()).isEqualTo("Home Address");
     testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Mailing address");
+    testPage.goBack();
+    testPage.clickElementById("noHomeAddress-true");
+    testPage.clickContinue();
+
+    // Where to send mail
+    assertThat(testPage.getTitle()).isEqualTo("Where to send mail");
+    testPage.clickButton("Add a mailing address");
 
     // Mailing Address
     assertThat(testPage.getTitle()).isEqualTo("Mailing address");
     testPage.clickContinue();
 
     // Contact Info
-    testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
     assertThat(testPage.getTitle()).isEqualTo("Contact info");
     testPage.clickContinue();
 
@@ -95,6 +103,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Household list");
     testPage.clickButton("Yes, this is everyone");
 
+    assertThat(testPage.getTitle()).isEqualTo("Next step");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/ssnForm");
     assertThat(testPage.getTitle()).isEqualTo("SSN");
     testPage.clickLink("Learn why we ask for SSNs");
     assertThat(testPage.getTitle()).isEqualTo("SSN faqs");
@@ -146,6 +157,35 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Work disqualifications");
     testPage.clickButton("No");
+
+    // household income
+    testPage.navigateToFlowScreen("laDigitalAssister/householdIncomeByJob");
+    testPage.clickLink("I already know my monthly household pre-tax income - I prefer to enter it directly.");
+    testPage.enter("monthlyHouseholdIncome", "200");
+    testPage.clickContinue();
+    testPage.clickButton("Yes, add income by job");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Income who");
+    testPage.clickElementById("householdMemberJobAdd-you");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Employer name");
+    testPage.enter("employerName", "job1");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Self-employment");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Paid by the hour");
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Hourly wage");
+    testPage.enter("hourlyWage", "15");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Hours a week");
+    testPage.enter("hoursPerWeek", "10");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Income list");
+    testPage.clickButton("I'm done adding jobs");
+    assertThat(testPage.getTitle()).isEqualTo("Additional income");
 
     // SNAP
     testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");
@@ -265,5 +305,120 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
     testPage.clickButton("No");
     assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
+
+
+  //    Expenses SignPost
+    testPage.navigateToFlowScreen("laDigitalAssister/expensesSignPost");
+    assertThat(testPage.getTitle()).isEqualTo("Expenses Signpost");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Home Expenses");;
+    testPage.clickElementById("householdHomeExpenses-Rent-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Rent");
+    testPage.goBack();
+
+    testPage.clickElementById("householdHomeExpenses-Other-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Rent");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Other");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Utilities");
+
+    testPage.clickElementById("householdUtilitiesExpenses-Water-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Water");
+    testPage.goBack();
+
+    testPage.clickElementById("householdUtilitiesExpenses-Water-label"); // none selected
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Dependent Care");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Dependent Care Amount");
+    testPage.goBack();
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo("Insurance Expenses");
+    testPage.clickElementById("householdInsuranceExpenses-Dental insurance premiums-label"); // none selected
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Dental insurance premiums");
+    testPage.goBack();
+
+    testPage.clickElementById("none__checkbox-label"); // none selected
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Elderly Care");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Elderly Care Amount");
+
+    testPage.goBack();
+    testPage.clickButton("No");
+
+    //    Final SignPost
+    assertThat(testPage.getTitle()).isEqualTo("Final Signpost");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Medicaid");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/authorizedRepAuthorization");
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Communication Authorization");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Mail");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Spending");
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Contact Information");
+    testPage.enter("authorizedRepFirstName", "test");
+    testPage.enter("authorizedRepLastName", "test");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Medicaid");
+    testPage.clickButton("Yes, please share my info");
+
+
+    assertThat(testPage.getTitle()).isEqualTo("Register to Vote");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Help Registering to Vote");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Race and Ethnicity");
+    testPage.clickButton("No, skip this question");
+
+    assertThat(testPage.getTitle()).isEqualTo("Legal Stuff");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/raceEthnicityAsk");
+
+    assertThat(testPage.getTitle()).isEqualTo("Race and Ethnicity");
+    testPage.clickButton("Yes, continue");
+
+    assertThat(testPage.getTitle()).isEqualTo("Ethnicity Selection");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Race Selection");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Legal Stuff");
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Signature");
   }
 }

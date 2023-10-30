@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title='Scaffold')"></head>
+<head th:replace="fragments/head :: head(title=#{expenses-signpost.title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,18 +8,25 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <!--        <th:block-->
-        <!--            th:replace="'fragments/cardHeader' :: cardHeader(header=#{}, subtext=#{})"/>-->
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
-          <th:block th:ref="formContent">
-            <div class="form-card__content">
-
-            </div>
-            <div class="form-card__footer">
-
-            </div>
-          </th:block>
-        </th:block>
+        <div class="grid__item spacing-above-35 text--centered">
+          <th:block th:replace="~{fragments/icons :: moneyTips}"></th:block>
+          <p class="text--help spacing-below-10"
+             th:text="#{expenses-signpost.step}"></p>
+          <th:block
+              th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{expenses-signpost.header})}"/>
+        </div>
+        <div class="form-card__content">
+          <div class="grid__item intro-section boxed-content spacing-below-60">
+            <h2 class="h3 text--centered intro-box__title" th:text="#{signpost.well-ask-about}"></h2>
+            <ol class="list--numbered spacing-above-10">
+              <li th:text="#{expenses-signpost.expense}"></li>
+              <li th:text="#{expenses-signpost.addl-expense}"></li>
+            </ol>
+          </div>
+        </div>
+        <div class="form-card__footer text--centered">
+          <th:block th:replace="~{'fragments/continueButton' :: continue}"/>
+        </div>
       </main>
     </div>
   </section>

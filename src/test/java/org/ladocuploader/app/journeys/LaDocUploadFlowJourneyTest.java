@@ -1,14 +1,17 @@
 package org.ladocuploader.app.journeys;
 
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -250,11 +253,11 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Upload documents");
     assertThat(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none")).isTrue();
     uploadJpgFile();
-    boolean isHidden = testPage.findElementsByButtonText("I'm finished uploading").getAttribute("class").contains("display-none");
-    if (isHidden) {
-      takeSnapShot("flakeyTestScreenshot.jpg");
-    }
-    assertFalse(isHidden);
+    // give the system time to remove the "display-none" class.
+    await().atMost(5, TimeUnit.SECONDS).until(
+        () -> !(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none"))
+    );
+
     testPage.clickButton("I'm finished uploading");
 
     // Confirm submit
