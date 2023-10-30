@@ -1,8 +1,3 @@
-<!--
- file name + type
- Type: <file type>  (if present)
- size . delete link
--->
 <th:block
   th:fragment="fileDetails(userFile)"
   th:id="${userFile.get('originalFilename')}"
@@ -26,7 +21,6 @@
         </div>
         <div class="display-flex file-details">
           <div class="dz-detail">
-<!--            th:if="${userFile.getValue().get('docTypeLabel') != @environment.getProperty('spring.flyway.placeholders.user_file_doc_type_default')}"-->
             <span th:if="${docTypeInfo == true}" th:text="${'Type: ' + #messages.msg(T(org.ladocuploader.app.file.DocTypeEnum).findNameSrcForValue(userFile.get('docTypeLabel')))}"></span>
           </div>
         </div>
@@ -35,8 +29,6 @@
             <strong th:text="${T(org.ladocuploader.app.utils.UserFileUtilities).getFileMbFromBytes(userFile.get('filesize'))}"></strong>
             MB
             </div>
-<!--          <span class="file-details-delimiter" aria-hidden="true">•</span>-->
-<!--          <a class="dz-remove" href="javascript:undefined;">delete</a>-->
         </div>
 
       </div>
