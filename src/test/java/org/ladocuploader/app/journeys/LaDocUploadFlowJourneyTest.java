@@ -1,9 +1,5 @@
 package org.ladocuploader.app.journeys;
 
-import com.beust.ah.A;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -17,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Slf4j
 public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
@@ -265,27 +260,35 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Continue");
 
     // Add document type
-    assertThat(testPage.getTitle()).isEqualTo("Select the document type");
+    assertThat(testPage.getTitle()).isEqualTo("Select document types");
 
-    assertThat(driver.findElements(By.className("filename-text-name")).get(0).getText()).isEqualTo("test.jpg");
+    assertThat(driver.findElement(By.className("filename-text-name")).getText()).isEqualTo("test");
+    assertThat(driver.findElement(By.className("filename-text-ext")).getText()).isEqualTo(".jpeg");
     WebElement docTypeSelect = driver.findElements(By.className("select__element")).get(0);
-    testPage.enter(docTypeSelect.getAttribute("name"), "DivorceDecree");
+    testPage.selectFromDropdown(docTypeSelect.getAttribute("name"), "Divorce Decree");
     testPage.clickContinue();
 
     // Doc type review page
-    assertThat(testPage.getTitle()).isEqualTo("Are these the right document types?");
+    assertThat(testPage.getTitle()).isEqualTo("Review documents");
     assertThat(driver.findElement(By.className("filename-text-name")).getText()).isEqualTo("test");
-    assertThat(driver.findElement(By.className("filename-text-ext")).getText()).isEqualTo(".jpg");
-    assertThat(driver.findElement(By.className("dz-detail")).findElement(By.tagName("span")).getText()).isEqualTo("Divorce Decree");
+    assertThat(driver.findElement(By.className("filename-text-ext")).getText()).isEqualTo(".jpeg");
+    assertThat(driver.findElement(By.className("dz-detail")).findElement(By.tagName("span")).getText()).isEqualTo("Type: Divorce Decree");
+    testPage.clickButton("Yes, continue");
 
     // Confirm submit
     assertThat(testPage.getTitle()).isEqualTo("Doc submit confirmation");
     testPage.clickButton("No, add more documents");
     assertThat(testPage.getTitle()).isEqualTo("Upload documents");
-    testPage.clickButton("I'm finished uploading");
+    // add document types
+    testPage.clickContinue();
+    // review document types
+    testPage.clickContinue();
+    // doc submit confirmation
+    testPage.clickButton("Yes, continue");
+    // final confirmation
     testPage.clickButton("Yes, submit and finish");
 
     // Confirmation page
-    assertThat(testPage.getTitle()).isEqualTo("documents sent");
+    assertThat(testPage.getTitle()).isEqualTo("Documents sent");
   }
 }

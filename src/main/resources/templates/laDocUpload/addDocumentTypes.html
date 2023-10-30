@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title=#{upload-documents.title}, useDropzone=false)}"></head>
+<head th:replace="~{fragments/head :: head(title=#{add-document-types.title}, useDropzone=false)}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -9,7 +9,7 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{upload-documents.add-doc-type.header})}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{add-document-types.header})}"/>
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
           <th:block th:ref="clientInfoFormContents"
              th:with="
@@ -36,7 +36,7 @@
                         ariaLabel=${userFile.get('originalFilename')})}">
                       <th:block th:ref="docTypes">
                         <th:block
-                          th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{upload-documents.doc-type-label.placeholder})}"/>
+                          th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{add-document-types.doc-type-label.placeholder})}"/>
                         <th:block th:each="docTypeOpt : ${T(org.ladocuploader.app.file.DocTypeEnum).values()}">
                           <th:block
                               th:replace="~{fragments/inputs/selectOption :: selectOption(value=${docTypeOpt.getValue()}, optionText=#{${docTypeOpt.getNameSrc()}})}"/>
