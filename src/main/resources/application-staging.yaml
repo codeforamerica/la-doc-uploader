@@ -1,7 +1,4 @@
 spring:
-  flyway:
-    placeholders:
-      user_file_doc_type_default: "NotSet"
   thymeleaf:
     cache: true
   datasource:
@@ -13,3 +10,4 @@ form-flow:
   disabled-flows: ~
   uploads:
     max-file-size: '5'
+    default-doc-type: "NotSet"
