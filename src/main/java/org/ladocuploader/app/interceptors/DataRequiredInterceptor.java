@@ -62,7 +62,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
         if (submissionMaybe.isPresent()) {
           return checkForMissingData(request, response, requiredData, submissionId, submissionMaybe.get());
         } else {
-          return handleMissingSubmission(request, response, requiredData, submissionId);
+          return handleMissingSubmission(request, response, submissionId);
         }
       } else {
         return handleMissingSubmissionId(request, response);
@@ -71,23 +71,6 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       return true;
     }
   }
-
-  private boolean checkIfSubmissionIdAndApplicantIdMatch(HttpServletRequest request) {
-    var session = request.getSession(false);
-    var applicantId = request.getParameter("applicantId");
-    boolean applicantIdPresent = applicantId != null && !applicantId.isEmpty();
-    if (session == null) {
-      return !applicantIdPresent;
-    } else {
-      var submissionId = session.getAttribute("id");
-      if (submissionId == null) {
-        return !applicantIdPresent;
-      } else {
-        return submissionId.equals(applicantId);
-      }
-    }
-  }
-
 
   /**
    * The session and submission ID are present.
@@ -106,9 +89,8 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
     var flowName = parsedUrl.get("flow");
     var inputName = REQUIRED_DATA.get(flowName);
     if (submission.getInputData().get(inputName) == null) {
-      var screenName = parsedUrl.get("screen");
       log.error("Submission %s missing field data %s, redirecting".formatted(submissionId, requiredData));
-      response.sendRedirect(getRedirectUrl(screenName, flowName));
+      response.sendRedirect(getRedirectUrl(parsedUrl.get("screen"), flowName));
       return false;
     }
 
@@ -129,7 +111,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
    * The session and submission ID are present, but the submission associated with the submissionID is not present in the database.
    * Use the applicantId to determine next steps.
    */
-  private static boolean handleMissingSubmission(HttpServletRequest request, HttpServletResponse response, String requiredData, UUID submissionId) throws IOException {
+  private static boolean handleMissingSubmission(HttpServletRequest request, HttpServletResponse response, UUID submissionId) throws IOException {
     log.error("Submission %s not found in database".formatted(submissionId));
     return manageSessionOrRedirect(request, response);
   }
@@ -152,11 +134,8 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
     if (applicantId == null) {
       // Middle of the flow without session or applicantId data - have to redirect
       var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
-      var screenName = parsedUrl.get("screen");
-      var flow = parsedUrl.get("flow");
-      var redirect_url = getRedirectUrl(screenName, flow);
       log.warn("Redirecting");
-      response.sendRedirect(redirect_url);
+      response.sendRedirect(getRedirectUrl(parsedUrl.get("screen"), parsedUrl.get("flow")));
       return false;
     } else {
       // Middle of the flow without session - but we have the applicantId to recover
