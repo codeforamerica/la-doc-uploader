@@ -14,6 +14,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static formflow.library.inputs.FieldDesignation.DYNAMIC_FIELD_MARKER;
+
 @Component
 public class AssociateDocTypeLabel implements Action {
 
@@ -22,18 +24,18 @@ public class AssociateDocTypeLabel implements Action {
 
     @Override
     public void run(Submission submission){
+        String fieldName =  "docType" + DYNAMIC_FIELD_MARKER;
         Map<String, Object> docTypeEntries = submission.getInputData().entrySet().stream()
-                .filter(entry -> entry.getKey().contains("docType_wildcard"))
+                .filter(entry -> entry.getKey().contains(fieldName))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
         docTypeEntries.forEach((inputName, inputValue) -> {
-            String fileId = StringUtils.substringAfterLast(inputName, "docType_wildcard");
+            String fileId = StringUtils.substringAfterLast(inputName, fieldName);
             Optional<UserFile> maybeUserFile = userFileRepositoryService.findById(UUID.fromString(fileId));
             if (maybeUserFile.isPresent()){
                 UserFile userFile = maybeUserFile.get();
                 userFile.setDocTypeLabel(String.valueOf(inputValue));
                 userFileRepositoryService.save(userFile);
             }
-
         });
 
     }

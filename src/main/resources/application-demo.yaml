@@ -7,4 +7,4 @@ form-flow:
   disabled-flows: ~
   uploads:
     max-file-size: '5'
-    default-doc-type: "NotSet"
+    default-doc-type-label: "NotSet"

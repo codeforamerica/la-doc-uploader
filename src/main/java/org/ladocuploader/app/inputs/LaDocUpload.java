@@ -1,6 +1,7 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
+import formflow.library.data.annotations.DynamicField;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -47,6 +48,7 @@ public class LaDocUpload extends FlowInputs {
   private String uploadDocumentsFeedbackDetail;
 
   @NotBlank(message = "{doc-type.select-a-type}")
+  @DynamicField
   private String docType;
 }
 

@@ -29,7 +29,7 @@
                     <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile}, showDocType=false)}"></th:block>
 
                     <th:block th:replace="~{fragments/inputs/select :: select(
-                        inputName=${'docType_wildcard' + fileId},
+                        inputName=${'docType' + T(formflow.library.inputs.FieldDesignation.DYNAMIC_FIELD_MARKER) + fileId},
                         helpText='',
                         content=~{::docTypes},
                         label='',
