@@ -25,11 +25,12 @@
               <div class="dropzone file-preview-template preview-container">
                 <th:block th:each="fileId, iter: ${fileIds}">
                   <th:block th:with="
-                              userFile=${userFileInfo.get(fileId)}">
+                              userFile=${userFileInfo.get(fileId)},
+                              docTypeInputName=${'docType' + T(formflow.library.inputs.FieldDesignation).DYNAMIC_FIELD_MARKER + fileId}">
                     <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile}, showDocType=false)}"></th:block>
 
                     <th:block th:replace="~{fragments/inputs/select :: select(
-                        inputName=${'docType' + T(formflow.library.inputs.FieldDesignation.DYNAMIC_FIELD_MARKER) + fileId},
+                        inputName=${docTypeInputName},
                         helpText='',
                         content=~{::docTypes},
                         label='',
