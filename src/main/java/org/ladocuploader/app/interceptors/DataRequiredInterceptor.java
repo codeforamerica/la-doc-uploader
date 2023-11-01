@@ -59,6 +59,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
                 return true; // There are no data requirements for this page
             }
 
+
       var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
       var screenName = parsedUrl.get("screen");
       if (BEGINNING_PAGES.containsValue(screenName) || "GET".equals(request.getMethod())) {
@@ -68,7 +69,6 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
 
       String flow = parsedUrl.get("flow");
       var requiredData = REQUIRED_DATA.get(flow);
-
 
       var session = request.getSession(false);
       if (session == null) {
@@ -118,18 +118,22 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
    * Check if there's any data missing and then use the applicantId to determine next steps.
    */
   private static boolean checkForMissingData(HttpServletRequest request, HttpServletResponse response, String requiredData, UUID submissionId, Submission submission) throws IOException {
-
     var applicantIdFromRequest = request.getParameter("applicantId");
-    var applicantIdFromData = submission.getInputData().getOrDefault("applicantId", "");
-    if (applicantIdFromRequest != null && !applicantIdFromRequest.equals(applicantIdFromData)) {
-      log.warn("applicantIds do not match, param=%s inputData=%s".formatted(applicantIdFromRequest, applicantIdFromData));
+    var applicantIdFromData = (String) submission.getInputData().getOrDefault("applicantId", "");
+    if (applicantIdFromRequest != null && !applicantIdFromData.isBlank() && !applicantIdFromRequest.equals(applicantIdFromData)) {
+      log.warn("Unexpected state - applicantIds do not match, param=%s inputData=%s".formatted(applicantIdFromRequest, applicantIdFromData));
+      request.getSession().setAttribute("id", UUID.fromString(applicantIdFromData));
+      return true;
     }
 
     var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
     var flowName = parsedUrl.get("flow");
     var inputName = REQUIRED_DATA.get(flowName);
-    if (submission.getInputData().getOrDefault(inputName, "").toString().isBlank()) {
+    if (submission.getInputData().get(inputName) == null) {
+      var screenName = parsedUrl.get("screen");
       log.error("Submission %s missing field data %s, redirecting".formatted(submissionId, requiredData));
+      response.sendRedirect(getRedirectUrl(screenName, flowName));
+      return false;
     }
 
     return manageSessionOrRedirect(request, response);
@@ -173,8 +177,8 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       // Middle of the flow without session or applicantId data - have to redirect
       var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
       var screenName = parsedUrl.get("screen");
-      String flow = parsedUrl.get("flow");
-      String redirect_url = String.format("/flow/%s/%s?intercepted=%s", flow, BEGINNING_PAGES.get(flow), screenName);
+      var flow = parsedUrl.get("flow");
+      var redirect_url = getRedirectUrl(screenName, flow);
       log.warn("Redirecting");
       response.sendRedirect(redirect_url);
       return false;
@@ -182,9 +186,12 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       // Middle of the flow without session - but we have the applicantId to recover
       // What are the security concerns here? How can we mitigate?
       log.warn("Setting session id to %s".formatted(applicantId));
-      var session = request.getSession();
-      session.setAttribute("id", UUID.fromString(applicantId));
+      request.getSession().setAttribute("id", UUID.fromString(applicantId));
       return true;
     }
+  }
+
+  private static String getRedirectUrl(String screenName, String flow) {
+    return String.format("/flow/%s/%s?intercepted=%s", flow, BEGINNING_PAGES.get(flow), screenName);
   }
 }

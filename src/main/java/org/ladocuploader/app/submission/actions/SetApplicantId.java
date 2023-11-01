@@ -18,12 +18,10 @@ public class SetApplicantId implements Action {
   public void run(Submission submission) {
     Map<String, Object> inputData = submission.getInputData();
     var submissionId = submission.getId().toString();
-    String applicantId = (String) inputData.getOrDefault("applicantId", "");
-
-    if (applicantId.isBlank()) {
-      inputData.put("applicantId", submissionId);
+    var applicantId = (String) inputData.getOrDefault("applicantId", "");
+    if (!applicantId.isBlank()) {
+      log.warn("Overwriting applicantId [%s] with [%s]".formatted(applicantId, submissionId));
     }
+    inputData.put("applicantId", submissionId);
   }
-
-
 }
