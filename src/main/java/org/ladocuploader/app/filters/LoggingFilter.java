@@ -33,6 +33,7 @@ public class LoggingFilter implements Filter {
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
       FilterChain filterChain) throws ServletException, IOException {
+
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpSession session = request.getSession(false);
     Map<String, UUID> submissionMap =
@@ -51,12 +52,16 @@ public class LoggingFilter implements Filter {
 
     String sessionCreatedAt = session != null ?
         new DateTime(session.getCreationTime()).toString("HH:mm:ss.SSS") : "no session";
+
+    MDC.put("xForwardedFor", request.getHeader("X-Forwarded-For"));
     MDC.put("method", request.getMethod());
     MDC.put("request", request.getRequestURI());
     MDC.put("sessionId", session == null ? "null" : session.getId());
     MDC.put("sessionCreatedAt", sessionCreatedAt);
     MDC.put("submissionId", subId == null ? "null" : subId.toString());
+
     filterChain.doFilter(servletRequest, servletResponse);
+
     MDC.clear();
   }
 
