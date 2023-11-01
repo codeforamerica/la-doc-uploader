@@ -43,24 +43,22 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
         return true;
       }
 
-      String flow = parsedUrl.get("flow");
-      var requiredData = REQUIRED_DATA.get(flow);
-
       var session = request.getSession(false);
       if (session == null) {
         return handleMissingSession(request, response);
       }
-
+      
       Map<String, UUID> submissionMap = (Map) session.getAttribute(FormFlowController.SUBMISSION_MAP_NAME);
+      String flow = parsedUrl.get("flow");
       UUID submissionId = null;
-
       if (submissionMap != null && submissionMap.get(flow) != null) {
         submissionId = submissionMap.get(flow);
       }
+
       if (submissionId != null) {
         var submissionMaybe = this.submissionRepositoryService.findById(submissionId);
         if (submissionMaybe.isPresent()) {
-          return checkForMissingData(request, response, requiredData, submissionId, submissionMaybe.get());
+          return checkForMissingData(request, response, submissionId, submissionMaybe.get());
         } else {
           return handleMissingSubmission(request, response, submissionId);
         }
@@ -76,7 +74,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
    * The session and submission ID are present.
    * Check if there's any data missing and then use the applicantId to determine next steps.
    */
-  private static boolean checkForMissingData(HttpServletRequest request, HttpServletResponse response, String requiredData, UUID submissionId, Submission submission) throws IOException {
+  private static boolean checkForMissingData(HttpServletRequest request, HttpServletResponse response, UUID submissionId, Submission submission) throws IOException {
     var applicantIdFromRequest = request.getParameter("applicantId");
     var applicantIdFromData = (String) submission.getInputData().getOrDefault("applicantId", "");
     if (applicantIdFromRequest != null && !applicantIdFromData.isBlank() && !applicantIdFromRequest.equals(applicantIdFromData)) {
@@ -89,7 +87,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
     var flowName = parsedUrl.get("flow");
     var inputName = REQUIRED_DATA.get(flowName);
     if (submission.getInputData().get(inputName) == null) {
-      log.error("Submission %s missing field data %s, redirecting".formatted(submissionId, requiredData));
+      log.error("Submission %s missing field data %s, redirecting".formatted(submissionId, inputName));
       response.sendRedirect(getRedirectUrl(parsedUrl.get("screen"), flowName));
       return false;
     }
