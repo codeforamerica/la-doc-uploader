@@ -4,5 +4,6 @@ spring:
   datasource:
     url: jdbc:postgresql://host.docker.internal:5432/la-doc-uploader
 form-flow:
+  disabled-flows: ~
   uploads:
     max-file-size: '5'
