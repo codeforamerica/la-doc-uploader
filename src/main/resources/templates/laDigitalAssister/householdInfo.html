@@ -18,11 +18,16 @@
                   text(inputName='householdMemberFirstName',
                   label=#{household-info.first-name-question},
                   helpText=#{household-info.name-help})}"/>
-
               <th:block th:replace="~{fragments/inputs/text ::
                   text(inputName='householdMemberLastName',
                   label=#{household-info.last-name-question},
                   helpText=#{household-info.name-help})}"/>
+              <th:block th:replace="~{'fragments/inputs/date' ::
+                  date(inputName='householdBirth',
+                  label=#{household-info.birthday-question},
+                  helpText='personal-info.date-of-birth.help',
+                  groupName='householdBirthDate'
+                  )}"/>
               <div class="form-card__footer">
                 <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{general.inputs.continue})}"/>
