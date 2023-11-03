@@ -1,4 +1,7 @@
 form-flow:
+  disabled-flows:
+    - flow: laDigitalAssister
+      staticRedirectPage: /
   pdf:
     path: ~
   inputs: 'org.ladocuploader.app.inputs.'
