@@ -1,0 +1,20 @@
+flow: laDigitalAssister
+type: parentGuardian
+inputFields:
+  # submission field name --> PDF field name
+
+  # Cross-check this list against the PDF with this command:
+  #   diff \
+  #     <(pdftk src/main/resources/pdfs/applicant_summary.pdf dump_data_fields | grep 'FieldName: ' | cut -d' ' -f2 | sort) \
+  #     <(ruby -ryaml -e "y = YAML.load_file('src/main/resources/pdf-map.yaml'); puts y['inputFields'].values.concat(y['dbFields'].values)" | sort)
+  #
+  # Red lines = in PDF but not YAML
+  # Green lines = in YAML but not PDF
+
+  # Overview Page
+  firstName: first_name
+  lastName: last_name
+  emailAddress: email_address
+  phoneNumber: phone_number
+dbFields:
+  createdAt: submission-createdat

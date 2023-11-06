@@ -4,6 +4,9 @@
   <p th:utext="#{footer.this-benefits-application-is}"></p>
   <a class="text--small font-white spacing-below-15" target="_blank" rel="noopener noreferrer" href="/privacy"
      th:text="#{footer.privacy}"></a>
+  <th:block th:if="${#arrays.contains(@environment.getActiveProfiles(), 'demo') || #arrays.contains(@environment.getActiveProfiles(), 'dev')}">
+    <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/' + ${submission.getId()}">Download Applicant Summary CSV</a><br/>
+  </th:block>
   <div class="footer-logos spacing-below-15">
     <div class="spacing-above-15">
       <a href="https://www.codeforamerica.org">
