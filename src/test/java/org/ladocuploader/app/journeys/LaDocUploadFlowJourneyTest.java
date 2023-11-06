@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.SessionId;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -262,6 +263,22 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
     // Confirm submit
     assertThat(testPage.getTitle()).isEqualTo("Doc submit confirmation");
+//    String sessionIdBeforeDestroy = driver.getSessionId().toString();
+//    // verify that hidden input is equal to submission id ?
+//    String applicantId = testPage.getInputValue("applicantId");
+////    testPage.enter("applicantId", "1234");
+//    assertThat(applicantId).isNotNull();
+//    // delete cookies and verify that the applicant id still exists, but session is missing until the post
+//    driver.manage().deleteAllCookies();
+//    assertThat(driver.getSessionId()).isNull();
+    // verify that it is back after the post
+
+
+//    assertThat(testPage.getInputValue("applicantId")).isEqualTo(sessionKey);
+
+//    driver.manage().deleteAllCookies();
+//    SessionId s = driver.getSessionId();
+//    String sessionKey = s.toString();
     testPage.clickButton("No, add more documents");
     assertThat(testPage.getTitle()).isEqualTo("Upload documents");
     testPage.clickButton("I'm finished uploading");

@@ -12,6 +12,9 @@
                      maxSize=${@environment.getProperty('form-flow.uploads.max-file-size')}">
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{how-to-add-documents.header})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::clientInfoFormContents})}">
+          <th:block th:ref="clientInfoFormContents">
         <div class="center">
           <th:block th:replace="~{fragments/icons :: takingPicWithPhone}"></th:block>
         </div>
@@ -25,8 +28,12 @@
         <span class="spacing-left-1_5" th:utext="${#messages.msg('how-to-add-documents.each-file', maxSize)}"></span>
 
         <div class="form-card__footer">
-          <th:block th:replace="~{fragments/continueButton :: continue}" />
+<!--          <th:block th:replace="~{fragments/continueButton :: continue}" />-->
+
+          <th:block th:replace="~{'fragments/inputs/submitButton' :: submitButton(text=#{general.inputs.continue})}" />
         </div>
+          </th:block>
+        </th:block>
       </main>
     </div>
   </section>

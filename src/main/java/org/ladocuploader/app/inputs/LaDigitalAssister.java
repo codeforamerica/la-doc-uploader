@@ -2,13 +2,10 @@ package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
 import formflow.library.data.annotations.Money;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.NumberFormat;
 
 import java.util.List;
 
