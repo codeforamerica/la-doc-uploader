@@ -28,7 +28,7 @@ repositories {
 }
 
 def profile = props.getProperty('SPRING_PROFILES_ACTIVE')
-def formFlowLibraryVersion = '0.0.14'
+def formFlowLibraryVersion = '0.0.15'
 def useLocalLibrary = System.getenv('USE_LOCAL_LIBRARY')
 
 dependencies {
@@ -54,7 +54,7 @@ dependencies {
 
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.33.0'
 
-    implementation 'io.sentry:sentry-logback:6.32.0'
+    implementation 'io.sentry:sentry-logback:6.33.0'
 
     compileOnly 'org.projectlombok:lombok'
 
