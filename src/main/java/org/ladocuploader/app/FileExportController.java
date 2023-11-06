@@ -1,7 +1,9 @@
 package org.ladocuploader.app;
 
+
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+
 import formflow.library.config.FlowConfiguration;
 import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepositoryService;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.enums.CsvType;
+
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -43,10 +46,10 @@ public class FileExportController {
 
     private final CsvService csvService;
 
-
     public FileExportController(MessageSource messageSource,
         SubmissionRepositoryService submissionRepositoryService,
         List<FlowConfiguration> flowConfigurations, CsvService csvService) {
+
         this.submissionRepositoryService = submissionRepositoryService;
         this.flowConfigurations = flowConfigurations;
         this.messageSource = messageSource;
@@ -94,6 +97,7 @@ public class FileExportController {
         log.info("GET downloadCSV Relationship (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow, submissionId);
 
         return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.RELATIONSHIP);
+
     }
 
     protected static void throwNotFoundError(String flow, String screen, String message) {
@@ -124,15 +128,15 @@ public class FileExportController {
             CsvDocument csvDoc = csvService.generateCsvFormattedData(List.of(submission), csvType);
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=%s".formatted(csvService.generateCsvName(submission.getFlow(), csvType)));
+                    "attachment; filename=%s".formatted(csvService.generateCsvName(submission.getFlow(), csvType)));
             return ResponseEntity
-                .ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .headers(headers)
-                .body(csvDoc.getCsvData());
+                    .ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .headers(headers)
+                    .body(csvDoc.getCsvData());
         } else {
             log.error("Attempted to download PDF with submission_id: " + submissionId + " but session_id was: "
-                + httpSession.getAttribute("id"));
+                    + httpSession.getAttribute("id"));
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(messageSource.getMessage("error.forbidden", null, locale));
         }
     }
