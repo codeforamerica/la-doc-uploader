@@ -1,7 +1,7 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
-import formflow.library.data.validators.Money;
+import formflow.library.data.annotations.Money;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
