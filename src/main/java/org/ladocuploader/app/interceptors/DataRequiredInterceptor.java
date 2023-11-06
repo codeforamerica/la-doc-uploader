@@ -11,6 +11,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -101,14 +102,15 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
   private static boolean checkForMissingData(HttpServletRequest request, HttpServletResponse response, UUID submissionId, Submission submission) throws IOException {
     var applicantIdFromRequest = request.getParameter("applicantId");
     var applicantIdFromData = (String) submission.getInputData().getOrDefault("applicantId", "");
-    if (applicantIdFromRequest != null && !applicantIdFromData.isBlank() && !applicantIdFromRequest.equals(applicantIdFromData)) {
-      log.warn("Unexpected state - applicantIds do not match, param=%s inputData=%s".formatted(applicantIdFromRequest, applicantIdFromData));
-      request.getSession().setAttribute("id", UUID.fromString(applicantIdFromData));
-      return true;
-    }
-
     var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
     var flowName = parsedUrl.get("flow");
+    if (applicantIdFromRequest != null && !applicantIdFromData.isBlank() && !applicantIdFromRequest.equals(applicantIdFromData)) {
+      log.warn("Unexpected state - applicantIds do not match, param=%s inputData=%s".formatted(applicantIdFromRequest, applicantIdFromData));
+      Map<String, UUID> sessionMap = new HashMap<>();
+      sessionMap.put(parsedUrl.get("flow"), UUID.fromString(applicantIdFromData));
+      request.getSession().setAttribute(FormFlowController.SUBMISSION_MAP_NAME, sessionMap);
+      return true;
+    }
     var inputName = REQUIRED_DATA.get(flowName);
     if (submission.getInputData().get(inputName) == null) {
       log.error("Submission %s missing field data %s, redirecting".formatted(submissionId, inputName));
@@ -153,9 +155,9 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
    */
   private static boolean manageSessionOrRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
     var applicantId = request.getParameter("applicantId");
+    var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
     if (applicantId == null) {
       // Middle of the flow without session or applicantId data - have to redirect
-      var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
       log.warn("Redirecting");
       response.sendRedirect(getRedirectUrl(parsedUrl.get("screen"), parsedUrl.get("flow")));
       return false;
@@ -163,7 +165,9 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       // Middle of the flow without session - but we have the applicantId to recover
       // What are the security concerns here? How can we mitigate?
       log.warn("Setting session id to %s".formatted(applicantId));
-      request.getSession().setAttribute("id", UUID.fromString(applicantId));
+      Map<String, UUID> sessionMap = new HashMap<>();
+      sessionMap.put(parsedUrl.get("flow"), UUID.fromString(applicantId));
+      request.getSession().setAttribute(FormFlowController.SUBMISSION_MAP_NAME, sessionMap);
       return true;
     }
   }
