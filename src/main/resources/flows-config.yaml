@@ -19,6 +19,8 @@ flow:
   finalConfirmation:
     nextScreens:
       - name: finalConfirmation
+landmarks:
+  firstScreen: clientInfo
 ---
 name: laDigitalAssister
 flow:
