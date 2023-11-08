@@ -15,6 +15,11 @@
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::homeAddress})}">
           <th:block th:ref="homeAddress">
             <div class="form-card__content">
+              <th:block th:replace="~{fragments/inputs/checkbox ::
+                  checkbox(inputName='sameAsHomeAddress',
+                  label=#{mailing-address.same-address},
+                  value='true'
+                 )}"/>
 
               <th:block th:replace="~{fragments/inputs/address ::
                                   address(
