@@ -3,11 +3,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (sameAsAddressBox) {
     sameAsAddressBox.addEventListener("click", function() {
-      document.getElementById("mailingAddressStreetAddress1").value="";
-      document.getElementById("mailingAddressStreetAddress2").value="";
-      document.getElementById("mailingAddressCity").value="";
-      document.getElementById("mailingAddressState").value="";
-      document.getElementById("mailingAddressZipCode").value="";
+      var selectedClass = document.getElementsByClassName('is-selected')
+      var mailFields = document.getElementById("hidden-mailing-fields")
+      if(selectedClass.length > 0){
+        mailFields.style.display="none";
+      } else {
+        mailFields.style.display="block";
+      }
     });
   }
 });
