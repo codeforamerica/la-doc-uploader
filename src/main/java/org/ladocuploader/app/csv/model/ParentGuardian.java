@@ -1,5 +1,8 @@
 package org.ladocuploader.app.csv.model;
 
+import com.opencsv.bean.CsvIgnore;
+import formflow.library.data.Submission;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,25 +12,17 @@ import com.opencsv.bean.CsvBindByName;
 @Component
 @Getter
 @Setter
-@NoArgsConstructor
 public class ParentGuardian {
 
-    @CsvBindByName(column = "first_name", required = true)
+    @CsvBindByName(column = "first_name")
     private String firstName;
-    @CsvBindByName(column = "last_name", required = true)
+    @CsvBindByName(column = "last_name")
     private String lastName;
 
-    @CsvBindByName(column = "email_address", required = true)
+    @CsvBindByName(column = "email_address")
     private String emailAddress;
 
-    @CsvBindByName(column = "phone_number", required = true)
+    @CsvBindByName(column = "phone_number")
     private String phoneNumber;
-
-//    private Map<String, String> columnMappings = Map.of(
-//            "first_name", "firstName",
-//            "last_name", "lastName",
-//            "email_address", "emailAddress",
-//            "phone_number", "phoneNumber"
-//    );
 
 }
