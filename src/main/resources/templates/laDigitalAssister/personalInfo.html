@@ -30,9 +30,10 @@
                   helpText=#{personal-info.othernames-help})}" />
                 
                 <th:block th:replace="~{'fragments/inputs/date' ::
-                  date(inputName='birthDate',
+                  date(inputName='birth',
                   label=#{personal-info.birthdate},
-                  helpText='personal-info.date-of-birth.help')}"/>
+                  helpText='personal-info.date-of-birth.help',
+                   groupName='birthDate')}"/>
 
                 <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
                               radioFieldset(inputName='sex',

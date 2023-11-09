@@ -40,7 +40,9 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String otherNames;
 
-  private String birthDate;
+  private String birthDay;
+  private String birthMonth;
+  private String birthYear;
 
   private String phoneNumber;
 
@@ -51,6 +53,12 @@ public class LaDigitalAssister extends FlowInputs {
   private String householdMemberFirstName;
 
   private String householdMemberLastName;
+
+  private String householdBirthDay;
+
+  private String householdBirthMonth;
+
+  private String householdBirthYear;
 
   private String ssns;
 
