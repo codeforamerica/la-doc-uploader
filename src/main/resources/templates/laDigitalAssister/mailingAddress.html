@@ -15,13 +15,19 @@
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::homeAddress})}">
           <th:block th:ref="homeAddress">
             <div class="form-card__content">
-
-              <th:block th:replace="~{fragments/inputs/address ::
+              <th:block th:replace="~{fragments/inputs/checkbox ::
+                  checkbox(inputName='sameAsHomeAddress',
+                  label=#{mailing-address.same-address},
+                  value='true'
+                 )}"/>
+              <span id="hidden-mailing-fields">
+                <th:block th:replace="~{fragments/inputs/address ::
                                   address(
                                     validate=false,
                                     inputName='mailingAddress',
                                     streetAddress2HelpText=#{general.optional}
                                   )}"/>
+              </span>
             </div>
             <div class="form-card__footer">
 

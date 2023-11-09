@@ -62,6 +62,7 @@ flow:
     nextScreens:
       - name: contactInfo
   mailingAddress:
+    beforeSaveAction: MailingAddressSetToHomeAddress
     nextScreens:
       - name: contactInfo
   contactInfo:
