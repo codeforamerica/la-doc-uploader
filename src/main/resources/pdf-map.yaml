@@ -1,0 +1,45 @@
+flow: laDigitalAssister
+pdf: /pdfs/la_application_for_assistance.pdf
+inputFields:
+  # submission field name --> PDF field name
+
+  # Cross-check this list against the PDF with this command:
+  #   diff \
+  #     <(pdftk src/main/resources/pdfs/la_application_for_assistance.pdf dump_data_fields | grep 'FieldName: ' | cut -d' ' -f2 | sort) \
+  #     <(ruby -ryaml -e "y = YAML.load_file('src/main/resources/pdf-map.yaml'); puts y['inputFields'].values.concat(y['dbFields'].values)" | sort)
+  #
+  # Red lines = in PDF but not YAML
+  # Green lines = in YAML but not PDF
+
+  # Overview Page
+  firstName: firstName
+  lastName: lastName
+  applicantSsn: applicantSsn
+  homeAddressStreetAddress1: homeAddressStreetAddress1
+  homeAddressStreetAddress2: homeAddressStreetAddress2
+  homeAddressZipCode: homeAddressZipCode
+  homeAddressState: homeAddressState
+  homeAddressCity: homeAddressCity
+  mailingAddressZipCode: mailingAddressZipCode
+  mailingAddressState: mailingAddressState
+  mailingAddressCity: mailingAddressCity
+  mailingAddressStreetAddress2: mailingAddressStreetAddress2
+  mailingAddressStreetAddress1: mailingAddressStreetAddress1
+  signature: signature
+
+  emailAddress: emailAddress
+  sex: sex
+  ethnicitySelected: ethnicitySelected
+  raceSelected:
+    American Indian or Alaskan Native: RACE_American Indian or Alaskan Native
+    Asian: RACE_Asian
+    Black or African American: RACE_Black or African American
+    Native Hawaiian or Other Pacific Islander: RACE_Native Hawaiian or Other Pacific Islander
+    White: RACE_White
+  maritalStatus: maritalStatus
+  applicantStudentInd: applicantStudentInd
+  applicantCitizenInd: applicantCitizenInd
+  applicantHomelessInd: applicantHomelessInd
+
+dbFields:
+  submittedAt: submission-timestamp

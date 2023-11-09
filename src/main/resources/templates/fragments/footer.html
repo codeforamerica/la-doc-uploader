@@ -19,5 +19,8 @@
       </a>
     </div>
   </div>
+  <th:block th:if="${#arrays.contains(@environment.getActiveProfiles(), 'demo') || #arrays.contains(@environment.getActiveProfiles(), 'dev')}">
+    <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download/laDigitalAssister/' + ${submission.getId()}">Download Applicant PDF</a><br/>
+  </th:block>
 
 </footer>
