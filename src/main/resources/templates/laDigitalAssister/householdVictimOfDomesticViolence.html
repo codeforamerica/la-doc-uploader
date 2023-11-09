@@ -14,9 +14,7 @@
         <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::hhDomesticViolence})}">
           <th:block th:ref="hhDomesticViolence">
             <div class="form-card__footer">
-              <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
-                inputName='householdHasDomesticViolenceSituation',
-                ariaDescribe=#{domestic-violence.header})}"/>
+             <th:block th:replace="~{fragments/continueButton :: continue}" />
             </div>
           </th:block>
         </th:block>

@@ -25,19 +25,6 @@
                         th:replace="~{fragments/inputs/selectOption :: selectOption(value='Vietnamese', optionText=#{language-preference.vietnamese})}"/>
                   </th:block>
                 </th:block>
-
-                <th:block
-                    th:replace="~{fragments/inputs/select :: select(label=#{language-preference.language-to-speak-label}, inputName='languageSpeak', helpText=#{language-preference.language-to-speak-help}, content=~{::languageToSpeakContent})}">
-                  <th:block th:ref="languageToSpeakContent">
-                    <th:block
-                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='English', optionText=#{language-preference.english})}"/>
-                    <th:block
-                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Spanish', optionText=#{language-preference.spanish})}"/>
-                    <th:block
-                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Vietnamese', optionText=#{language-preference.vietnamese})}"/>
-                  </th:block>
-                </th:block>
-
                 <th:block th:replace="~{fragments/inputs/radioFieldset ::
                             radioFieldset(inputName='needInterpreter',
                             label=#{language-preference.need-interpreter-label},
