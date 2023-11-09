@@ -1,7 +1,6 @@
 package org.ladocuploader.app.csv;
 
 import formflow.library.data.Submission;
-import formflow.library.pdf.PdfFile;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -17,9 +16,9 @@ public class CsvService {
         this.csvGenerator = csvGenerator;
     }
 
-    public byte[] generateCsv(Submission submission, String flow) throws IOException {
-        return csvGenerator.generate(submission, flow);
-    }
+//    public byte[] generateCsv(Submission submission, String flow) throws IOException {
+//        return csvGenerator.generate(submission, flow);
+//    }
 
     /**
      * Generates a generic pdf file name from the flow and submission id that are part of the Submission.
