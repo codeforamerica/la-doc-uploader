@@ -1,6 +1,7 @@
 package org.ladocuploader.app.csv;
 
 import com.opencsv.CSVWriter;
+
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.bean.exceptionhandler.CsvExceptionHandler;
@@ -20,10 +21,10 @@ import org.ladocuploader.app.csv.model.RelationshipCsvModel;
 import org.ladocuploader.app.csv.model.WICApplicationCsvModel;
 import org.springframework.stereotype.Component;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-
 
 @Component
 @Slf4j
@@ -42,6 +43,7 @@ public class CsvGenerator {
 
         return generateCsv(CsvType.RELATIONSHIP, RelationshipCsvModel.class, relationships);
     }
+
 
     public CsvDocument generateParentGuardianCsvData(List<Submission> submissionList)
         throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
