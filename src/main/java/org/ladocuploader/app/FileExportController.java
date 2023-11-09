@@ -1,5 +1,7 @@
 package org.ladocuploader.app;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
@@ -18,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Array;
@@ -55,8 +58,6 @@ public class FileExportController {
 
     private final CsvService csvService;
 
-    private final ParentGuardian parentGuardian;
-
 
     public FileExportController(MessageSource messageSource,
                                 SubmissionRepositoryService submissionRepositoryService,
@@ -65,7 +66,6 @@ public class FileExportController {
         this.flowConfigurations = flowConfigurations;
         this.messageSource = messageSource;
         this.csvService = csvService;
-        this.parentGuardian = parentGuardian;
     }
 
     @GetMapping("{flow}/{submissionId}")
@@ -88,28 +88,21 @@ public class FileExportController {
             Submission submission = maybeSubmission.get();
             HttpHeaders headers = new HttpHeaders();
             Map<String, Object> inputData = submission.getInputData();
-            Map<String,String> inputDataMap = inputData.entrySet().
-                    stream().
-                    filter(entry -> entry.getValue() instanceof String )
-                    .collect(Collectors.toMap(Map.Entry::getKey, e -> (String)e.getValue()));
+            List<ParentGuardian> pgList = new ArrayList<>();
+            final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            final ParentGuardian pg = mapper.convertValue(inputData, ParentGuardian.class);
+            pgList.add(pg);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
             CSVWriter writer = new CSVWriter(streamWriter);
-//            ByteArrayOutputStream out = new ByteArrayOutputStream();
-//            Writer writer = Files.newBufferedWriter(Paths.get(csvService.generateCsvName(submission)));
-//            ParentGuardian pg = new ParentGuardian();
-            HeaderColumnNameTranslateMappingStrategy<ParentGuardian> mappingStrategy = new HeaderColumnNameTranslateMappingStrategy<>();
-            mappingStrategy.setType(ParentGuardian.class);
-//            mappingStrategy.setColumnMapping(pg.getColumnMappings());
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                    .withMappingStrategy(mappingStrategy)
                     .withSeparator(',')
                     .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                     .build();
-            beanToCsv.write(inputDataMap);
+            beanToCsv.write(pgList);
             streamWriter.flush();
             byte [] data = stream.toByteArray();
-//            byte[] data = csvService.generateCsv(maybeSubmission.get(), flow);
             headers.add(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=%s".formatted(csvService.generateCsvName(submission)));
             return ResponseEntity
