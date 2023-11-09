@@ -1,15 +1,29 @@
 package org.ladocuploader.app;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.config.FlowConfiguration;
 import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepositoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Array;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.model.ParentGuardian;
@@ -62,7 +76,7 @@ public class FileExportController {
             HttpServletRequest request,
             Locale locale
 //            @PathVariable String csvName
-    ) throws IOException {
+    ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         log.info("GET downloadCSV (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow, submissionId);
         if (!doesFlowExist(flow)) {
             throwNotFoundError(flow, null, String.format("Could not find flow %s in your application's flow configuration.", flow));
@@ -73,8 +87,29 @@ public class FileExportController {
             log.info("Downloading CSV with submission_id: " + submissionId);
             Submission submission = maybeSubmission.get();
             HttpHeaders headers = new HttpHeaders();
-            byte[] data = csvService.generateCsv(maybeSubmission.get(), flow);
-
+            Map<String, Object> inputData = submission.getInputData();
+            Map<String,String> inputDataMap = inputData.entrySet().
+                    stream().
+                    filter(entry -> entry.getValue() instanceof String )
+                    .collect(Collectors.toMap(Map.Entry::getKey, e -> (String)e.getValue()));
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
+            CSVWriter writer = new CSVWriter(streamWriter);
+//            ByteArrayOutputStream out = new ByteArrayOutputStream();
+//            Writer writer = Files.newBufferedWriter(Paths.get(csvService.generateCsvName(submission)));
+//            ParentGuardian pg = new ParentGuardian();
+            HeaderColumnNameTranslateMappingStrategy<ParentGuardian> mappingStrategy = new HeaderColumnNameTranslateMappingStrategy<>();
+            mappingStrategy.setType(ParentGuardian.class);
+//            mappingStrategy.setColumnMapping(pg.getColumnMappings());
+            StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
+                    .withMappingStrategy(mappingStrategy)
+                    .withSeparator(',')
+                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                    .build();
+            beanToCsv.write(inputDataMap);
+            streamWriter.flush();
+            byte [] data = stream.toByteArray();
+//            byte[] data = csvService.generateCsv(maybeSubmission.get(), flow);
             headers.add(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=%s".formatted(csvService.generateCsvName(submission)));
             return ResponseEntity
