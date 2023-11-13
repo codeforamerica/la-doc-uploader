@@ -61,7 +61,7 @@ public class FileExportController {
 
     public FileExportController(MessageSource messageSource,
                                 SubmissionRepositoryService submissionRepositoryService,
-                                List<FlowConfiguration> flowConfigurations, CsvService csvService, ParentGuardian parentGuardian) {
+                                List<FlowConfiguration> flowConfigurations, CsvService csvService) {
         this.submissionRepositoryService = submissionRepositoryService;
         this.flowConfigurations = flowConfigurations;
         this.messageSource = messageSource;

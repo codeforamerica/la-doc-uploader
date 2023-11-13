@@ -4,7 +4,6 @@ form-flow:
       staticRedirectPage: /
   pdf:
     path: ~
-    map-file: parent-guardian-csv-map.yaml
   inputs: 'org.ladocuploader.app.inputs.'
   path: 'flows-config.yaml'
   uploads:
