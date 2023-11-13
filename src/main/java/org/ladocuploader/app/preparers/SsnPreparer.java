@@ -8,10 +8,7 @@ import formflow.library.pdf.SubmissionFieldPreparer;
 import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class SsnPreparer implements SubmissionFieldPreparer {
@@ -29,6 +26,8 @@ public class SsnPreparer implements SubmissionFieldPreparer {
 
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
+    Map<String, SubmissionField> results = new HashMap<>();
+
     // Digital Assister
     List<String> householdSsnInputs = new ArrayList<>();
     String encryptedSSN = (String) submission.getInputData().remove(ENCRYPTED_SSNS_INPUT_NAME);
@@ -44,18 +43,20 @@ public class SsnPreparer implements SubmissionFieldPreparer {
         householdSsnInputs.add("");
       }
       for (int i = 0; i < householdMembers.size(); i++) {
-        encryptedSSN = (String) ((Map) householdMembers.get(i)).remove(ENCRYPTED_SSNS_INPUT_NAME);
-        if (encryptedSSN != null) {
-          String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
-          householdSsnInputs.add(decryptedSSN);
-        } else {
-          householdSsnInputs.add("");
-        }
+        encryptedSSN = (String) ((Map<?, ?>) householdMembers.get(i)).remove(ENCRYPTED_SSNS_INPUT_NAME);
+        String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
+        householdSsnInputs.add(decryptedSSN);
       }
     }
 
     if (!householdSsnInputs.isEmpty()) {
-      return Map.of("applicantSsn", new SingleField("applicantSsn", householdSsnInputs.get(0), null));
+      results.put("applicantSsn", new SingleField("applicantSsn", householdSsnInputs.get(0), null));
+
+      for (int i = 1; i < householdSsnInputs.size(); i++) {
+        results.put("ssns_" + i, new SingleField("ssns_" + i, householdSsnInputs.get(i), null));
+      }
+
+      return results;
     }
 
     return Collections.emptyMap();

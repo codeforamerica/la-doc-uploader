@@ -41,5 +41,30 @@ inputFields:
   applicantCitizenInd: applicantCitizenInd
   applicantHomelessInd: applicantHomelessInd
 
+  authorizedRepresentative: authorizedRepresentative
+  authorizedRepFirstName: authorizedRepFirstName
+  authorizedRepLastName: authorizedRepLastName
+  authorizedRepStreetAddress1: authorizedRepStreetAddress1
+  authorizedRepStreetAddress2: authorizedRepStreetAddress2
+  authorizedRepZipCode: authorizedRepZipCode
+  authorizedRepState: authorizedRepState
+  authorizedRepCity: authorizedRepCity
+  authorizedRepPhoneNumber: authorizedRepPhoneNumber
+  needsMedicaid: needsMedicaid
+  ssns_1: ssns_1
+  ssns_2: ssns_2
+  ssns_3: ssns_3
+  ssns_4: ssns_4
+  ssns_5: ssns_5
+  ssns_6: ssns_6
+  ssns_7: ssns_7
+
+subflowInfo:
+  household:
+    totalIterations: 7
+    inputFields:
+      householdMemberFirstName: householdMemberFirstName
+      householdMemberLastName: householdMemberLastName
+
 dbFields:
   submittedAt: submission-timestamp
