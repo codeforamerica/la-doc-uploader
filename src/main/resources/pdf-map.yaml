@@ -69,6 +69,15 @@ inputFields:
   migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
   roomRentalInd: roomRentalInd
 
+  additionalIncome:
+    SSI: Yes
+    SocialSecurity: Yes
+    Unemployment: Yes
+    WorkersCompensation: Yes
+    ChildSupport: Yes
+    VeteransBenefits: Yes
+    Contributions: Yes
+
 subflowInfo:
   household:
     totalIterations: 7
