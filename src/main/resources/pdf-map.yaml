@@ -59,6 +59,16 @@ inputFields:
   ssns_6: ssns_6
   ssns_7: ssns_7
 
+  pregnancyInd: pregnancyInd
+  schoolInd: schoolInd
+  buyPrepareMealsSeparateIndicator: buyPrepareMealsSeparateIndicator
+  outOfStateBenefitsInd: outOfStateBenefitsInd
+  veteranInd: veteranInd
+
+  jobSearch: jobSearch
+  migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
+  roomRentalInd: roomRentalInd
+
 subflowInfo:
   household:
     totalIterations: 7
