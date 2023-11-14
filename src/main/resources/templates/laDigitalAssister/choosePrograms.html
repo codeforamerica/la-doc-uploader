@@ -21,12 +21,10 @@
                 <th:block th:ref="content">
                   <th:block
                       th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='programs',value='SNAP', label=#{choose-programs.snap}, checkboxHelpText=#{choose-programs.snap-help})}"/>
-                  <th:block
-                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='programs',value='CASH', label=#{choose-programs.cash}, checkboxHelpText=#{choose-programs.cash-help})}"/>
                 </th:block>
               </th:block>
             </div>
-            <div class="notice--warning" th:utext="#{choose-programs.note}"></div>
+            <div class="notice--warning" th:utext="#{choose-programs.snap-only}"></div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{general.inputs.continue})}"/>

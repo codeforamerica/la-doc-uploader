@@ -23,7 +23,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     // Language preference
     assertThat(testPage.getTitle()).isEqualTo("Language preference");
     testPage.selectFromDropdown("languageRead", "Spanish");
-    testPage.selectFromDropdown("languageSpeak", "Spanish");
     testPage.selectRadio("needInterpreter", "Yes");
     testPage.clickContinue();
 
@@ -34,9 +33,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Expedited notice");
 
-    testPage.goBack();
-    testPage.clickElementById("programs-SNAP"); // unselect
-    testPage.clickElementById("programs-CASH");
     testPage.clickContinue();
 
     // Signpost
@@ -87,8 +83,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Review contact information");
 
+    testPage.clickButton("This looks correct");
+
+
     // Household
-    testPage.navigateToFlowScreen("laDigitalAssister/multiplePersonHousehold");
     assertThat(testPage.getTitle()).isEqualTo("Multiple person household");
     testPage.clickButton("Yes");
 
@@ -103,9 +101,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Household list");
     testPage.clickButton("Yes, this is everyone");
 
-    assertThat(testPage.getTitle()).isEqualTo("Next step");
-
-    testPage.navigateToFlowScreen("laDigitalAssister/ssnForm");
     assertThat(testPage.getTitle()).isEqualTo("SSN");
     testPage.clickLink("Learn why we ask for SSNs");
     assertThat(testPage.getTitle()).isEqualTo("SSN faqs");
@@ -138,7 +133,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("Out of state benefits");
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
+    assertThat(testPage.getTitle()).isEqualTo("Prepare food");
     testPage.goBack();
     testPage.clickButton("Yes");
 
@@ -146,49 +141,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("outOfStateBenefitsRecipients-you");
     testPage.clickContinue();
 
-    // Income - TODO move this after sensitive questions
-    testPage.navigateToFlowScreen("laDigitalAssister/incomeSignPost");
-    assertThat(testPage.getTitle()).isEqualTo("Signpost");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Job search");
-    testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo("Job search who");
-    testPage.clickElementById("jobSearch-you");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Work disqualifications");
-    testPage.clickButton("No");
-
-    // household income
-    testPage.navigateToFlowScreen("laDigitalAssister/householdIncomeByJob");
-    testPage.clickLink("I already know my monthly household pre-tax income - I prefer to enter it directly.");
-    testPage.enter("monthlyHouseholdIncome", "200");
-    testPage.clickContinue();
-    testPage.clickButton("Yes, add income by job");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Income who");
-    testPage.clickElementById("householdMemberJobAdd-you");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Employer name");
-    testPage.enter("employerName", "job1");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Self-employment");
-    testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Paid by the hour");
-    testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo("Hourly wage");
-    testPage.enter("hourlyWage", "15");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Hours a week");
-    testPage.enter("hoursPerWeek", "10");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
-    testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Income list");
-    testPage.clickButton("I'm done adding jobs");
-    assertThat(testPage.getTitle()).isEqualTo("Additional income");
-
-    // SNAP
-    testPage.navigateToFlowScreen("laDigitalAssister/householdPrepareFood");
     assertThat(testPage.getTitle()).isEqualTo("Prepare food");
     testPage.clickButton("No");
 
@@ -295,20 +247,57 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
 
-    testPage.clickButton("Yes");
+    testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
 
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("Criminal Justice");
+    testPage.clickButton("Yes");
 
-    testPage.navigateToFlowScreen("laDigitalAssister/householdVictimOfDomesticViolence");
-    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
+    assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Job search");
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Job search who");
+    testPage.clickElementById("jobSearch-you");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Work disqualifications");
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
+    assertThat(testPage.getTitle()).isEqualTo("Employment status");
+    testPage.clickButton("Yes");
 
+    assertThat(testPage.getTitle()).isEqualTo("Income by job");
+    testPage.clickLink("I already know my monthly household pre-tax income - I prefer to enter it directly.");
+    testPage.enter("monthlyHouseholdIncome", "200");
+    testPage.clickContinue();
+    testPage.clickButton("Yes, add income by job");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Income who");
+    testPage.clickElementById("householdMemberJobAdd-you");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Employer name");
+    testPage.enter("employerName", "job1");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Self-employment");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Paid by the hour");
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo("Hourly wage");
+    testPage.enter("hourlyWage", "15");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Hours a week");
+    testPage.enter("hoursPerWeek", "10");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
+    testPage.clickButton("No");
+    assertThat(testPage.getTitle()).isEqualTo("Income list");
+    testPage.clickButton("I'm done adding jobs");
+    assertThat(testPage.getTitle()).isEqualTo("Additional income");
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Money on hand");
+    testPage.clickContinue();
 
   //    Expenses SignPost
-    testPage.navigateToFlowScreen("laDigitalAssister/expensesSignPost");
     assertThat(testPage.getTitle()).isEqualTo("Expenses Signpost");
     testPage.clickContinue();
 
