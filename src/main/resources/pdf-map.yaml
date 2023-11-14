@@ -96,6 +96,9 @@ inputFields:
     Flood Insurance: Flood Insurance
     Other: Other
 
+  votingRegistrationRequested: votingRegistrationRequested
+  votingRegistrationHelpRequested: votingRegistrationHelpRequested
+
 subflowInfo:
   household:
     totalIterations: 7
