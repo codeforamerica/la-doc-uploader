@@ -1,11 +1,10 @@
 package org.ladocuploader.app.csv;
 
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
 import java.io.IOException;
-import com.opencsv.CSVWriter;
 
 @Service
 public class CsvService {
@@ -16,9 +15,9 @@ public class CsvService {
         this.csvGenerator = csvGenerator;
     }
 
-//    public byte[] generateCsv(Submission submission, String flow) throws IOException {
-//        return csvGenerator.generate(submission, flow);
-//    }
+    public byte[] generateParentGuardian(Submission submission) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        return csvGenerator.generateParentGuardian(submission);
+    }
 
     /**
      * Generates a generic pdf file name from the flow and submission id that are part of the Submission.

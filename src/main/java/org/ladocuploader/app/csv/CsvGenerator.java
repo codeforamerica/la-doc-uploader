@@ -1,12 +1,23 @@
 package org.ladocuploader.app.csv;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import formflow.library.pdf.*;
 import lombok.extern.slf4j.Slf4j;
+import org.ladocuploader.app.csv.model.ParentGuardian;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +26,34 @@ import java.util.Map;
 @Slf4j
 public class CsvGenerator {
 
-    private final SubmissionFieldPreparers submissionFieldPreparers;
-    private final PdfMapConfiguration pdfMapConfiguration;
-    private final PdfFieldMapper pdfFieldMapper;
 //    private final PDFBoxFieldFiller pdfBoxFieldFiller;
 
-    public CsvGenerator(SubmissionFieldPreparers submissionFieldPreparers,
-                        PdfFieldMapper pdfFieldMapper, PdfMapConfiguration pdfMapConfiguration) {
-        this.submissionFieldPreparers = submissionFieldPreparers;
-        this.pdfMapConfiguration = pdfMapConfiguration;
-        this.pdfFieldMapper = pdfFieldMapper;
+    // TODO: modify to generate for any CSV model
+    public CsvGenerator() {
+
+    }
+
+    public byte[] generateParentGuardian(Submission submission)
+            throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        Map<String, Object> inputData = submission.getInputData();
+        List<ParentGuardian> pgList = new ArrayList<>();
+        final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        final ParentGuardian pg = mapper.convertValue(inputData, ParentGuardian.class);
+        pgList.add(pg);
+        AnnotationStrategy<ParentGuardian> strategy = new AnnotationStrategy<>();
+        strategy.setType(pg.getClass());
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
+        CSVWriter writer = new CSVWriter(streamWriter);
+        StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
+                .withSeparator(',')
+                .withMappingStrategy(strategy)
+                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                .build();
+        beanToCsv.write(pgList);
+        streamWriter.flush();
+        return stream.toByteArray();
     }
 
     /**

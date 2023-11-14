@@ -2,10 +2,10 @@ package org.ladocuploader.app.csv.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import com.opencsv.bean.CsvBindByName;
 
-@Component
 @Getter
 @Setter
 public class ParentGuardian {
