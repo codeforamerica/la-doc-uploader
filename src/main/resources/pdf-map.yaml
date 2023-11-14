@@ -26,9 +26,10 @@ inputFields:
   mailingAddressStreetAddress2: mailingAddressStreetAddress2
   mailingAddressStreetAddress1: mailingAddressStreetAddress1
   signature: signature
-
+  applicantBirthdayFormatted: applicantBirthday
   emailAddress: emailAddress
   sex: sex
+  highestEducationFormatted: highestEducation
   ethnicitySelected: ethnicitySelected
   raceSelected:
     American Indian or Alaskan Native: RACE_American Indian or Alaskan Native
@@ -38,7 +39,7 @@ inputFields:
     White: RACE_White
   maritalStatus: maritalStatus
   applicantStudentInd: applicantStudentInd
-  applicantCitizenInd: applicantCitizenInd
+  applicantNonCitizenInd: applicantNonCitizenInd
   applicantHomelessInd: applicantHomelessInd
 
   authorizedRepresentative: authorizedRepresentative
@@ -59,11 +60,14 @@ inputFields:
   ssns_6: ssns_6
   ssns_7: ssns_7
 
+  hasDependentCareExpenses: hasDependentCareExpenses
+  personalSituationDisablityInd: disablityInd
   pregnancyInd: pregnancyInd
   schoolInd: schoolInd
   buyPrepareMealsSeparateIndicator: buyPrepareMealsSeparateIndicator
   outOfStateBenefitsInd: outOfStateBenefitsInd
   veteranInd: veteranInd
+  fosterAgedOutInd: fosterAgedOutInd
 
   jobSearch: jobSearch
   migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
@@ -105,6 +109,12 @@ subflowInfo:
     inputFields:
       householdMemberFirstName: householdMemberFirstName
       householdMemberLastName: householdMemberLastName
+      householdRelationship: householdRelationship
+      householdSex: householdSex
+      householdMaritalStatusFormatted: householdMaritalStatus
+      householdHighestEducationFormatted: householdHighestEducation
+      householdBirthdayFormatted: householdBirthday
+      householdUSCitizenDerived: householdUSCitizen
 
 dbFields:
   submittedAt: submission-timestamp

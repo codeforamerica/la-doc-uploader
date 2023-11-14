@@ -7,6 +7,36 @@ import java.util.*;
 
 public class SubmissionUtilities {
 
+    public static final Map<String, String> EDUCATION_MAP = new HashMap<>();
+    public static final Map<String, String> MARITAL_STATUS_MAP = new HashMap<>();
+
+    static {
+        EDUCATION_MAP.put("firstGrade", "1st grade");
+        EDUCATION_MAP.put("secondGrade", "2nd grade");
+        EDUCATION_MAP.put("thirdGrade", "3rd grade");
+        EDUCATION_MAP.put("fourthGrade", "4th grade");
+        EDUCATION_MAP.put("fifthGrade", "5th grade");
+        EDUCATION_MAP.put("sixthGrade", "6th grade");
+        EDUCATION_MAP.put("seventhGrade", "7th grade");
+        EDUCATION_MAP.put("eighthGrade", "8th grade");
+        EDUCATION_MAP.put("ninthGrade", "9th grade");
+        EDUCATION_MAP.put("tenthGrade", "10th grade");
+        EDUCATION_MAP.put("eleventhGrade", "11th grade");
+        EDUCATION_MAP.put("highSchoolOrEquivalent", "High school / GED");
+        EDUCATION_MAP.put("associatesDegree", "Associate's degree");
+        EDUCATION_MAP.put("bachelorsDegree", "Bachelor's degree");
+        EDUCATION_MAP.put("graduateDegree", "Graduate/Master's degree");
+        EDUCATION_MAP.put("certificateOrDiploma", "Other certificate or diploma");
+        EDUCATION_MAP.put("noFormalEducation", "None");
+        EDUCATION_MAP.put("notSure", "Not sure");
+
+        MARITAL_STATUS_MAP.put("NeverMarried", "Never Married");
+        MARITAL_STATUS_MAP.put("MarriedLivingWithSpouse", "Married");
+        MARITAL_STATUS_MAP.put("MarriedNotLivingWithSpouse", "Married");
+        MARITAL_STATUS_MAP.put("LegallySeparated", "Separated");
+        MARITAL_STATUS_MAP.put("Divorced", "Divorced");
+        MARITAL_STATUS_MAP.put("Widowed", "Widowed");
+    }
     public static String formatMoney(String value) {
         if (value == null) {
             return "";
@@ -110,4 +140,6 @@ public class SubmissionUtilities {
 
         return items;
     }
+
+
 }
