@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
-import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.bean.*;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.config.FlowConfiguration;
@@ -19,17 +16,13 @@ import jakarta.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.lang.reflect.Field;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.model.ParentGuardian;
+import org.ladocuploader.app.csv.AnnotationStrategy;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -87,22 +80,7 @@ public class FileExportController {
             log.info("Downloading CSV with submission_id: " + submissionId);
             Submission submission = maybeSubmission.get();
             HttpHeaders headers = new HttpHeaders();
-            Map<String, Object> inputData = submission.getInputData();
-            List<ParentGuardian> pgList = new ArrayList<>();
-            final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            final ParentGuardian pg = mapper.convertValue(inputData, ParentGuardian.class);
-            pgList.add(pg);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
-            CSVWriter writer = new CSVWriter(streamWriter);
-            StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                    .withSeparator(',')
-                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
-                    .build();
-            beanToCsv.write(pgList);
-            streamWriter.flush();
-            byte [] data = stream.toByteArray();
+            byte[] data = csvService.generateParentGuardian(submission);
             headers.add(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=%s".formatted(csvService.generateCsvName(submission)));
             return ResponseEntity
