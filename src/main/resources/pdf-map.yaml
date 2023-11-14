@@ -70,13 +70,31 @@ inputFields:
   roomRentalInd: roomRentalInd
 
   additionalIncome:
-    SSI: Yes
-    SocialSecurity: Yes
-    Unemployment: Yes
-    WorkersCompensation: Yes
-    ChildSupport: Yes
-    VeteransBenefits: Yes
-    Contributions: Yes
+    SSI: SSI
+    SocialSecurity: SocialSecurity
+    Unemployment: Unemployment
+    WorkersCompensation: WorkersCompensation
+    ChildSupport: ChildSupport
+    VeteransBenefits: VeteransBenefits
+    Contributions: Contributions
+
+  householdUtilitiesExpenses:
+    Electricity: Electricity
+    Water: Water
+    Phone/Cell Phone: Phone/Cell Phone
+    Garbage: Garbage
+    Sewer: Sewer
+    Cooking Fuel: Cooking Fuel
+    Other: Other
+  householdHomeExpenses:
+    Rent: Rent
+    Mortgage: Mortgage
+    Homeowner's Insurance: Homeowner's Insurance
+    Property Tax: Property Tax
+    Condominium Fees: Condominium Fees
+    Lot Rent: Lot Rent
+    Flood Insurance: Flood Insurance
+    Other: Other
 
 subflowInfo:
   household:
