@@ -1,11 +1,14 @@
 <form th:fragment="form"
       th:with="applicantUrlParam=${T(org.ladocuploader.app.config.UrlParams).APPLICANT_ID_URL_PARAM},
-        modifiedAction=${applicantId != null ? action + '?' + applicantUrlParam + '=' + applicantId : action}"
+        modifiedAction=${applicantId != null ? action + '?' + applicantUrlParam + '=' + applicantId : action},
+        csrfToken=${T(org.ladocuploader.app.utils.CsrfHelper).generateCsrf()},
+        csrfFieldName=${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_FIELD}"
       th:assert="${!#strings.isEmpty(action)}, ${!#strings.isEmpty(content)}"
       th:action="@{${modifiedAction}}"
       th:enctype="${enctype}"
       th:id="${formId}"
       autocomplete="off"
       method="post">
+  <input type="hidden" th:attr="name=${csrfFieldName}" th:value="${csrfToken}" id="token">
   <th:block th:replace="${content}"/>
 </form>

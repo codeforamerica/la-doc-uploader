@@ -1,9 +1,21 @@
 <th:block
     th:fragment="submitButton"
     th:with="text=${text} ? ${text} : #{general.inputs.submit}">
+  <script th:inline="javascript">
+    function setCsrf() {
+      console.log("setting CSRF")
+      element = document.getElementById("token");
+      if (element) {
+        // whoa, really? I'm sure this isn't right yet, but you can see where it's going.
+        document.cookie='[[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}]]=' + element.getAttribute("value");
+      }
+    }
+  </script>
   <!--<input type="hidden" name="applicantId" th:value="${inputData.getOrDefault('applicantId', '')}"> -->
   <button id="form-submit-button"
           th:class="${classes != null ? classes : 'button button--primary'}"
           type="submit"
-          th:text="${text}"></button>
+          th:text="${text}"
+          onclick="setCsrf()">
+  </button>
 </th:block>
