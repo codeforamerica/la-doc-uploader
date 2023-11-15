@@ -162,8 +162,6 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
     // is fine, then it should be okay.
     UUID applicantId = getSubmissionIdFromSession(request.getSession(), parsedUrl.get("flow"));
     //String applicantId = request.getParameter(UrlParams.APPLICANT_ID_URL_PARAM); this will not be set on the first page.
-    log.info("postHandle: noting that id in session is '{}' and one in url is '{}'",
-        applicantId, request.getParameter(UrlParams.APPLICANT_ID_URL_PARAM));
     Map<String, Object> model = modelAndView.getModel();
     modelAndView.getModel().put("applicantId", applicantId);
   }

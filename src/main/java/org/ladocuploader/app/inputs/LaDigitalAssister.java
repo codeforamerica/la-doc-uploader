@@ -85,6 +85,8 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String mailingAddressZipCode;
 
+  private String csrfField;
+
   //Contact Info
   private String phoneNumber;
 

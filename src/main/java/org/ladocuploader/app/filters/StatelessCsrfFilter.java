@@ -38,7 +38,7 @@ public class StatelessCsrfFilter extends OncePerRequestFilter {
           csrfCookieToken = csrfCookie.get().getValue();
         }
       }
-      if (csrfFieldToken == null || csrfCookieToken == null || !csrfCookieToken.equals(csrfFieldToken)) {
+      if (csrfCookieToken == null || !csrfCookieToken.equals(csrfFieldToken)) {
         accessDeniedHandler.handle(request, response, new AccessDeniedException("CSRF tokens missing or not matching"));
         return;
       }

@@ -13,7 +13,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 public class SecurityConfiguration {
 
   public static final String CSRF_COOKIE = "CSRF-TOKEN";
-  public static final String CSRF_FIELD = "CSRF-FIELD";
+  public static final String CSRF_FIELD = "csrfField";
   public static final String CSRF_HEADER = "X-CSRF-TOKEN";
 
   private final StatelessCsrfFilter statelessCsrfFilter = new StatelessCsrfFilter();
