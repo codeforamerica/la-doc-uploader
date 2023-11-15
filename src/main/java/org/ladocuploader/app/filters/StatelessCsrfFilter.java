@@ -27,7 +27,7 @@ public class StatelessCsrfFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
 
     if (!SAFE_METHODS.contains(request.getMethod())) {
-      String csrfFieldToken = (String)request.getAttribute(CSRF_FIELD);
+      String csrfFieldToken = (String)request.getParameter(CSRF_FIELD);
       String csrfCookieToken = null;
       Cookie[] cookies = request.getCookies();
       if (cookies != null) {

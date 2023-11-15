@@ -7,5 +7,4 @@ public class CsrfHelper {
   public static String generateCsrf() {
     return UUID.randomUUID().toString();
   }
-
 }

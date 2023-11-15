@@ -7,7 +7,7 @@
       element = document.getElementById("token");
       if (element) {
         // whoa, really? I'm sure this isn't right yet, but you can see where it's going.
-        document.cookie='[[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}]]=' + element.getAttribute("value");
+        document.cookie=[[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}]] + '=' + element.getAttribute("value") + ';';
       }
     }
   </script>
