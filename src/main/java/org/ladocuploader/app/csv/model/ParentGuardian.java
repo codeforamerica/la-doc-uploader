@@ -25,6 +25,6 @@ public class ParentGuardian {
     private String phoneNumber;
 
     @CsvCustomBindByName(column="computed", converter = ComputedFieldConverter.class)
-    private ComputedFieldConverter id;
+    private String id;
 
 }

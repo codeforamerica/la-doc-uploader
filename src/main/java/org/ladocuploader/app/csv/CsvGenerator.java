@@ -25,6 +25,8 @@ import java.util.Map;
 @Component
 @Slf4j
 public class CsvGenerator {
+    // TODO: keep in mind for subflow unpacking etc.
+//    https://stackoverflow.com/questions/77230117/custom-converter-for-opencsv
 
 
     // TODO: adapt for list of submissions

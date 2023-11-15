@@ -6,9 +6,17 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class ComputedFieldConverter extends AbstractBeanField {
+public class ComputedFieldConverter<T, I> extends AbstractBeanField<T, I> {
+
     @Override
     protected Object convert(String value)  {
         return value + "_CONVERTED";
     }
+
+    @Override
+    protected String convertToWrite(Object value) throws CsvDataTypeMismatchException {
+
+        return "converted to write";
+    }
+
 }
