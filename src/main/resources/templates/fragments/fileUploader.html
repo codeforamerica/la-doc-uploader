@@ -227,9 +227,10 @@
       xhrRequest.withCredentials = false;
       xhrRequest.setRequestHeader("Accept", "*/*");
       xhrRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-      var csrfToken = [[${_csrf.token}]];
+      //var csrfToken = [  [ $  { _csrf.token } ] ];
+      var csrfToken = document.getElementById("token").getText();
       var formData = new FormData();
-      formData.append("_csrf", csrfToken);
+      formData.append("csrfField", csrfToken);
       formData.append("id", id);
       xhrRequest.send(formData);
     }
@@ -338,8 +339,10 @@
         });
 
         this.on("sending", function (file, xhr, formData) {
-          var csrfToken = [[${_csrf.token}]];
-          formData.append("_csrf", csrfToken);
+          //var csrfToken = [ [ $ {_csrf.token } ] ];
+          var csrfToken = document.getElementById("token").getAttribute("value")
+          document.cookie=[[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}]]+'='+csrfToken;
+          formData.append("csrfField", csrfToken);
           formData.append("type", file.type);
           formData.append("flow", [[${flow}]]);
           formData.append("screen", [[${screen}]]);

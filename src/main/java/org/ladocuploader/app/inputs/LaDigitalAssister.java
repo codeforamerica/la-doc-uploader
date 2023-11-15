@@ -85,6 +85,12 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String mailingAddressZipCode;
 
+  // This csrfField isn't use for anything and should be ignored.
+  // It represents a CSRF used in a request.  We opted to include this here so that we
+  // could pass validation.  Ideally we'd filter this out, like the library does for '_csrf' field
+  // in the validation logic.  However, there's no easy way to inject this field into the "ignore" field list there.
+  // Another way to get rid of it is via an Action, but we'd have to put that Action on EVERY POST
+  // page, which is really annoying. So, for now, we've just included it here.
   private String csrfField;
 
   //Contact Info
