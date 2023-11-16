@@ -1,11 +1,8 @@
 package org.ladocuploader.app.csv.model;
 
-import com.opencsv.bean.CsvBindAndJoinByNames;
 import com.opencsv.bean.CsvCustomBindByName;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import com.opencsv.bean.CsvBindByName;
 import org.ladocuploader.app.csv.converters.ComputedFieldConverter;
 
@@ -25,6 +22,6 @@ public class ParentGuardian {
     private String phoneNumber;
 
     @CsvCustomBindByName(column="computed", converter = ComputedFieldConverter.class)
-    private String id;
+    private String whosApplying;
 
 }
