@@ -2,6 +2,7 @@ package org.ladocuploader.app.journeys;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
@@ -13,7 +14,7 @@ import org.openqa.selenium.WebElement;
 public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
 
   @Test
-  void thingsWorkWellNoSessionLoss() {
+  void noSessionLossThingsWorkWell() {
     // How this works page
     testPage.navigateToFlowScreen("laDigitalAssister/howThisWorks");
     testPage.clickContinue();
@@ -31,31 +32,65 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
 
   @Test
   void lostSessionOnGETRequest() {
+    String languageChoice = "Spanish";
     // How this works page
     testPage.navigateToFlowScreen("laDigitalAssister/howThisWorks");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo("Timeout notice");
     String continueHref = testPage.findElementById("continue-link").getAttribute("href");
-    assertThat(continueHref.contains("applicantId")).isTrue();
-
     String applicantId = getApplicantIdFromUrl(continueHref);
-    Cookie firstCookie = driver.manage().getCookieNamed("SESSION");
-   // get rid of cookies and try to keep going
-    driver.manage().deleteAllCookies();
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo("Language preference");
+    testPage.selectFromDropdown("languageRead", languageChoice);
+    testPage.selectFromDropdown("languageSpeak", languageChoice);
+    testPage.selectRadio("needInterpreter", "Yes");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Choose programs");
+    //testPage.enter("programs", List.of("SNAP"));
+    List<WebElement> formInputElements = driver.findElements(By.name("programs[]")).stream()
+            .filter(e -> e.getAttribute("type").equals("checkbox")).toList();
+    testPage.selectEnumeratedInput(formInputElements, List.of("SNAP"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo("Expedited notice");
+
+    // on GET - delete the cookie
+    Cookie firstCookie = driver.manage().getCookieNamed("SESSION");
+    // get rid of cookies and try to keep going
+    driver.manage().deleteAllCookies();
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo("Signpost");
 
     // assert that the url has the same application ID as before
-    String postHref = driver.findElement(By.tagName("form")).getAttribute("action");
-    assertThat(postHref.contains("applicantId")).isTrue();
+    String postHref = driver.findElement(By.id("continue-link")).getAttribute("href");
     String nextApplicantUrl = getApplicantIdFromUrl(postHref);
     assertThat(nextApplicantUrl.equals(applicantId)).isTrue();
 
-    // assert that the session has the same id as well.
+    // assert that the session has a different cookie
     Cookie secondCookie = driver.manage().getCookieNamed("SESSION");
     assertThat(firstCookie.getValue()).isNotEqualTo(secondCookie.getValue());
+
+    // now go back and ensure that data is still good
+    testPage.goBack();
+    assertThat(testPage.getTitle()).isEqualTo("Expedited notice");
+    testPage.goBack();
+    assertThat(testPage.getTitle()).isEqualTo("Choose programs");
+    List<String> programs = testPage.getCheckboxValues("programs");
+    assertThat(programs.size()).isEqualTo(1);
+    assertThat(programs.contains("Food (SNAP)")).isTrue();
+
+    testPage.goBack();
+    assertThat(testPage.getTitle()).isEqualTo("Language preference");
+
+    testSelectValue("languageRead", languageChoice);
+    testSelectValue("languageSpeak", languageChoice);
+    assertThat(testPage.getRadioValue("needInterpreter")).isEqualTo("Yes");
+    Cookie thirdCookie = driver.manage().getCookieNamed("SESSION");
+    assertThat(thirdCookie.getValue()).isEqualTo(secondCookie.getValue());
   }
 
   @Test
@@ -69,8 +104,6 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
     // GET PAGE
     assertThat(testPage.getTitle()).isEqualTo("Timeout notice");
     String continueHref = testPage.findElementById("continue-link").getAttribute("href");
-    assertThat(continueHref.contains("applicantId")).isTrue();
-
     String origApplicantId = getApplicantIdFromUrl(continueHref);
     Cookie firstCookie = driver.manage().getCookieNamed("SESSION");
     testPage.clickContinue();
@@ -84,13 +117,12 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
 
     // POST PAGE
     assertThat(testPage.getTitle()).isEqualTo("Choose programs");
-    // assert that the session has the same id as well.
+    // assert that the session is different
     Cookie secondCookie = driver.manage().getCookieNamed("SESSION");
     assertThat(firstCookie.getValue()).isNotEqualTo(secondCookie.getValue());
 
-    // now check the applicantId's in the url
+    // now check the applicantId's in the url and that it equals the original applicant id.
     String postHref = driver.findElement(By.tagName("form")).getAttribute("action");
-    assertThat(postHref.contains("applicantId")).isTrue();
     String nextApplicantUrl = getApplicantIdFromUrl(postHref);
     assertThat(nextApplicantUrl.equals(origApplicantId)).isTrue();
 
@@ -101,17 +133,10 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
     String goBackHref = driver.findElement(By.tagName("form")).getAttribute("action");
     String goBackApplicantId = getApplicantIdFromUrl(goBackHref);
 
-    assertThat(goBackHref.contains("applicantId")).isTrue();
     assertThat(goBackApplicantId.equals(origApplicantId)).isTrue();
 
     // ensure that data was accurately retrieved, even though the session was lost
-    String languageReadSubmitted = driver.findElement(By.id("languageRead"))
-        .findElements(By.tagName("option")).stream()
-        .filter(WebElement::isSelected)
-        .findFirst()
-        .map(WebElement::getText)
-        .orElseThrow();
-    assertThat(languageReadChoice).isEqualTo(languageReadSubmitted);
+    testSelectValue("languageRead", languageReadChoice);
   }
 
   @Test
@@ -122,19 +147,20 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("How this works");
   }
 
-  @Test
-  void sessionSubmissionIdAndUrlIdDoNotMatchOnGET() {
-
-  }
-
-  @Test
-  void sessionSubmissionIdAndUrlIdDoNotMatchOnPOST() {}
-
-
   private String getApplicantIdFromUrl(String url) {
     assertThat(url.contains("applicantId")).isTrue();
     int index = url.lastIndexOf("=");
     return url.substring(index);
   }
 
+  private void testSelectValue(String elementId, String expectedValue) {
+    String elementValue = driver.findElement(By.id(elementId))
+        .findElements(By.tagName("option")).stream()
+        .filter(WebElement::isSelected)
+        .findFirst()
+        .map(WebElement::getText)
+        .orElseThrow();
+    assertThat(elementValue).isEqualTo(expectedValue);
+  }
 }
+

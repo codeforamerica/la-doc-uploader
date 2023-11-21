@@ -147,7 +147,7 @@ public class Page {
     inputToSelect.click();
   }
 
-  private void selectEnumeratedInput(List<WebElement> webElements, List<String> options) {
+  public void selectEnumeratedInput(List<WebElement> webElements, List<String> options) {
     options.forEach(option -> selectEnumeratedInput(webElements, option));
   }
 
@@ -230,7 +230,7 @@ public class Page {
   }
 
   public String getRadioValue(String inputName) {
-    return driver.findElements(By.cssSelector(String.format("input[name='%s[]']", inputName)))
+    return driver.findElements(By.cssSelector(String.format("input[name='%s']", inputName)))
         .stream()
         .filter(WebElement::isSelected)
         .map(input -> input.findElement(By.xpath("./..")).getText())

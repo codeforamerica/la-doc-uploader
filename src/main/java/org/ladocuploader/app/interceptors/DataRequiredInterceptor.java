@@ -50,6 +50,11 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     try {
+
+      // Note for future - We may want to abstract the applicantId away from equaling the submission ID.
+      // but for now applicantId == submissionId.
+      // We may also wish to add an expiration time for the id in the URL.
+
       String pathMatchString = PATH_FORMAT;
       boolean navigationLink = false;
       if (request.getRequestURL().toString().contains("/navigation")) {
@@ -76,20 +81,20 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       // let it create one if one doesn't exist.  We will check below to see if it contains submission data.
       HttpSession session = request.getSession();
 
-      if (landmarkConfiguration.getFirstScreen().equals(screenName) || ("GET".equals(request.getMethod()) && !navigationLink)) {
-        // We don't have values to lose on beginning pages and we're not handling GETs right now
+      // We don't have values to lose on beginning pages
+      if (landmarkConfiguration.getFirstScreen().equals(screenName)) {
         return true;
       }
 
-      // second, is there an applicant id in the URL?
-      // first step is submission id, then later abstract some
-      //     second step is abstraction - hold off on these for now.
-      //     put it out and check a few things:
-      //      If same session is still active, Okay to go forward. Renew the applicantId timeout.
-      //      If same session is not still active, check timeout, if timeout is still good, go forward.
-      //      If same session is not still active, check timeout, if expired, they are done.
+      if ("GET".equals(request.getMethod()) && !navigationLink)  {
+        return true;
+      }
 
-      // Second, is there a submission for this session?
+      if ("GET".equals(request.getMethod()) && session == null) {
+        log.error("GET request with no session available: {}", request.getRequestURL());
+        response.sendRedirect(getRedirectUrlForFirstScreen(flowName, parsedUrl.get("screen")));
+        return false;
+      }
 
       String applicationIdFromParams = request.getParameter(UrlParams.APPLICANT_ID_URL_PARAM);
       // start with this ID equaling the one in session.
@@ -130,12 +135,12 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
           }
         } else {
           log.error("Submission '{}' not found in database. Redirecting.", submissionId);
-          response.sendRedirect(getRedirectUrl(flowName, parsedUrl.get("screen")));
+          response.sendRedirect(getRedirectUrlForFirstScreen(flowName, parsedUrl.get("screen")));
           return false;
         }
       } else {
         log.error("No submission ID in session or in URL. Redirecting.");
-        response.sendRedirect(getRedirectUrl(flowName, parsedUrl.get("screen")));
+        response.sendRedirect(getRedirectUrlForFirstScreen(flowName, parsedUrl.get("screen")));
         return false;
       }
     } catch (IllegalStateException e) {
@@ -155,13 +160,11 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
     var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(pathMatchString, request.getRequestURI());
 
     // inject applicant id into model here, so it can give it to the templates.
-    // pull the id from session, as that's the most up to date, having come from the ffb library
-    //UUID applicantId = getSubmissionIdFromSession(request.getSession(), parsedUrl.get("flow"));
-    // not sure if I should use the one from the current session or from the original URL.
+    // pull the id from session, as that's the most up to date, having come from the ffb library.
+    // Not sure if I should use the one from the current session or from the original URL.
     // if the server is botching things, then the one in session will be broken. But if the server
     // is fine, then it should be okay.
     UUID applicantId = getSubmissionIdFromSession(request.getSession(), parsedUrl.get("flow"));
-    //String applicantId = request.getParameter(UrlParams.APPLICANT_ID_URL_PARAM); this will not be set on the first page.
     Map<String, Object> model = modelAndView.getModel();
     modelAndView.getModel().put("applicantId", applicantId);
   }
@@ -186,7 +189,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
             submission.getId(),
             requiredFieldData.getValue()
         );
-        response.sendRedirect(getRedirectUrl(flowName, screen));
+        response.sendRedirect(getRedirectUrlForFirstScreen(flowName, screen));
         return false;
       }
     }
@@ -205,7 +208,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
   //  if (applicantId == null) {
       // Middle of the flow without session or applicantId data - have to redirect
       log.warn("Redirecting: no session or applicant id available");
-      response.sendRedirect(getRedirectUrl(flowName, parsedUrl.get("screen")));
+      response.sendRedirect(getRedirectUrlForFirstScreen(flowName, parsedUrl.get("screen")));
       return false;
    // } else {
       // Middle of the flow without session - but we have the applicantId to recover
@@ -216,7 +219,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
    // }
   }
 
-  private String getRedirectUrl(String flow, String interceptedScreenName) {
+  private String getRedirectUrlForFirstScreen(String flow, String interceptedScreenName) {
     return String.format("/flow/%s/%s?intercepted=%s", flow, landmarkConfiguration.getFirstScreen(), interceptedScreenName);
   }
 

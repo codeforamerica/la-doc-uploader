@@ -3,10 +3,13 @@
     th:with="text=${text} ? ${text} : #{general.inputs.submit}">
   <script th:inline="javascript">
     function setCsrf() {
-      console.log("setting CSRF")
-      element = document.getElementById("token");
+      console.log("attempting to set cookie");
+      var element = document.getElementById("token");
       if (element) {
-        document.cookie=[[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}]] + '=' + element.getAttribute("value") + ';';
+        cookie = [[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}]] + '=' + element.getAttribute("value") + ';';
+        //cookie += " domain=/;";
+        document.cookie = cookie;
+        console.log("setting CSRF to: " + cookie);
       }
     }
   </script>
