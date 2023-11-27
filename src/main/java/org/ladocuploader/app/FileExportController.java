@@ -80,7 +80,7 @@ public class FileExportController {
             log.info("Downloading CSV with submission_id: " + submissionId);
             Submission submission = maybeSubmission.get();
             HttpHeaders headers = new HttpHeaders();
-            byte[] data = csvService.generateParentGuardian(submission);
+            byte[] data = csvService.generateRelationship(submission);
             headers.add(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=%s".formatted(csvService.generateCsvName(submission)));
             return ResponseEntity

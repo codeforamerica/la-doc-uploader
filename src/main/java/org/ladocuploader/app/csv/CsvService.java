@@ -15,6 +15,10 @@ public class CsvService {
         this.csvGenerator = csvGenerator;
     }
 
+    public byte[] generateRelationship(Submission submission) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        return csvGenerator.generateRelationship(submission);
+    }
+
     public byte[] generateParentGuardian(Submission submission) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         return csvGenerator.generateParentGuardian(submission);
     }
