@@ -9,8 +9,7 @@ import lombok.Setter;
 public class Relationship {
 
     @CsvBindByName(column = "first_person")
-    private String id; // use id of applicant
-
+    private String first_person_id; // use id of applicant
     @CsvBindByName(column="second_person")
-    private String household_id; // id of subflow member
+    private String uuid; // id of subflow member
 }
