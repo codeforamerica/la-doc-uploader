@@ -227,11 +227,11 @@
       xhrRequest.withCredentials = false;
       xhrRequest.setRequestHeader("Accept", "*/*");
       xhrRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-      var csrfToken = document.getElementById("token").getAttribute("value");
-      var formData = new FormData();
+      let csrfToken = document.getElementById("token").getAttribute("value");
+      let formData = new FormData();
       formData.append("csrfField", csrfToken);
       formData.append("id", id);
-      xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+      xhrRequest.setRequestHeader("X-CSRF-TOKEN", csrfToken);
       xhrRequest.send(formData);
     }
 
