@@ -44,7 +44,6 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("Language preference");
     testPage.selectFromDropdown("languageRead", languageChoice);
-    testPage.selectFromDropdown("languageSpeak", languageChoice);
     testPage.selectRadio("needInterpreter", "Yes");
     testPage.clickContinue();
 
@@ -87,7 +86,6 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Language preference");
 
     testSelectValue("languageRead", languageChoice);
-    testSelectValue("languageSpeak", languageChoice);
     assertThat(testPage.getRadioValue("needInterpreter")).isEqualTo("Yes");
     Cookie thirdCookie = driver.manage().getCookieNamed("SESSION");
     assertThat(thirdCookie.getValue()).isEqualTo(secondCookie.getValue());
@@ -142,7 +140,8 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
   @Test
   void jumpInFlowSkippingFirstPostPageShouldRedirectToFirstPage() {
     testPage.navigateToFlowScreen("laDigitalAssister/whosApplying");
-    testPage.selectRadio("whosApplying", "CSRAssistant");
+    assertThat(testPage.getTitle()).isEqualTo("Who's applying");
+    testPage.selectRadio("whosApplying", "CommunityPartner");
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo("How this works");
   }
