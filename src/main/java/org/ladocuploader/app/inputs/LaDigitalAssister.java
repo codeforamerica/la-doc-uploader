@@ -46,6 +46,12 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String phoneNumber;
 
+  private String identifiesAsDeaf;
+
+  private String preferredCommsMethod;
+
+  private String remindersMethod;
+
   private String emailAddress;
 
   private String multiplePersonHousehold;
@@ -59,6 +65,16 @@ public class LaDigitalAssister extends FlowInputs {
   private String householdBirthMonth;
 
   private String householdBirthYear;
+
+  private String householdOtherNames;
+
+  private String householdRelationship;
+
+  private String householdSex;
+
+  private String householdMaritalStatus;
+
+  private String householdHighestEducation;
 
   private String ssns;
 
@@ -308,5 +324,10 @@ public class LaDigitalAssister extends FlowInputs {
   private String hasElderlyCareExpenses;
 
   private String expensesElderlyCare;
+
+  @NotBlank(message = "{final-confirmation.answer-feedback-question}")
+  private String digitalAssisterFeedback;
+
+  private String digitalAssisterFeedbackDetail;
 }
 

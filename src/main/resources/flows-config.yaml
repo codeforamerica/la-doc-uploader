@@ -623,7 +623,12 @@ flow:
     nextScreens:
       - name: signature
   signature:
-    nextScreens: null
+    nextScreens:
+      - name: confirmation
+  confirmation:
+    beforeDisplayAction: FormatSubmittedAtDate
+    nextScreens:
+      - name: confirmation
 subflows:
   household:
     entryScreen: multiplePersonHousehold

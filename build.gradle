@@ -1,6 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '3.1.5'
-    id 'io.spring.dependency-management' version '1.1.3'
+    id 'io.spring.dependency-management' version '1.1.4'
     id 'java'
     id 'com.adarshr.test-logger' version '3.2.0'
 }
@@ -41,6 +41,7 @@ dependencies {
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.3'
     implementation 'com.opencsv:opencsv:5.7.0'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.0'
 
     if (profile == 'dev' || useLocalLibrary == 'true') {
         implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
