@@ -56,10 +56,8 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       // We may also wish to add an expiration time for the id in the URL.
 
       String pathMatchString = PATH_FORMAT;
-      boolean navigationLink = false;
       if (request.getRequestURL().toString().contains("/navigation")) {
         pathMatchString = PATH_FORMAT_NAV;
-        navigationLink = true;
       }
 
       var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(pathMatchString, request.getRequestURI());
@@ -90,7 +88,6 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       String applicationIdFromParams = request.getParameter(UrlParams.APPLICANT_ID_URL_PARAM);
       // start with this ID equaling the one in session.
       UUID submissionId = getSubmissionIdFromSession(session, flowName);
-      Submission submission = null;
 
       // if an applicantId has been supplied in the URL, that will override the one in session
       if(applicationIdFromParams != null) {
@@ -127,7 +124,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
         var submissionMaybe = submissionRepositoryService.findById(submissionId);
         if (submissionMaybe.isPresent()) {
           // we require that some critical data be set, or it shows that the user skipped around
-          return checkForMissingData(request, response, submissionMaybe.get(), flowName, parsedUrl.get("screen"));
+          return checkForMissingData(response, submissionMaybe.get(), flowName, parsedUrl.get("screen"));
         } else {
           log.error("Submission '{}' not found in database. Redirecting.", submissionId);
           response.sendRedirect(getRedirectUrlForFirstScreen(flowName, parsedUrl.get("screen")));
@@ -164,13 +161,8 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
    * Check if there's any required data missing in the input. If so, redirect
    * them back to the starting page.
    */
-  private boolean checkForMissingData(HttpServletRequest request,
-      HttpServletResponse response,
-      Submission submission,
-      String flowName,
-      String screen)
+  private boolean checkForMissingData( HttpServletResponse response, Submission submission, String flowName, String screen)
       throws IOException {
-
     Optional<Entry<String, String>> maybeRequiredFieldData = REQUIRED_DATA.get(flowName).entrySet().stream().findFirst();
     if (maybeRequiredFieldData.isPresent()) {
       Entry<String, String> requiredFieldData = maybeRequiredFieldData.get();

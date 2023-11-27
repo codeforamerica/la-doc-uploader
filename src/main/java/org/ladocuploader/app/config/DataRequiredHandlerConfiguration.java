@@ -3,7 +3,6 @@ package org.ladocuploader.app.config;
 import formflow.library.config.FlowConfiguration;
 import formflow.library.data.SubmissionRepositoryService;
 import java.util.List;
-import javax.xml.crypto.Data;
 import org.ladocuploader.app.interceptors.DataRequiredInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

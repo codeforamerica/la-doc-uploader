@@ -4,9 +4,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.SessionId;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -262,7 +260,6 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
 
     // Confirm submit
     assertThat(testPage.getTitle()).isEqualTo("Doc submit confirmation");
-
     testPage.clickButton("No, add more documents");
     assertThat(testPage.getTitle()).isEqualTo("Upload documents");
     testPage.clickButton("I'm finished uploading");
