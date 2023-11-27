@@ -27,3 +27,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
+function setCsrf(cookieName) {
+  console.log("attempting to set cookie");
+  var element = document.getElementById("token");
+  if (element) {
+    cookie = cookieName + '=' + element.getAttribute("value") + ';';
+    document.cookie = cookie;
+    console.log("setting CSRF to: " + cookie);
+  }
+}

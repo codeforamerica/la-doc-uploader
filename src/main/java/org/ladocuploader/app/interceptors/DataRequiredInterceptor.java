@@ -35,7 +35,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
 
   // for each flow, only supply one page and whatever fields on that page you want to check.
   // <flow, <pageName, inputName>>
-  // For any POST page in a flow, it MUST have the data listed, unless it is the page that the data is collected on.
+  // For any POST page in a flow, it MUST have the data listed, unless it is the page that the
   private static final Map<String, Map<String,String>> REQUIRED_DATA = Map.of(
           "laDocUpload",  Map.of("clientInfo", "firstName"),
           "laDigitalAssister", Map.of("languagePreference", "languageRead")
@@ -81,19 +81,10 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       // let it create one if one doesn't exist.  We will check below to see if it contains submission data.
       HttpSession session = request.getSession();
 
-      // We don't have values to lose on beginning pages
+      // We don't have values to lose on first page, nor should we have to worry about
+      // session issues.
       if (landmarkConfiguration.getFirstScreen().equals(screenName)) {
         return true;
-      }
-
-      if ("GET".equals(request.getMethod()) && !navigationLink)  {
-        return true;
-      }
-
-      if ("GET".equals(request.getMethod()) && session == null) {
-        log.error("GET request with no session available: {}", request.getRequestURL());
-        response.sendRedirect(getRedirectUrlForFirstScreen(flowName, parsedUrl.get("screen")));
-        return false;
       }
 
       String applicationIdFromParams = request.getParameter(UrlParams.APPLICANT_ID_URL_PARAM);
@@ -113,26 +104,30 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
 
           log.warn(
               "Submission id's do not match and the one from the URL doesn't exist. (session submission id: '{}', url id: '{}')."
-                  +
-                  "Going forward with the one from the URL",
+                  + "Going forward with the one from the URL",
               submissionId,
               applicationIdFromParams
           );
         }
       }
 
-      // at this point we've tried to get the submission id - either from the session or URL.
+      // Session/submission issues have been resolved.
+      //
+      // Don't check data on a GET - this could cause weird flow if the GET page is _before_
+      // the first page where we collect data.
+      // If we check data on a GET, we may get bumped forward to the first page where we collect
+      // data, thereby ruining the flow.
+      if ("GET".equals(request.getMethod())) {
+        return true;
+      }
+
+      // at this point we've tried to get the submission id from the session or URL.
       // Fetch it and test the data in it. If it doesn't exist, then redirect to the right spot.
       if (submissionId != null) {
         var submissionMaybe = submissionRepositoryService.findById(submissionId);
         if (submissionMaybe.isPresent()) {
           // we require that some critical data be set, or it shows that the user skipped around
-          if (navigationLink) {
-            // it's a GET and we don't need to verify anything
-            return true;
-          } else {
-            return checkForMissingData(request, response, submissionMaybe.get(), flowName, parsedUrl.get("screen"));
-          }
+          return checkForMissingData(request, response, submissionMaybe.get(), flowName, parsedUrl.get("screen"));
         } else {
           log.error("Submission '{}' not found in database. Redirecting.", submissionId);
           response.sendRedirect(getRedirectUrlForFirstScreen(flowName, parsedUrl.get("screen")));
@@ -159,19 +154,15 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
     }
     var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(pathMatchString, request.getRequestURI());
 
-    // inject applicant id into model here, so it can give it to the templates.
-    // pull the id from session, as that's the most up to date, having come from the ffb library.
-    // Not sure if I should use the one from the current session or from the original URL.
-    // if the server is botching things, then the one in session will be broken. But if the server
-    // is fine, then it should be okay.
+    // Inject applicant id into model here, so it can give it to the templates.
+    // Use the id from session, as that's the most up to date, having come from the FFB library.
     UUID applicantId = getSubmissionIdFromSession(request.getSession(), parsedUrl.get("flow"));
-    Map<String, Object> model = modelAndView.getModel();
     modelAndView.getModel().put("applicantId", applicantId);
   }
 
   /**
-   * The session and submission ID are present.
-   * Check if there's any data missing and then use the applicantId to determine next steps.
+   * Check if there's any required data missing in the input. If so, redirect
+   * them back to the starting page.
    */
   private boolean checkForMissingData(HttpServletRequest request,
       HttpServletResponse response,
@@ -198,27 +189,12 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
   }
 
   /**
-   * Check if the applicantId is available - this means that there was another session previously associated with this applicant's data.
-   * If it is not available - we don't have any other information on this applicant and should assume it's a new application
+   * Get the redirect URL, as a string. The page the user was intercepted on will be
+   * noted in the database.
+   * @param flow flow being worked on
+   * @param interceptedScreenName name of screen user tried to reach but couldn't
+   * @return String of URL where the user should be redirected to.
    */
-  private boolean manageSessionOrRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-   // var applicantId = request.getParameter(UrlParams.APPLICANT_ID_URL_PARAM); // applicantId
-    var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
-    String flowName = parsedUrl.get("flow");
-  //  if (applicantId == null) {
-      // Middle of the flow without session or applicantId data - have to redirect
-      log.warn("Redirecting: no session or applicant id available");
-      response.sendRedirect(getRedirectUrlForFirstScreen(flowName, parsedUrl.get("screen")));
-      return false;
-   // } else {
-      // Middle of the flow without session - but we have the applicantId to recover
-      // What are the security concerns here? How can we mitigate?
-    //  log.warn("Setting session submission id to %s".formatted(applicantId));
-     // updateSubmissionIdInSession(request.getSession(false), flowName, applicantId);
-     // return true;
-   // }
-  }
-
   private String getRedirectUrlForFirstScreen(String flow, String interceptedScreenName) {
     return String.format("/flow/%s/%s?intercepted=%s", flow, landmarkConfiguration.getFirstScreen(), interceptedScreenName);
   }

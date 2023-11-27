@@ -1,23 +1,11 @@
 <th:block
     th:fragment="submitButton"
-    th:with="text=${text} ? ${text} : #{general.inputs.submit}">
-  <script th:inline="javascript">
-    function setCsrf() {
-      console.log("attempting to set cookie");
-      var element = document.getElementById("token");
-      if (element) {
-        cookie = [[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}]] + '=' + element.getAttribute("value") + ';';
-        //cookie += " domain=/;";
-        document.cookie = cookie;
-        console.log("setting CSRF to: " + cookie);
-      }
-    }
-  </script>
-  <!--<input type="hidden" name="applicantId" th:value="${inputData.getOrDefault('applicantId', '')}"> -->
+    th:with="text=${text} ? ${text} : #{general.inputs.submit},
+             cookieName=${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}">
   <button id="form-submit-button"
           th:class="${classes != null ? classes : 'button button--primary'}"
           type="submit"
           th:text="${text}"
-          onclick="setCsrf()">
+          th:onclick="setCsrf([[${cookieName}]])">
   </button>
 </th:block>

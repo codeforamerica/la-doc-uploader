@@ -5,7 +5,8 @@
       hasLabel=${!#strings.isEmpty(label)},
       hasAriaDescribe=${!#strings.isEmpty(ariaDescribe)},
       hasYesText=${!#strings.isEmpty(overrideYesText)},
-      hasNoText=${!#strings.isEmpty(overrideNoText)}"
+      hasNoText=${!#strings.isEmpty(overrideNoText)},
+      cookieName=${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_COOKIE}"
     th:assert="${!#strings.isEmpty(inputName)}, ${hasAriaDescribe}">
   <label th:if="${hasLabel}" th:for="${inputName}" th:text="${label}" class="form-question"/>
   <div th:if="${hasHelpText}">
@@ -13,13 +14,13 @@
        th:text="${helpText}"
        class="text--help spacing-below-25"></p>
   </div>
-  <input type="hidden" name="applicantId" th:value="${inputData.getOrDefault('applicantId', '')}">
   <button
       th:name="${inputName}"
       th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"
       type="submit"
       value="true"
-      class="button button--primary">
+      class="button button--primary"
+      th:onclick="setCsrf([[${cookieName}]])">
     <span th:text="${hasYesText ? overrideYesText : #messages.msg('general.inputs.yes')}"></span>
   </button>
   <button
@@ -27,8 +28,8 @@
       th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"
       value="false"
       th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
-      class="button button--secondary">
+      class="button button--secondary"
+      th:onclick="setCsrf([[${cookieName}]])">
     <span th:text="${hasNoText ? overrideNoText : #messages.msg('general.inputs.no')}"></span>
   </button>
-
 </th:block>

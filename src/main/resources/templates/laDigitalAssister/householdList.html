@@ -52,11 +52,11 @@
                       <span th:text="${householdMember.householdMemberLastName}"></span>
                     </span>
                     <span class="text--small spacing-below-0">
-                      <a th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${householdMember.uuid} + '/edit'"
+                      <a th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${householdMember.uuid} + '/edit?applicantId=' + ${applicantId}"
                          th:text="#{general.edit}"
                          th:id="'edit-iteration-' + ${householdMember.uuid}"
                          class="subflow-edit"></a>
-                      <a th:href="'/flow/laDigitalAssister/household/' + ${householdMember.uuid} + '/deleteConfirmation'"
+                      <a th:href="'/flow/laDigitalAssister/household/' + ${householdMember.uuid} + '/deleteConfirmation?applicantId=' + ${applicantId}"
                          th:text="#{general.delete}"
                          class="subflow-delete"
                          th:id="'delete-iteration-' + ${householdMember.uuid}"></a>
@@ -68,9 +68,11 @@
           </div>
         </div>
         <div class="form-card__footer">
-          <a th:href="'/flow/' + ${flow} + '/householdInfo'" class="button button--primary spacing-above-15"
+          <a th:href="'/flow/' + ${flow} + '/householdInfo?applicantId=' + ${applicantId}" class="button button--primary spacing-above-15"
              th:text="#{household-list.add}"></a>
-          <a th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
+          <th:block th:replace="~{fragments/continueButton :: continue}" />
+
+          <a th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation?applicantId=' + ${applicantId}"
              th:text="#{household-list.continue}"
              class="button spacing-left-0"
              id="continue-link"></a>

@@ -34,12 +34,12 @@
                       </div>
 
                       <div class="subflow-list__item-actions">
-                        <a th:href="'/flow/laDigitalAssister/householdEmployerName/' + ${incomeItem.uuid} + '/edit'"
+                        <a th:href="'/flow/laDigitalAssister/householdEmployerName/' + ${incomeItem.uuid} + '/edit?applicantId=' + ${applicantId}"
                            th:text="#{income-list.edit-job}"
                            class="subflow-edit"
                            th:id="'edit-iteration-' + ${incomeItem.uuid}">
                         </a>
-                        <a th:href="'/flow/laDigitalAssister/income/' + ${incomeItem.uuid} + '/deleteConfirmation'"
+                        <a th:href="'/flow/laDigitalAssister/income/' + ${incomeItem.uuid} + '/deleteConfirmation?applicantId=' + ${applicantId}"
                                th:text="#{income-list.delete-job}"
                                class="subflow-delete"
                                th:id="'delete-iteration-' + ${incomeItem.uuid}"></a>
@@ -79,7 +79,7 @@
                   </li>
                 </ul>
 
-                <a class="button button--add-job" th:text="#{income-list.add-job}" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen}"></a>
+                <a class="button button--add-job" th:text="#{income-list.add-job}" th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '?applicantId=' + ${applicantId}"></a>
 
               </div>
 

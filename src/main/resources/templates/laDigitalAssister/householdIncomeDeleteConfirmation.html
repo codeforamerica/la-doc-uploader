@@ -28,10 +28,10 @@
                   th:text="${title}"></h1>
             </div>
             <div class="form-card__footer">
-              <a class="button button--primary" th:href="'/flow/' + ${flow} + '/incomeReview'"
+              <a class="button button--primary" th:href="'/flow/' + ${flow} + '/incomeReview?applicantId=' + ${applicantId}"
                  th:text="#{income-delete-confirmation.no}"></a>
               <form method="post"
-                    th:action="'/flow/' + ${flow} + '/' + ${subflow} + '/' + ${param.uuid} + '/delete'">
+                    th:action="'/flow/' + ${flow} + '/' + ${subflow} + '/' + ${param.uuid} + '/delete?applicantId=' + ${applicantId}">
                 <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   classes='button button--danger',
                   text=#{income-delete-confirmation.yes})}"/>

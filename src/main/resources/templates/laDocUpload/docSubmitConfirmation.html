@@ -18,7 +18,7 @@
             <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{doc-submit-confirmation.yes-submit-and-finish})}" />
             <br>
-            <a id="add_more" class="button button--other"  th:href="'/flow/' + ${flow} + '/uploadDocuments'"
+            <a id="add_more" class="button button--other"  th:href="'/flow/' + ${flow} + '/uploadDocuments?applicantId=' + ${applicantId}"
                th:text="#{doc-submit-confirmation.no-add-more-documents}"></a>
           </div>
         </th:block>

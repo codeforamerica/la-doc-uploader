@@ -11,11 +11,10 @@
         <th:block th:replace="~{fragments/icons :: mail}"></th:block>
         <th:block
             th:replace="'fragments/cardHeader' :: cardHeader(header=#{where-to-send-mail.header}, subtext=#{where-to-send-mail.subtext})"/>
-
-        <a th:href="'/flow/' + ${flow} + '/mailingAddressNoAddress'"
+        <a th:href="'/flow/' + ${flow} + '/mailingAddress?applicantId=' + ${applicantId}"
            th:text="#{where-to-send-mail.add-address}"
            class="button button--primary"></a>
-        <a th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
+        <a th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation?applicantId=' + ${applicantId}"
            th:text="#{where-to-send-mail.continue-without}"
            class="button spacing-left-0"
            id="continue-link"></a>

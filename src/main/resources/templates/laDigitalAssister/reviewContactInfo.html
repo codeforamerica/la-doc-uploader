@@ -39,7 +39,7 @@
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{review-contact-info.this-looks-correct})}"/>
               <a class="button button--secondary" th:text="#{review-contact-info.edit}"
-                      th:href="'/flow/' + ${flow} + '/personalInfo'"></a>
+                      th:href="'/flow/' + ${flow} + '/personalInfo?applicantId=' + ${applicantId}"></a>
             </div>
           </th:block>
         </th:block>
