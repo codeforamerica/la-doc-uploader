@@ -229,9 +229,9 @@
       xhrRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       let csrfToken = document.getElementById("token").getAttribute("value");
       let formData = new FormData();
-      formData.append("csrfField", csrfToken);
+      formData.append([[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_FIELD}]], csrfToken);
       formData.append("id", id);
-      xhrRequest.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+      xhrRequest.setRequestHeader([[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_HEADER}]], csrfToken);
       xhrRequest.send(formData);
     }
 
@@ -340,8 +340,8 @@
 
         this.on("sending", function (file, xhr, formData) {
           var csrfToken = document.getElementById("token").getAttribute("value");
-          xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
-          formData.append("csrfField", csrfToken);
+          xhr.setRequestHeader([[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_HEADER}]], csrfToken);
+          formData.append([[${T(org.ladocuploader.app.config.SecurityConfiguration).CSRF_FIELD}]], csrfToken);
           formData.append("type", file.type);
           formData.append("flow", [[${flow}]]);
           formData.append("screen", [[${screen}]]);
