@@ -1,43 +1,48 @@
 package org.ladocuploader.app.csv;
 
-import com.opencsv.bean.BeanField;
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import org.apache.commons.lang3.StringUtils;
 
-public class AnnotationStrategy<T> extends HeaderColumnNameMappingStrategy<T> {
 
-    @Override
-    public String[] generateHeader(T bean) throws CsvRequiredFieldEmptyException {
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
-        String[] headersAsPerFieldName = getFieldMap().generateHeader(bean); // header name based on field name
+import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 
-        String[] header = new String[headersAsPerFieldName.length];
+public class AnnotationStrategy<T> extends HeaderColumnNameTranslateMappingStrategy<T> {
+    Map<String, String> columnMap = new HashMap<>();
+    public AnnotationStrategy(Class<? extends T> clazz) {
 
-        for (int i = 0; i <= headersAsPerFieldName.length - 1; i++) {
+        for (Field field : clazz.getDeclaredFields()) {
+            CsvBindByName annotation = field.getAnnotation(CsvBindByName.class);
+            if (annotation != null) {
 
-            BeanField<T, String> beanField = findField(i);
-
-            String columnHeaderName = extractHeaderName(beanField); // header name based on @CsvBindByName annotation
-
-            if (columnHeaderName.isEmpty()) // No @CsvBindByName is present
-                columnHeaderName = headersAsPerFieldName[i]; // defaults to header name based on field name
-
-            header[i] = columnHeaderName;
+                columnMap.put(field.getName().toUpperCase(), annotation.column());
+            }
         }
-
-        headerIndex.initializeHeaderIndex(header);
-
-        return header;
+        setType(clazz);
     }
 
-    private String extractHeaderName(final BeanField<T, String> beanField) {
-        if (beanField == null || beanField.getField() == null || beanField.getField().getDeclaredAnnotationsByType(CsvBindByName.class).length == 0) {
-            return StringUtils.EMPTY;
-        }
+    @Override
+    public String getColumnName(int col) {
+        String name = headerIndex.getByPosition(col);
+        return name;
+    }
 
-        final CsvBindByName bindByNameAnnotation = beanField.getField().getDeclaredAnnotationsByType(CsvBindByName.class)[0];
-        return bindByNameAnnotation.column();
+    public String getColumnName1(int col) {
+        String name = headerIndex.getByPosition(col);
+        if(name != null) {
+            name = columnMap.get(name);
+        }
+        return name;
+    }
+    @Override
+    public String[] generateHeader(T bean) throws CsvRequiredFieldEmptyException {
+        String[] result = super.generateHeader(bean);
+        for (int i = 0; i < result.length; i++) {
+            result[i] = getColumnName1(i);
+        }
+        return result;
     }
 }
