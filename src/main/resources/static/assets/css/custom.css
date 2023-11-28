@@ -7,7 +7,9 @@
   --dark-grey: #121111;
 }
 
-body {
+html,
+body,
+.slab--off-white {
   background-color: var(--light);
 }
 
