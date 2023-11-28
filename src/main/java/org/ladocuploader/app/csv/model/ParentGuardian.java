@@ -1,49 +1,35 @@
 package org.ladocuploader.app.csv.model;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.bean.*;
+import formflow.library.data.Submission;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
-import org.ladocuploader.app.csv.converters.InputDataConverter;
 
 import java.util.Map;
 
 @Getter
 @Setter
-public class ParentGuardian {
+public class ParentGuardian extends ParentStudentShared {
 
-    @CsvBindByName(column = "first_name")
+    @CsvBindByName(column = "first_name", required=true)
     private String firstName;
-    @CsvBindByName(column = "last_name")
+    @CsvBindByName(column = "last_name", required=true)
     private String lastName;
 
-    @CsvBindByName(column = "email_address")
+    @CsvBindByName(column = "email_address", required=true)
     private String emailAddress;
 
-    @CsvBindByName(column = "phone_number")
+    @CsvBindByName(column = "phone_number", required=true)
     private String phoneNumber;
-    @CsvBindByName(column = "active")
-    private String active = "true";
 
-    @CsvBindByName(column="zip_code")
-    private String homeAddressZipCode;
+    public static BaseCsvModel generateModel(Submission submission){
+        Map<String, Object> inputData = submission.getInputData();
+        inputData.put("id", submission.getId());
 
-    // TODO: see if we need to combine homeAddressStreetAddress1 and StreetAddress2
-//    @CsvBindAndJoinByName(column = ".homeAddressStreetAddress*", elementType = String.class)
-//    private String homeAddressStreetAddress1;
-
-    @CsvBindByName(column="street_address")
-    private String homeAddressStreetAddress1;
-
-    @CsvBindByName(column="state")
-    private String homeAddressState;
-
-    @CsvBindByName(column="city")
-    private String homeAddressCity;
-
-    @CsvBindByName(column="reference_id")
-    private String id;
+        return mapper.convertValue(inputData, ParentGuardian.class);
+    }
 
 
 }

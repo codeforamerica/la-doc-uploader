@@ -3,6 +3,7 @@ package org.ladocuploader.app.csv;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -26,18 +28,15 @@ public class CsvGenerator {
 
     public byte[] generateRelationship(Submission submission)
             throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-        Map<String, Object> inputData = submission.getInputData();
-        UUID first_person_id = submission.getId();
-        List<Relationship> relationships = new ArrayList<>();
-        List<Map<String, Object>> households = (List<Map<String, Object>>) inputData.get("household");
-        final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        for (Map<String, Object> household : households){
-            household.put("first_person_id", first_person_id);
-            relationships.add(mapper.convertValue(household, Relationship.class));
-        }
-        AnnotationStrategy<Relationship> strategy = new AnnotationStrategy<>();
-        strategy.setType(Relationship.class);
+
+        List<BaseCsvModel> relationships = Relationship.generateModel(submission);
+
+        return generateCsv(ParentGuardian.class, relationships);
+    }
+
+    public byte[] generateCsv(Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        AnnotationStrategy<BaseCsvModel> strategy = new AnnotationStrategy<>(classType);
+        strategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
         CSVWriter writer = new CSVWriter(streamWriter);
@@ -46,7 +45,7 @@ public class CsvGenerator {
                 .withMappingStrategy(strategy)
                 .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                 .build();
-        beanToCsv.write(relationships);
+        beanToCsv.write(objects);
         streamWriter.flush();
         return stream.toByteArray();
     }
@@ -55,25 +54,12 @@ public class CsvGenerator {
     // TODO: adapt for list of submissions
     public byte[] generateParentGuardian(Submission submission)
             throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-        Map<String, Object> inputData = submission.getInputData();
-        inputData.put("id", submission.getId());
-        List<ParentGuardian> pgList = new ArrayList<>();
-        final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        final ParentGuardian pg = mapper.convertValue(inputData, ParentGuardian.class);
+
+        BaseCsvModel pg = ParentGuardian.generateModel(submission);
+
+        List<BaseCsvModel> pgList = new ArrayList<>();
         pgList.add(pg);
-        AnnotationStrategy<ParentGuardian> strategy = new AnnotationStrategy<>();
-        strategy.setType(pg.getClass());
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
-        CSVWriter writer = new CSVWriter(streamWriter);
-        StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                .withSeparator(',')
-                .withMappingStrategy(strategy)
-                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
-                .build();
-        beanToCsv.write(pgList);
-        streamWriter.flush();
-        return stream.toByteArray();
+
+        return generateCsv(ParentGuardian.class, pgList);
     }
 }

@@ -3,29 +3,27 @@ package org.ladocuploader.app.csv.model;
 import com.opencsv.bean.CsvBindByName;
 import lombok.Getter;
 import lombok.Setter;
+import formflow.library.data.Submission;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
-public class Student {
-    @CsvBindByName(column = "first_name")
+public class Student extends ParentStudentShared {
+    @CsvBindByName(column = "first_name", required=true)
     private String firstName; // use id of applicant
 
-    @CsvBindByName(column="last_name")
+    @CsvBindByName(column="last_name", required=true)
     private String lastName; // id of subflow member
 
-    @CsvBindByName(column="birth_date")
+    @CsvBindByName(column="birth_date", required=true)
     private String birthDate;
 
-    private String streetAddress;
+    public static BaseCsvModel generateModel(Submission submission){
+        Map<String, Object> inputData = submission.getInputData();
+        inputData.put("id", submission.getId());
 
-    private String city;
-
-    private String state;
-
-    private String zipCode;
-
-    @CsvBindByName(column="reference_id")
-    private String id;
-
+        return mapper.convertValue(inputData, Student.class);
+    }
 
 }
