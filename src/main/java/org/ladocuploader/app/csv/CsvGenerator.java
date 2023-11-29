@@ -1,9 +1,6 @@
 package org.ladocuploader.app.csv;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVWriter;
-import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
@@ -16,9 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -26,15 +21,45 @@ public class CsvGenerator {
     // TODO: keep in mind for subflow unpacking etc.
 //    https://stackoverflow.com/questions/77230117/custom-converter-for-opencsv
 
-    public byte[] generateRelationship(Submission submission)
+    public byte[] generateRelationshipCsvData(List<Submission> submissionList)
             throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
 
-        List<BaseCsvModel> relationships = Relationship.generateModel(submission);
+        List<BaseCsvModel> relationships = new ArrayList<>();
 
-        return generateCsv(ParentGuardian.class, relationships);
+        for(Submission submission : submissionList) {
+            relationships.addAll(RelationshipCsvModel.generateModel(submission));
+        }
+
+        return generateCsv(ParentGuardianCsvModel.class, relationships);
     }
 
-    public byte[] generateCsv(Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+    public byte[] generateParentGuardianCsvData(List<Submission> submissionList)
+        throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+
+        List<BaseCsvModel> pgList = new ArrayList<>();
+
+        for (Submission submission : submissionList) {
+            BaseCsvModel pg = ParentGuardianCsvModel.generateModel(submission);
+            pgList.add(pg);
+        }
+
+        return generateCsv(ParentGuardianCsvModel.class, pgList);
+    }
+
+    public byte[] generateStudentCsvData(List<Submission> submissionList)
+        throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+
+        List<BaseCsvModel> studentList = new ArrayList<>();
+
+        for (Submission submission : submissionList) {
+            BaseCsvModel student = StudentCsvModel.generateModel(submission);
+            studentList.add(student);
+        }
+
+        return generateCsv(StudentCsvModel.class, studentList);
+    }
+
+    private byte[] generateCsv(Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         AnnotationStrategy<BaseCsvModel> strategy = new AnnotationStrategy<>(classType);
         strategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -48,18 +73,5 @@ public class CsvGenerator {
         beanToCsv.write(objects);
         streamWriter.flush();
         return stream.toByteArray();
-    }
-
-
-    // TODO: adapt for list of submissions
-    public byte[] generateParentGuardian(Submission submission)
-            throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-
-        BaseCsvModel pg = ParentGuardian.generateModel(submission);
-
-        List<BaseCsvModel> pgList = new ArrayList<>();
-        pgList.add(pg);
-
-        return generateCsv(ParentGuardian.class, pgList);
     }
 }
