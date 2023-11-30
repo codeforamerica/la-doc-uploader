@@ -20,10 +20,8 @@ import org.springframework.shell.standard.ShellMethod;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -62,6 +60,8 @@ public class TransmitterCommands {
             appIdToSubmission.put(transmission.getConfirmationNumber(), submission);
 
         });
+
+        //TODO: Do we need batches? Maybe for documents?
 
         log.info("Preparing batches");
         var appIdBatches = Lists.partition(appIdToSubmission.keySet().stream().toList(), 200);

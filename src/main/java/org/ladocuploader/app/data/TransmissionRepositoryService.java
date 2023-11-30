@@ -31,9 +31,6 @@ public class TransmissionRepositoryService {
 
         var transmission = Transmission.fromSubmission(submission);
 
-        var inputData = submission.getInputData();
-//        inputData.put("confirmationNumber", transmission.getConfirmationNumber());
-
         this.submissionRepository.save(submission);
         this.transmissionRepository.save(transmission);
 

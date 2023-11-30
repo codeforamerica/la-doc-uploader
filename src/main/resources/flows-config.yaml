@@ -633,6 +633,7 @@ flow:
     nextScreens:
       - name: signature
   signature:
+    afterSaveAction: HandleApplicationSigned
     nextScreens:
       - name: confirmation
   confirmation:
