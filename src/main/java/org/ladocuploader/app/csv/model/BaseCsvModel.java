@@ -8,16 +8,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import com.opencsv.bean.CsvIgnore;
 
 public class BaseCsvModel {
+    @CsvIgnore
     final static ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
 
     static {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        //PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
-         //   .allowIfSubType("org.ladocuploader.app.csv.model")
-         //   .allowIfSubType("java.util.LinkedHashMap")
-         //   .build();
-        //mapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
     }
 }
