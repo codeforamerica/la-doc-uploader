@@ -87,8 +87,10 @@ public class LaDigitalAssister extends FlowInputs {
   // Household
   private String multiplePersonHousehold;
 
+//  @NotBlank(message="{error.missing-firstname}")
   private String householdMemberFirstName;
 
+//  @NotBlank(message="{error.missing-lastname}")
   private String householdMemberLastName;
 
   private String householdOtherNames;
@@ -101,12 +103,15 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String householdRelationship;
 
+//  @NotBlank(message="{error.missing-general}")
   private String householdSex;
 
   private String householdMaritalStatus;
 
   private String householdHighestEducation;
 
+
+//  @DynamicField: https://github.com/codeforamerica/form-flow/tree/cd165e6c07ca3d5bd1ba9aeb14dacf7eb6ce56c6#dynamic-input-fields
   private List<String> ssns;
 
   private String schoolInd;
@@ -209,74 +214,127 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank
   private String hoursPerWeek;
 
+//  @NotBlank(message="{error.missing-pay-period}")
   private String payPeriod;
 
   @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String payPeriodAmount;
 
+//  @NotEmpty
   private List<String> additionalIncome;
 
   @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String moneyOnHand;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String monthlyHouseholdIncome;
   
   private String switchToIncomeByJob;
 
   private List<String> householdHomeExpenses;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesRent;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesMortgage;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesHomeownerInsurance;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesPropertyTax;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesCondoFees;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesLotRental;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesFloodInsurance;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesOther;
 
   private List<String> householdUtilitiesExpenses;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesHeating;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesCooling;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesElectricity;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesWater;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesPhone;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesGarbage;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesSewer;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesCookingFuel;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesOther;
 
   private String hasDependentCareExpenses;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesDependentCare;
 
+//  @NotEmpty
   private List<String> householdInsuranceExpenses;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesMedicalInsurance;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesDentalInsurance;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesVisionInsurance;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesMedicalBills;
 
   private String hasElderlyCareExpenses;
 
+//  @Money
+//  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesElderlyCare;
 
   // Final Screen
@@ -288,8 +346,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String authorizedRepSpendingAuthorization;
 
+//  @NotBlank(message="{error.missing-firstname}")
   private String authorizedRepFirstName;
 
+//  @NotBlank(message="{error.missing-lastname}")
   private String authorizedRepLastName;
 
   private String authorizedRepOtherNames;

@@ -19,7 +19,6 @@ public class ValidateMailingAddress extends AssisterAction {
   private final String STATE_INPUT_NAME = "mailingAddressState";
   private final String ZIP_INPUT_NAME = "mailingAddressZipCode";
 
-
   @Override
   public Map<String, List<String>> runValidation(FormSubmission formSubmission, Submission submission) {
     Map<String, List<String>> errorMessages = new HashMap<>();
@@ -88,6 +87,4 @@ public class ValidateMailingAddress extends AssisterAction {
       return inputData.containsKey(ZIP_INPUT_NAME);
     }
   }
-
-
 }

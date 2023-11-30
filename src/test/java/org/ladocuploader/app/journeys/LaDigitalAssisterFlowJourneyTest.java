@@ -108,6 +108,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Add a mailing address");
 
     testPage.clickContinue();
+
     assert(testPage.hasErrorText(message("error.missing-general")));
     assert(testPage.hasErrorText(message("error.format-zip")));
 
@@ -235,6 +236,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
 
   }
+
   @Test
   void fullDigitalAssisterFlow() {
     // How this works
@@ -319,6 +321,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("remindersMethod-By Email-label");
     testPage.enter("emailAddress", "mail@mail.com");
 
+
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("phone-number-nudge.title"));
@@ -338,6 +341,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("household-signpost.title"));
+
     testPage.clickContinue();
     // Household
 
@@ -660,4 +664,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("Confirmation");
   }
+  @Test
+  void fullDigitalAssisterFlow2() {
+
+    testPage.navigateToFlowScreen("laDigitalAssister/multiplePersonHousehold");
+
+  }
+
 }
