@@ -33,4 +33,11 @@ public class Transmission {
     @Column(name="transmission_type")
     private String transmissionType;
 
+    public static Transmission fromSubmission(Submission submission) {
+        var transmission = new Transmission();
+        transmission.setSubmission(submission);
+//        transmission.setFlow(submission.getFlow());
+        return transmission;
+    }
+
 }

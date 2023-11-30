@@ -34,6 +34,8 @@ def useLocalLibrary = System.getenv('USE_LOCAL_LIBRARY')
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'org.springframework.shell:spring-shell-starter:3.0.4'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation("com.mixpanel:mixpanel-java:1.5.2")
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.14'
@@ -80,6 +82,12 @@ dependencies {
 
 springBoot {
     buildInfo()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.shell:spring-shell-dependencies:3.0.4"
+    }
 }
 
 test {
