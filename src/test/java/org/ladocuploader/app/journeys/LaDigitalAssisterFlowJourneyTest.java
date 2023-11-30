@@ -223,6 +223,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
+
     testPage.goBack();
 
     testPage.enter("emailAddress", "test");
@@ -234,7 +235,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
-
   }
 
   @Test
