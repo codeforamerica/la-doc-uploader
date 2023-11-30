@@ -95,6 +95,7 @@ public class TransmitterCommands {
         log.info("Finished transmission of a batch");
     }
 
+    // TODO: pass in batch?
     @NotNull
     private static String createZipFilename(Map<String, Submission> appIdToSubmission) {
         // Format: Apps__2023-07-05.zip
@@ -185,7 +186,7 @@ public class TransmitterCommands {
     }
 
     private static boolean doTransmitApplication(String appNumber, Submission submission) {
-        // TODO: eliminate this?
+        // TODO: use this to delay submission if it is less than 2 hours old to prevent doc-less submissions?
         // delay 7 days if there aren't any uploaded docs associated with this application
 //        Instant submittedAt = submission.getSubmittedAt().toInstant();
 //        long diffDays = ChronoUnit.DAYS.between(submittedAt, Instant.now());
