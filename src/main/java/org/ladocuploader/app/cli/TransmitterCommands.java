@@ -11,13 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
-import org.ladocuploader.app.utils.SubmissionUtilities;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -35,8 +33,7 @@ public class TransmitterCommands {
     private final SftpClient sftpClient;
 
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient,
-                               @Value("${form-flow.laterdoc-delay-disabled}") String disableLaterdocDelay) {
+                               SftpClient sftpClient) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
     }
@@ -47,33 +44,33 @@ public class TransmitterCommands {
         var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted());
         log.info("Total submissions to transmit in all batches is {}", allSubmissions.size());
 
-        log.info("Computing which app IDs have later docs");
-        List<UUID> allSubmissionIds = new ArrayList<>();
-        allSubmissions.forEach(submission -> {
-            allSubmissionIds.add(submission.getId());
-        });
-        Map<String, Submission> appIdToSubmission = new HashMap<>();
-
-        allSubmissionIds.forEach(id -> {
-            Transmission transmission = transmissionRepository.getTransmissionBySubmission(Submission.builder().id(id).build());
-            Submission submission = transmission.getSubmission();
-            appIdToSubmission.put(transmission.getConfirmationNumber(), submission);
-
-        });
-
-        //TODO: Do we need batches? Maybe for documents?
-
-        log.info("Preparing batches");
-        var appIdBatches = Lists.partition(appIdToSubmission.keySet().stream().toList(), 200);
-        for (var appIdBatch : appIdBatches) {
-            Map<String, Submission> appIdToSubmissionBatch = new HashMap<>();
-            for (var appId : appIdBatch) {
-                appIdToSubmissionBatch.put(appId, appIdToSubmission.get(appId));
-            }
-
-            log.info("Starting batch of size={}", appIdToSubmissionBatch.size());
-            transmitBatch(appIdToSubmissionBatch);
-        }
+//        log.info("Computing which app IDs have later docs");
+//        List<UUID> allSubmissionIds = new ArrayList<>();
+//        allSubmissions.forEach(submission -> {
+//            allSubmissionIds.add(submission.getId());
+//        });
+//        Map<String, Submission> appIdToSubmission = new HashMap<>();
+//
+//        allSubmissionIds.forEach(id -> {
+//            Transmission transmission = transmissionRepository.getTransmissionBySubmission(Submission.builder().id(id).build());
+//            Submission submission = transmission.getSubmission();
+//            appIdToSubmission.put(transmission.getConfirmationNumber(), submission);
+//
+//        });
+//
+//        //TODO: Do we need batches? Maybe for documents?
+//
+//        log.info("Preparing batches");
+//        var appIdBatches = Lists.partition(appIdToSubmission.keySet().stream().toList(), 200);
+//        for (var appIdBatch : appIdBatches) {
+//            Map<String, Submission> appIdToSubmissionBatch = new HashMap<>();
+//            for (var appId : appIdBatch) {
+//                appIdToSubmissionBatch.put(appId, appIdToSubmission.get(appId));
+//            }
+//
+//            log.info("Starting batch of size={}", appIdToSubmissionBatch.size());
+//            transmitBatch(appIdToSubmissionBatch);
+//        }
     }
 
     private void transmitBatch(Map<String, Submission> appIdToSubmissionBatch) throws IOException, JSchException, SftpException{
@@ -127,7 +124,7 @@ public class TransmitterCommands {
 
                 // TODO: is this necessary? Can we just pick up submissions which are ready?
                 if (!isComplete(submission)) {
-                    transmission.setLastTransmissionFailureReason("skip_incomplete");
+//                    transmission.setLastTransmissionFailureReason("skip_incomplete");
                     transmissionRepository.save(transmission);
                     continue;
                 }
@@ -146,12 +143,12 @@ public class TransmitterCommands {
 
                             byte[] file = new byte[0];
 
-                            zos.putNextEntry(new ZipEntry(subfolder));
-                            ZipEntry entry = new ZipEntry(subfolder + fileName);
-                            entry.setSize(file.length);
-                            zos.putNextEntry(entry);
-                            zos.write(file);
-                            zos.closeEntry();
+//                            zos.putNextEntry(new ZipEntry(subfolder));
+//                            ZipEntry entry = new ZipEntry(subfolder + fileName);
+//                            entry.setSize(file.length);
+//                            zos.putNextEntry(entry);
+//                            zos.write(file);
+//                            zos.closeEntry();
 
                         successfullySubmittedIds.add(submission.getId());
                     } catch (Exception e) {
@@ -160,7 +157,7 @@ public class TransmitterCommands {
                         log.error("Error generating file collection for submission ID {}", submission.getId(), e);
                     }
                 } else {
-                    transmission.setLastTransmissionFailureReason("skip_awaiting_laterdocs");
+//                    transmission.setLastTransmissionFailureReason("skip_awaiting_laterdocs");
                     transmissionRepository.save(transmission);
                 }
             }
