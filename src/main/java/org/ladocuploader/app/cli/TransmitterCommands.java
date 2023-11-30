@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class TransmitterCommands {
     @ShellMethod(key = "transmit")
     public void transmit() throws IOException, JSchException, SftpException {
         log.info("Finding submissions to transmit...");
+
         var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted(), TransmissionType.ECE);
         log.info("Total submissions to transmit for ECE is {}", allSubmissions.size());
         if (allSubmissions.size() > 0) {
@@ -165,6 +167,5 @@ public class TransmitterCommands {
 
         return results;
     }
-
 }
 

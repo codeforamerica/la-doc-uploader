@@ -22,6 +22,7 @@ public class TransmissionRepositoryService {
         this.transmissionRepository = transmissionRepository;
     }
 
+
     public boolean transmissionExists(Submission submission, TransmissionType transmissionType) {
         return transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType) != null;
     }
@@ -34,6 +35,7 @@ public class TransmissionRepositoryService {
         var transmission = Transmission.fromSubmission(submission);
         transmission.setTransmissionType(transmissionType);
         transmission.setStatus(TransmissionStatus.Queued);
+
 
         this.submissionRepository.save(submission);
         this.transmissionRepository.save(transmission);
