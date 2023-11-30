@@ -20,9 +20,13 @@ public class TransmissionRepositoryService {
         this.transmissionRepository = transmissionRepository;
     }
 
+    public boolean transmissionExists(Submission submission) {
+        return transmissionRepository.getTransmissionBySubmission(submission) != null;
+    }
+
     public Transmission createTransmissionRecord(Submission submission) {
-        if (!submission.getFlow().equals("pebt")) {
-            throw new RuntimeException("Non-Pebt object passed to createTransmissionRecord");
+        if (!submission.getFlow().equals("laDigitalAssister")) {
+            throw new RuntimeException("Non-laDigitalAssister object passed to createTransmissionRecord");
         }
 
         var transmission = Transmission.fromSubmission(submission);
