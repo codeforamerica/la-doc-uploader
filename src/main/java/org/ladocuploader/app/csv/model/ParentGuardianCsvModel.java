@@ -1,35 +1,20 @@
 package org.ladocuploader.app.csv.model;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.*;
 import formflow.library.data.Submission;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Map;
+import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 
 @Getter
 @Setter
 public class ParentGuardianCsvModel extends BaseCsvModel {
-
-    @CsvBindByName(column = "active", required=true)
-    private Boolean active = true;
-
-    @CsvBindByName(column="zip_code", required=true)
-    private String homeAddressZipCode;
-
-    // TODO: see if we need to combine homeAddressStreetAddress1 and StreetAddress2
-    @CsvBindAndJoinByName(column = ".homeAddressStreetAddress*", elementType = String.class)
-    private String homeAddressStreetAddress1;
-
-//    @CsvBindByName(column="street_address", required=true)
-//    private String homeAddressStreetAddress1;
-
-    @CsvBindByName(column="state", required=true)
-    private String homeAddressState;
-
-    @CsvBindByName(column="city", required=true)
-    private String homeAddressCity;
 
     @CsvBindByName(column="reference_id")
     private String id;
@@ -46,6 +31,38 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
     @CsvBindByName(column = "phone_number", required=true)
     private String phoneNumber;
 
+    @CsvBindByName(column="zip_code", required=true)
+    private String homeAddressZipCode;
+
+    // TODO: see if we need to combine homeAddressStreetAddress1 and StreetAddress2
+    //@CsvBindAndJoinByName(column = "street_address", elementType = String.class,
+    //@CsvBindAndSplitByName(
+    //    column = "street_address",
+    //    required = true,
+    //    elementType = String.class
+   // )
+    //@CsvBindByName(column = "street_address", required = true)
+    @CsvCustomBindByName(column="street_address", converter = AddressStreetConverter.class)
+    private List<String> homeAddressStreet = new ArrayList<>();
+
+    @CsvBindByName(column="city", required=true)
+    private String homeAddressCity;
+
+    @CsvBindByName(column="state", required=true)
+    private String homeAddressState;
+
+    @CsvBindByName(column = "active", required=true)
+    private Boolean active = true;
+
+    @JsonSetter(value = "homeAddressStreetAddress1")
+    private void setHomeAddress1(final String address) {
+        homeAddressStreet.add(0, address);
+    }
+
+    @JsonSetter(value= "homeAddressStreetAddress2")
+    private void setHomeAddress2(final String address) {
+        homeAddressStreet.add(1, address);
+    }
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());
