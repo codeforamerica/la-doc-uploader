@@ -44,21 +44,19 @@ public class TransmitterCommands {
         var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted());
         log.info("Total submissions to transmit in all batches is {}", allSubmissions.size());
 
-//        log.info("Computing which app IDs have later docs");
-//        List<UUID> allSubmissionIds = new ArrayList<>();
-//        allSubmissions.forEach(submission -> {
-//            allSubmissionIds.add(submission.getId());
-//        });
-//        Map<String, Submission> appIdToSubmission = new HashMap<>();
+        List<UUID> allSubmissionIds = new ArrayList<>();
+        allSubmissions.forEach(submission -> {
+            allSubmissionIds.add(submission.getId());
+        });
+        Map<String, Submission> transmissionIdToSubmission = new HashMap<>();
+
+        allSubmissionIds.forEach(id -> {
+            Transmission transmission = transmissionRepository.getTransmissionBySubmission(Submission.builder().id(id).build());
+            Submission submission = transmission.getSubmission();
+            transmissionIdToSubmission.put(transmission.getId(), submission);
+
+        });
 //
-//        allSubmissionIds.forEach(id -> {
-//            Transmission transmission = transmissionRepository.getTransmissionBySubmission(Submission.builder().id(id).build());
-//            Submission submission = transmission.getSubmission();
-//            appIdToSubmission.put(transmission.getConfirmationNumber(), submission);
-//
-//        });
-//
-//        //TODO: Do we need batches? Maybe for documents?
 //
 //        log.info("Preparing batches");
 //        var appIdBatches = Lists.partition(appIdToSubmission.keySet().stream().toList(), 200);
@@ -81,15 +79,12 @@ public class TransmitterCommands {
         log.info("Uploading zip file");
         sftpClient.uploadFile(zipFilename);
 
-        UUID batchId = UUID.randomUUID();
-
         // Update transmission in DB
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
             Transmission transmission = transmissionRepository.getTransmissionBySubmission(submission);
             transmission.setTimeSent(new Date());
             transmission.setStatus("success");
-            transmission.setBatchId(batchId);
             transmissionRepository.save(transmission);
         });
         log.info("Finished transmission of a batch");

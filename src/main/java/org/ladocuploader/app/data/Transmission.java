@@ -17,6 +17,10 @@ import static jakarta.persistence.TemporalType.TIMESTAMP;
 public class Transmission {
 
     @Id
+    @GeneratedValue
+    private UUID transmission_id;
+
+    @Id
     private UUID batchId;
 
     @ManyToOne
