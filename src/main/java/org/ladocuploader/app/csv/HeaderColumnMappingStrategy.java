@@ -11,9 +11,6 @@ import java.util.Arrays;
  * @param <T>
  */
 public class HeaderColumnMappingStrategy<T> extends HeaderColumnNameMappingStrategy<T> {
-    public HeaderColumnMappingStrategy(Class<? extends T> clazz) {
-        setType(clazz);
-    }
 
     @Override
     public String[] generateHeader(T bean) throws CsvRequiredFieldEmptyException {
