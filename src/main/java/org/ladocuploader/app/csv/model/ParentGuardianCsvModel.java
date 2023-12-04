@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.*;
 import formflow.library.data.Submission;
+import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Map;
-import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 
 @Getter
 @Setter
@@ -42,7 +42,7 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
     //    elementType = String.class
    // )
     //@CsvBindByName(column = "street_address", required = true)
-    @CsvCustomBindByName(column="street_address", converter = AddressStreetConverter.class)
+    @CsvCustomBindByName(column="street_address", required = true, converter = AddressStreetConverter.class)
     private List<String> homeAddressStreet = new ArrayList<>();
 
     @CsvBindByName(column="city", required=true)
