@@ -1,18 +1,22 @@
 package org.ladocuploader.app.csv.converters;
 
 import com.opencsv.bean.AbstractBeanField;
+import com.opencsv.exceptions.CsvConstraintViolationException;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import java.util.List;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@NoArgsConstructor
 public class AddressStreetConverter<T, I> extends AbstractBeanField<T, I> {
 
+  public AddressStreetConverter() {
+    log.info("Creating AddressStreetConverter");
+  }
   @Override
-  protected Object convert(String value) {
+  protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
     log.info("converting {}", value);
-    return "CONVERTED";
+    return value + "CONVERTED";
   }
 
   @Override

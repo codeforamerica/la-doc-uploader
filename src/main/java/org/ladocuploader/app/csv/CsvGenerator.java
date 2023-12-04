@@ -60,12 +60,12 @@ public class CsvGenerator {
     }
 
     private byte[] generateCsv(Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-        AnnotationStrategy<BaseCsvModel> strategy = new AnnotationStrategy<>(classType);
+        HeaderColumnMappingStrategy<BaseCsvModel> strategy = new HeaderColumnMappingStrategy<>(classType);
         strategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
         CSVWriter writer = new CSVWriter(streamWriter);
-        StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
+        StatefulBeanToCsv<BaseCsvModel> beanToCsv = new StatefulBeanToCsvBuilder<BaseCsvModel>(writer)
                 .withSeparator(',')
                 .withMappingStrategy(strategy)
                 .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
