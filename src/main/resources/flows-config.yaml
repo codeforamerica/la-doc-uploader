@@ -51,9 +51,11 @@ flow:
     nextScreens:
       - name: personalInfo
   personalInfo:
+    crossFieldValidationAction: ValidateBirthdate
     nextScreens:
       - name: homeAddress
   homeAddress:
+    crossFieldValidationAction: ValidateHomeAddress
     nextScreens:
       - name: noPermanentAddress
         condition: NoPermanentAddress
@@ -61,11 +63,18 @@ flow:
   noPermanentAddress:
     nextScreens:
       - name: contactInfo
+  mailingAddressNoAddress:
+    crossFieldValidationAction: ValidateMailingAddress
+    beforeSaveAction: MailingAddressSetToHomeAddress
+    nextScreens:
+      - name: contactInfo
   mailingAddress:
+    crossFieldValidationAction: ValidateMailingAddress
     beforeSaveAction: MailingAddressSetToHomeAddress
     nextScreens:
       - name: contactInfo
   contactInfo:
+    crossFieldValidationAction: ValidateContactMethod
     nextScreens:
       - name: phoneNumberNudge
         condition: PhoneNumberMissing

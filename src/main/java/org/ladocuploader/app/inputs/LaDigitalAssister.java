@@ -2,13 +2,11 @@ package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
 import formflow.library.data.annotations.Money;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.NumberFormat;
 
 import java.util.List;
 
@@ -22,21 +20,19 @@ public class LaDigitalAssister extends FlowInputs {
   private String needInterpreter;
 
   // Choose programs
+  @NotEmpty(message="{error.missing-general}")
   private List<String> programs;
-  @NotBlank
+
+  // Who is Applying
+  @NotBlank(message="{error.missing-general}")
   private String whosApplying;
 
-  @NotBlank
+  // Personal Information
+  @NotBlank(message="{error.missing-firstname}")
   private String firstName;
 
-  @NotBlank
+  @NotBlank(message="{error.missing-lastname}")
   private String lastName;
-
-  private String highestEducation;
-
-  private String maritalStatus;
-
-  private String sex;
 
   private String otherNames;
 
@@ -44,29 +40,64 @@ public class LaDigitalAssister extends FlowInputs {
   private String birthMonth;
   private String birthYear;
 
+  @NotBlank(message="{error.missing-general}")
+  private String sex;
+
+  private String maritalStatus;
+
+  private String highestEducation;
+
+  // home address
+  private String noHomeAddress;
+
+  private String homeAddressStreetAddress1;
+
+  private String homeAddressStreetAddress2;
+
+  private String homeAddressCity;
+
+  private String homeAddressState;
+
+  private String homeAddressZipCode;
+
+  //Mailing Address
+  private String sameAsHomeAddress;
+
+  private String mailingAddressStreetAddress1;
+
+  private String mailingAddressStreetAddress2;
+
+  private String mailingAddressCity;
+
+  private String mailingAddressState;
+
+  private String mailingAddressZipCode;
+
+  //Contact Info
   private String phoneNumber;
 
   private String identifiesAsDeaf;
 
   private String preferredCommsMethod;
 
-  private String remindersMethod;
-
   private String emailAddress;
 
+  private List<String> remindersMethod;
+
+  // Household
   private String multiplePersonHousehold;
 
   private String householdMemberFirstName;
 
   private String householdMemberLastName;
 
+  private String householdOtherNames;
+
   private String householdBirthDay;
 
   private String householdBirthMonth;
 
   private String householdBirthYear;
-
-  private String householdOtherNames;
 
   private String householdRelationship;
 
@@ -76,31 +107,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String householdHighestEducation;
 
-  private String ssns;
-
-  private String homeAddressZipCode;
-
-  private String homeAddressState;
-
-  private String homeAddressCity;
-
-  private String noHomeAddress;
-
-  private String homeAddressStreetAddress2;
-
-  private String homeAddressStreetAddress1;
-
-  private String sameAsHomeAddress;
-
-  private String mailingAddressZipCode;
-
-  private String mailingAddressState;
-
-  private String mailingAddressCity;
-
-  private String mailingAddressStreetAddress2;
-
-  private String mailingAddressStreetAddress1;
+  private List<String> ssns;
 
   private String schoolInd;
 
@@ -202,18 +209,16 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank
   private String hoursPerWeek;
 
-  @NotBlank
   private String payPeriod;
 
   @Money
-  @NotBlank
   private String payPeriodAmount;
 
-  private String additionalIncome;
+  private List<String> additionalIncome;
 
   @Money
   private String moneyOnHand;
-  
+
   private String monthlyHouseholdIncome;
   
   private String switchToIncomeByJob;
@@ -256,6 +261,24 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String expensesUtilitiesOther;
 
+  private String hasDependentCareExpenses;
+
+  private String expensesDependentCare;
+
+  private List<String> householdInsuranceExpenses;
+
+  private String expensesMedicalInsurance;
+
+  private String expensesDentalInsurance;
+
+  private String expensesVisionInsurance;
+
+  private String expensesMedicalBills;
+
+  private String hasElderlyCareExpenses;
+
+  private String expensesElderlyCare;
+
   // Final Screen
   private String authorizedRepresentative;
 
@@ -265,10 +288,8 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String authorizedRepSpendingAuthorization;
 
-  @NotBlank
   private String authorizedRepFirstName;
 
-  @NotBlank
   private String authorizedRepLastName;
 
   private String authorizedRepOtherNames;
@@ -306,24 +327,6 @@ public class LaDigitalAssister extends FlowInputs {
   private String nonDiscriminationStatementAgree;
 
   private String signature;
-
-  private String hasDependentCareExpenses;
-
-  private String expensesDependentCare;
-
-  private String householdInsuranceExpenses;
-
-  private String expensesMedicalInsurance;
-
-  private String expensesDentalInsurance;
-
-  private String expensesVisionInsurance;
-
-  private String expensesMedicalBills;
-
-  private String hasElderlyCareExpenses;
-
-  private String expensesElderlyCare;
 
   @NotBlank(message = "{final-confirmation.answer-feedback-question}")
   private String digitalAssisterFeedback;

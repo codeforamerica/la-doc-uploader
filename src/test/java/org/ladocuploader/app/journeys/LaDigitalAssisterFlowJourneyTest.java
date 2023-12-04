@@ -10,87 +10,336 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
+  void chooseProgramsFlow() {
+    testPage.navigateToFlowScreen("laDigitalAssister/choosePrograms");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-general")));
+    testPage.clickElementById("programs-SNAP");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap.title"));
+  }
+  @Test
+  void whosApplyingFlow() {
+    testPage.navigateToFlowScreen("laDigitalAssister/whosApplying");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-general")));
+    testPage.clickElementById("whosApplying-Self");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("personal-info.title"));
+  }
+
+  @Test
+  void personalInformationFlow() {
+    testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
+    testPage.clickContinue();
+
+    testPage.enter("birthMonth", "01");
+    testPage.enter("birthDay", "25");
+    testPage.enter("birthYear", "1985");
+
+    assert(testPage.hasErrorText(message("error.missing-firstname")));
+    assert(testPage.hasErrorText(message("error.missing-lastname")));
+    assert(testPage.hasErrorText(message("error.missing-general")));
+
+    testPage.enter("firstName", "test");
+    testPage.enter("lastName", "test2");
+    testPage.selectRadio("sex", "F");
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo(message("home-address.title"));
+
+  }
+
+  @Test
+  void birthDateFlow() {
+    testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
+    testPage.enter("firstName", "test");
+    testPage.enter("lastName", "test2");
+    testPage.selectRadio("sex", "F");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.format-dob")));
+
+    testPage.enter("birthMonth", "12");
+    testPage.enter("birthDay", "09");
+    testPage.enter("birthYear", "85");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.format-dob")));
+
+    testPage.enter("birthMonth", "12");
+    testPage.enter("birthDay", "25");
+    testPage.enter("birthYear", "1885");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.invalid-dob")));
+
+    testPage.enter("birthMonth", "12");
+    testPage.enter("birthDay", "25");
+    testPage.enter("birthYear", "2025");
+
+    testPage.clickContinue();
+    assert(testPage.hasErrorText(message("error.invalid-dob")));
+
+    testPage.enter("birthMonth", "2");
+    testPage.enter("birthDay", "9");
+    testPage.enter("birthYear", "1985");
+
+    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo(message("home-address.title"));
+  }
+
+  @Test
+  void noHomeAddressFlow(){
+    testPage.navigateToFlowScreen("laDigitalAssister/homeAddress");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText("Make sure to provide a home address or select ‘I don’t have a permanent address’."));
+
+    testPage.clickElementById("noHomeAddress-true");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("where-to-send-mail.title"));
+
+    testPage.clickButton("Add a mailing address");
+
+    testPage.clickContinue();
+    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert(testPage.hasErrorText(message("error.format-zip")));
+
+    testPage.enter("mailingAddressStreetAddress1", "test");
+    testPage.enter("mailingAddressCity", "test2");
+    testPage.enter("mailingAddressZipCode", "12");
+    testPage.selectFromDropdown("mailingAddressState", "CO - Colorado");
+
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.format-zip")));
+
+    testPage.enter("mailingAddressZipCode", "12526");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
+  }
+
+  @Test
+  void homeAddressFlow(){
+    testPage.navigateToFlowScreen("laDigitalAssister/homeAddress");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText("Make sure to provide a home address or select ‘I don’t have a permanent address’."));
+
+    testPage.enter("homeAddressStreetAddress1", "123 Main St");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert(testPage.hasErrorText(message("error.format-zip")));
+
+    testPage.enter("homeAddressCity", "test2");
+    testPage.selectFromDropdown("homeAddressState", "CO - Colorado");
+    testPage.enter("homeAddressZipCode", "12526");
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("mailing-address.title"));
+
+    testPage.clickElementById("sameAsHomeAddress-true");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
+    testPage.goBack();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("mailing-address.title"));
+    testPage.clickElementById("sameAsHomeAddress-true");
+
+    testPage.enter("mailingAddressStreetAddress1", "test");
+    testPage.selectFromDropdown("mailingAddressState", "CO - Colorado");
+    testPage.enter("mailingAddressCity", "");
+    testPage.enter("mailingAddressZipCode", "1245");
+
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert(testPage.hasErrorText(message("error.format-zip")));
+
+    testPage.enter("mailingAddressCity", "Test 5");
+    testPage.enter("mailingAddressZipCode", "12526");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
+  }
+
+  @Test
+  void contactInformationFlow(){
+    testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo((message("phone-number-nudge.title")));
+    testPage.goBack();
+
+    testPage.enter("emailAddress", "test");
+    testPage.enter("phoneNumber", "123-456-789");
+
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.invalid-email")));
+    assert(testPage.hasErrorText(message("error.invalid-phone")));
+
+    testPage.enter("emailAddress", "");
+    testPage.enter("phoneNumber", "");
+
+    testPage.clickElementById("remindersMethod-By Text-label");
+
+    testPage.clickContinue();
+    assert(testPage.hasErrorText(message("error.invalid-phone")));
+
+    testPage.enter("phoneNumber", "123-456-7891");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo((message("review-contact-info.title")));
+    testPage.goBack();
+
+    testPage.enter("phoneNumber", "123-456-789");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.invalid-phone")));
+    testPage.clickElementById("remindersMethod-By Text-label");
+    testPage.clickElementById("remindersMethod-By Email-label");
+    testPage.enter("emailAddress", "test@mail.com");
+    testPage.enter("phoneNumber", "");
+
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo((message("phone-number-nudge.title")));
+    testPage.goBack();
+
+    testPage.enter("phoneNumber", "123-456-7891");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo((message("review-contact-info.title")));
+    testPage.goBack();
+
+    testPage.enter("emailAddress", "test");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.invalid-email")));
+
+    testPage.enter("emailAddress", "test@mail.com");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo((message("review-contact-info.title")));
+
+  }
+  @Test
   void fullDigitalAssisterFlow() {
     // How this works
     testPage.navigateToFlowScreen("laDigitalAssister/howThisWorks");
     testPage.clickContinue();
 
     // Timeout notice
-    assertThat(testPage.getTitle()).isEqualTo("Timeout notice");
+    assertThat(testPage.getTitle()).isEqualTo(message("timeout-notice.title"));
     testPage.clickContinue();
 
     // Language preference
-    assertThat(testPage.getTitle()).isEqualTo("Language preference");
+    assertThat(testPage.getTitle()).isEqualTo(message("language-preference.title"));
     testPage.selectFromDropdown("languageRead", "Spanish");
     testPage.selectRadio("needInterpreter", "Yes");
     testPage.clickContinue();
 
     // Choose programs
-    assertThat(testPage.getTitle()).isEqualTo("Choose programs");
+    assertThat(testPage.getTitle()).isEqualTo(message("choose-programs.title"));
+
     // Choose SNAP program
     testPage.clickElementById("programs-SNAP");
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Expedited notice");
 
+    assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap.title"));
     testPage.clickContinue();
 
     // Signpost
-    assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    assertThat(testPage.getTitle()).isEqualTo(message("signpost.title"));
     testPage.clickContinue();
 
     // Who's Applying
-    assertThat(testPage.getTitle()).isEqualTo("Who's applying");
+    assertThat(testPage.getTitle()).isEqualTo(message("whos-applying.title"));
     testPage.clickElementById("whosApplying-CommunityPartner");
     testPage.clickContinue();
 
     // Applicant is not self - check that flow next page is the notice
-    assertThat(testPage.getTitle()).isEqualTo("Applicant notice");
+    assertThat(testPage.getTitle()).isEqualTo(message("applicant-notice.title"));
     testPage.clickContinue();
 
     // Personal Info
-    assertThat(testPage.getTitle()).isEqualTo("Personal info");
+    assertThat(testPage.getTitle()).isEqualTo(message("personal-info.title"));
     testPage.enter("firstName", "test");
     testPage.enter("lastName", "test2");
+    testPage.enter("birthMonth", "12");
+    testPage.enter("birthDay", "25");
+    testPage.enter("birthYear", "1985");
+    testPage.selectRadio("sex", "F");
     testPage.clickContinue();
 
     // Home Address
-    assertThat(testPage.getTitle()).isEqualTo("Home Address");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Mailing address");
-    testPage.goBack();
+    assertThat(testPage.getTitle()).isEqualTo(message("home-address.title"));
+
     testPage.clickElementById("noHomeAddress-true");
     testPage.clickContinue();
 
     // Where to send mail
-    assertThat(testPage.getTitle()).isEqualTo("Where to send mail");
-    testPage.clickButton("Add a mailing address");
+    assertThat(testPage.getTitle()).isEqualTo(message("where-to-send-mail.title"));
+
+    testPage.goBack();
+    testPage.clickElementById("noHomeAddress-true");
+    testPage.enter("homeAddressStreetAddress1", "test");
+    testPage.enter("homeAddressCity", "test2");
+    testPage.enter("homeAddressZipCode", "12");
+    testPage.selectFromDropdown("homeAddressState", "CO - Colorado");
+    testPage.enter("homeAddressZipCode", "12526");
+
+    testPage.clickContinue();
 
     // Mailing Address
-    assertThat(testPage.getTitle()).isEqualTo("Mailing address");
+    assertThat(testPage.getTitle()).isEqualTo(message("mailing-address.title"));
+
+    testPage.enter("mailingAddressStreetAddress1", "test");
+    testPage.enter("mailingAddressCity", "test 2");
+    testPage.selectFromDropdown("mailingAddressState", "CO - Colorado");
+    testPage.enter("mailingAddressZipCode", "12455");
+
     testPage.clickContinue();
 
-    // Contact Info
-    assertThat(testPage.getTitle()).isEqualTo("Contact info");
+    assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
+
+    assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
+    testPage.clickElementById("remindersMethod-By Email-label");
+    testPage.enter("emailAddress", "mail@mail.com");
+
     testPage.clickContinue();
 
-    // Phone Number Nudge
-    assertThat(testPage.getTitle()).isEqualTo("Phone number nudge");
+    assertThat(testPage.getTitle()).isEqualTo(message("phone-number-nudge.title"));
+
     testPage.clickButton("Add a phone number");
 
-    assertThat(testPage.getTitle()).isEqualTo("Contact info");
+    assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
     testPage.enter("phoneNumber", "123-456-7891");
+
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Review contact information");
+
+    assertThat(testPage.getTitle()).isEqualTo((message("review-contact-info.title")));
 
     testPage.clickButton("This looks correct");
 
-
-    // Household
-    assertThat(testPage.getTitle()).isEqualTo("Multiple person household");
+    assertThat(testPage.getTitle()).isEqualTo((message("multiple-person-household.title")));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    assertThat(testPage.getTitle()).isEqualTo((message("household-signpost.title")));
     testPage.clickContinue();
+    // Household
 
     assertThat(testPage.getTitle()).isEqualTo("Housemate info");
     testPage.enter("householdMemberFirstName", "roomy");
@@ -296,7 +545,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Money on hand");
     testPage.clickContinue();
 
-  //    Expenses SignPost
+    //    Expenses SignPost
     assertThat(testPage.getTitle()).isEqualTo("Expenses Signpost");
     testPage.clickContinue();
 

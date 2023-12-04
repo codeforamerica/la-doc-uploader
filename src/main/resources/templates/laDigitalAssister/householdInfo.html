@@ -93,6 +93,8 @@
                 <th:block th:ref="highestEducation">
                   <!-- Copy the below option if you want more options -->
                   <!-- If you want a placeholder option you can use the cfa:selectOptionPlaceholder live template -->
+                  <th:block
+                      th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{personal-info.select-education})}"/>
                   <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='firstGrade', optionText=#{personal-info.first-grade})}"/>
                   <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='secondGrade', optionText=#{personal-info.second-grade})}"/>
                   <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='thirdGrade', optionText=#{personal-info.third-grade})}"/>
