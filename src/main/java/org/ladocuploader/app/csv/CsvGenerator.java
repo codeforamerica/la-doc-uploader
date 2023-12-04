@@ -60,7 +60,7 @@ public class CsvGenerator {
     }
 
     private byte[] generateCsv(Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-        HeaderColumnMappingStrategy<BaseCsvModel> strategy = new HeaderColumnMappingStrategy<>(classType);
+        HeaderColumnMappingStrategy<BaseCsvModel> strategy = new HeaderColumnMappingStrategy<>();
         strategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
