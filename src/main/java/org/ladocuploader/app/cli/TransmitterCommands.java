@@ -3,9 +3,14 @@ package org.ladocuploader.app.cli;
 import com.google.common.collect.Lists;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.ladocuploader.app.csv.CsvDocument;
+import org.ladocuploader.app.csv.CsvPackage;
+import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.springframework.data.domain.Sort;
@@ -17,6 +22,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Slf4j
@@ -27,10 +33,13 @@ public class TransmitterCommands {
 
     private final SftpClient sftpClient;
 
+    private final CsvService csvService;
+
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient) {
+                               SftpClient sftpClient, CsvService csvService) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
+        this.csvService = csvService;
     }
 
     @ShellMethod(key = "transmit")
@@ -43,34 +52,27 @@ public class TransmitterCommands {
         allSubmissions.forEach(submission -> {
             allSubmissionIds.add(submission.getId());
         });
-        Map<String, Submission> transmissionIdToSubmission = new HashMap<>();
-
-        allSubmissionIds.forEach(id -> {
-            Transmission transmission = transmissionRepository.getTransmissionBySubmission(Submission.builder().id(id).build());
-            Submission submission = transmission.getSubmission();
-            // TODO: this might not be necessary - because this is a 1:1 relationship
-            transmissionIdToSubmission.put(transmission.getTransmission_id().toString(), submission);
-        });
 
         log.info("Preparing batches");
-        // partition into csvs with limit of size 1000
-        var transmissionIdBatches = Lists.partition(transmissionIdToSubmission.keySet().stream().toList(), 1000);
+        // partition into csvs with limit of size 500
+        var submissionIdBatches = Lists.partition(allSubmissionIds, 500);
         var batch_index = 0;
-        for (var transmissionIdBatch : transmissionIdBatches) {
-            Map<String, Submission> transmissionIdToSubmissionBatch = new HashMap<>();
-            for (var transmissionId : transmissionIdBatch) {
-                transmissionIdToSubmissionBatch.put(transmissionId, transmissionIdToSubmission.get(transmissionId));
+        for (var submissionIdBatch : submissionIdBatches) {
+            Map<UUID, Submission> submissionIdToSubmissionBatch = new HashMap<>();
+            for (var submissionId : submissionIdBatch) {
+                Submission submission = Submission.builder().id(submissionId).build();
+                submissionIdToSubmissionBatch.put(submissionId, submission);
             }
 
-            log.info("Starting batch of size={}", transmissionIdToSubmissionBatch.size());
-            transmitBatch(transmissionIdToSubmissionBatch, batch_index);
+            log.info("Starting batch of size={}", submissionIdToSubmissionBatch.size());
+            transmitBatch(submissionIdToSubmissionBatch, batch_index);
             batch_index ++;
         }
     }
 
-    private void transmitBatch(Map<String, Submission> appIdToSubmissionBatch, Integer batchIndex) throws IOException, JSchException, SftpException{
+    private void transmitBatch(Map<UUID, Submission> submissionIdToSubmission, Integer batchIndex) throws IOException, JSchException, SftpException{
         String zipFilename = createZipFilename(batchIndex);
-        List<UUID> successfullySubmittedIds = zipFiles(appIdToSubmissionBatch, zipFilename);
+        List<UUID> successfullySubmittedIds = zipFiles(submissionIdToSubmission, zipFilename);
 
         // send zip file
         log.info("Uploading zip file");
@@ -115,68 +117,21 @@ public class TransmitterCommands {
 
     }
 
-    private List<UUID> zipFiles(Map<String, Submission> transmissionIdToSubmission, String zipFileName) throws IOException {
+    private List<UUID> zipFiles(Map<UUID, Submission> submissionIdToSubmission, String zipFileName) throws IOException {
         List<UUID> successfullySubmittedIds = new ArrayList<>();
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
-            Map<String, Object> csvData = generateCsvs(transmissionIdToSubmission);
-            // loop over failed records and mark as failed
-            Map<UUID, String> failedSubmissions = (Map<UUID, String>) csvData.get("failedRecords");
-
-             // TODO: receive the list of streams and package into a ZipFile
-
-//            Map<String, Object> csvData = csvService.
-
-//            for (var transmissionAndSubmission : transmissionIdToSubmission.entrySet()) {
-//                var transmissionId = transmissionAndSubmission.getKey();
-//                var submission = transmissionAndSubmission.getValue();
-//
-//                Transmission transmission = transmissionRepository.getTransmissionBySubmission(submission);
-//                if (transmission == null) {
-//                    log.error("Missing transmission for submission {}", submission.getId());
-//                    continue;
-//                }
-//
-//                // TODO: do we need this check?
-//                if (!isComplete(submission)) {
-////                    transmission.setLastTransmissionFailureReason("skip_incomplete");
-//                    transmissionRepository.save(transmission);
-//                    continue;
-//                }
-//
-//                if ("laDigitalAssister".equals(submission.getFlow())) {
-//                    // TODO: do we need a subfolder?
-////                    String subfolder = createSubfolderName(submission, transmission);
-//                    try {
-//                            // generate applicant summary
-////                            byte[] file = renderPDFOrCrash(submission);
-////                            String fileName = "00_" + pdfService.generatePdfName(submission);
-////                            if (!fileName.endsWith(".pdf")) {
-////                                fileName += ".pdf";
-////                            }
-//                            // TODO: generate all CSV files - or use dummy files for now
-//
-////                            String fileName = submission.getId()
-//
-//                            byte[] file = new byte[0];
-//
-////                            zos.putNextEntry(new ZipEntry(subfolder));
-//                            ZipEntry entry = new ZipEntry(fileName);
-//                            entry.setSize(file.length);
-//                            zos.putNextEntry(entry);
-//                            zos.write(file);
-//                            zos.closeEntry();
-//
-//                        successfullySubmittedIds.add(submission.getId());
-//                    } catch (Exception e) {
-//                        transmission.setStatus("failed");
-//                        transmissionRepository.save(transmission);
-//                        log.error("Error generating file collection for submission ID {}", submission.getId(), e);
-//                    }
-//                } else {
-//                    log.info("Skipping - it is part of another flow={}", submission.getFlow());
-//                }
-//            }
+            CsvPackage ecePackage = csvService.generateCsvPackage(submissionIdToSubmission.values().stream().toList(), CsvPackage.CsvPackageType.ECE_PACKAGE);
+            // TODO: collect failures
+            byte [] studentDoc = ecePackage.getCsvDocument(CsvService.CsvType.STUDENT).getCsvData();
+            byte [] parentGuardianDoc = ecePackage.getCsvDocument(CsvService.CsvType.PARENT_GUARDIAN).getCsvData();
+            ZipEntry entry = new ZipEntry("student.csv");
+            entry.setSize(studentDoc.length);
+            zos.putNextEntry(entry);
+            zos.write(studentDoc);
+            zos.closeEntry();
+        } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
+            throw new RuntimeException(e);
         }
 
         return successfullySubmittedIds;
