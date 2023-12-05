@@ -87,31 +87,26 @@ public class LaDigitalAssister extends FlowInputs {
   // Household
   private String multiplePersonHousehold;
 
-//  @NotBlank(message="{error.missing-firstname}")
   private String householdMemberFirstName;
 
-//  @NotBlank(message="{error.missing-lastname}")
   private String householdMemberLastName;
 
-  private String householdOtherNames;
+  private String householdMemberOtherNames;
 
-  private String householdBirthDay;
+  private String householdMemberBirthDay;
 
-  private String householdBirthMonth;
+  private String householdMemberBirthMonth;
 
-  private String householdBirthYear;
+  private String householdMemberBirthYear;
 
-  private String householdRelationship;
+  private String householdMemberRelationship;
 
-//  @NotBlank(message="{error.missing-general}")
-  private String householdSex;
+  private String householdMemberSex;
 
-  private String householdMaritalStatus;
+  private String householdMemberMaritalStatus;
 
-  private String householdHighestEducation;
+  private String householdMemberHighestEducation;
 
-
-//  @DynamicField: https://github.com/codeforamerica/form-flow/tree/cd165e6c07ca3d5bd1ba9aeb14dacf7eb6ce56c6#dynamic-input-fields
   private List<String> ssns;
 
   private String schoolInd;
