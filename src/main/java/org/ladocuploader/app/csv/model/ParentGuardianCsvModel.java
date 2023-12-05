@@ -16,33 +16,25 @@ import java.util.Map;
 @Setter
 public class ParentGuardianCsvModel extends BaseCsvModel {
 
+    @CsvBindByName(column = "active", required=true)
+    private Boolean active = true;
+
     @CsvBindByName(column="reference_id")
     private String id;
 
-    @CsvBindByName(column = "first_name", required=true)
+    @CsvBindByName(column="first_name", required=true)
     private String firstName;
 
-    @CsvBindByName(column = "last_name", required=true)
+    @CsvBindByName(column="last_name", required=true)
     private String lastName;
 
-    @CsvBindByName(column = "email_address", required=true)
+    @CsvBindByName(column="email_address", required=true)
     private String emailAddress;
 
-    @CsvBindByName(column = "phone_number", required=true)
+    @CsvBindByName(column="phone_number", required=true)
     private String phoneNumber;
 
-    @CsvBindByName(column="zip_code", required=true)
-    private String homeAddressZipCode;
-
-    // TODO: see if we need to combine homeAddressStreetAddress1 and StreetAddress2
-    //@CsvBindAndJoinByName(column = "street_address", elementType = String.class,
-    //@CsvBindAndSplitByName(
-    //    column = "street_address",
-    //    required = true,
-    //    elementType = String.class
-   // )
-    //@CsvBindByName(column = "street_address", required = true)
-    @CsvCustomBindByName(column="street_address", required = true, converter = AddressStreetConverter.class)
+    @CsvCustomBindByName(column="street_address", required=true, converter=AddressStreetConverter.class)
     private List<String> homeAddressStreet = new ArrayList<>();
 
     @CsvBindByName(column="city", required=true)
@@ -51,18 +43,19 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
     @CsvBindByName(column="state", required=true)
     private String homeAddressState;
 
-    @CsvBindByName(column = "active", required=true)
-    private Boolean active = true;
+    @CsvBindByName(column="zip_code", required=true)
+    private String homeAddressZipCode;
 
-    @JsonSetter(value = "homeAddressStreetAddress1")
+    @JsonSetter(value="homeAddressStreetAddress1")
     private void setHomeAddress1(final String address) {
         homeAddressStreet.add(0, address);
     }
 
-    @JsonSetter(value= "homeAddressStreetAddress2")
+    @JsonSetter(value="homeAddressStreetAddress2")
     private void setHomeAddress2(final String address) {
         homeAddressStreet.add(1, address);
     }
+
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());

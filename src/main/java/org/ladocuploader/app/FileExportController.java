@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
+import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.CsvService.CsvType;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -64,7 +65,7 @@ public class FileExportController {
         log.info("GET downloadCSV ParentGuardian (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow,
             submissionId);
 
-        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.ParentGuardian);
+        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.PARENT_GUARDIAN);
     }
 
     @GetMapping("{flow}/student/{submissionId}")
@@ -78,7 +79,7 @@ public class FileExportController {
 
         log.info("GET downloadCSV Student (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow, submissionId);
 
-        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.Student);
+        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.STUDENT);
     }
 
     @GetMapping("{flow}/rel/{submissionId}")
@@ -92,7 +93,7 @@ public class FileExportController {
 
         log.info("GET downloadCSV Relationship (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow, submissionId);
 
-        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.Relationship);
+        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.RELATIONSHIP);
     }
 
     protected static void throwNotFoundError(String flow, String screen, String message) {
@@ -120,7 +121,7 @@ public class FileExportController {
         if (getSubmissionIdForFlow(httpSession, flow).toString().equals(submissionId) && maybeSubmission.isPresent()) {
             log.info("Downloading CSV with submission_id: " + submissionId);
             Submission submission = maybeSubmission.get();
-            byte[] data = csvService.generateCsvFormattedData(List.of(submission), csvType);
+            CsvDocument csvDoc = csvService.generateCsvFormattedData(List.of(submission), csvType);
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=%s".formatted(csvService.generateCsvName(submission.getFlow(), csvType)));
@@ -128,7 +129,7 @@ public class FileExportController {
                 .ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .headers(headers)
-                .body(data);
+                .body(csvDoc.getCsvData());
         } else {
             log.error("Attempted to download PDF with submission_id: " + submissionId + " but session_id was: "
                 + httpSession.getAttribute("id"));
