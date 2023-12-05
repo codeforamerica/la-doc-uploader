@@ -4,5 +4,5 @@ import java.io.IOException;
 
 public interface FtpsClient {
 
-  void uploadFile(String zipFilename) throws IOException;
+  void uploadFile(String zipFilename, byte[] data) throws IOException;
 }

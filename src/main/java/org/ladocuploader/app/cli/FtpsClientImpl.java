@@ -6,9 +6,10 @@ import org.apache.commons.net.ftp.FTPSClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 
 @Component
@@ -28,7 +29,7 @@ public class FtpsClientImpl implements FtpsClient {
   }
 
   @Override
-  public void uploadFile(String zipFilename) throws IOException {
+  public void uploadFile(String zipFilename, byte[] data) throws IOException {
     FTPSClient ftp = new FTPSClient();
 
     ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
@@ -51,7 +52,7 @@ public class FtpsClientImpl implements FtpsClient {
     ftp.execPROT("P");
     ftp.enterLocalPassiveMode();
     ftp.pasv();
-    FileInputStream local = new FileInputStream(file);
+    InputStream local = new ByteArrayInputStream(data);
     ftp.storeFile(zipFilename, local);
     local.close();
     ftp.completePendingCommand();

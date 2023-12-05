@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class MockFtpsClientImpl implements FtpsClient {
 
   @Override
-  public void uploadFile(String zipFilename) {
+  public void uploadFile(String zipFilename, byte[] data) {
     // Do nothing
     log.info("Mock uploading file " + zipFilename);
   }
