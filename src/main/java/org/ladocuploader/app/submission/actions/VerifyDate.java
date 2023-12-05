@@ -1,13 +1,12 @@
 package org.ladocuploader.app.submission.actions;
-import formflow.library.config.submission.Action;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.DateTime;
 
-public class VerifyDate implements Action {
+public class VerifyDate extends AssisterAction {
 
-  DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy");
-  DateTime MIN_DATE = dtf.parseDateTime("01/01/1900");
+  DateTimeFormatter dtf = DateTimeFormat.forPattern(DATE_REGEX_PATTERN);
+  DateTime MIN_DATE = dtf.parseDateTime(MIN_DATE_ALLOWED);
   protected boolean validRange(String date){
     try {
       DateTime birthdate = dtf.parseDateTime(date);

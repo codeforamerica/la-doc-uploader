@@ -1,6 +1,5 @@
 package org.ladocuploader.app.submission.actions;
 
-import formflow.library.config.submission.Action;
 import formflow.library.data.FormSubmission;
 import formflow.library.data.Submission;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ValidateHomeAddress implements Action {
+public class ValidateHomeAddress extends AssisterAction {
   private final String NO_HOME_ADDRESS_INPUT_NAME = "noHomeAddress";
   private final String ADDRESS_1_INPUT_NAME = "homeAddressStreetAddress1";
   private final String CITY_INPUT_NAME = "homeAddressCity";
@@ -32,22 +31,22 @@ public class ValidateHomeAddress implements Action {
 
     if(homeAddressExpected(inputData)){
       if((address1+" "+city+" "+state+" "+zip).isBlank()){
-        errorMessages.put(NO_HOME_ADDRESS_INPUT_NAME, List.of("Make sure to provide a home address or select ‘I don’t have a permanent address’. "));
+        errorMessages.put(NO_HOME_ADDRESS_INPUT_NAME, List.of(translateMessage("error.missing-address")));
       } else {
         if(address1.isBlank()){
-          errorMessages.put(ADDRESS_1_INPUT_NAME, List.of("Make sure you answer this question."));
+          errorMessages.put(ADDRESS_1_INPUT_NAME, List.of(translateMessage("error.missing-general")));
         };
         if(city.isBlank()){
-          errorMessages.put(CITY_INPUT_NAME, List.of("Make sure you answer this question."));
+          errorMessages.put(CITY_INPUT_NAME, List.of(translateMessage("error.missing-general")));
         };
         if(state.isBlank()){
-          errorMessages.put(STATE_INPUT_NAME, List.of("Make sure you answer this question."));
+          errorMessages.put(STATE_INPUT_NAME, List.of(translateMessage("error.missing-general")));
         };
         if (!Pattern.matches("\\d{5}",zip)) {
-          errorMessages.put(ZIP_INPUT_NAME, List.of("Make sure to enter a zip code with 5 digits."));
+          errorMessages.put(ZIP_INPUT_NAME, List.of(translateMessage("error.format-zip")));
         }
         if(errorMessages.containsKey(NO_HOME_ADDRESS_INPUT_NAME)){
-          errorMessages.remove(NO_HOME_ADDRESS_INPUT_NAME, List.of("Make sure to provide a home address or select 'I don’t have a permanent address'."));
+          errorMessages.remove(NO_HOME_ADDRESS_INPUT_NAME, List.of(translateMessage("error.missing-address")));
         }
       }
 
@@ -57,8 +56,8 @@ public class ValidateHomeAddress implements Action {
   }
 
   protected boolean homeAddressExpected(Map<String, Object> inputData){
-    if(inputData.containsKey("noHomeAddress[]")){
-      ArrayList<String> noHomeAddress = (ArrayList) inputData.get("noHomeAddress[]");
+    if(inputData.containsKey(NO_HOME_ADDRESS_INPUT_NAME+"[]")){
+      ArrayList<String> noHomeAddress = (ArrayList) inputData.get(NO_HOME_ADDRESS_INPUT_NAME+"[]");
       return noHomeAddress.isEmpty();
     }
     return true;

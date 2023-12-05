@@ -1,6 +1,5 @@
 package org.ladocuploader.app.submission.actions;
 
-import formflow.library.config.submission.Action;
 import formflow.library.data.FormSubmission;
 import formflow.library.data.Submission;
 import java.util.ArrayList;
@@ -13,7 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ValidateMailingAddress implements Action {
+public class ValidateMailingAddress extends AssisterAction {
+  private final String SAME_AS_HOME_INPUT_NAME="sameAsHomeAddress";
   private final String ADDRESS_1_INPUT_NAME = "mailingAddressStreetAddress1";
   private final String CITY_INPUT_NAME = "mailingAddressCity";
   private final String STATE_INPUT_NAME = "mailingAddressState";
@@ -28,29 +28,29 @@ public class ValidateMailingAddress implements Action {
 
     if(validateAgainstHomeAddressBoolean){
       if(homeAddressElementHasError(submission, "homeAddressStreetAddress1")){
-        errorMessages.put(ADDRESS_1_INPUT_NAME, List.of("Make sure you answer this question."));
+        errorMessages.put(ADDRESS_1_INPUT_NAME, List.of(translateMessage("error.missing-general")));
       }
       if(homeAddressElementHasError(submission, "homeAddressCity")){
-        errorMessages.put(CITY_INPUT_NAME, List.of("Make sure you answer this question."));
+        errorMessages.put(CITY_INPUT_NAME, List.of(translateMessage("error.missing-general")));
       }
       if(homeAddressElementHasError(submission, "homeAddressState")){
-        errorMessages.put(STATE_INPUT_NAME, List.of("Make sure you answer this question."));
+        errorMessages.put(STATE_INPUT_NAME, List.of(translateMessage("error.missing-general")));
       }
       if(homeAddressZipHasError(submission)){
-        errorMessages.put(ZIP_INPUT_NAME, List.of("Make sure to enter a zip code with 5 digits."));
+        errorMessages.put(ZIP_INPUT_NAME, List.of(translateMessage("error.format-zip")));
       }
     } else {
       if(mailingAddressHasError(inputData, ADDRESS_1_INPUT_NAME)){
-        errorMessages.put(ADDRESS_1_INPUT_NAME, List.of("Make sure you answer this question."));
+        errorMessages.put(ADDRESS_1_INPUT_NAME, List.of(translateMessage("error.missing-general")));
       }
       if(mailingAddressHasError(inputData, CITY_INPUT_NAME)){
-        errorMessages.put(CITY_INPUT_NAME, List.of("Make sure you answer this question."));
+        errorMessages.put(CITY_INPUT_NAME, List.of(translateMessage("error.missing-general")));
       }
       if(mailingAddressHasError(inputData, STATE_INPUT_NAME)){
-        errorMessages.put(STATE_INPUT_NAME, List.of("Make sure you answer this question."));
+        errorMessages.put(STATE_INPUT_NAME, List.of(translateMessage("error.missing-general")));
       }
       if(mailingAddressZipHasError(inputData)){
-        errorMessages.put(ZIP_INPUT_NAME, List.of("Make sure to enter a zip code with 5 digits."));
+        errorMessages.put(ZIP_INPUT_NAME, List.of(translateMessage("error.format-zip")));
       }
     }
 
@@ -58,8 +58,8 @@ public class ValidateMailingAddress implements Action {
   }
 
   protected boolean validateAgainstHomeAddress(Map<String, Object> inputData){
-    if(inputData.containsKey("sameAsHomeAddress[]")){
-      ArrayList<String> sameAsHomeAddress = (ArrayList) inputData.get("sameAsHomeAddress[]");
+    if(inputData.containsKey(SAME_AS_HOME_INPUT_NAME+"[]")){
+      ArrayList<String> sameAsHomeAddress = (ArrayList) inputData.get(SAME_AS_HOME_INPUT_NAME+"[]");
       return sameAsHomeAddress.contains("true");
     }
     return false;

@@ -98,7 +98,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.navigateToFlowScreen("laDigitalAssister/homeAddress");
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText("Make sure to provide a home address or select ‘I don’t have a permanent address’."));
+    assert(testPage.hasErrorText(message("error.missing-address")));
 
     testPage.clickElementById("noHomeAddress-true");
     testPage.clickContinue();
@@ -131,7 +131,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.navigateToFlowScreen("laDigitalAssister/homeAddress");
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText("Make sure to provide a home address or select ‘I don’t have a permanent address’."));
+    assert(testPage.hasErrorText(message("error.missing-address")));
 
     testPage.enter("homeAddressStreetAddress1", "123 Main St");
     testPage.clickContinue();
@@ -178,7 +178,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo((message("phone-number-nudge.title")));
+    assertThat(testPage.getTitle()).isEqualTo(message("phone-number-nudge.title"));
     testPage.goBack();
 
     testPage.enter("emailAddress", "test");
@@ -200,7 +200,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("phoneNumber", "123-456-7891");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo((message("review-contact-info.title")));
+    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
     testPage.goBack();
 
     testPage.enter("phoneNumber", "123-456-789");
@@ -215,13 +215,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo((message("phone-number-nudge.title")));
+    assertThat(testPage.getTitle()).isEqualTo(message("phone-number-nudge.title"));
     testPage.goBack();
 
     testPage.enter("phoneNumber", "123-456-7891");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo((message("review-contact-info.title")));
+    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
     testPage.goBack();
 
     testPage.enter("emailAddress", "test");
@@ -232,7 +232,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("emailAddress", "test@mail.com");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo((message("review-contact-info.title")));
+    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
 
   }
   @Test
@@ -330,14 +330,14 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo((message("review-contact-info.title")));
+    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
 
     testPage.clickButton("This looks correct");
 
-    assertThat(testPage.getTitle()).isEqualTo((message("multiple-person-household.title")));
+    assertThat(testPage.getTitle()).isEqualTo(message("multiple-person-household.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo((message("household-signpost.title")));
+    assertThat(testPage.getTitle()).isEqualTo(message("household-signpost.title"));
     testPage.clickContinue();
     // Household
 
