@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvPackage;
 import org.ladocuploader.app.csv.CsvService;
+import org.ladocuploader.app.csv.enums.CsvPackageType;
+import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.springframework.data.domain.Sort;
@@ -121,10 +123,10 @@ public class TransmitterCommands {
         List<UUID> successfullySubmittedIds = new ArrayList<>();
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
-            CsvPackage ecePackage = csvService.generateCsvPackage(submissionIdToSubmission.values().stream().toList(), CsvPackage.CsvPackageType.ECE_PACKAGE);
+            CsvPackage ecePackage = csvService.generateCsvPackage(submissionIdToSubmission.values().stream().toList(), CsvPackageType.ECE_PACKAGE);
             // TODO: collect failures
-            byte [] studentDoc = ecePackage.getCsvDocument(CsvService.CsvType.STUDENT).getCsvData();
-            byte [] parentGuardianDoc = ecePackage.getCsvDocument(CsvService.CsvType.PARENT_GUARDIAN).getCsvData();
+            byte [] studentDoc = ecePackage.getCsvDocument(CsvType.STUDENT).getCsvData();
+            byte [] parentGuardianDoc = ecePackage.getCsvDocument(CsvType.PARENT_GUARDIAN).getCsvData();
             ZipEntry entry = new ZipEntry("student.csv");
             entry.setSize(studentDoc.length);
             zos.putNextEntry(entry);
