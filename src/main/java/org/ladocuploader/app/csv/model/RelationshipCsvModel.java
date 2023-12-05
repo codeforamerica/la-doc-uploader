@@ -3,6 +3,7 @@ package org.ladocuploader.app.csv.model;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.opencsv.bean.CsvBindByName;
 import formflow.library.data.Submission;
+import java.util.HashMap;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,10 +29,12 @@ public class RelationshipCsvModel extends BaseCsvModel {
         List<BaseCsvModel> relationships = new ArrayList<>();
         List<Map<String, Object>> households = (List<Map<String, Object>>) inputData.get("household");
 
-        if (households != null && households.isEmpty()) {
+        if (households != null && !households.isEmpty()) {
             for (Map<String, Object> household : households) {
-                household.put("first_person_id", first_person_id);
-                relationships.add(mapper.convertValue(household, RelationshipCsvModel.class));
+                Map<String, Object> person = new HashMap<>();
+                person.put("first_person_id", first_person_id);
+                person.put("uuid", household.get("uuid"));
+                relationships.add(mapper.convertValue(person, RelationshipCsvModel.class));
             }
         }
 

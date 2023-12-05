@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.List;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.ladocuploader.app.csv.CsvPackage.CsvPackageType;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 
@@ -20,16 +21,17 @@ public class CsvService {
      *  Enum type representing the different CSV files that can be generated.
      */
     @Getter
-    public enum CsvType {
-        ParentGuardian,// ("ParentGuardian"),
-        Student, // ("Student"),
-        Relationship, // ("Relationship"),
-        Application;// ("Application");
-/*
-        private String name;
+    public static enum CsvType {
+        PARENT_GUARDIAN("ParentGuardian"),
+        STUDENT("Student"),
+        RELATIONSHIP("Relationship"),
+        ECE_APPLICATION("ECE Application"),
+        WIC_APPLICATION("WIC Application");
+
+        private final String name;
         CsvType(String name) {
             this.name = name;
-        }*/
+        }
     }
 
     public CsvService(CsvGenerator csvGenerator) {
@@ -46,16 +48,36 @@ public class CsvService {
      * @throws CsvDataTypeMismatchException
      * @throws IOException
      */
-    public byte[] generateCsvFormattedData(List<Submission> submissionList, CsvType csvType)
+    public CsvDocument generateCsvFormattedData(List<Submission> submissionList, CsvType csvType)
         throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-        switch (csvType) {
-            case Student: return csvGenerator.generateStudentCsvData(submissionList);
-            case Relationship: return csvGenerator.generateRelationshipCsvData(submissionList);
-            case ParentGuardian: return csvGenerator.generateParentGuardianCsvData(submissionList);
-            default:
-                log.warn("Unknown CSV Type requested: {}", csvType.name());
-                return null;
+      return switch (csvType) {
+        case STUDENT -> csvGenerator.generateStudentCsvData(submissionList);
+        case RELATIONSHIP -> csvGenerator.generateRelationshipCsvData(submissionList);
+        case PARENT_GUARDIAN -> csvGenerator.generateParentGuardianCsvData(submissionList);
+        default -> {
+          log.warn("Unknown CSV Type requested: {}", csvType.name());
+          yield null;
         }
+      };
+    }
+
+    /**
+     * Returns a
+     * @param submissionList
+     * @param packageType
+     * @return
+     */
+    public CsvPackage generateCsvPackage(List<Submission> submissionList, CsvPackageType packageType)
+        throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        CsvPackage csvPackage = new CsvPackage(packageType);
+
+        List<CsvType> csvTypes = packageType.getCsvTypeList();
+
+        for (CsvType csvType : csvTypes) {
+            csvPackage.addCsvDocument(generateCsvFormattedData(submissionList, csvType));
+        }
+
+        return csvPackage;
     }
 
     /**
