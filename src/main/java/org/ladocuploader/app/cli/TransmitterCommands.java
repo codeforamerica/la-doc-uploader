@@ -4,14 +4,10 @@ import com.google.common.collect.Lists;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 import formflow.library.data.Submission;
-import formflow.library.data.UserFile;
-import formflow.library.pdf.PdfService;
-import formflow.library.pdf.SubmissionFieldPreparer;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -21,7 +17,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Slf4j
@@ -53,26 +48,28 @@ public class TransmitterCommands {
         allSubmissionIds.forEach(id -> {
             Transmission transmission = transmissionRepository.getTransmissionBySubmission(Submission.builder().id(id).build());
             Submission submission = transmission.getSubmission();
-            transmissionIdToSubmission.put(transmission.getId(), submission);
-
+            // TODO: this might not be necessary - because this is a 1:1 relationship
+            transmissionIdToSubmission.put(transmission.getTransmission_id().toString(), submission);
         });
-//
-//
-//        log.info("Preparing batches");
-//        var appIdBatches = Lists.partition(appIdToSubmission.keySet().stream().toList(), 200);
-//        for (var appIdBatch : appIdBatches) {
-//            Map<String, Submission> appIdToSubmissionBatch = new HashMap<>();
-//            for (var appId : appIdBatch) {
-//                appIdToSubmissionBatch.put(appId, appIdToSubmission.get(appId));
-//            }
-//
-//            log.info("Starting batch of size={}", appIdToSubmissionBatch.size());
-//            transmitBatch(appIdToSubmissionBatch);
-//        }
+
+        log.info("Preparing batches");
+        // partition into csvs with limit of size 1000
+        var transmissionIdBatches = Lists.partition(transmissionIdToSubmission.keySet().stream().toList(), 1000);
+        var batch_index = 0;
+        for (var transmissionIdBatch : transmissionIdBatches) {
+            Map<String, Submission> transmissionIdToSubmissionBatch = new HashMap<>();
+            for (var transmissionId : transmissionIdBatch) {
+                transmissionIdToSubmissionBatch.put(transmissionId, transmissionIdToSubmission.get(transmissionId));
+            }
+
+            log.info("Starting batch of size={}", transmissionIdToSubmissionBatch.size());
+            transmitBatch(transmissionIdToSubmissionBatch, batch_index);
+            batch_index ++;
+        }
     }
 
-    private void transmitBatch(Map<String, Submission> appIdToSubmissionBatch) throws IOException, JSchException, SftpException{
-        String zipFilename = createZipFilename(appIdToSubmissionBatch);
+    private void transmitBatch(Map<String, Submission> appIdToSubmissionBatch, Integer batchIndex) throws IOException, JSchException, SftpException{
+        String zipFilename = createZipFilename(batchIndex);
         List<UUID> successfullySubmittedIds = zipFiles(appIdToSubmissionBatch, zipFilename);
 
         // send zip file
@@ -82,7 +79,7 @@ public class TransmitterCommands {
         // Update transmission in DB
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
-            Transmission transmission = transmissionRepository.getTransmissionBySubmission(submission);
+            Transmission transmission = transmissionRepository.getTransmissionBySubmissionAndType(submission, "ECE");
             transmission.setTimeSent(new Date());
             transmission.setStatus("success");
             transmissionRepository.save(transmission);
@@ -90,73 +87,96 @@ public class TransmitterCommands {
         log.info("Finished transmission of a batch");
     }
 
-    // TODO: pass in batch?
     @NotNull
-    private static String createZipFilename(Map<String, Submission> appIdToSubmission) {
-        // Format: Apps__2023-07-05.zip
+    private static String createZipFilename(Integer batchIndex) {
+        // Format: Apps__2023-07-05__0.zip
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
 
-//        String firstAppId = appIdToSubmission.keySet().stream().min(String::compareTo).get();
-//        String lastAppId = appIdToSubmission.keySet().stream().max(String::compareTo).get();
-
-        return "Apps__" + date + ".zip";
+        return "Apps__" + date + "__" + batchIndex + ".zip";
     }
 
-    private List<UUID> zipFiles(Map<String, Submission> appIdToSubmission, String zipFileName) throws IOException {
+    private Map<String, Object> generateCsvs(Map<String, Submission> transmissionIdToSubmission) {
+        Map<String, Object> csvData = new HashMap<>(Map.ofEntries(
+                Map.entry("ParentGuardian", new byte[0]),
+                Map.entry("Relationships", new byte[0]),
+                Map.entry("Student", new byte[0]),
+                Map.entry("failedRecords", new HashMap<UUID, String>())
+        ));
+        for (var submission: transmissionIdToSubmission.values()){
+            // randomly add failed records
+            if (Math.random() > 0.5){
+                csvData.put("failedRecords", Map.entry(submission.getId(), "Failed"));
+            }
+        }
+
+        return csvData;
+
+    }
+
+    private List<UUID> zipFiles(Map<String, Submission> transmissionIdToSubmission, String zipFileName) throws IOException {
         List<UUID> successfullySubmittedIds = new ArrayList<>();
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
-            for (var appNumberAndSubmission : appIdToSubmission.entrySet()) {
-                var appNumber = appNumberAndSubmission.getKey();
-                var submission = appNumberAndSubmission.getValue();
+            Map<String, Object> csvData = generateCsvs(transmissionIdToSubmission);
+            // loop over failed records and mark as failed
+            Map<UUID, String> failedSubmissions = (Map<UUID, String>) csvData.get("failedRecords");
 
-                Transmission transmission = transmissionRepository.getTransmissionBySubmission(submission);
-                if (transmission == null) {
-                    log.error("Missing transmission for submission {}", submission.getId());
-                    continue;
-                }
+             // TODO: receive the list of streams and package into a ZipFile
 
-                // TODO: is this necessary? Can we just pick up submissions which are ready?
-                if (!isComplete(submission)) {
-//                    transmission.setLastTransmissionFailureReason("skip_incomplete");
-                    transmissionRepository.save(transmission);
-                    continue;
-                }
+//            Map<String, Object> csvData = csvService.
 
-                if ("laDigitalAssister".equals(submission.getFlow())) {
-                    // TODO: do we need a subfolder?
-//                    String subfolder = createSubfolderName(submission, transmission);
-                    try {
-                            // generate applicant summary
-//                            byte[] file = renderPDFOrCrash(submission);
-//                            String fileName = "00_" + pdfService.generatePdfName(submission);
-//                            if (!fileName.endsWith(".pdf")) {
-//                                fileName += ".pdf";
-//                            }
-                            // TODO: generate all CSV files - or use dummy files for now
-
-                            byte[] file = new byte[0];
-
-//                            zos.putNextEntry(new ZipEntry(subfolder));
-//                            ZipEntry entry = new ZipEntry(subfolder + fileName);
+//            for (var transmissionAndSubmission : transmissionIdToSubmission.entrySet()) {
+//                var transmissionId = transmissionAndSubmission.getKey();
+//                var submission = transmissionAndSubmission.getValue();
+//
+//                Transmission transmission = transmissionRepository.getTransmissionBySubmission(submission);
+//                if (transmission == null) {
+//                    log.error("Missing transmission for submission {}", submission.getId());
+//                    continue;
+//                }
+//
+//                // TODO: do we need this check?
+//                if (!isComplete(submission)) {
+////                    transmission.setLastTransmissionFailureReason("skip_incomplete");
+//                    transmissionRepository.save(transmission);
+//                    continue;
+//                }
+//
+//                if ("laDigitalAssister".equals(submission.getFlow())) {
+//                    // TODO: do we need a subfolder?
+////                    String subfolder = createSubfolderName(submission, transmission);
+//                    try {
+//                            // generate applicant summary
+////                            byte[] file = renderPDFOrCrash(submission);
+////                            String fileName = "00_" + pdfService.generatePdfName(submission);
+////                            if (!fileName.endsWith(".pdf")) {
+////                                fileName += ".pdf";
+////                            }
+//                            // TODO: generate all CSV files - or use dummy files for now
+//
+////                            String fileName = submission.getId()
+//
+//                            byte[] file = new byte[0];
+//
+////                            zos.putNextEntry(new ZipEntry(subfolder));
+//                            ZipEntry entry = new ZipEntry(fileName);
 //                            entry.setSize(file.length);
 //                            zos.putNextEntry(entry);
 //                            zos.write(file);
 //                            zos.closeEntry();
-
-                        successfullySubmittedIds.add(submission.getId());
-                    } catch (Exception e) {
-                        transmission.setStatus("failed");
-                        transmissionRepository.save(transmission);
-                        log.error("Error generating file collection for submission ID {}", submission.getId(), e);
-                    }
-                } else {
-//                    transmission.setLastTransmissionFailureReason("skip_awaiting_laterdocs");
-                    transmissionRepository.save(transmission);
-                }
-            }
+//
+//                        successfullySubmittedIds.add(submission.getId());
+//                    } catch (Exception e) {
+//                        transmission.setStatus("failed");
+//                        transmissionRepository.save(transmission);
+//                        log.error("Error generating file collection for submission ID {}", submission.getId(), e);
+//                    }
+//                } else {
+//                    log.info("Skipping - it is part of another flow={}", submission.getFlow());
+//                }
+//            }
         }
 
         return successfullySubmittedIds;

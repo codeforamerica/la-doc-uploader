@@ -13,14 +13,19 @@ import org.springframework.stereotype.Component;
 public class HandleApplicationSigned implements Action {
   @Autowired
   private TransmissionRepositoryService transmissionRepositoryService;
-
   public void run(Submission submission) {
-    if (transmissionRepositoryService.transmissionExists(submission)) {
-      // already submitted. don't do anything again.
-      return;
+    // Create WIC + ECE records if they don't exist
+    if (!transmissionRepositoryService.transmissionExists(submission, "WIC")) {
+      // already submitted WIC. don't do anything again.
+      transmissionRepositoryService.createTransmissionRecord(submission, "WIC");
     }
 
-    transmissionRepositoryService.createTransmissionRecord(submission);
+    if (!transmissionRepositoryService.transmissionExists(submission, "ECE")) {
+      // already submitted WIC. don't do anything again.
+      transmissionRepositoryService.createTransmissionRecord(submission, "ECE");
+    }
+
+
 
   }
 }
