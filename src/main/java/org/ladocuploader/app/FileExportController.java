@@ -14,7 +14,7 @@ import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvService;
-import org.ladocuploader.app.csv.CsvService.CsvType;
+import org.ladocuploader.app.csv.enums.CsvType;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.ladocuploader.app.csv.CsvService.CsvType;
+import org.ladocuploader.app.csv.enums.CsvType;
 
 public class CsvGeneratorTest {
 

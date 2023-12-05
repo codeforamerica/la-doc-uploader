@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
-import org.ladocuploader.app.csv.CsvService.CsvType;
+import org.ladocuploader.app.csv.enums.CsvType;
 
 @Getter
 public class CsvDocument {
@@ -16,6 +16,7 @@ public class CsvDocument {
   @Setter
   private CsvType csvType;
 
+  // TODO Map to ERROR ENUM
   private final Map<UUID, String> errorMessages;
 
   public CsvDocument(CsvType csvType, byte [] csvData) {

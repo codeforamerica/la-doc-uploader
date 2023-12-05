@@ -1,13 +1,17 @@
 package org.ladocuploader.app.csv;
 
+import static org.ladocuploader.app.csv.enums.CsvType.PARENT_GUARDIAN;
+import static org.ladocuploader.app.csv.enums.CsvType.RELATIONSHIP;
+import static org.ladocuploader.app.csv.enums.CsvType.STUDENT;
+
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import java.time.Instant;
 import java.util.List;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.ladocuploader.app.csv.CsvPackage.CsvPackageType;
+import org.ladocuploader.app.csv.enums.CsvPackageType;
+import org.ladocuploader.app.csv.enums.CsvType;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 
@@ -20,20 +24,6 @@ public class CsvService {
     /**
      *  Enum type representing the different CSV files that can be generated.
      */
-    @Getter
-    public static enum CsvType {
-        PARENT_GUARDIAN("ParentGuardian"),
-        STUDENT("Student"),
-        RELATIONSHIP("Relationship"),
-        ECE_APPLICATION("ECE Application"),
-        WIC_APPLICATION("WIC Application");
-
-        private final String name;
-        CsvType(String name) {
-            this.name = name;
-        }
-    }
-
     public CsvService(CsvGenerator csvGenerator) {
         this.csvGenerator = csvGenerator;
     }
