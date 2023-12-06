@@ -4,6 +4,7 @@ import formflow.library.data.FlowInputs;
 import formflow.library.data.annotations.Money;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
@@ -344,46 +345,55 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String authorizedRepSpendingAuthorization;
 
-//  @NotBlank(message="{error.missing-firstname}")
+  @NotBlank(message="{error.missing-firstname}")
   private String authorizedRepFirstName;
 
-//  @NotBlank(message="{error.missing-lastname}")
+  @NotBlank(message="{error.missing-lastname}")
   private String authorizedRepLastName;
 
   private String authorizedRepOtherNames;
 
+  @NotBlank(message="{error.missing-general}")
   private String authorizedRepStreetAddress1;
 
   private String authorizedRepStreetAddress2;
 
-  private String authorizedRepZipCode;
-
-  private String authorizedRepState;
-
+  @NotBlank(message="{error.missing-general}")
   private String authorizedRepCity;
 
+  @NotBlank(message="{error.missing-general}")
+  private String authorizedRepState;
+
+  @NotBlank(message="{error.missing-general}")
+  @Pattern(regexp = "\\d{5}", message = "{error.format-zip}")
+  private String authorizedRepZipCode;
+
+  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
   private String authorizedRepPhoneNumber;
 
   private String needsMedicaid;
 
+  @NotBlank(message="{error.missing-general}")
   private String votingRegistrationRequested;
 
+  @NotBlank(message="{error.missing-general}")
   private String votingRegistrationHelpRequested;
 
   private String permissionToAskAboutRace;
 
   private String ethnicitySelected;
 
-  private String raceSelected;
+  private List<String> raceSelected;
 
-  private String rightsAndResponsibilitiesAgree;
+  private List<String> rightsAndResponsibilitiesAgree;
 
-  private String noIncorrectInformationAgree;
+  private List<String> noIncorrectInformationAgree;
 
-  private String programsSharingDataAccessAgree;
+  private List<String> programsSharingDataAccessAgree;
 
-  private String nonDiscriminationStatementAgree;
+  private List<String> nonDiscriminationStatementAgree;
 
+  @NotBlank(message="{error.missing-general}")
   private String signature;
 
   @NotBlank(message = "{final-confirmation.answer-feedback-question}")

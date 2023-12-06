@@ -16,6 +16,8 @@ public class AssisterAction implements Action {
   protected static final String PHONE_REGEX_PATTERN="^\\(\\d{3}\\) \\d{3}-\\d{4}$";
   protected static final String EMAIL_REGEX_PATTERN="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
+  protected static final String ZIPCODE_REGEX_PATTERN="\\d{5}";
+
 
 
   @Autowired

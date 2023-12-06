@@ -42,7 +42,7 @@ public class ValidateHomeAddress extends AssisterAction {
         if(state.isBlank()){
           errorMessages.put(STATE_INPUT_NAME, List.of(translateMessage("error.missing-general")));
         };
-        if (!Pattern.matches("\\d{5}",zip)) {
+        if (!Pattern.matches(ZIPCODE_REGEX_PATTERN,zip)) {
           errorMessages.put(ZIP_INPUT_NAME, List.of(translateMessage("error.format-zip")));
         }
         if(errorMessages.containsKey(NO_HOME_ADDRESS_INPUT_NAME)){

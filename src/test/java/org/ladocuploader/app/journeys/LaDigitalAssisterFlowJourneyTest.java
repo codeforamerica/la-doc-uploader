@@ -374,7 +374,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("income-confirmation.title"));
   }
 
-
   @Test
   void fullDigitalAssisterFlow() {
     // How this works
@@ -769,64 +768,71 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("No");
 
     //    Final SignPost
-    assertThat(testPage.getTitle()).isEqualTo("Final Signpost");
+    assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative");
+    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Medicaid");
+    assertThat(testPage.getTitle()).isEqualTo(message("medicaid.title"));
 
-    testPage.navigateToFlowScreen("laDigitalAssister/authorizedRepAuthorization");
-    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative");
+    testPage.goBack();
+    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Communication Authorization");
+    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-communication.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Mail");
+    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-mail.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Spending");
+    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-spending.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Authorized Representative Contact Information");
+    testPage.navigateToFlowScreen("laDigitalAssister/authorizedRepContactInfo");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-contact-info.title"));
     testPage.enter("authorizedRepFirstName", "test");
     testPage.enter("authorizedRepLastName", "test");
+    testPage.enter("authorizedRepStreetAddress1", "test5");
+    testPage.enter("authorizedRepCity", "test2");
+    testPage.enter("authorizedRepZipCode", "12345");
+    testPage.selectFromDropdown("authorizedRepState", "CO - Colorado");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Medicaid");
-    testPage.clickButton("Yes, please share my info");
+    assertThat(testPage.getTitle()).isEqualTo(message("medicaid.title"));
+    testPage.clickButton(message("medicaid.yes"));
 
-
-    assertThat(testPage.getTitle()).isEqualTo("Register to Vote");
+    assertThat(testPage.getTitle()).isEqualTo(message("voter-registration.title"));
+    testPage.selectRadio("votingRegistrationRequested", "Yes");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Help Registering to Vote");
+    assertThat(testPage.getTitle()).isEqualTo(message("voter-registration-help.title"));
+    testPage.selectRadio("votingRegistrationHelpRequested", "No");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Race and Ethnicity");
+    assertThat(testPage.getTitle()).isEqualTo(message("race-ethnicity.title"));
     testPage.clickButton("No, skip this question");
 
-    assertThat(testPage.getTitle()).isEqualTo("Legal Stuff");
+    assertThat(testPage.getTitle()).isEqualTo(message("legal-title"));
+    testPage.goBack();
 
-    testPage.navigateToFlowScreen("laDigitalAssister/raceEthnicityAsk");
-
-    assertThat(testPage.getTitle()).isEqualTo("Race and Ethnicity");
+    assertThat(testPage.getTitle()).isEqualTo(message("race-ethnicity.title"));
     testPage.clickButton("Yes, continue");
 
-    assertThat(testPage.getTitle()).isEqualTo("Ethnicity Selection");
+    assertThat(testPage.getTitle()).isEqualTo(message("ethnicity-selection.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Race Selection");
+    assertThat(testPage.getTitle()).isEqualTo(message("race-selection.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Legal Stuff");
+    assertThat(testPage.getTitle()).isEqualTo(message("legal-title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Signature");
-    testPage.clickButton("Submit Application");
+    assertThat(testPage.getTitle()).isEqualTo(message("signature-title"));
+    testPage.enter("signature", "My signature");
+    testPage.clickButton(message("signature-submit"));
 
-    assertThat(testPage.getTitle()).isEqualTo("Confirmation");
+    assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
   }
 
   void loadUserPersonalData() {

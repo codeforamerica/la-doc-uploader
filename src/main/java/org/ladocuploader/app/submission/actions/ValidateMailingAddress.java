@@ -70,7 +70,7 @@ public class ValidateMailingAddress extends AssisterAction {
 
   protected boolean homeAddressZipHasError(Submission submission){
     if(submission.getInputData().containsKey("homeAddressZip")){
-      return !Pattern.matches("\\d{5}", submission.getInputData().get("homeAddressZip").toString());
+      return !Pattern.matches(ZIPCODE_REGEX_PATTERN, submission.getInputData().get("homeAddressZip").toString());
     } else{
       return submission.getInputData().containsKey("homeAddressZip");
     }
@@ -82,7 +82,7 @@ public class ValidateMailingAddress extends AssisterAction {
 
   protected boolean mailingAddressZipHasError(Map<String, Object> inputData){
     if(inputData.containsKey(ZIP_INPUT_NAME)){
-      return !Pattern.matches("\\d{5}", inputData.get(ZIP_INPUT_NAME).toString());
+      return !Pattern.matches(ZIPCODE_REGEX_PATTERN, inputData.get(ZIP_INPUT_NAME).toString());
     } else{
       return inputData.containsKey(ZIP_INPUT_NAME);
     }
