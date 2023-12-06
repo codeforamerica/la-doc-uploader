@@ -711,56 +711,59 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     //    Expenses SignPost
-    assertThat(testPage.getTitle()).isEqualTo("Expenses Signpost");
+    assertThat(testPage.getTitle()).isEqualTo(message("expenses-signpost.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Home Expenses");;
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));;
     testPage.clickElementById("householdHomeExpenses-Rent-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Rent");
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.rent"));
     testPage.goBack();
 
     testPage.clickElementById("householdHomeExpenses-Other-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Rent");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Other");
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.rent"));
+    testPage.enter("expensesRent", "500");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Utilities");
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.other"));
+    testPage.enter("expensesOther", "15");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
 
     testPage.clickElementById("householdUtilitiesExpenses-Water-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Water");
-    testPage.goBack();
-
-    testPage.clickElementById("householdUtilitiesExpenses-Water-label"); // none selected
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo("Dependent Care");
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo("Dependent Care Amount");
-    testPage.goBack();
-    testPage.clickButton("No");
-
-    assertThat(testPage.getTitle()).isEqualTo("Insurance Expenses");
-    testPage.clickElementById("householdInsuranceExpenses-Dental insurance premiums-label"); // none selected
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo("Dental insurance premiums");
+    assertThat(testPage.getTitle()).isEqualTo(message("utilities.water"));
     testPage.goBack();
 
     testPage.clickElementById("none__checkbox-label"); // none selected
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Elderly Care");
+    assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Elderly Care Amount");
+    assertThat(testPage.getTitle()).isEqualTo(message("dependentcare-expenses.title"));
+    testPage.goBack();
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.title"));
+    testPage.clickElementById("householdInsuranceExpenses-Dental insurance premiums-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.dental-insurance-premium"));
+    testPage.goBack();
+
+    testPage.clickElementById("none__checkbox-label"); // none selected
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare-amount.title"));
 
     testPage.goBack();
     testPage.clickButton("No");

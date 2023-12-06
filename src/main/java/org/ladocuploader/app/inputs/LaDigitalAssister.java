@@ -230,107 +230,109 @@ public class LaDigitalAssister extends FlowInputs {
   
   private String switchToIncomeByJob;
 
+  @NotEmpty
   private List<String> householdHomeExpenses;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesRent;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesMortgage;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesHomeownerInsurance;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesPropertyTax;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesCondoFees;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesLotRental;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesFloodInsurance;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesOther;
 
+  @NotEmpty
   private List<String> householdUtilitiesExpenses;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesHeating;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesCooling;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesElectricity;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesWater;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesPhone;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesGarbage;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesSewer;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesCookingFuel;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesOther;
 
   private String hasDependentCareExpenses;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesDependentCare;
 
-//  @NotEmpty
+  @NotEmpty
   private List<String> householdInsuranceExpenses;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesMedicalInsurance;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesDentalInsurance;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesVisionInsurance;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesMedicalBills;
 
   private String hasElderlyCareExpenses;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesElderlyCare;
 
   // Final Screen
