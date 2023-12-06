@@ -115,8 +115,11 @@ public class LaDigitalAssister extends FlowInputs {
   private String householdMemberHighestEducation;
 
   @Size(min=9, max=9, message="{error.invalid-ssn}")
-  @DynamicField
   private String ssn;
+
+  @Size(min=9, max=9, message="{error.invalid-ssn}")
+  @DynamicField
+  private String householdMemberSsn;
 
   private String schoolInd;
 
