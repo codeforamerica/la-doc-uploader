@@ -49,33 +49,35 @@ public class TransmitterCommands {
     public void transmit() throws IOException, JSchException, SftpException {
         log.info("Finding submissions to transmit...");
         var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted());
-        log.info("Total submissions to transmit in all batches is {}", allSubmissions.size());
+        log.info("Total submissions to transmit is {}", allSubmissions.size());
 
-        List<UUID> allSubmissionIds = new ArrayList<>();
-        allSubmissions.forEach(submission -> {
-            allSubmissionIds.add(submission.getId());
-        });
+//        List<UUID> allSubmissionIds = new ArrayList<>();
+//        allSubmissions.forEach(submission -> {
+//            allSubmissionIds.add(submission.getId());
+//        });
 
-        log.info("Preparing batches");
+        log.info("Transmitting submissions");
+        transmitBatch(allSubmissions);
         // partition into csvs with limit of size 500
-        var submissionIdBatches = Lists.partition(allSubmissionIds, 500);
-        var batch_index = 0;
-        for (var submissionIdBatch : submissionIdBatches) {
-            Map<UUID, Submission> submissionIdToSubmissionBatch = new HashMap<>();
-            for (var submissionId : submissionIdBatch) {
-                Submission submission = Submission.builder().id(submissionId).build();
-                submissionIdToSubmissionBatch.put(submissionId, submission);
-            }
-
-            log.info("Starting batch of size={}", submissionIdToSubmissionBatch.size());
-            transmitBatch(submissionIdToSubmissionBatch, batch_index);
-            batch_index ++;
-        }
+//        var submissionIdBatches = Lists.partition(allSubmissionIds, 500);
+//        var batch_index = 0;
+//        for (var submissionIdBatch : submissionIdBatches) {
+//            Map<UUID, Submission> submissionIdToSubmissionBatch = new HashMap<>();
+//            for (var submissionId : submissionIdBatch) {
+//
+//
+//                submissionIdToSubmissionBatch.put(submissionId, );
+//            }
+//
+//            log.info("Starting batch of size={}", submissionIdToSubmissionBatch.size());
+//            transmitBatch(submissionIdToSubmissionBatch, batch_index);
+//            batch_index ++;
+//        }
     }
 
-    private void transmitBatch(Map<UUID, Submission> submissionIdToSubmission, Integer batchIndex) throws IOException, JSchException, SftpException{
-        String zipFilename = createZipFilename(batchIndex);
-        List<UUID> successfullySubmittedIds = zipFiles(submissionIdToSubmission, zipFilename);
+    private void transmitBatch(List<Submission> submissions) throws IOException, JSchException, SftpException{
+        String zipFilename = createZipFilename(1);
+        List<UUID> successfullySubmittedIds = zipFiles(submissions, zipFilename);
 
         // send zip file
         log.info("Uploading zip file");
@@ -94,37 +96,18 @@ public class TransmitterCommands {
 
     @NotNull
     private static String createZipFilename(Integer batchIndex) {
-        // Format: Apps__2023-07-05__0.zip
+        // Format: Apps__2023-07-05.zip
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
-
         return "Apps__" + date + "__" + batchIndex + ".zip";
     }
 
-    private Map<String, Object> generateCsvs(Map<String, Submission> transmissionIdToSubmission) {
-        Map<String, Object> csvData = new HashMap<>(Map.ofEntries(
-                Map.entry("ParentGuardian", new byte[0]),
-                Map.entry("Relationships", new byte[0]),
-                Map.entry("Student", new byte[0]),
-                Map.entry("failedRecords", new HashMap<UUID, String>())
-        ));
-        for (var submission: transmissionIdToSubmission.values()){
-            // randomly add failed records
-            if (Math.random() > 0.5){
-                csvData.put("failedRecords", Map.entry(submission.getId(), "Failed"));
-            }
-        }
-
-        return csvData;
-
-    }
-
-    private List<UUID> zipFiles(Map<UUID, Submission> submissionIdToSubmission, String zipFileName) throws IOException {
+    private List<UUID> zipFiles(List<Submission> submissions, String zipFileName) throws IOException {
         List<UUID> successfullySubmittedIds = new ArrayList<>();
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
-            CsvPackage ecePackage = csvService.generateCsvPackage(submissionIdToSubmission.values().stream().toList(), CsvPackageType.ECE_PACKAGE);
+            CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
             // TODO: collect failures
             byte [] studentDoc = ecePackage.getCsvDocument(CsvType.STUDENT).getCsvData();
             byte [] parentGuardianDoc = ecePackage.getCsvDocument(CsvType.PARENT_GUARDIAN).getCsvData();

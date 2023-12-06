@@ -36,7 +36,8 @@ public class SftpClientImpl implements SftpClient {
         sftp.connect(5000);
 
         ChannelSftp channelSftp = (ChannelSftp) sftp;
-        channelSftp.put(zipFilename, "/inbox/" + zipFilename);
+        // TODO: make this an input?
+        channelSftp.put(zipFilename, "/la-du-moveit-transfer/nola-ps-staging/" + zipFilename);
 
         channelSftp.exit();
     }

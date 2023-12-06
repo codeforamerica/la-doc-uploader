@@ -1,0 +1,9 @@
+1701879222700:java -Dserver.port=9191 -jar /opt/la-doc-uploader/app.jar transmit
+1701879227647:transmit
+1701880191090:transmit staketrace
+1701880201946:stacktrace
+1701880366117:transmit
+1701880509762:stacktrace
+1701880912965:transmit
+1701880939237:exit
+1701880952070:transmit
