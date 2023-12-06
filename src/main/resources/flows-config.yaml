@@ -106,8 +106,7 @@ flow:
   householdMemberDeleteConfirmation:
     nextScreens: null
   ssnForm:
-#    beforeSaveAction: EncryptSSNBeforeSaving
-    beforeSaveAction: StoreSSNsForHouseholdMembers
+    beforeSaveAction: EncryptSSNBeforeSaving
     beforeDisplayAction: DecryptSSNBeforeDisplaying
     nextScreens:
       - name: householdSpecialSituations
