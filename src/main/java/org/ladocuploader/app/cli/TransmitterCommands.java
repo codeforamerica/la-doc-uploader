@@ -111,11 +111,17 @@ public class TransmitterCommands {
             // TODO: collect failures
             byte [] studentDoc = ecePackage.getCsvDocument(CsvType.STUDENT).getCsvData();
             byte [] parentGuardianDoc = ecePackage.getCsvDocument(CsvType.PARENT_GUARDIAN).getCsvData();
-            ZipEntry entry = new ZipEntry("student.csv");
+            ZipEntry entry = new ZipEntry(CsvType.STUDENT.getFileName());
             entry.setSize(studentDoc.length);
             zos.putNextEntry(entry);
             zos.write(studentDoc);
             zos.closeEntry();
+            ZipEntry nextEntry = new ZipEntry(CsvType.PARENT_GUARDIAN.getFileName());
+            nextEntry.setSize(parentGuardianDoc.length);
+            zos.putNextEntry(nextEntry);
+            zos.write(parentGuardianDoc);
+            zos.closeEntry();
+
         } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
             throw new RuntimeException(e);
         }
@@ -142,7 +148,7 @@ public class TransmitterCommands {
     }
 
     private static boolean doTransmitApplication(String appNumber, Submission submission) {
-        // TODO: use this to delay submission if it is less than 2 hours old to prevent doc-less submissions?
+        // TODO: use this to delay submission if it is less than 2 hours old to prevent doc-less submissions? use this to defer
         // delay 7 days if there aren't any uploaded docs associated with this application
 //        Instant submittedAt = submission.getSubmittedAt().toInstant();
 //        long diffDays = ChronoUnit.DAYS.between(submittedAt, Instant.now());

@@ -95,8 +95,8 @@ public class StudentCsvModel extends BaseCsvModel {
 
                 Map<String, Object> studentData = new HashMap<>();
                 studentData.put("id", submission.getId());
-                studentData.put("firstName", member.get("firstName"));
-                studentData.put("lastName", member.get("lastName"));
+                studentData.put("firstName", member.get("householdMemberFirstName"));
+                studentData.put("lastName", member.get("householdMemberLastName"));
                 studentData.put("memberBirthDay", member.get("householdBirthDay"));
                 studentData.put("memberBirthMonth", member.get("householdBirthMonth"));
                 studentData.put("memberBirthYear", member.get("householdBirthYear"));

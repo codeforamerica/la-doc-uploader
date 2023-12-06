@@ -44,6 +44,7 @@ public class CsvService {
         case STUDENT -> csvGenerator.generateStudentCsvData(submissionList);
         case RELATIONSHIP -> csvGenerator.generateRelationshipCsvData(submissionList);
         case PARENT_GUARDIAN -> csvGenerator.generateParentGuardianCsvData(submissionList);
+        case ECE_APPLICATION -> new CsvDocument(CsvType.ECE_APPLICATION, new byte[0]);
         default -> {
           log.warn("Unknown CSV Type requested: {}", csvType.name());
           yield null;
