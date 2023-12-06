@@ -9,6 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
+  protected static final String RANGE_ERROR_MESSAGE="Make sure to provide a value between 1 and 100.";
+
   @Test
   void chooseProgramsFlow() {
     testPage.navigateToFlowScreen("laDigitalAssister/choosePrograms");
@@ -236,6 +238,142 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
   }
+
+  @Test
+  void hourlyIncomeFlow(){
+    loadUserPersonalData();
+    loadHouseHoldData("First", "User", "12", "22", "1991");
+    loadHouseHoldData("Second", "User", "01", "23", "1997");
+    preloadIncomeScreen();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
+    testPage.clickContinue();
+    assert(testPage.hasErrorText(message("error.missing-general")));
+
+    testPage.clickElementById("householdMemberJobAdd-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("employer-name.title"));
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-general")));
+    testPage.enter("employerName", "job1");
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("self-employment.title"));
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-paid-by-hour.title"));
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-hourly-wage.title"));
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-dollar-amount")));
+    testPage.enter("hourlyWage", "a");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.invalid-money")));
+    testPage.enter("hourlyWage", ".99");
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-hours-per-week.title"));
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(RANGE_ERROR_MESSAGE));
+    assert(testPage.hasErrorText(message("error.missing-general")));
+
+    testPage.enter("hoursPerWeek", "100000");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(RANGE_ERROR_MESSAGE));
+
+    testPage.enter("hoursPerWeek", "10");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-confirmation.title"));
+  }
+
+  @Test
+  void monthlyIncomeFlow(){
+    loadUserPersonalData();
+    loadHouseHoldData("Third", "User", "12", "22", "1991");
+    loadHouseHoldData("Fourth", "User", "01", "23", "1997");
+    preloadIncomeScreen();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
+    testPage.clickLink(message("income-by-job.enter-directly"));
+
+    assertThat(testPage.getTitle()).isEqualTo(message("household-annual-income.title"));
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-dollar-amount")));
+    testPage.enter("monthlyHouseholdIncome", "abc");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.invalid-money")));
+    testPage.enter("monthlyHouseholdIncome", "1286.55");
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-list.title"));
+  }
+
+  @Test
+  void otherIncomeFlow(){
+    loadUserPersonalData();
+    loadHouseHoldData("Third", "User", "12", "22", "1991");
+    loadHouseHoldData("Fourth", "User", "01", "23", "1997");
+    preloadIncomeScreen();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
+    testPage.clickContinue();
+    assert(testPage.hasErrorText(message("error.missing-general")));
+
+    testPage.clickElementById("householdMemberJobAdd-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("employer-name.title"));
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-general")));
+    testPage.enter("employerName", "job1");
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("self-employment.title"));
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-paid-by-hour.title"));
+    testPage.clickButton("No");
+
+    testPage.clickContinue();
+    assert(testPage.hasErrorText(message("error.missing-pay-period")));
+
+    testPage.selectRadio("payPeriod", "Every month");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-pay-amount.title"));
+
+    testPage.enter("payPeriodAmount", "a");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.invalid-money")));
+    testPage.enter("payPeriodAmount", "282.99");
+
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-confirmation.title"));
+  }
+
 
   @Test
   void fullDigitalAssisterFlow() {
@@ -506,47 +644,70 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("Criminal Justice");
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Signpost");
+    assertThat(testPage.getTitle()).isEqualTo(message("income-signpost.title"));
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Job search");
-    testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo("Job search who");
-    testPage.clickElementById("jobSearch-you");
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Work disqualifications");
-    testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Employment status");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-search.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Income by job");
-    testPage.clickLink("I already know my monthly household pre-tax income - I prefer to enter it directly.");
+    assertThat(testPage.getTitle()).isEqualTo(message("job-search-who.title"));
+    testPage.clickElementById("jobSearch-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("work-disqualifications.title"));
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("employment-status.title"));
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
+
+    testPage.clickLink(message("income-by-job.enter-directly"));
+
+    assertThat(testPage.getTitle()).isEqualTo(message("household-annual-income.title"));
+
     testPage.enter("monthlyHouseholdIncome", "200");
     testPage.clickContinue();
-    testPage.clickButton("Yes, add income by job");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-list.title"));
+
+    testPage.clickButton(message("household-income-total.yes"));
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Income who");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
     testPage.clickElementById("householdMemberJobAdd-you");
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Employer name");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("employer-name.title"));
     testPage.enter("employerName", "job1");
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Self-employment");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("self-employment.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Paid by the hour");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-paid-by-hour.title"));
     testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo("Hourly wage");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-hourly-wage.title"));
     testPage.enter("hourlyWage", "15");
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Hours a week");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-hours-per-week.title"));
     testPage.enter("hoursPerWeek", "10");
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-confirmation.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Income list");
-    testPage.clickButton("I'm done adding jobs");
-    assertThat(testPage.getTitle()).isEqualTo("Additional income");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("income-list.title"));
+    testPage.clickButton(message("income-list.continue"));
+
+    assertThat(testPage.getTitle()).isEqualTo(message("additional-income.title"));
+    testPage.clickElementById("none__checkbox");
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Money on hand");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("money-on-hand.title"));
+    testPage.enter("moneyOnHand", "0");
     testPage.clickContinue();
 
     //    Expenses SignPost
@@ -664,11 +825,47 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo("Confirmation");
   }
-  @Test
-  void fullDigitalAssisterFlow2() {
 
-    testPage.navigateToFlowScreen("laDigitalAssister/multiplePersonHousehold");
+  void loadUserPersonalData() {
+    testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
 
+    testPage.enter("firstName", "test");
+    testPage.enter("lastName", "test2");
+    testPage.enter("birthMonth", "12");
+    testPage.enter("birthDay", "25");
+    testPage.enter("birthYear", "1985");
+    testPage.selectRadio("sex", "F");
+    testPage.clickContinue();
   }
 
+  void loadHouseHoldData(String firstName, String lastName, String month, String day, String year) {
+    testPage.navigateToFlowScreen("laDigitalAssister/householdInfo");
+    testPage.enter("householdMemberFirstName", firstName);
+    testPage.enter("householdMemberLastName", lastName);
+    testPage.enter("householdMemberBirthMonth", month);
+    testPage.enter("householdMemberBirthDay", day);
+    testPage.enter("householdMemberBirthYear", year);
+    testPage.selectRadio("householdMemberSex", "F");
+    testPage.clickContinue();
+  }
+
+  void preloadIncomeScreen(){
+    testPage.navigateToFlowScreen("laDigitalAssister/incomeSignPost");
+    testPage.clickContinue();
+
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("job-search-who.title"));
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.missing-general")));
+
+    testPage.clickElementById("jobSearch-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("work-disqualifications.title"));
+    testPage.clickButton("No");
+
+    testPage.clickButton("No");
+  }
 }

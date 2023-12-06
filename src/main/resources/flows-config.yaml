@@ -94,7 +94,6 @@ flow:
     nextScreens:
       - name: householdInfo
   householdInfo:
-#    crossFieldValidationAction: ValidateHouseholdBirthdate
     subflow: household
     nextScreens:
       - name: householdList
@@ -106,7 +105,6 @@ flow:
   householdMemberDeleteConfirmation:
     nextScreens: null
   ssnForm:
-#    crossFieldValidationAction: ValidateHouseholdSSN
     beforeSaveAction: EncryptSSNBeforeSaving
     beforeDisplayAction: DecryptSSNBeforeDisplaying
     nextScreens:

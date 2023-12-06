@@ -132,18 +132,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String citizenshipInd;
 
-  private String selfEmploymentIncome;
-
-  @NotBlank
-  private String householdMemberJobAdd;
-
-  @NotBlank
-  private String employerName;
-
-  private String selfEmployed;
-
-  private String jobPaidByHour;
-
   private String nonCitizens;
 
   private String citizenshipNumber;
@@ -172,12 +160,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String meals;
 
-  // Income
-  private String householdSearchingForJob;
-
-  private String jobSearch;
-
-  private String workDisqualificationInd;
 
   //  Sensitive Questions
   private String householdHasPersonalSituations;
@@ -200,31 +182,50 @@ public class LaDigitalAssister extends FlowInputs {
   
   private String personalSituationDisability;
 
+  // Income
+  private String householdSearchingForJob;
 
-  @Money
-  @NotBlank
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> jobSearch;
+
+  private String workDisqualificationInd;
+
+  private String selfEmploymentIncome;
+
+  @NotBlank(message="{error.missing-general}")
+  private String householdMemberJobAdd;
+
+  @NotBlank(message="{error.missing-general}")
+  private String employerName;
+
+  private String selfEmployed;
+
+  private String jobPaidByHour;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String hourlyWage;
 
-  @Range(min=1, max=100)
-  @NotBlank
+  @Range(message="{error.invalid-range}", min=1, max=100)
+  @NotBlank(message="{error.missing-general}")
   private String hoursPerWeek;
 
-//  @NotBlank(message="{error.missing-pay-period}")
+  @NotBlank(message="{error.missing-pay-period}")
   private String payPeriod;
 
-  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String payPeriodAmount;
 
-//  @NotEmpty
+  @NotEmpty
   private List<String> additionalIncome;
 
-  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String moneyOnHand;
 
-//  @Money
-//  @NotBlank(message="{error.missing-dollar-amount}")
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String monthlyHouseholdIncome;
   
   private String switchToIncomeByJob;
