@@ -11,9 +11,11 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.csv.model.BaseCsvModel;
+import org.ladocuploader.app.csv.model.ECEApplicationCsvModel;
 import org.ladocuploader.app.csv.model.ParentGuardianCsvModel;
 import org.ladocuploader.app.csv.model.StudentCsvModel;
 import org.ladocuploader.app.csv.model.RelationshipCsvModel;
+import org.ladocuploader.app.csv.model.WICApplicationCsvModel;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
@@ -64,6 +66,32 @@ public class CsvGenerator {
         }
         byte [] data = generateCsv(StudentCsvModel.class, studentList);
         return new CsvDocument(CsvType.STUDENT, data);
+    }
+
+    public CsvDocument generateECEApplicationCsvData(List<Submission> submissionList)
+        throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+
+        List<BaseCsvModel> applicationList = new ArrayList<>();
+
+        for (Submission submission : submissionList) {
+            BaseCsvModel application = ECEApplicationCsvModel.generateModel(submission);
+            applicationList.add(application);
+        }
+        byte [] data = generateCsv(ECEApplicationCsvModel.class, applicationList);
+        return new CsvDocument(CsvType.ECE_APPLICATION, data);
+    }
+
+    public CsvDocument generateWICApplicationCsvData(List<Submission> submissionList)
+        throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+
+        List<BaseCsvModel> applicationList = new ArrayList<>();
+
+        for (Submission submission : submissionList) {
+            BaseCsvModel application = WICApplicationCsvModel.generateModel(submission);
+            applicationList.add(application);
+        }
+        byte [] data = generateCsv(WICApplicationCsvModel.class, applicationList);
+        return new CsvDocument(CsvType.WIC_APPLICATION, data);
     }
 
     private byte[] generateCsv(Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {

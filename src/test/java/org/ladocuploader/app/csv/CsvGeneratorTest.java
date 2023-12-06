@@ -70,8 +70,8 @@ public class CsvGeneratorTest {
       for (int h = 0; h < NUM_KIDS; h++) {
         Map<String, Object> entry = new HashMap<>();
         entry.put("uuid", UUID.fromString(String.format("%s00%02d",fakePersonUUIDPrefix, h)));
-        entry.put("firstName", kidsNames.get(h));
-        entry.put("lastName", lastNames.get(i));
+        entry.put("householdMemberFirstName", kidsNames.get(h));
+        entry.put("householdMemberLastName", lastNames.get(i));
         entry.put("householdBirthDay", String.format("%d", h+1));
         entry.put("householdBirthMonth", "11");
         entry.put("householdBirthYear", "2001");
