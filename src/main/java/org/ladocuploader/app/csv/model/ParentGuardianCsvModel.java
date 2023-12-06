@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.*;
 import formflow.library.data.Submission;
+import java.util.HashMap;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Map;
+import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 
 @Getter
 @Setter
@@ -31,11 +33,11 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
     @CsvBindByName(column="email_address", required=true)
     private String emailAddress;
 
-    @CsvBindByName(column="phone_number", required=true)
+    @CsvCustomBindByName(column="phone_number", required=true, converter= PhoneNumberConverter.class)
     private String phoneNumber;
 
     @CsvCustomBindByName(column="street_address", required=true, converter=AddressStreetConverter.class)
-    private List<String> homeAddressStreet = new ArrayList<>();
+    private Map<String, String> homeAddressStreet = new HashMap<>();
 
     @CsvBindByName(column="city", required=true)
     private String homeAddressCity;
@@ -48,12 +50,16 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
 
     @JsonSetter(value="homeAddressStreetAddress1")
     private void setHomeAddress1(final String address) {
-        homeAddressStreet.add(0, address);
+        if (address != null) {
+            homeAddressStreet.put("address1", address);
+        }
     }
 
     @JsonSetter(value="homeAddressStreetAddress2")
     private void setHomeAddress2(final String address) {
-        homeAddressStreet.add(1, address);
+        if (address != null) {
+            homeAddressStreet.put("address2", address);
+        }
     }
 
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {

@@ -32,7 +32,7 @@ public class StudentCsvModel extends BaseCsvModel {
     private String lastName; // student's last name
 
     @CsvCustomBindByName(column="street_address", required=true, converter=AddressStreetConverter.class)
-    private List<String> homeAddressStreet = new ArrayList<>();
+    private Map<String, String> homeAddressStreet = new HashMap<>();
 
     @CsvBindByName(column="city", required=true)
     private String homeAddressCity;
@@ -44,31 +44,41 @@ public class StudentCsvModel extends BaseCsvModel {
     private String homeAddressZipCode;
 
     @CsvCustomBindByName(column="birth_date", required=true, converter= HouseholdBirthDateConverter.class)
-    private Map<String, Integer> birthDate;
+    private Map<String, Integer> birthDate = new HashMap<>();
 
     @JsonSetter(value="memberBirthDay")
     private void setMemberBirthDay(final String day) {
-        birthDate.put("day", Integer.valueOf(day));
+        if (day != null) {
+            birthDate.put("day", Integer.valueOf(day));
+        }
     }
 
     @JsonSetter(value="memberBirthMonth")
     private void setMemberBirthMonth(final String month) {
-        birthDate.put("month", Integer.valueOf(month));
+        if (month != null) {
+            birthDate.put("month", Integer.valueOf(month));
+        }
     }
 
     @JsonSetter(value="memberBirthYear")
     private void setMemberBirthYear(final String year) {
-        birthDate.put("year", Integer.valueOf(year));
+        if (year != null) {
+            birthDate.put("year", Integer.valueOf(year));
+        }
     }
 
     @JsonSetter(value="homeAddressStreetAddress1")
     private void setHomeAddress1(final String address) {
-        homeAddressStreet.add(0, address);
+        if (address != null) {
+            homeAddressStreet.put("address1", address);
+        }
     }
 
     @JsonSetter(value="homeAddressStreetAddress2")
     private void setHomeAddress2(final String address) {
-        homeAddressStreet.add(1, address);
+        if (address != null) {
+            homeAddressStreet.put("address2", address);
+        }
     }
 
     public static List<BaseCsvModel> generateModel(Submission submission){
@@ -87,19 +97,17 @@ public class StudentCsvModel extends BaseCsvModel {
                 studentData.put("id", submission.getId());
                 studentData.put("firstName", member.get("firstName"));
                 studentData.put("lastName", member.get("lastName"));
+                studentData.put("memberBirthDay", member.get("householdBirthDay"));
+                studentData.put("memberBirthMonth", member.get("householdBirthMonth"));
+                studentData.put("memberBirthYear", member.get("householdBirthYear"));
                 studentData.put("homeAddressStreetAddress1", inputData.get("homeAddressStreetAddress1"));
                 studentData.put("homeAddressStreetAddress2", inputData.get("homeAddressStreetAddress2"));
                 studentData.put("homeAddressCity", inputData.get("homeAddressCity"));
                 studentData.put("homeAddressState", inputData.get("homeAddressState"));
                 studentData.put("homeAddressZipCode", inputData.get("homeAddressZipCode"));
-                studentData.put("memberBirthDay", member.get("householdBirthDay"));
-                studentData.put("memberBirthMonth", member.get("householdBirthMonth"));
-                studentData.put("memberBirthYear", member.get("householdBirthYear"));
                 students.add(mapper.convertValue(studentData, StudentCsvModel.class));
             }
         }
-
         return students;
     }
-
 }
