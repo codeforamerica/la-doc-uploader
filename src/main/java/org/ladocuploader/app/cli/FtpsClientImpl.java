@@ -4,6 +4,7 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -13,7 +14,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 @Component
-//@Profile("production")
+@Profile("production")
 public class FtpsClientImpl implements FtpsClient {
 
   private final String username;
