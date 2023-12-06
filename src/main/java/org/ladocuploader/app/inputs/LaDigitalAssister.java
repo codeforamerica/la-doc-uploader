@@ -88,8 +88,10 @@ public class LaDigitalAssister extends FlowInputs {
   // Household
   private String multiplePersonHousehold;
 
+  @NotBlank(message="{error.missing-firstname}")
   private String householdMemberFirstName;
 
+  @NotBlank(message="{error.missing-firstname}")
   private String householdMemberLastName;
 
   private String householdMemberOtherNames;
@@ -100,8 +102,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String householdMemberBirthYear;
 
+  @NotBlank(message="{error.missing-general}")
   private String householdMemberRelationship;
 
+  @NotBlank(message="{error.missing-general}")
   private String householdMemberSex;
 
   private String householdMemberMaritalStatus;

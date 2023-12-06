@@ -482,165 +482,182 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     // Household
 
-    assertThat(testPage.getTitle()).isEqualTo("Housemate info");
+    assertThat(testPage.getTitle()).isEqualTo(message("household-info.title"));
     testPage.enter("householdMemberFirstName", "roomy");
     testPage.enter("householdMemberLastName", "smith");
+    testPage.selectRadio("householdMemberSex", "F");
+    testPage.enter("householdMemberBirthMonth", "1");
+    testPage.enter("householdMemberBirthDay", "25");
+    testPage.enter("householdMemberBirthYear", "1991");
+    testPage.selectFromDropdown("householdMemberRelationship", message("household-info.relationship.step-child"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Household list");
+    assertThat(testPage.getTitle()).isEqualTo(message("household-list.title"));
     testPage.clickButton("Yes, this is everyone");
 
-    assertThat(testPage.getTitle()).isEqualTo("SSN");
+    assertThat(testPage.getTitle()).isEqualTo(message("ssn-form.title"));
     testPage.clickLink("Learn why we ask for SSNs");
-    assertThat(testPage.getTitle()).isEqualTo("SSN faqs");
-    testPage.clickButton("Back");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("ssn-faqs.title"));
+    testPage.goBack();
+
     testPage.clickContinue();
 
     // Special situations
-    assertThat(testPage.getTitle()).isEqualTo("Next step");
+    assertThat(testPage.getTitle()).isEqualTo(message("special-situations.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("School");
+    assertThat(testPage.getTitle()).isEqualTo(message("school.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Pregnancy");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("pregnancy.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("School who");
+    assertThat(testPage.getTitle()).isEqualTo(message("school-who.title"));
     testPage.clickElementById("students-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Pregnancy");
+    assertThat(testPage.getTitle()).isEqualTo(message("pregnancy.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Out of state benefits");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("out-of-state-benefits.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Pregnancy who");
+    assertThat(testPage.getTitle()).isEqualTo(message("pregnancy-who.title"));
     testPage.clickElementById("pregnancies-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Out of state benefits");
+    assertThat(testPage.getTitle()).isEqualTo(message("out-of-state-benefits.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Prepare food");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("household-prepare-food.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Out of state benefits who");
+    assertThat(testPage.getTitle()).isEqualTo(message("out-of-state-benefits-who.title"));
     testPage.clickElementById("outOfStateBenefitsRecipients-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Prepare food");
+    assertThat(testPage.getTitle()).isEqualTo(message("household-prepare-food.title"));
     testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo("Prepare food who");
+    assertThat(testPage.getTitle()).isEqualTo(message("household-prepare-food-who.title"));
     testPage.clickElementById("preparesFood-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Seasonal farm worker");
+    assertThat(testPage.getTitle()).isEqualTo(message("seasonal-farmworker.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Citizenship");
+    assertThat(testPage.getTitle()).isEqualTo(message("citizenship.title"));
     testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo("Veteran");
+    assertThat(testPage.getTitle()).isEqualTo(message("veteran.title"));
     testPage.goBack();
     testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo("Non-citizen");
+    assertThat(testPage.getTitle()).isEqualTo(message("non-citizen.title"));
     testPage.clickElementById("nonCitizens-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Citizenship number");
+    assertThat(testPage.getTitle()).isEqualTo(message("citizenship-number.title"));
     testPage.selectFromDropdown("citizenshipNumber", "1 people");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Veteran");
+    assertThat(testPage.getTitle()).isEqualTo(message("veteran.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Foster");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("foster.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Veteran who");
+    assertThat(testPage.getTitle()).isEqualTo(message("veteran-who.title"));
     testPage.clickElementById("veterans-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Foster");
+    assertThat(testPage.getTitle()).isEqualTo(message("foster.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Foster aged out");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("foster-aged-out.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Foster who");
+    assertThat(testPage.getTitle()).isEqualTo(message("foster-who.title"));
     testPage.clickElementById("fosters-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Foster aged out");
+    assertThat(testPage.getTitle()).isEqualTo(message("foster-aged-out.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Homeless");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("homeless.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Foster aged out who");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("foster-aged-out-who.title"));
     testPage.clickElementById("fostersAgedOut-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Homeless");
+    assertThat(testPage.getTitle()).isEqualTo(message("homeless.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Room rental");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("household-room-rental.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Homelessness who");
+    assertThat(testPage.getTitle()).isEqualTo(message("homeless-who.title"));
     testPage.clickElementById("homeless-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Room rental");
+    assertThat(testPage.getTitle()).isEqualTo(message("household-room-rental.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Meals");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("household-meals.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Room rental who");
+    assertThat(testPage.getTitle()).isEqualTo(message("household-room-rental-who.title"));
     testPage.clickElementById("roomRentals-you");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Meals");
+    assertThat(testPage.getTitle()).isEqualTo(message("household-meals.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("sensitive-questions.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Meals who");
+    assertThat(testPage.getTitle()).isEqualTo(message("household-meals-who.title"));
     testPage.clickElementById("meals-you");
     testPage.clickContinue();
 
     // Sensitive Questions
-    assertThat(testPage.getTitle()).isEqualTo("Sensitive Questions");
+    assertThat(testPage.getTitle()).isEqualTo(message("sensitive-questions.title"));
     testPage.clickContinue();
 
     //    Case when no personal situations apply
-    assertThat(testPage.getTitle()).isEqualTo("Personal Situations");
+    assertThat(testPage.getTitle()).isEqualTo(message("personal-situations.title"));
     testPage.clickButton("No");
-    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
 
+    assertThat(testPage.getTitle()).isEqualTo(message("domestic-violence.title"));
+    testPage.goBack();
 
-    testPage.navigateToFlowScreen("laDigitalAssister/householdPersonalSituations");
-    assertThat(testPage.getTitle()).isEqualTo("Personal Situations");
-
+    assertThat(testPage.getTitle()).isEqualTo(message("personal-situations.title"));
     testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo("Personal Situations Who");
 
+    assertThat(testPage.getTitle()).isEqualTo(message("personal-situations-who.title"));
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Which Personal Situations");
 
+    assertThat(testPage.getTitle()).isEqualTo(message("personal-situations-which.title"));
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Domestic Violence Victim");
 
+    assertThat(testPage.getTitle()).isEqualTo(message("domestic-violence.title"));
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice Involvement Warning");
 
+    assertThat(testPage.getTitle()).isEqualTo(message("criminal-justice-warning.title"));
     testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo("Criminal Justice");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("criminal-justice.title"));
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-signpost.title"));
@@ -788,8 +805,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-spending.title"));
     testPage.clickButton("Yes");
 
-    testPage.navigateToFlowScreen("laDigitalAssister/authorizedRepContactInfo");
-
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-contact-info.title"));
     testPage.enter("authorizedRepFirstName", "test");
     testPage.enter("authorizedRepLastName", "test");
@@ -834,7 +849,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
   }
-
   void loadUserPersonalData() {
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
 
@@ -854,6 +868,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("householdMemberBirthMonth", month);
     testPage.enter("householdMemberBirthDay", day);
     testPage.enter("householdMemberBirthYear", year);
+    testPage.selectFromDropdown("householdMemberRelationship", message("household-info.relationship.step-child"));
     testPage.selectRadio("householdMemberSex", "F");
     testPage.clickContinue();
   }
