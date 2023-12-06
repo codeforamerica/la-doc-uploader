@@ -375,6 +375,24 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
+  void socialSecurityFlow(){
+    loadUserPersonalData();
+
+    testPage.navigateToFlowScreen("laDigitalAssister/ssnForm");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("ssn-form.title"));
+
+    testPage.enter("ssn", "1234");
+    testPage.clickContinue();
+
+    assert(testPage.hasErrorText(message("error.invalid-ssn")));
+    testPage.enter("ssn", "");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("special-situations.title"));
+  }
+
+  @Test
   void fullDigitalAssisterFlow() {
     // How this works
     testPage.navigateToFlowScreen("laDigitalAssister/howThisWorks");

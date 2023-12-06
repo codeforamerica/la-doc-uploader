@@ -16,12 +16,14 @@
             <div class="form-card__content">
               <th:block th:replace="~{'fragments/inputs/text' ::
                 text(inputName=${'ssn'},
+                helpText=#{general.optional},
                 label=#{ssn-form.ssn-question(${inputData.firstName})})}"/>
               <th:block th:if="${fieldData.containsKey('household')}">
                 <div th:each="householdMember, iter: ${fieldData.household}" class="spacing-below-15">
                   <th:block th:with="ssnInputName=${'householdMemberSsn' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + householdMember.uuid}">
                     <th:block th:replace="~{'fragments/inputs/text' ::
                       text(inputName=${ssnInputName},
+                      helpText=#{general.optional},
                       label=#{ssn-form-household.ssn-question(${householdMember.householdMemberFirstName})})}"/>
                   </th:block>
                 </div>

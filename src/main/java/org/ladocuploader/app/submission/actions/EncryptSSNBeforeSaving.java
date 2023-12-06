@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Component
 public class EncryptSSNBeforeSaving implements Action {
-  private static final String ENCRYPTED_SSNS_INPUT_NAME = "encryptedSSN";
+  private static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
 
   private final StringEncryptor encryptor;
 
