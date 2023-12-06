@@ -3,6 +3,8 @@ package org.ladocuploader.app.data;
 import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepository;
 import jakarta.transaction.Transactional;
+import org.ladocuploader.app.data.enums.TransmissionStatus;
+import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -20,17 +22,18 @@ public class TransmissionRepositoryService {
         this.transmissionRepository = transmissionRepository;
     }
 
-    public boolean transmissionExists(Submission submission, String transmissionType) {
-        return transmissionRepository.getTransmissionBySubmissionAndType(submission, transmissionType) != null;
+    public boolean transmissionExists(Submission submission, TransmissionType transmissionType) {
+        return transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType) != null;
     }
 
-    public Transmission createTransmissionRecord(Submission submission, String transmissionType) {
+    public Transmission createTransmissionRecord(Submission submission, TransmissionType transmissionType) {
         if (!submission.getFlow().equals("laDigitalAssister")) {
             throw new RuntimeException("Non-laDigitalAssister object passed to createTransmissionRecord");
         }
 
         var transmission = Transmission.fromSubmission(submission);
         transmission.setTransmissionType(transmissionType);
+        transmission.setStatus(TransmissionStatus.Queued);
 
         this.submissionRepository.save(submission);
         this.transmissionRepository.save(transmission);

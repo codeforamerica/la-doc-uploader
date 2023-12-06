@@ -1,7 +1,3 @@
-CREATE TYPE transmission_status AS ENUM('Queued', 'Failed', 'Complete');
-CREATE TYPE transmission_type AS ENUM('SNAP', 'ECE', 'WIC');
--- CREATE TYPE submission_error_type AS ENUM('INCOMPLETE_RECORD', 'OTHER');
--- CREATE TYPE documentation_error_type AS ENUM('NOT_FOUND', 'PERMISSION_DENIED');
 CREATE TABLE transmissions (
     transmission_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     submission_id uuid REFERENCES submissions(id),
@@ -9,8 +5,8 @@ CREATE TABLE transmissions (
     run_id uuid,
     time_sent TIMESTAMP WITHOUT TIME ZONE,
     time_created TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
-    status transmission_status DEFAULT 'Queued',
-    transmission_type transmission_type,
+    status varchar DEFAULT 'Queued',
+    transmission_type varchar,
     submission_errors jsonb
 );
 

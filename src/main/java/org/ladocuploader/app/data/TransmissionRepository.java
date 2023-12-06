@@ -1,6 +1,7 @@
 package org.ladocuploader.app.data;
 
 import formflow.library.data.Submission;
+import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,9 +12,11 @@ import java.util.UUID;
 
 @Repository
 public interface TransmissionRepository extends JpaRepository<Transmission, UUID> {
-    @Query(value = "SELECT s FROM Submission s JOIN Transmission t ON t.submission = s WHERE s.submittedAt IS NOT NULL AND t.timeSent IS NULL ORDER BY s.updatedAt ASC ")
+    @Query(value = "SELECT s FROM Submission s JOIN Transmission t ON t.submission = s WHERE s.submittedAt IS NOT NULL AND t.status = 'Queued' ORDER BY s.updatedAt ASC ")
     List<Submission> submissionsToTransmit(Sort sort);
 
-    @Query(value = "SELECT t FROM Transmission t WHERE t.submission = :submission AND t.transmissionType= :transmissionType")
-    Transmission getTransmissionBySubmissionAndType(Submission submission, String transmissionType);
+    Transmission findBySubmissionAndTransmissionType(Submission submission, TransmissionType transmissionType);
+
+//    @Query(value = "SELECT t FROM Transmission t WHERE t.submission = :submission AND t.transmissionType = :transmissionType")
+//    Transmission getTransmissionBySubmissionAndType(Submission submission, TransmissionType transmissionType);
 }

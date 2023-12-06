@@ -8,13 +8,14 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvPackage;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.enums.CsvPackageType;
 import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
+import org.ladocuploader.app.data.enums.TransmissionStatus;
+import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -83,9 +84,9 @@ public class TransmitterCommands {
         // Update transmission in DB
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
-            Transmission transmission = transmissionRepository.getTransmissionBySubmissionAndType(submission, "ECE");
+            Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.ECE);
             transmission.setTimeSent(new Date());
-            transmission.setStatus("success");
+            transmission.setStatus(TransmissionStatus.Complete);
             transmissionRepository.save(transmission);
         });
         log.info("Finished transmission of a batch");

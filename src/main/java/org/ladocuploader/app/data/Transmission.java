@@ -4,6 +4,8 @@ import formflow.library.data.Submission;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import lombok.Data;
 import org.hibernate.annotations.Type;
+import org.ladocuploader.app.data.enums.TransmissionStatus;
+import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.*;
@@ -40,10 +42,12 @@ public class Transmission {
     private Date timeSent;
 
     @Column(name="status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TransmissionStatus status;
 
     @Column(name="transmission_type")
-    private String transmissionType;
+    @Enumerated(EnumType.STRING)
+    private TransmissionType transmissionType;
 
     @Type(JsonType.class)
     @Column(name="submission_errors")
