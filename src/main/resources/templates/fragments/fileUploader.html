@@ -208,7 +208,7 @@
       let filesToDelete = window['cancelledFiles' + [[${inputName}]]];
       filesToDelete.forEach(fTD => {
         if (fTD.name === file.name) {
-          removeFileFromDropzone(file, id, flow, screeen);
+          removeFileFromDropzone(file, id, flow, screen);
             mixpanel.track('file_upload_delete', {
                 'page_name': window.location.pathname,
                 'file_size': file.size,
