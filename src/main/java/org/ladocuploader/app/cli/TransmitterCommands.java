@@ -8,6 +8,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvPackage;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.enums.CsvPackageType;
@@ -51,32 +52,12 @@ public class TransmitterCommands {
         var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted());
         log.info("Total submissions to transmit is {}", allSubmissions.size());
 
-//        List<UUID> allSubmissionIds = new ArrayList<>();
-//        allSubmissions.forEach(submission -> {
-//            allSubmissionIds.add(submission.getId());
-//        });
-
         log.info("Transmitting submissions");
-        transmitBatch(allSubmissions);
-        // partition into csvs with limit of size 500
-//        var submissionIdBatches = Lists.partition(allSubmissionIds, 500);
-//        var batch_index = 0;
-//        for (var submissionIdBatch : submissionIdBatches) {
-//            Map<UUID, Submission> submissionIdToSubmissionBatch = new HashMap<>();
-//            for (var submissionId : submissionIdBatch) {
-//
-//
-//                submissionIdToSubmissionBatch.put(submissionId, );
-//            }
-//
-//            log.info("Starting batch of size={}", submissionIdToSubmissionBatch.size());
-//            transmitBatch(submissionIdToSubmissionBatch, batch_index);
-//            batch_index ++;
-//        }
+        transmitBatch(allSubmissions, TransmissionType.ECE);
     }
 
-    private void transmitBatch(List<Submission> submissions) throws IOException, JSchException, SftpException{
-        String zipFilename = createZipFilename(1);
+    private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException{
+        String zipFilename = createZipFilename(transmissionType);
         List<UUID> successfullySubmittedIds = zipFiles(submissions, zipFilename);
 
         // send zip file
@@ -86,7 +67,7 @@ public class TransmitterCommands {
         // Update transmission in DB
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
-            Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.ECE);
+            Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
             transmission.setTimeSent(new Date());
             transmission.setStatus(TransmissionStatus.Complete);
             transmissionRepository.save(transmission);
@@ -95,12 +76,33 @@ public class TransmitterCommands {
     }
 
     @NotNull
-    private static String createZipFilename(Integer batchIndex) {
-        // Format: Apps__2023-07-05.zip
+    private static String createZipFilename(TransmissionType transmissionType) {
+        // Format: Apps__<TRANSMISSION_TYPE>__2023-07-05.zip
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
-        return "Apps__" + date + "__" + batchIndex + ".zip";
+        return "Apps__" + transmissionType.name() + "__" + date + ".zip";
+    }
+
+    private void addZipEntries(CsvPackage csvPackage, ZipOutputStream zipOutput){
+        CsvPackageType packageType = csvPackage.getPackageType();
+        List<CsvType> csvTypes = packageType.getCsvTypeList();
+        csvTypes.forEach(csvType ->
+                {
+                    try {
+                        byte[] document = csvPackage.getCsvDocument(csvType).getCsvData();
+                        ZipEntry entry = new ZipEntry(csvType.getFileName());
+                        entry.setSize(document.length);
+                        zipOutput.putNextEntry(entry);
+                        zipOutput.write(document);
+                        zipOutput.closeEntry();
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+        );
     }
 
     private List<UUID> zipFiles(List<Submission> submissions, String zipFileName) throws IOException {
@@ -108,19 +110,7 @@ public class TransmitterCommands {
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
-            // TODO: collect failures
-            byte [] studentDoc = ecePackage.getCsvDocument(CsvType.STUDENT).getCsvData();
-            byte [] parentGuardianDoc = ecePackage.getCsvDocument(CsvType.PARENT_GUARDIAN).getCsvData();
-            ZipEntry entry = new ZipEntry(CsvType.STUDENT.getFileName());
-            entry.setSize(studentDoc.length);
-            zos.putNextEntry(entry);
-            zos.write(studentDoc);
-            zos.closeEntry();
-            ZipEntry nextEntry = new ZipEntry(CsvType.PARENT_GUARDIAN.getFileName());
-            nextEntry.setSize(parentGuardianDoc.length);
-            zos.putNextEntry(nextEntry);
-            zos.write(parentGuardianDoc);
-            zos.closeEntry();
+            addZipEntries(ecePackage, zos);
 
         } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
             throw new RuntimeException(e);

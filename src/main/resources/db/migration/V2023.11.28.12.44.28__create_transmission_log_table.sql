@@ -1,7 +1,6 @@
 CREATE TABLE transmissions (
     transmission_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     submission_id uuid REFERENCES submissions(id),
-    batch_id integer,
     run_id uuid,
     time_sent TIMESTAMP WITHOUT TIME ZONE,
     time_created TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
