@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Map;
 import org.joda.time.DateTime;
@@ -35,6 +36,7 @@ public class LoggingFilter implements Filter {
       FilterChain filterChain) throws ServletException, IOException {
 
     HttpServletRequest request = (HttpServletRequest) servletRequest;
+
     HttpSession session = request.getSession(false);
     Map<String, UUID> submissionMap =
         session != null ? (Map) session.getAttribute(FormFlowController.SUBMISSION_MAP_NAME) : null;
@@ -52,7 +54,9 @@ public class LoggingFilter implements Filter {
 
     String sessionCreatedAt = session != null ?
         new DateTime(session.getCreationTime()).toString("HH:mm:ss.SSS") : "no session";
+    HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+    MDC.put("status", Integer.toString(response.getStatus()));
     MDC.put("xForwardedFor", request.getHeader("X-Forwarded-For"));
     MDC.put("method", request.getMethod());
     MDC.put("request", request.getRequestURI());
