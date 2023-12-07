@@ -52,7 +52,10 @@ public class TransmitterCommands {
         var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted());
         log.info("Total submissions to transmit is {}", allSubmissions.size());
 
-        log.info("Transmitting submissions");
+        // generates a run id for
+        UUID runId = UUID.randomUUID();
+
+        log.info("Transmitting submissions for ECE");
         transmitBatch(allSubmissions, TransmissionType.ECE);
     }
 
@@ -64,12 +67,15 @@ public class TransmitterCommands {
         log.info("Uploading zip file");
         sftpClient.uploadFile(zipFilename);
 
+        UUID runId = UUID.randomUUID();
+
         // Update transmission in DB
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
             Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
             transmission.setTimeSent(new Date());
             transmission.setStatus(TransmissionStatus.Complete);
+            transmission.setRunId(runId);
             transmissionRepository.save(transmission);
         });
         log.info("Finished transmission of a batch");
@@ -87,6 +93,7 @@ public class TransmitterCommands {
     private void addZipEntries(CsvPackage csvPackage, ZipOutputStream zipOutput){
         CsvPackageType packageType = csvPackage.getPackageType();
         List<CsvType> csvTypes = packageType.getCsvTypeList();
+//        Map<CsvType, Map<UUID, String>> errorMessages = csvPackage.getErrorMessages();
         csvTypes.forEach(csvType ->
                 {
                     try {
@@ -96,8 +103,10 @@ public class TransmitterCommands {
                         zipOutput.putNextEntry(entry);
                         zipOutput.write(document);
                         zipOutput.closeEntry();
-
+                        // TODO: should we add errors at this stage as well if something fails with zip?
                     } catch (IOException e) {
+
+//                        errorMessages.merge()
                         throw new RuntimeException(e);
                     }
 
@@ -107,9 +116,11 @@ public class TransmitterCommands {
 
     private List<UUID> zipFiles(List<Submission> submissions, String zipFileName) throws IOException {
         List<UUID> successfullySubmittedIds = new ArrayList<>();
+        // TODO: collect successfully submitted IDs
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
+            Map<CsvType, Map<UUID, String>> errorMessages = ecePackage.getErrorMessages();
             addZipEntries(ecePackage, zos);
 
         } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {

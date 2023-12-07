@@ -9,4 +9,4 @@ CREATE TABLE transmissions (
     submission_errors jsonb
 );
 
-CREATE INDEX idx_transmission_id on transmissions (batch_id, submission_id);
+CREATE INDEX idx_transmission_id on transmissions (run_id, submission_id);
