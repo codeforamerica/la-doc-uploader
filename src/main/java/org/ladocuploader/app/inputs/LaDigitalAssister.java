@@ -1,10 +1,12 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
+import formflow.library.data.annotations.DynamicField;
 import formflow.library.data.annotations.Money;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
@@ -88,8 +90,10 @@ public class LaDigitalAssister extends FlowInputs {
   // Household
   private String multiplePersonHousehold;
 
+  @NotBlank(message="{error.missing-firstname}")
   private String householdMemberFirstName;
 
+  @NotBlank(message="{error.missing-firstname}")
   private String householdMemberLastName;
 
   private String householdMemberOtherNames;
@@ -100,15 +104,22 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String householdMemberBirthYear;
 
+  @NotBlank(message="{error.missing-general}")
   private String householdMemberRelationship;
 
+  @NotBlank(message="{error.missing-general}")
   private String householdMemberSex;
 
   private String householdMemberMaritalStatus;
 
   private String householdMemberHighestEducation;
 
-  private List<String> ssns;
+  @Size(min=9, max=9, message="{error.invalid-ssn}")
+  private String ssn;
+
+  @Size(min=9, max=9, message="{error.invalid-ssn}")
+  @DynamicField
+  private String householdMemberSsn;
 
   private String schoolInd;
 

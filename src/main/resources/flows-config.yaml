@@ -94,6 +94,7 @@ flow:
     nextScreens:
       - name: householdInfo
   householdInfo:
+    crossFieldValidationAction: ValidateHouseholdBirthdate
     subflow: household
     nextScreens:
       - name: householdList
