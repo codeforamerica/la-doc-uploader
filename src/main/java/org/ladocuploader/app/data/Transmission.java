@@ -56,7 +56,6 @@ public class Transmission {
     public static Transmission fromSubmission(Submission submission) {
         var transmission = new Transmission();
         transmission.setSubmission(submission);
-//        transmission.setFlow(submission.getFlow());
         return transmission;
     }
 

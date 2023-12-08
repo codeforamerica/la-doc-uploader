@@ -52,15 +52,13 @@ public class TransmitterCommands {
         var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted());
         log.info("Total submissions to transmit is {}", allSubmissions.size());
 
-        // generates a run id for
-        UUID runId = UUID.randomUUID();
-
         log.info("Transmitting submissions for ECE");
         transmitBatch(allSubmissions, TransmissionType.ECE);
     }
 
     private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException{
         String zipFilename = createZipFilename(transmissionType);
+        // TODO: get errors for the packageType
         List<UUID> successfullySubmittedIds = zipFiles(submissions, zipFilename);
 
         // send zip file
@@ -116,11 +114,22 @@ public class TransmitterCommands {
 
     private List<UUID> zipFiles(List<Submission> submissions, String zipFileName) throws IOException {
         List<UUID> successfullySubmittedIds = new ArrayList<>();
+        Map<UUID, Map<CsvType, String>> submissionErrors = new HashMap<>();
         // TODO: collect successfully submitted IDs
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
             Map<CsvType, Map<UUID, String>> errorMessages = ecePackage.getErrorMessages();
+            // TODO: reformat error messages for easy update in transmission table
+            errorMessages.forEach((csvType, submissionErrorMessages) -> submissionErrorMessages.forEach((submissionId, messages) -> {
+                // TODO: remove the submission ID from successfully submitted?
+//                submissionErrors.(submissionId, )
+            }));
+//            errorMessages.values().stream().flatMap(v->v.values().stream())
+
+//            List<UUID> successfullySubmittedIds = new ArrayList<>();
+
+
             addZipEntries(ecePackage, zos);
 
         } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
@@ -129,46 +138,6 @@ public class TransmitterCommands {
 
         return successfullySubmittedIds;
     }
-
-    private static boolean isComplete(Submission submission) {
-        // TODO: add filter to find complete submissions for laDigitalAssisterFlow
-        // Bail if the submission looks incomplete
-//        var inputData = submission.getInputData();
-//        if (submission.getFlow().equals("pebt")) {
-//            if (inputData.get("hasMoreThanOneStudent") == null || inputData.get("firstName") == null || inputData.get("signature") == null) {
-//                log.warn("Declining to transmit incomplete pebt app submissionId={} -- hasMoreThanOneStudent or firstName or signature is missing", submission.getId());
-//                return false;
-//            }
-//        } else if (submission.getFlow().equals("docUpload")) {
-//            if (inputData.get("firstName") == null || inputData.get("lastName") == null || inputData.get("applicationNumber") == null) {
-//                log.warn("Declining to transmit incomplete doc upload submissionId={} -- firstName or lastName or applicationNumber is missing", submission.getId());
-//                return false;
-//            }
-//        }
-        return true;
-    }
-
-    private static boolean doTransmitApplication(String appNumber, Submission submission) {
-        // TODO: use this to delay submission if it is less than 2 hours old to prevent doc-less submissions? use this to defer
-        // delay 7 days if there aren't any uploaded docs associated with this application
-//        Instant submittedAt = submission.getSubmittedAt().toInstant();
-//        long diffDays = ChronoUnit.DAYS.between(submittedAt, Instant.now());
-//        boolean submitted7daysAgo = Math.abs(diffDays) >= 7;
-//        List<String> missingDocUploads = SubmissionUtilities.getMissingDocUploads(submission);
-//        boolean hasUploadedDocs = missingDocUploads.isEmpty();
-        return true;
-    }
-
-//    @NotNull
-//    private static String createSubfolderName(Submission submission, Transmission transmission) {
-//        // TODO: eliminate this?
-//        Map<String, Object> inputData = submission.getInputData();
-//        if ("pebt".equals(submission.getFlow())) {
-//            return transmission.getConfirmationNumber() + "_" + inputData.get("lastName") + "/";
-//        } else {
-//            return "LaterDoc_" + inputData.get("applicationNumber") + "_" + inputData.get("lastName") + "_" + inputData.get("firstName") + "/";
-//        }
-//    }
 
 }
 

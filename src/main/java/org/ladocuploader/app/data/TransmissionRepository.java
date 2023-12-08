@@ -12,11 +12,8 @@ import java.util.UUID;
 
 @Repository
 public interface TransmissionRepository extends JpaRepository<Transmission, UUID> {
-    @Query(value = "SELECT s FROM Submission s JOIN Transmission t ON t.submission = s WHERE s.submittedAt IS NOT NULL AND t.status = 'Queued' ORDER BY s.updatedAt ASC ")
+    @Query(value = "SELECT s FROM Submission s JOIN Transmission t ON t.submission = s WHERE s.submittedAt IS NOT NULL AND (t.status = 'Queued') OR (t.status = 'Failed') ORDER BY s.updatedAt ASC ")
     List<Submission> submissionsToTransmit(Sort sort);
 
     Transmission findBySubmissionAndTransmissionType(Submission submission, TransmissionType transmissionType);
-
-//    @Query(value = "SELECT t FROM Transmission t WHERE t.submission = :submission AND t.transmissionType = :transmissionType")
-//    Transmission getTransmissionBySubmissionAndType(Submission submission, TransmissionType transmissionType);
 }
