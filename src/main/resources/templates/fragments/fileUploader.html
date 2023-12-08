@@ -204,26 +204,26 @@
       }
     }
 
-    function deleteCancelledFiles(file, id) {
+    function deleteCancelledFiles(file, id, flow, screen) {
       let filesToDelete = window['cancelledFiles' + [[${inputName}]]];
       filesToDelete.forEach(fTD => {
         if (fTD.name === file.name) {
-          removeFileFromDropzone(file, id);
+          removeFileFromDropzone(file, id, flow, screen);
             mixpanel.track('file_upload_delete', {
                 'page_name': window.location.pathname,
                 'file_size': file.size,
                 'file_format': file.type
             });
-          sendDeleteXhrRequest(id);
+          sendDeleteXhrRequest(id, flow, screen);
         }
       })
     }
 
-    function sendDeleteXhrRequest(id, flow) {
+    function sendDeleteXhrRequest(id, flow, screen) {
       var xhrRequest = new XMLHttpRequest();
       xhrRequest.open('POST',
           '/file-delete?' + id + '&returnPath=' + window.location.pathname + '&inputName='
-          + [[${inputName}]] + '&flow=' + flow, true);
+          + [[${inputName}]] + '&flow=' + flow + '&screen=' + screen, true);
       xhrRequest.withCredentials = false;
       xhrRequest.setRequestHeader("Accept", "*/*");
       xhrRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -342,6 +342,7 @@
           formData.append("_csrf", csrfToken);
           formData.append("type", file.type);
           formData.append("flow", [[${flow}]]);
+          formData.append("screen", [[${screen}]]);
           formData.append("subflow", [[${subflow}]]);
           formData.append("inputName", [[${inputName}]]);
           formData.append("thumbDataURL", file.dataURL);
@@ -378,7 +379,7 @@
             let confirmation = confirm(confirmMsg.replaceAll('"',''))
 
             if (confirmation) {
-              sendDeleteXhrRequest(id, [[${flow}]]);
+              sendDeleteXhrRequest(id, [[${flow}]], [[${screen}]]);
                 mixpanel.track('file_upload_delete', {
                     'page_name': window.location.pathname,
                     'file_size': file.size,
@@ -391,7 +392,7 @@
           thumbnail.classList.remove("hidden");
           progressBar.classList.add("hidden");
           $('#submit-my-documents-' + [[${inputName}]]).removeClass("disabled");
-          deleteCancelledFiles(file, id);
+          deleteCancelledFiles(file, id, [[${flow}]], [[${screen}]]);
         });
 
         // This lets dropzone know to process the queue after each file has completed
