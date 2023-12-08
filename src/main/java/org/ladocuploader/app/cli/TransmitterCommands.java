@@ -152,7 +152,7 @@ public class TransmitterCommands {
                     }
             );
 
-            // TODO: at what point do we not submit the package?
+            // TODO: at what point do we not submit the package/ mark as failed? does marking as failed mean that we should retry?
 
             addZipEntries(ecePackage, zos);
             results.put("failed", submissionErrors);
