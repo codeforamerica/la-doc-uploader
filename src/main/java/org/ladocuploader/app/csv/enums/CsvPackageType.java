@@ -10,15 +10,24 @@ import java.util.List;
 import org.ladocuploader.app.csv.CsvService;
 
 public enum CsvPackageType {
-  ECE_PACKAGE (List.of(PARENT_GUARDIAN, STUDENT, RELATIONSHIP, ECE_APPLICATION)),
-  WIC_PACKAGE (List.of(WIC_APPLICATION));
+
+  // TODO: abstract environment
+  ECE_PACKAGE (List.of(PARENT_GUARDIAN, STUDENT, RELATIONSHIP, ECE_APPLICATION), "/la-du-moveit-transfer/nola-ps-staging/"),
+  WIC_PACKAGE (List.of(WIC_APPLICATION), "/la-du-moveit-transfer/wic-staging/");
 
   private final List<CsvType> csvTypeList;
-  CsvPackageType(List<CsvType> csvTypeList) {
+
+  private final String uploadLocation;
+  CsvPackageType(List<CsvType> csvTypeList, String uploadLocation) {
     this.csvTypeList = csvTypeList;
+    this.uploadLocation = uploadLocation;
   }
 
   public List<CsvType> getCsvTypeList() {
     return this.csvTypeList;
+  }
+
+  public String getUploadLocation() {
+    return this.uploadLocation;
   }
 }

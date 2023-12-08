@@ -1,6 +1,5 @@
 package org.ladocuploader.app.cli;
 
-import com.google.common.collect.Lists;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
@@ -8,7 +7,6 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvPackage;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.enums.CsvPackageType;
@@ -21,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -59,15 +58,26 @@ public class TransmitterCommands {
     private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException{
         String zipFilename = createZipFilename(transmissionType);
         // TODO: get errors for the packageType
-        List<UUID> successfullySubmittedIds = zipFiles(submissions, zipFilename);
+        Map<String, Object> zipResults = zipFiles(submissions, zipFilename);
+
+        List<UUID> successfullySubmittedIds = (List<UUID>) zipResults.get("success");
+
+        Map<UUID, Map<CsvType, String>> failedSubmissions = (Map<UUID, Map<CsvType, String>>) zipResults.get("failed");
 
         // send zip file
         log.info("Uploading zip file");
-        sftpClient.uploadFile(zipFilename);
+        String uploadLocation = transmissionType.getPackageType().getUploadLocation();
+        sftpClient.uploadFile(zipFilename, uploadLocation);
+        File zip = new File(zipFilename);
+        if (zip.delete()) {
+            log.info("Deleted the folder: " + zip.getName());
+        } else {
+            log.info("Failed to delete the folder " + zip.getName());
+        }
 
         UUID runId = UUID.randomUUID();
 
-        // Update transmission in DB
+        // Update transmission in DB for success
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
             Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
@@ -77,6 +87,18 @@ public class TransmitterCommands {
             transmissionRepository.save(transmission);
         });
         log.info("Finished transmission of a batch");
+
+        failedSubmissions.forEach((id, errorMessages) -> {
+            Submission submission = Submission.builder().id(id).build();
+            Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
+            transmission.setStatus(TransmissionStatus.Failed);
+            transmission.setRunId(runId);
+            transmission.setSubmissionErrors(errorMessages);
+                }
+        );
+
+
+
     }
 
     @NotNull
@@ -91,7 +113,6 @@ public class TransmitterCommands {
     private void addZipEntries(CsvPackage csvPackage, ZipOutputStream zipOutput){
         CsvPackageType packageType = csvPackage.getPackageType();
         List<CsvType> csvTypes = packageType.getCsvTypeList();
-//        Map<CsvType, Map<UUID, String>> errorMessages = csvPackage.getErrorMessages();
         csvTypes.forEach(csvType ->
                 {
                     try {
@@ -101,10 +122,8 @@ public class TransmitterCommands {
                         zipOutput.putNextEntry(entry);
                         zipOutput.write(document);
                         zipOutput.closeEntry();
-                        // TODO: should we add errors at this stage as well if something fails with zip?
+                        // TODO: add errors to the error map if something fails with zip?
                     } catch (IOException e) {
-
-//                        errorMessages.merge()
                         throw new RuntimeException(e);
                     }
 
@@ -112,23 +131,21 @@ public class TransmitterCommands {
         );
     }
 
-    private List<UUID> zipFiles(List<Submission> submissions, String zipFileName) throws IOException {
-        List<UUID> successfullySubmittedIds = new ArrayList<>();
+    private Map<String, Object> zipFiles(List<Submission> submissions, String zipFileName) throws IOException {
+        Map<String, Object> results = new HashMap<>();
+        List<UUID> successfullySubmittedIds = new ArrayList<>(submissions.stream()
+                .map(Submission::getId)
+                .toList());
+        // TODO: replace this with the package.getErrorMessages() - translate the CsvType to String + Errors to Object?
         Map<UUID, Map<CsvType, String>> submissionErrors = new HashMap<>();
-        // TODO: collect successfully submitted IDs
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
-            Map<UUID, Map<CsvType, String>> errorMessages = ecePackage.getErrorMessages();
-            // TODO: reformat error messages for easy update in transmission table
-            errorMessages.forEach((csvType, submissionErrorMessages) -> submissionErrorMessages.forEach((submissionId, messages) -> {
-                // TODO: remove the submission ID from successfully submitted?
-//                submissionErrors.(submissionId, )
-            }));
-//            errorMessages.values().stream().flatMap(v->v.values().stream())
 
-//            List<UUID> successfullySubmittedIds = new ArrayList<>();
-
+            submissionErrors.forEach((submissionId, submissionErrorMessages) -> {
+                    successfullySubmittedIds.remove(submissionId);
+                    }
+            );
 
             addZipEntries(ecePackage, zos);
 
@@ -136,7 +153,10 @@ public class TransmitterCommands {
             throw new RuntimeException(e);
         }
 
-        return successfullySubmittedIds;
+        results.put("success", successfullySubmittedIds);
+        results.put("failed", submissionErrors);
+
+        return results;
     }
 
 }

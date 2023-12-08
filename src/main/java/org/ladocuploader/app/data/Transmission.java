@@ -4,6 +4,7 @@ import formflow.library.data.Submission;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import lombok.Data;
 import org.hibernate.annotations.Type;
+import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.stereotype.Component;
@@ -29,10 +30,6 @@ public class Transmission {
     @Column(name="run_id")
     private UUID runId;
 
-
-    @Column(name="batch_id")
-    private Integer batchId;
-
     @ManyToOne
     @JoinColumn(name = "submission_id")
     private Submission submission;
@@ -51,7 +48,7 @@ public class Transmission {
 
     @Type(JsonType.class)
     @Column(name="submission_errors")
-    private Map<String, Object> submissionErrors;
+    private Map<CsvType, String> submissionErrors;
 
     public static Transmission fromSubmission(Submission submission) {
         var transmission = new Transmission();

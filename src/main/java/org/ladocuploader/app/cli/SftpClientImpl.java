@@ -25,7 +25,7 @@ public class SftpClientImpl implements SftpClient {
     }
 
     @Override
-    public void uploadFile(String zipFilename) throws JSchException, SftpException {
+    public void uploadFile(String zipFilename, String filePath) throws JSchException, SftpException {
         JSch jsch = new JSch();
         jsch.setKnownHosts("src/main/resources/known_hosts");
         Session jschSession = jsch.getSession(username, uploadUrl);
@@ -37,7 +37,7 @@ public class SftpClientImpl implements SftpClient {
 
         ChannelSftp channelSftp = (ChannelSftp) sftp;
         // TODO: make this an input?
-        channelSftp.put(zipFilename, "/la-du-moveit-transfer/nola-ps-staging/" + zipFilename);
+        channelSftp.put(zipFilename, filePath + zipFilename);
 
         channelSftp.exit();
     }
