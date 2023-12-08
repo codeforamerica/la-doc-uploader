@@ -36,6 +36,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
             var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
             var requiredData = REQUIRED_DATA.get(parsedUrl.get("screen"));
             String redirect_url = String.format("/flow/laDocUpload/clientInfo?intercepted=%s", parsedUrl.get("screen"));
+
             if (requiredData == null) {
                 return true; // There are no data requirements for this page
             }
