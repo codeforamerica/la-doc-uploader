@@ -105,7 +105,9 @@ public class StudentCsvModel extends BaseCsvModel {
                 studentData.put("homeAddressCity", inputData.get("homeAddressCity"));
                 studentData.put("homeAddressState", inputData.get("homeAddressState"));
                 studentData.put("homeAddressZipCode", inputData.get("homeAddressZipCode"));
-                students.add(mapper.convertValue(studentData, StudentCsvModel.class));
+                StudentCsvModel studentModel = mapper.convertValue(studentData, StudentCsvModel.class);
+                studentModel.setSubmissionId(submission.getId());
+                students.add(studentModel);
             }
         }
         return students;

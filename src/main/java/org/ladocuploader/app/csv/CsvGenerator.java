@@ -3,7 +3,9 @@ package org.ladocuploader.app.csv;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.bean.exceptionhandler.CsvExceptionHandler;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import java.util.ArrayList;
@@ -37,8 +39,7 @@ public class CsvGenerator {
             relationships.addAll(RelationshipCsvModel.generateModel(submission));
         }
 
-        byte[] data = generateCsv(RelationshipCsvModel.class, relationships);
-        return new CsvDocument(CsvType.RELATIONSHIP, data);
+        return generateCsv(CsvType.RELATIONSHIP, RelationshipCsvModel.class, relationships);
     }
 
     public CsvDocument generateParentGuardianCsvData(List<Submission> submissionList)
@@ -51,8 +52,7 @@ public class CsvGenerator {
             pgList.add(pg);
         }
 
-        byte[] data = generateCsv(ParentGuardianCsvModel.class, pgList);
-        return new CsvDocument(CsvType.PARENT_GUARDIAN, data);
+        return generateCsv(CsvType.PARENT_GUARDIAN,ParentGuardianCsvModel.class, pgList);
     }
 
     public CsvDocument generateStudentCsvData(List<Submission> submissionList)
@@ -64,8 +64,7 @@ public class CsvGenerator {
             List<BaseCsvModel> students = StudentCsvModel.generateModel(submission);
             studentList.addAll(students);
         }
-        byte [] data = generateCsv(StudentCsvModel.class, studentList);
-        return new CsvDocument(CsvType.STUDENT, data);
+        return generateCsv(CsvType.STUDENT, StudentCsvModel.class, studentList);
     }
 
     public CsvDocument generateECEApplicationCsvData(List<Submission> submissionList)
@@ -77,8 +76,7 @@ public class CsvGenerator {
             BaseCsvModel application = ECEApplicationCsvModel.generateModel(submission);
             applicationList.add(application);
         }
-        byte [] data = generateCsv(ECEApplicationCsvModel.class, applicationList);
-        return new CsvDocument(CsvType.ECE_APPLICATION, data);
+        return generateCsv(CsvType.ECE_APPLICATION, ECEApplicationCsvModel.class, applicationList);
     }
 
     public CsvDocument generateWICApplicationCsvData(List<Submission> submissionList)
@@ -90,11 +88,11 @@ public class CsvGenerator {
             BaseCsvModel application = WICApplicationCsvModel.generateModel(submission);
             applicationList.add(application);
         }
-        byte [] data = generateCsv(WICApplicationCsvModel.class, applicationList);
-        return new CsvDocument(CsvType.WIC_APPLICATION, data);
+        return generateCsv(CsvType.WIC_APPLICATION, WICApplicationCsvModel.class, applicationList);
     }
 
-    private byte[] generateCsv(Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+    private CsvDocument generateCsv(CsvType csvType, Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        CsvDocument csv = new CsvDocument(csvType);
         HeaderColumnMappingStrategy<BaseCsvModel> strategy = new HeaderColumnMappingStrategy<>();
         strategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -105,8 +103,22 @@ public class CsvGenerator {
                 .withMappingStrategy(strategy)
                 .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                 .build();
-        beanToCsv.write(objects);
+        // write one line at a time to gather exceptions. Otherwise, we just have access to CsvExceptions and
+        // that's not particularly useful.
+        for (BaseCsvModel item : objects) {
+            try {
+                beanToCsv.write(item);
+            } catch (Exception e) {
+                log.warn("Exception caught while processing CSV (submission id: '{}', type: '{}'): '{}'",
+                    item.getSubmissionId(), csvType, e.getMessage());
+                if (e instanceof CsvException) {
+                    // NOTE: this only captures one error per type per submission.
+                    csv.addErrorMessage(item.getSubmissionId(), e.getMessage());
+                }
+            }
+        }
         streamWriter.flush();
-        return stream.toByteArray();
+        csv.setCsvData(stream.toByteArray());
+        return csv;
     }
 }

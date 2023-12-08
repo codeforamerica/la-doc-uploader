@@ -119,7 +119,7 @@ public class TransmitterCommands {
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
-            Map<CsvType, Map<UUID, String>> errorMessages = ecePackage.getErrorMessages();
+            Map<UUID, Map<CsvType, String>> errorMessages = ecePackage.getErrorMessages();
             // TODO: reformat error messages for easy update in transmission table
             errorMessages.forEach((csvType, submissionErrorMessages) -> submissionErrorMessages.forEach((submissionId, messages) -> {
                 // TODO: remove the submission ID from successfully submitted?

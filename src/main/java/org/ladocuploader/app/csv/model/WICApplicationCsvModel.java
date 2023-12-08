@@ -24,6 +24,8 @@ public class WICApplicationCsvModel extends BaseCsvModel {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());
 
-        return mapper.convertValue(inputData, WICApplicationCsvModel.class);
+        WICApplicationCsvModel wicModel = mapper.convertValue(inputData, WICApplicationCsvModel.class);
+        wicModel.setSubmissionId(submission.getId());
+        return wicModel;
     }
 }

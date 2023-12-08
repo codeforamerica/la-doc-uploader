@@ -34,7 +34,9 @@ public class RelationshipCsvModel extends BaseCsvModel {
                 Map<String, Object> person = new HashMap<>();
                 person.put("first_person_id", first_person_id);
                 person.put("uuid", household.get("uuid"));
-                relationships.add(mapper.convertValue(person, RelationshipCsvModel.class));
+                RelationshipCsvModel relModel = mapper.convertValue(person, RelationshipCsvModel.class);
+                relModel.setSubmissionId(submission.getId());
+                relationships.add(relModel);
             }
         }
 

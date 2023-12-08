@@ -66,6 +66,8 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());
 
-        return mapper.convertValue(inputData, ParentGuardianCsvModel.class);
+        ParentGuardianCsvModel pgpModel = mapper.convertValue(inputData, ParentGuardianCsvModel.class);
+        pgpModel.setSubmissionId(submission.getId());
+        return pgpModel;
     }
 }

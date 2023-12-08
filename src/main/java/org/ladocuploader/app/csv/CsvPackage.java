@@ -23,13 +23,6 @@ public class CsvPackage {
     this.packageType = packageType;
   }
 
-  public void addError(CsvType csvType, UUID submissionId, String errorMsg) {
-    if (csvDocumentMap.containsKey(csvType)) {
-      CsvDocument csv = csvDocumentMap.get(csvType);
-      csv.addErrorMessage(submissionId, errorMsg);
-    }
-  }
-
   public Map<UUID, String> getErrorMessages(CsvType csvType) {
     if (csvDocumentMap.containsKey(csvType)) {
       return csvDocumentMap.get(csvType).getErrorMessages();
@@ -37,12 +30,27 @@ public class CsvPackage {
     return null;
   }
 
-  public Map<CsvType, Map<UUID, String>> getErrorMessages() {
+  public Map<UUID, Map<CsvType, String>> getErrorMessages() {
+    Map<UUID, Map<CsvType, String>> errorMap = new HashMap<>();
+
+    csvDocumentMap.forEach((csvType, csv) -> {
+      Map<UUID, String> docErrors = csv.getErrorMessages();
+      docErrors.entrySet()
+          .forEach(entry -> {
+            errorMap.put(entry.getKey(), Map.of(csvType, entry.getValue()));
+      });
+    });
+
+    return errorMap;
+
+/*
     Map<CsvType, Map<UUID, String>> errorMap = new HashMap<>();
     csvDocumentMap.forEach((csvType, csv) -> {
       errorMap.put(csvType, csv.getErrorMessages());
     });
     return errorMap;
+
+ */
   }
 
   public void addCsvDocument(CsvDocument csv) {

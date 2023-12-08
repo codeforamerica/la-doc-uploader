@@ -247,6 +247,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Verified residency document #2 type: {{952bf770-a7a7-4060-9e85-0731f8ba553c}}")
     private String proofOfResidencyDocumentTwoType;
 
+    /*
     @CsvBindByName(column="Either the parent/guardian name must be on the residency documents or if the parent/guardian lives with another adult who is named on the residency documents, the parent/guardian must upload two proofs of residency in the resident's name and a photo ID from the person named on the documents. {{79aae8cf-13f0-4787-8c23-4f0a87e319e0}}")
     @CsvBindByName(column="What is the name of the person on the residency documents? (ID matching that name must be uploaded) {{bce6f956-52b7-40a2-b042-886051e9f5cd}}")
     @CsvBindByName(column="What is the phone number of the person named on the residency documents uploaded? {{b6a5c1ce-5eb0-45ca-af5e-66dd440fe1e6}}")
@@ -502,11 +503,12 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Zip code {{0e6c71db-01ef-445b-b066-abacfa8adcc3}}")
     @CsvBindByName(column="Please select if any of the following intra-agency transfer requests apply {{3ea3da10-cdc3-4743-9c50-271975cd24b5}}")
     @CsvBindByName(column="Transfer center: {{907d0f3b-fd25-42b5-a117-97a691be9bd8}}")
-
+*/
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());
-
-        return mapper.convertValue(inputData, ECEApplicationCsvModel.class);
+        ECEApplicationCsvModel eceApp = mapper.convertValue(inputData, ECEApplicationCsvModel.class);
+        eceApp.setSubmissionId(submission.getId());
+        return eceApp;
     }
 }
