@@ -48,11 +48,14 @@ public class TransmitterCommands {
     @ShellMethod(key = "transmit")
     public void transmit() throws IOException, JSchException, SftpException {
         log.info("Finding submissions to transmit...");
-        var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted());
-        log.info("Total submissions to transmit is {}", allSubmissions.size());
-
-        log.info("Transmitting submissions for ECE");
-        transmitBatch(allSubmissions, TransmissionType.ECE);
+        var allSubmissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted(), TransmissionType.ECE);
+        log.info("Total submissions to transmit for ECE is {}", allSubmissions.size());
+        if (allSubmissions.size() > 0) {
+            log.info("Transmitting submissions for ECE");
+            transmitBatch(allSubmissions, TransmissionType.ECE);
+        } else {
+            log.info("Skipping transmission for ECE");
+        }
     }
 
     private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException{
@@ -94,6 +97,7 @@ public class TransmitterCommands {
             transmission.setStatus(TransmissionStatus.Failed);
             transmission.setRunId(runId);
             transmission.setSubmissionErrors(errorMessages);
+            transmissionRepository.save(transmission);
                 }
         );
 
@@ -136,25 +140,28 @@ public class TransmitterCommands {
         List<UUID> successfullySubmittedIds = new ArrayList<>(submissions.stream()
                 .map(Submission::getId)
                 .toList());
-        // TODO: replace this with the package.getErrorMessages() - translate the CsvType to String + Errors to Object?
-        Map<UUID, Map<CsvType, String>> submissionErrors = new HashMap<>();
+
         try (FileOutputStream baos = new FileOutputStream(zipFileName);
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
+            Map<UUID, Map<CsvType, String>> submissionErrors = ecePackage.getErrorMessages();
+            log.info(submissionErrors.toString());
 
             submissionErrors.forEach((submissionId, submissionErrorMessages) -> {
                     successfullySubmittedIds.remove(submissionId);
                     }
             );
 
+            // TODO: at what point do we not submit the package?
+
             addZipEntries(ecePackage, zos);
+            results.put("failed", submissionErrors);
 
         } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
             throw new RuntimeException(e);
         }
 
         results.put("success", successfullySubmittedIds);
-        results.put("failed", submissionErrors);
 
         return results;
     }
