@@ -6,11 +6,15 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
+@Slf4j
 //@Profile("production")
 public class SftpClientImpl implements SftpClient {
 
@@ -18,10 +22,14 @@ public class SftpClientImpl implements SftpClient {
     String password;
     String uploadUrl;
 
-    public SftpClientImpl(@Value("${sftp.username:}") String username, @Value("${sftp.password:}") String password, @Value("${sftp.upload-url:}") String uploadUrl) {
+    String environmentPath;
+
+    public SftpClientImpl(@Value("${sftp.username:}") String username, @Value("${sftp.password:}") String password, @Value("${sftp.upload-url:}") String uploadUrl,
+    @Value("${sftp.environment-path:}") String environmentPath) {
         this.username = username;
         this.password = password;
         this.uploadUrl = uploadUrl;
+        this.environmentPath = environmentPath;
     }
 
     @Override
@@ -36,8 +44,10 @@ public class SftpClientImpl implements SftpClient {
         sftp.connect(5000);
 
         ChannelSftp channelSftp = (ChannelSftp) sftp;
-        // TODO: make this an input?
-        channelSftp.put(zipFilename, filePath + zipFilename);
+        String destinationFilePath = String.join("/", List.of(filePath + "-" + this.environmentPath, zipFilename));
+        log.info(destinationFilePath);
+
+        channelSftp.put(zipFilename, destinationFilePath );
 
         channelSftp.exit();
     }

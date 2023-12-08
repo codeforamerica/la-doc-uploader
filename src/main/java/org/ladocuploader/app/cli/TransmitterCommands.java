@@ -126,7 +126,7 @@ public class TransmitterCommands {
                         zipOutput.putNextEntry(entry);
                         zipOutput.write(document);
                         zipOutput.closeEntry();
-                        // TODO: add errors to the error map if something fails with zip?
+                        // TODO: set status to failed for entire run if something goes wrong with zip?
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -152,7 +152,7 @@ public class TransmitterCommands {
                     }
             );
 
-            // TODO: at what point do we not submit the package/ mark as failed? does marking as failed mean that we should retry?
+            // TODO: at what point do we not submit the package/ mark as failed? does marking as failed mean that we should retry for this submission?
 
             addZipEntries(ecePackage, zos);
             results.put("failed", submissionErrors);
