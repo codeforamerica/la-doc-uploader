@@ -47,7 +47,7 @@ public class Transmission {
     private TransmissionType transmissionType;
 
     @Type(JsonType.class)
-    @Column(name="submission_errors")
+    @Column(name="submission_errors", columnDefinition = "jsonb")
     private Map<CsvType, String> submissionErrors;
 
     public static Transmission fromSubmission(Submission submission) {
