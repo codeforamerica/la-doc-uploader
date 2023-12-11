@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
+import org.ladocuploader.app.utils.HouseholdUtilities;
 
 @Getter
 @Setter
@@ -272,10 +273,11 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     String childsImmunizationRecordDocument;
 
     @CsvBindByName(column="Notes on immunization records, if needed {{59f6d133-3da5-4c3e-bbf8-e7383bea4913}}")
-    String childImmunicationRecordNotes;
+    String childImmunizationRecordNotes;
 
     @CsvBindByName(column="How many adults are in the household? {{6c7586e5-b989-402a-b1bd-7f7474e4a7fc}}")
     String numberOfAdultsInHousehold;
+
 
     //  *** START Adult One ***  UNUSED FIELDS, Use other Adult one section fields below ***
     @CsvBindByName(column="[NO LONGER ON APPLICATION] For each adult in the household (18+ years old, up to 3 adults), provide the following information.  Is Adult 1 (yourself) working, in school, or in a training program? {{316a6e00-a7bd-49f1-9432-f58d3d401ae4}}")
@@ -763,7 +765,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="If yes, list center name {{f5b660ae-c39f-4957-9dbc-fed8dea82f0a}}")
     String centerName;
     @CsvBindByName(column="Does the parent participate in Parents As Educators Kingsley House program? {{102d4312-b812-477c-a703-c7bc928e95c5}}")
-    String doesParentParticpateKingslyHouseProgram;
+    String doesParentParticipateKingslyHouseProgram;
     @CsvBindByName(column="Is a parent/guardian active military? {{66af33a9-a309-4a4a-a916-5bcbe6504a3d}}")
     String isParentGuardianActiveMilitary;
     @CsvBindByName(column="Is the applicant parent pregnant? {{e9d593bd-e5fe-431b-a133-fb7333114719}}")
@@ -792,7 +794,29 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());
-        ECEApplicationCsvModel eceApp = mapper.convertValue(inputData, ECEApplicationCsvModel.class);
+        List<Map<String, Object>> householdList = (List)inputData.get("household");
+
+        // this is the data that jackson will map into the EceModel, not inputData
+        Map<String, Object> eceDataMap = new HashMap<>();
+
+        int numberOfAdultsInHousehold = 0;
+
+        for (Map<String, Object> member : householdList) {
+            boolean is18orOlder = HouseholdUtilities.isMember18orOlder(
+                Integer.parseInt((String)member.get("householdMemberBirthDay")),
+                Integer.parseInt((String)member.get("householdMemberBirthMonth")),
+                Integer.parseInt((String)member.get("householdMemberBirthYear"))
+            );
+
+            if (is18orOlder) {
+                numberOfAdultsInHousehold++;
+            }
+        }
+        eceDataMap.put("numberOfAdultsInHousehold", numberOfAdultsInHousehold);
+
+
+
+        ECEApplicationCsvModel eceApp = mapper.convertValue(eceDataMap, ECEApplicationCsvModel.class);
         eceApp.setSubmissionId(submission.getId());
         return eceApp;
     }
