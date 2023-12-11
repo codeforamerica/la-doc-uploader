@@ -37,13 +37,13 @@ public class HouseholdDetailsPreparer implements SubmissionFieldPreparer {
     if (household != null) {
       for (int i = 0; i < household.size(); i++) {
         Map<String, Object> householdMember = household.get(i);
-        var educationStatus = householdMember.get("householdHighestEducation");
+        var educationStatus = householdMember.get("householdMemberHighestEducation");
         results.put("householdHighestEducation" + i, new SingleField("householdHighestEducationFormatted", EDUCATION_MAP.get(educationStatus), i + 1));
 
-        var maritalStatus = householdMember.get("householdMaritalStatus");
+        var maritalStatus = householdMember.get("householdMemberMaritalStatus");
         results.put("householdMaritalStatus" + i, new SingleField("householdMaritalStatusFormatted", MARITAL_STATUS_MAP.get(maritalStatus), i + 1));
 
-        var birthday = Stream.of("householdBirthMonth", "householdBirthDay", "householdBirthYear")
+        var birthday = Stream.of("householdMemberBirthMonth", "householdMemberBirthDay", "householdMemberBirthYear")
             .map(householdMember::get)
             .reduce((e, c) -> e + "/" + c)
             .get();
