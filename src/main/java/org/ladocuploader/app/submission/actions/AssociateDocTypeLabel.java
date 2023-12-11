@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static formflow.library.inputs.FieldDesignation.DYNAMIC_FIELD_MARKER;
+import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 
 @Component
 public class AssociateDocTypeLabel implements Action {
