@@ -36,6 +36,8 @@
                     th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.cooking-fuel}, label=#{utilities.cooking-fuel})"/>
                 <th:block
                     th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.other}, label=#{utilities.other})"/>
+                <th:block
+                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)"/>
               </th:block>
             </th:block>
             <div class="form-card__footer">

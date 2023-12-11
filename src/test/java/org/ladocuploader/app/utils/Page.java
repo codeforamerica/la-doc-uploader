@@ -1,6 +1,7 @@
 package org.ladocuploader.app.utils;
 
 import io.percy.selenium.Percy;
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 public class Page {
 
@@ -41,6 +43,9 @@ public class Page {
   }
 
   public void goBack() {
+    await().atMost(20, TimeUnit.SECONDS).until(
+        () -> !driver.findElements(By.id("back-link")).isEmpty()
+    );
     driver.findElement(By.partialLinkText("Go Back")).click();
   }
 

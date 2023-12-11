@@ -22,6 +22,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.context.MessageSource;
+import java.util.Locale;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Import({WebDriverConfiguration.class})
@@ -31,6 +33,9 @@ public abstract class AbstractBasePageTest {
   private static final String UPLOADED_JPG_FILE_NAME = "test.jpeg";
 
   private static final String VALID_REF_ID = "T9203206181";
+
+  @Autowired
+  protected MessageSource messageSource;
   
   @Autowired
   protected RemoteWebDriver driver;
@@ -85,5 +90,10 @@ public abstract class AbstractBasePageTest {
     await().until(
         () -> !driver.findElements(By.className("file-details")).get(0).getAttribute("innerHTML")
             .isBlank());
+  }
+
+  public String message(String message) {
+    return messageSource
+        .getMessage(message, null, Locale.ENGLISH);
   }
 }
