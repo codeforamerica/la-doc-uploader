@@ -6,7 +6,7 @@ CREATE TABLE transmissions (
     time_created TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
     status varchar DEFAULT 'Queued',
     transmission_type varchar,
-    submission_errors jsonb
+    submission_errors JSONB
 );
 
 CREATE INDEX idx_transmission_id on transmissions (run_id, submission_id);
