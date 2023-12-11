@@ -1,14 +1,13 @@
 package org.ladocuploader.app.cli;
 
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.SftpException;
 import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepository;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.csv.CsvService;
-import org.ladocuploader.app.csv.enums.CsvPackageType;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
@@ -30,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @SpringBootTest
-public class TransmitterCommands {
+public class TransmitterCommandsTest {
 
     @Autowired
     TransmitterCommands transmitterCommands;
@@ -63,10 +62,10 @@ public class TransmitterCommands {
         submissionList.add(submission);
     }
 
+    @Disabled
     @Test
-    @Ignore
-    void transmitZipFile() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-        transmitterCommands.transmitZipFile();
+    void transmitZipFile() throws IOException, JSchException, SftpException {
+        transmitterCommands.transmit();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);

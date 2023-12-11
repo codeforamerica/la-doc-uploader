@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@Profile("test")
+@Profile("!production")
 public class MockSftpClientImpl implements SftpClient {
 
   @Override
