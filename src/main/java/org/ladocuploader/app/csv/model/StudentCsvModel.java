@@ -88,7 +88,7 @@ public class StudentCsvModel extends BaseCsvModel {
 
         if (household != null || !household.isEmpty()) {
             for (Map<String, Object> member : household) {
-                String relationship = (String) member.get("householdRelationship");
+                String relationship = (String) member.get("householdMemberRelationship");
                 if (relationship == null || !relationship.equalsIgnoreCase("child")) {
                     continue;
                 }
@@ -97,9 +97,9 @@ public class StudentCsvModel extends BaseCsvModel {
                 studentData.put("id", submission.getId());
                 studentData.put("firstName", member.get("householdMemberFirstName"));
                 studentData.put("lastName", member.get("householdMemberLastName"));
-                studentData.put("memberBirthDay", member.get("householdBirthDay"));
-                studentData.put("memberBirthMonth", member.get("householdBirthMonth"));
-                studentData.put("memberBirthYear", member.get("householdBirthYear"));
+                studentData.put("memberBirthDay", member.get("householdMemberBirthDay"));
+                studentData.put("memberBirthMonth", member.get("householdMemberBirthMonth"));
+                studentData.put("memberBirthYear", member.get("householdMemberBirthYear"));
                 studentData.put("homeAddressStreetAddress1", inputData.get("homeAddressStreetAddress1"));
                 studentData.put("homeAddressStreetAddress2", inputData.get("homeAddressStreetAddress2"));
                 studentData.put("homeAddressCity", inputData.get("homeAddressCity"));

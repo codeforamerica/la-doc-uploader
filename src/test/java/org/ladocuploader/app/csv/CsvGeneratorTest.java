@@ -72,10 +72,10 @@ public class CsvGeneratorTest {
         entry.put("uuid", UUID.fromString(String.format("%s00%02d",fakePersonUUIDPrefix, h)));
         entry.put("householdMemberFirstName", kidsNames.get(h));
         entry.put("householdMemberLastName", lastNames.get(i));
-        entry.put("householdBirthDay", String.format("%d", h+1));
-        entry.put("householdBirthMonth", "11");
-        entry.put("householdBirthYear", "2001");
-        entry.put("householdRelationship", "child");
+        entry.put("householdMemberBirthDay", String.format("%d", h+1));
+        entry.put("householdMemberBirthMonth", "11");
+        entry.put("householdMemberBirthYear", "2001");
+        entry.put("householdMemberRelationship", "child");
         householdList.add(entry);
       }
 
