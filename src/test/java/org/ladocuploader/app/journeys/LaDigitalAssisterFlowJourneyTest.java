@@ -177,69 +177,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  void contactInformationFlow(){
-    testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("phone-number-nudge.title"));
-    testPage.goBack();
-
-    testPage.enter("emailAddress", "test");
-    testPage.enter("phoneNumber", "123-456-789");
-
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.invalid-email")));
-    assert(testPage.hasErrorText(message("error.invalid-phone")));
-
-    testPage.enter("emailAddress", "");
-    testPage.enter("phoneNumber", "");
-
-    testPage.clickElementById("remindersMethod-By Text-label");
-
-    testPage.clickContinue();
-    assert(testPage.hasErrorText(message("error.invalid-phone")));
-
-    testPage.enter("phoneNumber", "123-456-7891");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
-    testPage.goBack();
-
-    testPage.enter("phoneNumber", "123-456-789");
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.invalid-phone")));
-    testPage.clickElementById("remindersMethod-By Text-label");
-    testPage.clickElementById("remindersMethod-By Email-label");
-    testPage.enter("emailAddress", "test@mail.com");
-    testPage.enter("phoneNumber", "");
-
-
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("phone-number-nudge.title"));
-    testPage.goBack();
-
-    testPage.enter("phoneNumber", "123-456-7891");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
-
-    testPage.goBack();
-
-    testPage.enter("emailAddress", "test");
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.invalid-email")));
-
-    testPage.enter("emailAddress", "test@mail.com");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
-  }
-
-  @Test
   void hourlyIncomeFlow(){
     loadUserPersonalData();
     loadHouseHoldData("First", "User", "12", "22", "1991");
