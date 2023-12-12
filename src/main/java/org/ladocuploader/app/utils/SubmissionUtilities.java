@@ -5,7 +5,10 @@ import formflow.library.data.Submission;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
+
 public class SubmissionUtilities {
+    public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
 
     public static final Map<String, String> EDUCATION_MAP = new HashMap<>();
     public static final Map<String, String> MARITAL_STATUS_MAP = new HashMap<>();
@@ -141,5 +144,7 @@ public class SubmissionUtilities {
         return items;
     }
 
-
+    public static String getDecryptedSSNKeyName(String uuid) {
+        return "householdMemberSsn%s%s".formatted(DYNAMIC_FIELD_MARKER, uuid);
+    }
 }

@@ -15,7 +15,7 @@ public class MaritalStatusPreparer implements SubmissionFieldPreparer {
 
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
-    var maritalStatus = (String) submission.getInputData().getOrDefault("martialStatus", "");
+    var maritalStatus = (String) submission.getInputData().getOrDefault("maritalStatus", "");
     if (maritalStatus.startsWith("Married")) {
       return Map.of("maritalStatus", new SingleField("maritalStatus", "Married", null));
     }

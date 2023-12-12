@@ -8,12 +8,14 @@ import formflow.library.pdf.SubmissionFieldPreparer;
 import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.ladocuploader.app.utils.SubmissionUtilities.getDecryptedSSNKeyName;
 
 @Component
 public class SsnPreparer implements SubmissionFieldPreparer {
-  private static final String ENCRYPTED_SSNS_INPUT_NAME = "encryptedSSNs";
-
   private final StringEncryptor encryptor;
 
   public SsnPreparer(StringEncryptor stringEncryptor) {
@@ -27,38 +29,23 @@ public class SsnPreparer implements SubmissionFieldPreparer {
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> results = new HashMap<>();
-
-    // Digital Assister
-    List<String> householdSsnInputs = new ArrayList<>();
-    String encryptedSSN = (String) submission.getInputData().remove(ENCRYPTED_SSNS_INPUT_NAME);
+    String encryptedSSN = (String) submission.getInputData().remove("encryptedSSN");
     if (encryptedSSN != null) {
-      String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
-      householdSsnInputs.add(decryptedSSN);
+      String decryptedSSN = encryptor.decrypt(encryptedSSN);
+      results.put("applicantSsn", new SingleField("applicantSsn", decryptedSSN, null));
     }
 
-    var householdMembers = (List) submission.getInputData().get("household");
-    if (householdMembers != null && !householdMembers.isEmpty()) {
-      if (householdSsnInputs.isEmpty()) {
-        // Make sure there's one for head of household
-        householdSsnInputs.add("");
-      }
-      for (int i = 0; i < householdMembers.size(); i++) {
-        encryptedSSN = (String) ((Map<?, ?>) householdMembers.get(i)).remove(ENCRYPTED_SSNS_INPUT_NAME);
-        String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
-        householdSsnInputs.add(decryptedSSN);
+    List<Map<String, Object>> householdMembers = (List) submission.getInputData().get("household");
+    if(householdMembers != null) {
+      int i = 1;
+      for (Map<String, Object> hhmember : householdMembers) {
+        encryptedSSN = (String) hhmember.get(getDecryptedSSNKeyName((String) hhmember.get("uuid")));
+        String decryptedSSN = encryptor.decrypt(encryptedSSN);
+        results.put("ssns_" + i, new SingleField("ssns_" + i, decryptedSSN, null));
+        i++;
       }
     }
 
-    if (!householdSsnInputs.isEmpty()) {
-      results.put("applicantSsn", new SingleField("applicantSsn", householdSsnInputs.get(0), null));
-
-      for (int i = 1; i < householdSsnInputs.size(); i++) {
-        results.put("ssns_" + i, new SingleField("ssns_" + i, householdSsnInputs.get(i), null));
-      }
-
-      return results;
-    }
-
-    return Collections.emptyMap();
+    return results;
   }
 }

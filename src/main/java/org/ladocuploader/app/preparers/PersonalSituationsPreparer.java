@@ -7,7 +7,6 @@ import formflow.library.pdf.SubmissionField;
 import formflow.library.pdf.SubmissionFieldPreparer;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,20 +15,17 @@ public class PersonalSituationsPreparer implements SubmissionFieldPreparer {
 
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
-    Map<String, SubmissionField> results = new HashMap<>();
-
     List<String> disability = (List<String>) submission.getInputData().get("personalSituationDisability[]");
+    boolean disabilityFlag = disability != null && disability.contains("you");
 
     var household = (List<Map<String, Object>>) submission.getInputData().get("household");
-    if (household != null) {
+    if (household != null && disability != null) {
       for (Map<String, Object> member : household) {
         var uuid = member.get("uuid");
-
-        String disabilityFlag = disability.contains(uuid) || disability.contains("you") ? "Yes" : "No";
-        results.put("personalSituationDisablityInd", new SingleField("disablityInd", disabilityFlag, null));
+        disabilityFlag = disabilityFlag || disability.contains(uuid);
       }
     }
 
-    return results;
+    return Map.of("personalSituationDisablityInd", new SingleField("disablityInd", disabilityFlag ? "Yes" : "No", null));
   }
 }
