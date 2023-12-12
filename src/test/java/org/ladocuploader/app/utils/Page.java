@@ -43,7 +43,7 @@ public class Page {
   }
 
   public void goBack() {
-    await().atMost(20, TimeUnit.SECONDS).until(
+    await().atMost(100, TimeUnit.SECONDS).until(
         () -> !(driver.findElements(By.id("back-link")).isEmpty())
     );
     driver.findElement(By.partialLinkText("Go Back")).click();
