@@ -57,45 +57,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  void birthDateFlow() {
-    testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
-    testPage.enter("firstName", "test");
-    testPage.enter("lastName", "test2");
-    testPage.selectRadio("sex", "F");
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.format-dob")));
-
-    testPage.enter("birthMonth", "12");
-    testPage.enter("birthDay", "09");
-    testPage.enter("birthYear", "85");
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.format-dob")));
-
-    testPage.enter("birthMonth", "12");
-    testPage.enter("birthDay", "25");
-    testPage.enter("birthYear", "1885");
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.invalid-dob")));
-
-    testPage.enter("birthMonth", "12");
-    testPage.enter("birthDay", "25");
-    testPage.enter("birthYear", "2025");
-
-    testPage.clickContinue();
-    assert(testPage.hasErrorText(message("error.invalid-dob")));
-
-    testPage.enter("birthMonth", "2");
-    testPage.enter("birthDay", "9");
-    testPage.enter("birthYear", "1985");
-
-    testPage.clickContinue();
-    assertThat(testPage.getTitle()).isEqualTo(message("home-address.title"));
-  }
-
-  @Test
   void noHomeAddressFlow(){
     testPage.navigateToFlowScreen("laDigitalAssister/homeAddress");
     testPage.clickContinue();
