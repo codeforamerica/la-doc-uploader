@@ -3,6 +3,7 @@ package org.ladocuploader.app.submission.actions;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import formflow.library.data.FormSubmission;
+import formflow.library.data.Submission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 class ValidateMailingAddressTest {
     private final String BLANK_VALUE="";
     private final String NOT_BLANK_VALUE = "test";
-    private final String INVALID_ZIPCODE = "54";
     private final String VALID_ZIPCODE = "12345";
 
     private final String SAME_AS_HOME_ADDRESS_INPUT_NAME = "sameAsHomeAddress";
@@ -63,19 +63,22 @@ class ValidateMailingAddressTest {
 
     @Test
     public void testHomeAddressIsCheckedWhenSameAsHome() {
-        FormSubmission form = new FormSubmission(Map.of(
-            "sameAsHomeAddress[]", new ArrayList<>(List.of("true")),
-            ADDRESS_1_INPUT_NAME, BLANK_VALUE,
-            CITY_INPUT_NAME, BLANK_VALUE,
-            STATE_INPUT_NAME, BLANK_VALUE,
-            ZIP_INPUT_NAME, BLANK_VALUE,
+        Submission submission = new Submission();
+        submission.setInputData(Map.of(
             "homeAddressStreetAddress1", NOT_BLANK_VALUE,
             "homeAddressCity", NOT_BLANK_VALUE,
             "homeAddressState", NOT_BLANK_VALUE,
             "homeAddressZipCode", VALID_ZIPCODE
         ));
+        FormSubmission form = new FormSubmission(Map.of(
+            "sameAsHomeAddress[]", new ArrayList<>(List.of("true")),
+            ADDRESS_1_INPUT_NAME, BLANK_VALUE,
+            CITY_INPUT_NAME, BLANK_VALUE,
+            STATE_INPUT_NAME, BLANK_VALUE,
+            ZIP_INPUT_NAME, BLANK_VALUE
+        ));
 
-        Map<String, List<String>> result = validator.runValidation(form, null);
+        Map<String, List<String>> result = validator.runValidation(form, submission);
         assertThat(result.get(SAME_AS_HOME_ADDRESS_INPUT_NAME)).isNullOrEmpty();
         assertThat(result.get(ADDRESS_1_INPUT_NAME)).isNullOrEmpty();
         assertThat(result.get(CITY_INPUT_NAME)).isNullOrEmpty();
