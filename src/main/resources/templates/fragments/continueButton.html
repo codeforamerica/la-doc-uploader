@@ -1,0 +1,8 @@
+<a th:fragment="continue"
+   th:with="uuidQueryParam=${fieldData != null && fieldData.get('uuid') != null ? '?uuid=' + fieldData.get('uuid') : ''},
+            applicantUrlParam=${T(org.ladocuploader.app.config.UrlParams).APPLICANT_ID_URL_PARAM},
+            applicantIdParam=${applicantId != null ? '?' + applicantUrlParam + '=' + applicantId : ''}"
+   th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation' + ${uuidQueryParam} + ${applicantIdParam}"
+   th:text="${text} ? ${text} : #{general.inputs.continue}"
+   class="button button--primary"
+   id="continue-link"></a>

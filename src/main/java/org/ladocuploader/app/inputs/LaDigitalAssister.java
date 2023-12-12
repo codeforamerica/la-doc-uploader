@@ -26,6 +26,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String parish;
 
   // Language
+  @NotBlank
   private String languageRead;
   private String languageSpeak;
   private String needInterpreter;

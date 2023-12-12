@@ -3,6 +3,7 @@ package org.ladocuploader.app.config;
 import formflow.library.config.FlowConfiguration;
 import formflow.library.data.SubmissionRepositoryService;
 import java.util.List;
+import javax.xml.crypto.Data;
 import org.ladocuploader.app.interceptors.DataRequiredInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,6 @@ public class DataRequiredHandlerConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry
             .addInterceptor(new DataRequiredInterceptor(this.submissionRepositoryService, this.flowConfigurations))
-            .addPathPatterns(DataRequiredInterceptor.PATH_FORMAT);
+            .addPathPatterns(DataRequiredInterceptor.PATH_FORMAT, DataRequiredInterceptor.PATH_FORMAT_NAV);
     }
 }

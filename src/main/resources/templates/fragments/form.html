@@ -1,0 +1,11 @@
+<form th:fragment="form"
+      th:with="applicantUrlParam=${T(org.ladocuploader.app.config.UrlParams).APPLICANT_ID_URL_PARAM},
+        modifiedAction=${applicantId != null ? action + '?' + applicantUrlParam + '=' + applicantId : action}"
+      th:assert="${!#strings.isEmpty(action)}, ${!#strings.isEmpty(content)}"
+      th:action="@{${modifiedAction}}"
+      th:enctype="${enctype}"
+      th:id="${formId}"
+      autocomplete="off"
+      method="post">
+  <th:block th:replace="${content}"/>
+</form>

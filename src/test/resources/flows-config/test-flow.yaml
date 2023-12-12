@@ -1,0 +1,15 @@
+name: testFlow
+flow:
+  screenOne:
+    nextScreens:
+      - name: screenTwo
+  screenTwo:
+    nextScreens:
+      - name: screenThree
+  screenThree:
+    nextScreens:
+      - name: success
+  success:
+    nextScreens: null
+landmarks:
+  firstScreen: screenOne

@@ -34,7 +34,6 @@ flow:
     nextScreens:
       - name: languagePreference
   languagePreference:
-    beforeDisplayAction: SetApplicantId
     nextScreens:
       - name: choosePrograms
   choosePrograms:
@@ -524,3 +523,5 @@ subflows:
     iterationStartScreen: householdIncomeWho
     reviewScreen: householdIncomeList
     deleteConfirmationScreen: householdIncomeDeleteConfirmation
+landmarks:
+  firstScreen: howThisWorks
