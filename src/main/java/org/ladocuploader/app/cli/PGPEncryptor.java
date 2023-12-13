@@ -72,29 +72,26 @@ public class PGPEncryptor {
   }
 
   private PGPSecretKey getSecretKey() throws IOException {
-    InputStream inputStream = new FileInputStream(sigkeyFilename);
-    inputStream = PGPUtil.getDecoderStream(inputStream);
-    PGPSecretKeyRingCollection pgpSec;
+    try (InputStream fileInputStream = new FileInputStream(sigkeyFilename);) {
+      InputStream inputStream = PGPUtil.getDecoderStream(fileInputStream);
+      KeyFingerPrintCalculator fpCalculator = new JcaKeyFingerprintCalculator();
+      PGPSecretKeyRingCollection pgpSec = new PGPSecretKeyRingCollection(inputStream, fpCalculator);
 
-    KeyFingerPrintCalculator fpCalculator = new JcaKeyFingerprintCalculator();
-    try {
-      pgpSec = new PGPSecretKeyRingCollection(inputStream, fpCalculator);
-    } catch (PGPException e) {
-      throw new IllegalArgumentException("Invalid signing key", e);
-    }
+      Iterator<PGPSecretKeyRing> keyRingIter = pgpSec.getKeyRings();
+      while (keyRingIter.hasNext()) {
+        PGPSecretKeyRing keyRing = keyRingIter.next();
 
-    Iterator<PGPSecretKeyRing> keyRingIter = pgpSec.getKeyRings();
-    while (keyRingIter.hasNext()) {
-      PGPSecretKeyRing keyRing = keyRingIter.next();
+        Iterator<PGPSecretKey> keyIter = keyRing.getSecretKeys();
+        while (keyIter.hasNext()) {
+          PGPSecretKey key = keyIter.next();
 
-      Iterator<PGPSecretKey> keyIter = keyRing.getSecretKeys();
-      while (keyIter.hasNext()) {
-        PGPSecretKey key = keyIter.next();
-
-        if (key.isSigningKey()) {
-          return key;
+          if (key.isSigningKey()) {
+            return key;
+          }
         }
       }
+    } catch (PGPException e) {
+      throw new IllegalArgumentException("Invalid signing key", e);
     }
 
     throw new IllegalArgumentException("Invalid signing key");

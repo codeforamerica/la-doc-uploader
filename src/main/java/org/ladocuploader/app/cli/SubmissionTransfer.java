@@ -114,7 +114,7 @@ public class SubmissionTransfer {
         String.format("\"%s\",", submission.getInputData().getOrDefault("ssns", "")) + // TODO decrypt
         String.format("\"%s\",", submission.getInputData().getOrDefault("birthdate", "")) + // TODO format
         String.format("\"%s\",", submission.getSubmittedAt()) + // TODO format
-        String.format("\"%s/%s\",", bactchIndex, subfolder, filename);
+        String.format("\"%s/%s/%s\",", bactchIndex, subfolder, filename);
     return metaEntry.getBytes();
   }
 
