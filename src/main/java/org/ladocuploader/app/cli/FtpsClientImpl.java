@@ -1,5 +1,6 @@
 package org.ladocuploader.app.cli;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
@@ -8,11 +9,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
+@Slf4j
 @Component
 @Profile("production")
 public class FtpsClientImpl implements FtpsClient {
@@ -44,10 +45,7 @@ public class FtpsClientImpl implements FtpsClient {
 
     ftp.login(username, password);
 
-
     ftp.changeWorkingDirectory(uploadDir);
-
-    File file = new File(zipFilename);
 
     ftp.execPBSZ(0);
     ftp.execPROT("P");

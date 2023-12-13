@@ -1,5 +1,6 @@
 package org.ladocuploader.app.cli;
 
+import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.bcpg.CompressionAlgorithmTags;
 import org.bouncycastle.bcpg.SymmetricKeyAlgorithmTags;
 import org.bouncycastle.openpgp.*;
@@ -14,6 +15,7 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Iterator;
 
+@Slf4j
 @Component
 public class PGPEncryptor {
 
@@ -30,17 +32,20 @@ public class PGPEncryptor {
   public byte[] signAndEncryptPayload(String filename) throws IOException {
     FileInputStream instream = new FileInputStream(filename);
 
+    log.info("Retrieving keys for signing and encryption");
     PGPSecretKey signingKey = getSecretKey();
     PGPPublicKey pubKey = getPublicKey();
 
     ByteArrayOutputStream outstream = new ByteArrayOutputStream();
     try {
+      log.info("Signing and encrypting payload");
       return signAndEncryptPayload(instream, signingKey, pubKey, outstream);
     } catch (PGPException e) {
-      throw new RuntimeException(e);
+      throw new IllegalStateException("There was an issue signing and encrypting the file", e);
     } finally {
       instream.close();
       outstream.close();
+      log.info("Completed signing and encrypting payload");
     }
   }
 
@@ -75,7 +80,7 @@ public class PGPEncryptor {
     try {
       pgpSec = new PGPSecretKeyRingCollection(inputStream, fpCalculator);
     } catch (PGPException e) {
-      throw new IllegalArgumentException("Invalid signing key");
+      throw new IllegalArgumentException("Invalid signing key", e);
     }
 
     Iterator<PGPSecretKeyRing> keyRingIter = pgpSec.getKeyRings();
