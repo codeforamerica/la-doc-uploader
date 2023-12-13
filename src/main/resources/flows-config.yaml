@@ -123,6 +123,9 @@ flow:
       - name: householdPregnancy
   householdSchoolWho:
     nextScreens:
+      - name: householdSchoolDetails
+  householdSchoolDetails:
+    nextScreens:
       - name: householdPregnancy
   householdPregnancy:
     nextScreens:
@@ -130,6 +133,9 @@ flow:
         condition: IsPregnant
       - name: householdBenefits
   householdPregnancyWho:
+    nextScreens:
+      -name: householdPregnancyDueDate
+  householdPregnancyDueDate:
     nextScreens:
       - name: householdBenefits
   householdBenefits:
@@ -314,6 +320,9 @@ flow:
         condition: ProgramsIncludeSnap
       - name: expensesSignPost
   householdMoneyOnHand:
+    nextScreens:
+      - name: householdMoneyOnHandWhich
+  householdMoneyOnHandWhich:
     nextScreens:
       - name: expensesSignPost
   expensesSignPost:
@@ -537,6 +546,12 @@ flow:
       - name: expensesDependentCare
   utilitiesOther:
     nextScreens:
+      - name: energyAssistance
+  energyAssistance:
+    nextScreens:
+      - name: liheap
+  liheap:
+    nextScreens:
       - name: expensesDependentCare
   expensesDependentCare:
     nextScreens:
@@ -544,6 +559,12 @@ flow:
         condition: HasDependentCareExpenses
       - name: expensesInsurance
   expensesDependentCareAmount:
+    nextScreens:
+      - name: expensesChildSupport
+  expensesChildSupport:
+    nextScreens:
+      - name: expensesChildSupportAmount
+  expensesChildSupportAmount:
     nextScreens:
       - name: expensesInsurance
   expensesInsurance:
@@ -590,6 +611,9 @@ flow:
     nextScreens:
       - name: finalSignPost
   finalSignPost:
+    nextScreens:
+      - name: ebtCard
+  ebtCard:
     nextScreens:
       - name: authorizedRepAuthorization
   authorizedRepAuthorization:
