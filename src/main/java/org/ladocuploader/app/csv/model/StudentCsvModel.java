@@ -11,12 +11,14 @@ import lombok.Getter;
 import lombok.Setter;
 import formflow.library.data.Submission;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 import org.ladocuploader.app.csv.converters.HouseholdBirthDateConverter;
 
 @Getter
 @Setter
 @JsonTypeName("student")
+@Slf4j
 public class StudentCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="active", required=true)
@@ -48,22 +50,34 @@ public class StudentCsvModel extends BaseCsvModel {
 
     @JsonSetter(value="memberBirthDay")
     private void setMemberBirthDay(final String day) {
-        if (day != null) {
-            birthDate.put("day", Integer.valueOf(day));
+        try {
+            if (day != null) {
+                birthDate.put("day", Integer.valueOf(day));
+            }
+        } catch (NumberFormatException e) {
+            log.error("JSON Mapping: Unable to set member birth day, as value '{}' is bad.", day);
         }
     }
 
     @JsonSetter(value="memberBirthMonth")
     private void setMemberBirthMonth(final String month) {
-        if (month != null) {
-            birthDate.put("month", Integer.valueOf(month));
+        try {
+            if (month != null) {
+                birthDate.put("month", Integer.valueOf(month));
+            }
+        } catch (NumberFormatException e) {
+            log.error("JSON Mapping: Unable to set member birth month, as value '{}' is bad.", month);
         }
     }
 
     @JsonSetter(value="memberBirthYear")
     private void setMemberBirthYear(final String year) {
-        if (year != null) {
-            birthDate.put("year", Integer.valueOf(year));
+        try {
+            if (year != null) {
+                birthDate.put("year", Integer.valueOf(year));
+            }
+        } catch (NumberFormatException e) {
+            log.error("JSON Mapping: Unable to set member birth year, as value '{}' is bad.", year);
         }
     }
 
