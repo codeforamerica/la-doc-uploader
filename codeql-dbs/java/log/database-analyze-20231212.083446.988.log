@@ -1,0 +1,20 @@
+[2023-12-12 08:34:46] This is codeql database analyze codeql-dbs/java java-code-scanning.qls --format=sarif-latest sarif-category=java --output=java-results.sarif
+[2023-12-12 08:34:46] Log file was started late.
+[2023-12-12 08:34:46] [PROGRESS] database analyze> Running queries.
+[2023-12-12 08:34:47] Running plumbing command: codeql database run-queries --evaluator-log-level=5 --warnings=show --qlconfig-file=/Users/lkemperman/Documents/la-doc-uploader/qlconfig.yml --no-rerun --interpret-passthrough=null,--format=sarif-latest,-o=/Users/lkemperman/Documents/la-doc-uploader/java-results.sarif,--max-paths=4,--csv-location-format=line-column,--print-diagnostics-summary,--print-metrics-summary,--qlconfig-file=/Users/lkemperman/Documents/la-doc-uploader/qlconfig.yml,--,/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/java,java-code-scanning.qls,sarif-category=java -- /Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/java java-code-scanning.qls sarif-category=java
+[2023-12-12 08:34:47] Exception caught at top level: Database at /Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/java needs to be finalized before running queries; please run codeql database finalize
+                      com.semmle.cli2.database.RunQueriesCommand.executeSubcommand(RunQueriesCommand.java:222)
+                      com.semmle.cli2.picocli.SubcommandCommon.lambda$executeSubcommandWithMessages$5(SubcommandCommon.java:803)
+                      com.semmle.cli2.picocli.SubcommandCommon.withCompilationMessages(SubcommandCommon.java:442)
+                      com.semmle.cli2.picocli.SubcommandCommon.executeSubcommandWithMessages(SubcommandCommon.java:801)
+                      com.semmle.cli2.picocli.PlumbingRunner.run(PlumbingRunner.java:119)
+                      com.semmle.cli2.picocli.SubcommandCommon.execPlumbingInProcess(SubcommandCommon.java:227)
+                      com.semmle.cli2.database.AnalyzeCommand.executeSubcommand(AnalyzeCommand.java:160)
+                      com.semmle.cli2.picocli.SubcommandCommon.lambda$executeSubcommandWithMessages$5(SubcommandCommon.java:803)
+                      com.semmle.cli2.picocli.SubcommandCommon.withCompilationMessages(SubcommandCommon.java:442)
+                      com.semmle.cli2.picocli.SubcommandCommon.executeSubcommandWithMessages(SubcommandCommon.java:801)
+                      com.semmle.cli2.picocli.SubcommandCommon.toplevelMain(SubcommandCommon.java:685)
+                      com.semmle.cli2.picocli.SubcommandCommon.call(SubcommandCommon.java:666)
+                      com.semmle.cli2.picocli.SubcommandMaker.runMain(SubcommandMaker.java:237)
+                      com.semmle.cli2.picocli.SubcommandMaker.runMain(SubcommandMaker.java:247)
+                      com.semmle.cli2.CodeQL.main(CodeQL.java:115)

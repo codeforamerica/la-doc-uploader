@@ -643,7 +643,18 @@ flow:
   signature:
     afterSaveAction: HandleApplicationSigned
     nextScreens:
+      - name: docUploadIntro
+  docUploadIntro:
+    nextScreens:
+      - name: docUploadSignpost
+        condition: AddDocumentsSelected
       - name: confirmation
+  docUploadSignpost:
+    nextScreens:
+      - name: docUploadInstructions
+  docUploadInstructions:
+    nextScreens:
+      - name: docUploadRecommendations
   confirmation:
     beforeDisplayAction: FormatSubmittedAtDate
     nextScreens:

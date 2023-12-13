@@ -411,5 +411,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String digitalAssisterFeedback;
 
   private String digitalAssisterFeedbackDetail;
+
+  private String addIncome;
 }
 

@@ -1,0 +1,40 @@
+---
+sourceLocationPrefix: /Users/lkemperman/Documents/la-doc-uploader
+baselineLinesOfCode: 3590
+unicodeNewlines: false
+columnKind: utf16
+primaryLanguage: java
+inProgress:
+  primaryLanguage: java
+  installedExtractors:
+    go:
+     - /Users/lkemperman/Documents/codeql/go
+    python:
+     - /Users/lkemperman/Documents/codeql/python
+    java:
+     - /Users/lkemperman/Documents/codeql/java
+    html:
+     - /Users/lkemperman/Documents/codeql/html
+    xml:
+     - /Users/lkemperman/Documents/codeql/xml
+    properties:
+     - /Users/lkemperman/Documents/codeql/properties
+    cpp:
+     - /Users/lkemperman/Documents/codeql/cpp
+    swift:
+     - /Users/lkemperman/Documents/codeql/swift
+    csv:
+     - /Users/lkemperman/Documents/codeql/csv
+    yaml:
+     - /Users/lkemperman/Documents/codeql/yaml
+    csharp:
+     - /Users/lkemperman/Documents/codeql/csharp
+    javascript:
+     - /Users/lkemperman/Documents/codeql/javascript
+    ruby:
+     - /Users/lkemperman/Documents/codeql/ruby
+creationMetadata:
+  sha: 24121bf1c2320cfa1d794a2ae98b93bccea02167
+  cliVersion: 2.15.4
+  creationTime: 2023-12-12T15:31:24.097606Z
+finalised: false

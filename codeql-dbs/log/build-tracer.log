@@ -1,0 +1,616 @@
+[T 08:31:24 59990] CodeQL CLI version 2.15.4
+[T 08:31:24 59990] Initializing tracer.
+[T 08:31:24 59990] Initialising tags...
+[T 08:31:24 59990] ID set to 000000000000EA56_0000000000000001 (parent root)
+[T 08:31:24 59990] Initializing tracer.
+[T 08:31:24 59990] Initialising tags...
+[T 08:31:24 59990] ID set to 000000000000EA56_0000000000000002 (parent root)
+[T 08:31:24 59990] Warning: SEMMLE_EXEC and SEMMLE_EXECP not set. Falling back to path lookup on argv[0].
+[T 08:31:24 59990] ==== Candidate to intercept: /Users/lkemperman/Documents/codeql/tools/osx64/runner-osx (canonical: /Users/lkemperman/Documents/codeql/tools/osx64/runner-osx) ====
+[T 08:31:24 59990] Lua: === Intercepted call to /users/lkemperman/documents/codeql/tools/osx64/runner-osx ===
+[T 08:31:24 59990] Executing the following tracer actions:
+[T 08:31:24 59990] Tracer actions:
+[T 08:31:24 59990] pre_invocations(0)
+[T 08:31:24 59990] post_invocations(0)
+[T 08:31:24 59990] trace_languages(1): [java]
+[T 08:31:24 59992] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/bin/sh.semmle.0000EA56.0BCDB2B0.slice.x86_64: replacing existing signature
+[T 08:31:24 59990] Initializing tracer.
+[T 08:31:24 59990] Initialising tags...
+[T 08:31:24 59990] ID set to 000000000000EA56_0000000000000003 (parent 000000000000EA56_0000000000000002)
+[T 08:31:24 59990] ==== Candidate to intercept: /Users/lkemperman/Documents/codeql/javascript/tools/autobuild.sh (canonical: /Users/lkemperman/Documents/codeql/javascript/tools/autobuild.sh) ====
+[T 08:31:24 59990] Lua: === Intercepted call to /users/lkemperman/documents/codeql/javascript/tools/autobuild.sh ===
+[T 08:31:24 59990] Executing the following tracer actions:
+[T 08:31:24 59990] Tracer actions:
+[T 08:31:24 59990] pre_invocations(0)
+[T 08:31:24 59990] post_invocations(0)
+[T 08:31:24 59990] trace_languages(1): [java]
+[T 08:31:24 59996] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/bin/bash.semmle.0000EA56.20C19EC0.slice.x86_64: replacing existing signature
+[T 08:31:24 59990] Initializing tracer.
+[T 08:31:24 59990] Initialising tags...
+[T 08:31:24 59990] ID set to 000000000000EA56_0000000000000004 (parent 000000000000EA56_0000000000000003)
+[T 08:31:24 59990] ==== Candidate to intercept: /bin/bash (canonical: /bin/bash) ====
+[T 08:31:24 59990] Lua: === Intercepted call to /bin/bash ===
+[T 08:31:24 59990] Executing the following tracer actions:
+[T 08:31:24 59990] Tracer actions:
+[T 08:31:24 59990] pre_invocations(0)
+[T 08:31:24 59990] post_invocations(0)
+[T 08:31:24 59990] trace_languages(1): [java]
+[T 08:31:24 60002] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/usr/bin/env.semmle.0000EA61.32987808.slice.x86_64: replacing existing signature
+[T 08:31:25 60001] Initializing tracer.
+[T 08:31:25 60001] Initialising tags...
+[T 08:31:25 60001] ID set to 000000000000EA61_0000000000000001 (parent 000000000000EA56_0000000000000004)
+[T 08:31:25 60001] ==== Candidate to intercept: /usr/bin/env (canonical: /usr/bin/env) ====
+[T 08:31:25 60001] Lua: === Intercepted call to /usr/bin/env ===
+[T 08:31:25 60001] Executing the following tracer actions:
+[T 08:31:25 60001] Tracer actions:
+[T 08:31:25 60001] pre_invocations(0)
+[T 08:31:25 60001] post_invocations(0)
+[T 08:31:25 60001] trace_languages(1): [java]
+[T 08:31:25 60007] Attempting to switch stdout/stderr to 3...
+/Library/Developer/CommandLineTools/usr/bin/install_name_tool: warning: changes being made to the file will invalidate the code signature in: /Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/Users/lkemperman/Documents/codeql/tools/osx64/java-aarch64/bin/java.semmle.0000EA61.031C3038.slice.arm64
+/Library/Developer/CommandLineTools/usr/bin/install_name_tool: warning: changes being made to the file will invalidate the code signature in: /Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/Users/lkemperman/Documents/codeql/tools/osx64/java-aarch64/bin/java.semmle.0000EA61.031C3038.slice.arm64
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/Users/lkemperman/Documents/codeql/tools/osx64/java-aarch64/bin/java.semmle.0000EA61.031C3038.slice.arm64: replacing existing signature
+[T 08:31:25 60001] Initializing tracer.
+[T 08:31:25 60001] Initialising tags...
+[T 08:31:25 60001] ID set to 000000000000EA61_0000000000000002 (parent 000000000000EA61_0000000000000001)
+[T 08:31:25 60001] ==== Candidate to intercept: /Users/lkemperman/Documents/codeql/tools/osx64/java-aarch64/bin/java (canonical: /Users/lkemperman/Documents/codeql/tools/osx64/java-aarch64/bin/java) ====
+[T 08:31:25 60001] Lua: === Intercepted call to /users/lkemperman/documents/codeql/tools/osx64/java-aarch64/bin/java ===
+[T 08:31:25 60001] Executing the following tracer actions:
+[T 08:31:25 60001] Tracer actions:
+[T 08:31:25 60001] pre_invocations(0)
+[T 08:31:25 60001] post_invocations(0)
+[T 08:31:25 60001] trace_languages(1): [java]
+[T 08:31:25 60001] Passing through -javaagent:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar=ignore-project,java,kotlin to underlying JVM.
+[T 08:31:25 60001] Passing through -Xbootclasspath/a:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar to underlying JVM.
+[T 08:31:25 60001] Intercepted JVM creation with extra hidden args: ['-javaagent:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar=ignore-project,java,kotlin' '-Xbootclasspath/a:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar' ] (result: 1, 0).
+[T 08:31:28 60049] CodeQL CLI version 2.15.4
+[T 08:31:28 60049] Initializing tracer.
+[T 08:31:28 60049] Initialising tags...
+[T 08:31:28 60049] ID set to 000000000000EA91_0000000000000001 (parent root)
+[T 08:31:28 60049] Initializing tracer.
+[T 08:31:28 60049] Initialising tags...
+[T 08:31:28 60049] ID set to 000000000000EA91_0000000000000002 (parent root)
+[T 08:31:28 60049] Warning: SEMMLE_EXEC and SEMMLE_EXECP not set. Falling back to path lookup on argv[0].
+[T 08:31:28 60049] ==== Candidate to intercept: /Users/lkemperman/Documents/codeql/tools/osx64/runner-osx (canonical: /Users/lkemperman/Documents/codeql/tools/osx64/runner-osx) ====
+[T 08:31:28 60049] Lua: === Intercepted call to /users/lkemperman/documents/codeql/tools/osx64/runner-osx ===
+[T 08:31:28 60049] Executing the following tracer actions:
+[T 08:31:28 60049] Tracer actions:
+[T 08:31:28 60049] pre_invocations(0)
+[T 08:31:28 60049] post_invocations(0)
+[T 08:31:28 60049] trace_languages(1): [java]
+[T 08:31:28 60049] Initializing tracer.
+[T 08:31:28 60049] Initialising tags...
+[T 08:31:28 60049] ID set to 000000000000EA91_0000000000000003 (parent 000000000000EA91_0000000000000002)
+[T 08:31:28 60049] ==== Candidate to intercept: /Users/lkemperman/Documents/la-doc-uploader/codeql_buildscript.sh (canonical: /Users/lkemperman/Documents/la-doc-uploader/codeql_buildscript.sh) ====
+[T 08:31:28 60049] Lua: === Intercepted call to /users/lkemperman/documents/la-doc-uploader/codeql_buildscript.sh ===
+[T 08:31:28 60049] Executing the following tracer actions:
+[T 08:31:28 60049] Tracer actions:
+[T 08:31:28 60049] pre_invocations(0)
+[T 08:31:28 60049] post_invocations(0)
+[T 08:31:28 60049] trace_languages(1): [java]
+[T 08:31:28 60049] Initializing tracer.
+[T 08:31:28 60049] Initialising tags...
+[T 08:31:28 60049] ID set to 000000000000EA91_0000000000000004 (parent 000000000000EA91_0000000000000003)
+[T 08:31:28 60049] ==== Candidate to intercept: /bin/bash (canonical: /bin/bash) ====
+[T 08:31:28 60049] Lua: === Intercepted call to /bin/bash ===
+[T 08:31:28 60049] Executing the following tracer actions:
+[T 08:31:28 60049] Tracer actions:
+[T 08:31:28 60049] pre_invocations(0)
+[T 08:31:28 60049] post_invocations(0)
+[T 08:31:28 60049] trace_languages(1): [java]
+[T 08:31:28 60050] Initializing tracer.
+[T 08:31:28 60050] Initialising tags...
+[T 08:31:28 60050] ID set to 000000000000EA92_0000000000000001 (parent 000000000000EA91_0000000000000004)
+[T 08:31:28 60050] ==== Candidate to intercept: /Users/lkemperman/Documents/la-doc-uploader/gradlew (canonical: /Users/lkemperman/Documents/la-doc-uploader/gradlew) ====
+[T 08:31:28 60050] Lua: === Intercepted call to /users/lkemperman/documents/la-doc-uploader/gradlew ===
+[T 08:31:28 60050] Executing the following tracer actions:
+[T 08:31:28 60050] Tracer actions:
+[T 08:31:28 60050] pre_invocations(0)
+[T 08:31:28 60050] post_invocations(0)
+[T 08:31:28 60050] trace_languages(1): [java]
+[T 08:31:28 60050] Initializing tracer.
+[T 08:31:28 60050] Initialising tags...
+[T 08:31:28 60050] ID set to 000000000000EA92_0000000000000002 (parent 000000000000EA92_0000000000000001)
+[T 08:31:28 60050] ==== Candidate to intercept: /bin/bash (canonical: /bin/bash) ====
+[T 08:31:28 60050] Lua: === Intercepted call to /bin/bash ===
+[T 08:31:28 60050] Executing the following tracer actions:
+[T 08:31:28 60050] Tracer actions:
+[T 08:31:28 60050] pre_invocations(0)
+[T 08:31:28 60050] post_invocations(0)
+[T 08:31:28 60050] trace_languages(1): [java]
+[T 08:31:28 60053] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/usr/bin/uname.semmle.0000EA94.37B759F8.slice.x86_64: replacing existing signature
+[T 08:31:29 60052] Initializing tracer.
+[T 08:31:29 60052] Initialising tags...
+[T 08:31:29 60052] ID set to 000000000000EA94_0000000000000001 (parent 000000000000EA92_0000000000000002)
+[T 08:31:29 60052] ==== Candidate to intercept: /usr/bin/uname (canonical: /usr/bin/uname) ====
+[T 08:31:29 60052] Lua: === Intercepted call to /usr/bin/uname ===
+[T 08:31:29 60052] Executing the following tracer actions:
+[T 08:31:29 60052] Tracer actions:
+[T 08:31:29 60052] pre_invocations(0)
+[T 08:31:29 60052] post_invocations(0)
+[T 08:31:29 60052] trace_languages(1): [java]
+[T 08:31:29 60058] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/usr/bin/which.semmle.0000EA99.08B57630.slice.x86_64: replacing existing signature
+[T 08:31:29 60057] Initializing tracer.
+[T 08:31:29 60057] Initialising tags...
+[T 08:31:29 60057] ID set to 000000000000EA99_0000000000000001 (parent 000000000000EA92_0000000000000002)
+[T 08:31:29 60057] ==== Candidate to intercept: /usr/bin/which (canonical: /usr/bin/which) ====
+[T 08:31:29 60057] Lua: === Intercepted call to /usr/bin/which ===
+[T 08:31:29 60057] Executing the following tracer actions:
+[T 08:31:29 60057] Tracer actions:
+[T 08:31:29 60057] pre_invocations(0)
+[T 08:31:29 60057] post_invocations(0)
+[T 08:31:29 60057] trace_languages(1): [java]
+[T 08:31:29 60067] Attempting to switch stdout/stderr to 3...
+[T 08:31:29 60069] Attempting to switch stdout/stderr to 3...
+[T 08:31:29 60070] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/opt/homebrew/opt/gnu-sed/libexec/gnubin/sed.semmle.0000EAA2.14D897F8.slice.arm64: replacing existing signature
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/usr/bin/tr.semmle.0000EAA4.1508B078.slice.x86_64: replacing existing signature
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/usr/bin/xargs.semmle.0000EAA1.14BC8090.slice.x86_64: replacing existing signature
+[T 08:31:29 60068] Initializing tracer.
+[T 08:31:29 60068] Initialising tags...
+[T 08:31:29 60068] ID set to 000000000000EAA4_0000000000000001 (parent 000000000000EA92_0000000000000002)
+[T 08:31:29 60068] ==== Candidate to intercept: /usr/bin/tr (canonical: /usr/bin/tr) ====
+[T 08:31:29 60068] Lua: === Intercepted call to /usr/bin/tr ===
+[T 08:31:29 60068] Executing the following tracer actions:
+[T 08:31:29 60068] Tracer actions:
+[T 08:31:29 60068] pre_invocations(0)
+[T 08:31:29 60068] post_invocations(0)
+[T 08:31:29 60068] trace_languages(1): [java]
+[T 08:31:29 60065] Initializing tracer.
+[T 08:31:29 60065] Initialising tags...
+[T 08:31:29 60065] ID set to 000000000000EAA1_0000000000000001 (parent 000000000000EA92_0000000000000002)
+[T 08:31:29 60065] ==== Candidate to intercept: /usr/bin/xargs (canonical: /usr/bin/xargs) ====
+[T 08:31:29 60065] Lua: === Intercepted call to /usr/bin/xargs ===
+[T 08:31:29 60065] Executing the following tracer actions:
+[T 08:31:29 60065] Tracer actions:
+[T 08:31:29 60065] pre_invocations(0)
+[T 08:31:29 60065] post_invocations(0)
+[T 08:31:29 60065] trace_languages(1): [java]
+[T 08:31:29 60080] Attempting to switch stdout/stderr to 3...
+[T 08:31:29 60066] Initializing tracer.
+[T 08:31:29 60066] Initialising tags...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/bin/echo.semmle.0000EAA1.244CFBE8.slice.x86_64: replacing existing signature
+[T 08:31:29 60066] ID set to 000000000000EAA2_0000000000000001 (parent 000000000000EA92_0000000000000002)
+[T 08:31:29 60066] ==== Candidate to intercept: /opt/homebrew/opt/gnu-sed/libexec/gnubin/sed (canonical: /opt/homebrew/Cellar/gnu-sed/4.9/bin/gsed) ====
+[T 08:31:29 60066] Lua: === Intercepted call to /opt/homebrew/cellar/gnu-sed/4.9/bin/gsed ===
+[T 08:31:29 60066] Executing the following tracer actions:
+[T 08:31:29 60066] Tracer actions:
+[T 08:31:29 60066] pre_invocations(0)
+[T 08:31:29 60066] post_invocations(0)
+[T 08:31:29 60066] trace_languages(1): [java]
+[T 08:31:29 60085] Initializing tracer.
+[T 08:31:29 60085] Initialising tags...
+[T 08:31:29 60085] ID set to 000000000000EAB5_0000000000000001 (parent 000000000000EAA1_0000000000000001)
+[T 08:31:29 60085] ==== Candidate to intercept: /bin/echo (canonical: /bin/echo) ====
+[T 08:31:29 60085] Lua: === Intercepted call to /bin/echo ===
+[T 08:31:29 60085] Executing the following tracer actions:
+[T 08:31:29 60085] Tracer actions:
+[T 08:31:29 60085] pre_invocations(0)
+[T 08:31:29 60085] post_invocations(0)
+[T 08:31:29 60085] trace_languages(1): [java]
+[T 08:31:29 60090] Initializing tracer.
+[T 08:31:29 60090] Initialising tags...
+[T 08:31:29 60090] ID set to 000000000000EABA_0000000000000001 (parent 000000000000EAA1_0000000000000001)
+[T 08:31:29 60090] ==== Candidate to intercept: /bin/echo (canonical: /bin/echo) ====
+[T 08:31:29 60090] Lua: === Intercepted call to /bin/echo ===
+[T 08:31:29 60090] Executing the following tracer actions:
+[T 08:31:29 60090] Tracer actions:
+[T 08:31:29 60090] pre_invocations(0)
+[T 08:31:29 60090] post_invocations(0)
+[T 08:31:29 60090] trace_languages(1): [java]
+[T 08:31:29 60050] Initializing tracer.
+[T 08:31:29 60050] Initialising tags...
+[T 08:31:29 60050] ID set to 000000000000EA92_0000000000000003 (parent 000000000000EA92_0000000000000002)
+[T 08:31:29 60050] ==== Candidate to intercept: /Users/lkemperman/.jenv/shims/java (canonical: /Users/lkemperman/.jenv/shims/java) ====
+[T 08:31:29 60050] Lua: === Intercepted call to /users/lkemperman/.jenv/shims/java ===
+[T 08:31:29 60050] Executing the following tracer actions:
+[T 08:31:29 60050] Tracer actions:
+[T 08:31:29 60050] pre_invocations(0)
+[T 08:31:29 60050] post_invocations(0)
+[T 08:31:29 60050] trace_languages(1): [java]
+[T 08:31:29 60091] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/opt/homebrew/bin/bash.semmle.0000EA92.2FD82F28.slice.arm64: replacing existing signature
+[T 08:31:30 60050] Initializing tracer.
+[T 08:31:30 60050] Initialising tags...
+[T 08:31:30 60050] ID set to 000000000000EA92_0000000000000004 (parent 000000000000EA92_0000000000000003)
+[T 08:31:30 60050] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60050] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60050] Executing the following tracer actions:
+[T 08:31:30 60050] Tracer actions:
+[T 08:31:30 60050] pre_invocations(0)
+[T 08:31:30 60050] post_invocations(0)
+[T 08:31:30 60050] trace_languages(1): [java]
+[T 08:31:30 60050] Initializing tracer.
+[T 08:31:30 60050] Initialising tags...
+[T 08:31:30 60050] ID set to 000000000000EA92_0000000000000005 (parent 000000000000EA92_0000000000000004)
+[T 08:31:30 60050] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv) ====
+[T 08:31:30 60050] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv ===
+[T 08:31:30 60050] Executing the following tracer actions:
+[T 08:31:30 60050] Tracer actions:
+[T 08:31:30 60050] pre_invocations(0)
+[T 08:31:30 60050] post_invocations(0)
+[T 08:31:30 60050] trace_languages(1): [java]
+[T 08:31:30 60050] Initializing tracer.
+[T 08:31:30 60050] Initialising tags...
+[T 08:31:30 60050] ID set to 000000000000EA92_0000000000000006 (parent 000000000000EA92_0000000000000005)
+[T 08:31:30 60050] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60050] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60050] Executing the following tracer actions:
+[T 08:31:30 60050] Tracer actions:
+[T 08:31:30 60050] pre_invocations(0)
+[T 08:31:30 60050] post_invocations(0)
+[T 08:31:30 60050] trace_languages(1): [java]
+[T 08:31:30 60104] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/usr/bin/head.semmle.0000EAC7.053C7FF8.slice.x86_64: replacing existing signature
+[T 08:31:30 60103] Initializing tracer.
+[T 08:31:30 60103] Initialising tags...
+[T 08:31:30 60103] ID set to 000000000000EAC7_0000000000000001 (parent 000000000000EA92_0000000000000006)
+[T 08:31:30 60103] ==== Candidate to intercept: /usr/bin/head (canonical: /usr/bin/head) ====
+[T 08:31:30 60103] Lua: === Intercepted call to /usr/bin/head ===
+[T 08:31:30 60103] Executing the following tracer actions:
+[T 08:31:30 60103] Tracer actions:
+[T 08:31:30 60103] pre_invocations(0)
+[T 08:31:30 60103] post_invocations(0)
+[T 08:31:30 60103] trace_languages(1): [java]
+[T 08:31:30 60112] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/usr/bin/readlink.semmle.0000EACF.10A45C58.slice.x86_64: replacing existing signature
+[T 08:31:30 60111] Initializing tracer.
+[T 08:31:30 60111] Initialising tags...
+[T 08:31:30 60111] ID set to 000000000000EACF_0000000000000001 (parent 000000000000EA92_0000000000000006)
+[T 08:31:30 60111] ==== Candidate to intercept: /usr/bin/readlink (canonical: /usr/bin/readlink) ====
+[T 08:31:30 60111] Lua: === Intercepted call to /usr/bin/readlink ===
+[T 08:31:30 60111] Executing the following tracer actions:
+[T 08:31:30 60111] Tracer actions:
+[T 08:31:30 60111] pre_invocations(0)
+[T 08:31:30 60111] post_invocations(0)
+[T 08:31:30 60111] trace_languages(1): [java]
+[T 08:31:30 60050] Initializing tracer.
+[T 08:31:30 60050] Initialising tags...
+[T 08:31:30 60050] ID set to 000000000000EA92_0000000000000007 (parent 000000000000EA92_0000000000000006)
+[T 08:31:30 60050] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-exec (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-exec) ====
+[T 08:31:30 60050] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-exec ===
+[T 08:31:30 60050] Executing the following tracer actions:
+[T 08:31:30 60050] Tracer actions:
+[T 08:31:30 60050] pre_invocations(0)
+[T 08:31:30 60050] post_invocations(0)
+[T 08:31:30 60050] trace_languages(1): [java]
+[T 08:31:30 60050] Initializing tracer.
+[T 08:31:30 60050] Initialising tags...
+[T 08:31:30 60050] ID set to 000000000000EA92_0000000000000008 (parent 000000000000EA92_0000000000000007)
+[T 08:31:30 60050] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60050] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60050] Executing the following tracer actions:
+[T 08:31:30 60050] Tracer actions:
+[T 08:31:30 60050] pre_invocations(0)
+[T 08:31:30 60050] post_invocations(0)
+[T 08:31:30 60050] trace_languages(1): [java]
+[T 08:31:30 60127] Initializing tracer.
+[T 08:31:30 60127] Initialising tags...
+[T 08:31:30 60127] ID set to 000000000000EADF_0000000000000001 (parent 000000000000EA92_0000000000000008)
+[T 08:31:30 60127] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-version-name (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-version-name) ====
+[T 08:31:30 60127] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-version-name ===
+[T 08:31:30 60127] Executing the following tracer actions:
+[T 08:31:30 60127] Tracer actions:
+[T 08:31:30 60127] pre_invocations(0)
+[T 08:31:30 60127] post_invocations(0)
+[T 08:31:30 60127] trace_languages(1): [java]
+[T 08:31:30 60127] Initializing tracer.
+[T 08:31:30 60127] Initialising tags...
+[T 08:31:30 60127] ID set to 000000000000EADF_0000000000000002 (parent 000000000000EADF_0000000000000001)
+[T 08:31:30 60127] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60127] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60127] Executing the following tracer actions:
+[T 08:31:30 60127] Tracer actions:
+[T 08:31:30 60127] pre_invocations(0)
+[T 08:31:30 60127] post_invocations(0)
+[T 08:31:30 60127] trace_languages(1): [java]
+[T 08:31:30 60129] Initializing tracer.
+[T 08:31:30 60129] Initialising tags...
+[T 08:31:30 60129] ID set to 000000000000EAE1_0000000000000001 (parent 000000000000EADF_0000000000000002)
+[T 08:31:30 60129] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-version-file (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-version-file) ====
+[T 08:31:30 60129] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-version-file ===
+[T 08:31:30 60129] Executing the following tracer actions:
+[T 08:31:30 60129] Tracer actions:
+[T 08:31:30 60129] pre_invocations(0)
+[T 08:31:30 60129] post_invocations(0)
+[T 08:31:30 60129] trace_languages(1): [java]
+[T 08:31:30 60129] Initializing tracer.
+[T 08:31:30 60129] Initialising tags...
+[T 08:31:30 60129] ID set to 000000000000EAE1_0000000000000002 (parent 000000000000EAE1_0000000000000001)
+[T 08:31:30 60129] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60129] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60129] Executing the following tracer actions:
+[T 08:31:30 60129] Tracer actions:
+[T 08:31:30 60129] pre_invocations(0)
+[T 08:31:30 60129] post_invocations(0)
+[T 08:31:30 60129] trace_languages(1): [java]
+[T 08:31:30 60131] Initializing tracer.
+[T 08:31:30 60131] Initialising tags...
+[T 08:31:30 60131] ID set to 000000000000EAE3_0000000000000001 (parent 000000000000EADF_0000000000000002)
+[T 08:31:30 60131] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-version-file-read (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-version-file-read) ====
+[T 08:31:30 60131] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-version-file-read ===
+[T 08:31:30 60131] Executing the following tracer actions:
+[T 08:31:30 60131] Tracer actions:
+[T 08:31:30 60131] pre_invocations(0)
+[T 08:31:30 60131] post_invocations(0)
+[T 08:31:30 60131] trace_languages(1): [java]
+[T 08:31:30 60131] Initializing tracer.
+[T 08:31:30 60131] Initialising tags...
+[T 08:31:30 60131] ID set to 000000000000EAE3_0000000000000002 (parent 000000000000EAE3_0000000000000001)
+[T 08:31:30 60131] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60131] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60131] Executing the following tracer actions:
+[T 08:31:30 60131] Tracer actions:
+[T 08:31:30 60131] pre_invocations(0)
+[T 08:31:30 60131] post_invocations(0)
+[T 08:31:30 60131] trace_languages(1): [java]
+[T 08:31:30 60132] Initializing tracer.
+[T 08:31:30 60132] Initialising tags...
+[T 08:31:30 60132] ID set to 000000000000EAE4_0000000000000001 (parent 000000000000EA92_0000000000000008)
+[T 08:31:30 60132] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-options (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-options) ====
+[T 08:31:30 60132] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-options ===
+[T 08:31:30 60132] Executing the following tracer actions:
+[T 08:31:30 60132] Tracer actions:
+[T 08:31:30 60132] pre_invocations(0)
+[T 08:31:30 60132] post_invocations(0)
+[T 08:31:30 60132] trace_languages(1): [java]
+[T 08:31:30 60132] Initializing tracer.
+[T 08:31:30 60132] Initialising tags...
+[T 08:31:30 60132] ID set to 000000000000EAE4_0000000000000002 (parent 000000000000EAE4_0000000000000001)
+[T 08:31:30 60132] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60132] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60132] Executing the following tracer actions:
+[T 08:31:30 60132] Tracer actions:
+[T 08:31:30 60132] pre_invocations(0)
+[T 08:31:30 60132] post_invocations(0)
+[T 08:31:30 60132] trace_languages(1): [java]
+[T 08:31:30 60133] Initializing tracer.
+[T 08:31:30 60133] Initialising tags...
+[T 08:31:30 60133] ID set to 000000000000EAE5_0000000000000001 (parent 000000000000EAE4_0000000000000002)
+[T 08:31:30 60133] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-options-file (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-options-file) ====
+[T 08:31:30 60133] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-options-file ===
+[T 08:31:30 60133] Executing the following tracer actions:
+[T 08:31:30 60133] Tracer actions:
+[T 08:31:30 60133] pre_invocations(0)
+[T 08:31:30 60133] post_invocations(0)
+[T 08:31:30 60133] trace_languages(1): [java]
+[T 08:31:30 60133] Initializing tracer.
+[T 08:31:30 60133] Initialising tags...
+[T 08:31:30 60133] ID set to 000000000000EAE5_0000000000000002 (parent 000000000000EAE5_0000000000000001)
+[T 08:31:30 60133] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60133] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60133] Executing the following tracer actions:
+[T 08:31:30 60133] Tracer actions:
+[T 08:31:30 60133] pre_invocations(0)
+[T 08:31:30 60133] post_invocations(0)
+[T 08:31:30 60133] trace_languages(1): [java]
+[T 08:31:30 60135] Initializing tracer.
+[T 08:31:30 60135] Initialising tags...
+[T 08:31:30 60135] ID set to 000000000000EAE7_0000000000000001 (parent 000000000000EAE4_0000000000000002)
+[T 08:31:30 60135] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-options-file-read (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-options-file-read) ====
+[T 08:31:30 60135] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-options-file-read ===
+[T 08:31:30 60135] Executing the following tracer actions:
+[T 08:31:30 60135] Tracer actions:
+[T 08:31:30 60135] pre_invocations(0)
+[T 08:31:30 60135] post_invocations(0)
+[T 08:31:30 60135] trace_languages(1): [java]
+[T 08:31:30 60135] Initializing tracer.
+[T 08:31:30 60135] Initialising tags...
+[T 08:31:30 60135] ID set to 000000000000EAE7_0000000000000002 (parent 000000000000EAE7_0000000000000001)
+[T 08:31:30 60135] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60135] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60135] Executing the following tracer actions:
+[T 08:31:30 60135] Tracer actions:
+[T 08:31:30 60135] pre_invocations(0)
+[T 08:31:30 60135] post_invocations(0)
+[T 08:31:30 60135] trace_languages(1): [java]
+[T 08:31:30 60136] Initializing tracer.
+[T 08:31:30 60136] Initialising tags...
+[T 08:31:30 60136] ID set to 000000000000EAE8_0000000000000001 (parent 000000000000EA92_0000000000000008)
+[T 08:31:30 60136] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-which (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-which) ====
+[T 08:31:30 60136] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-which ===
+[T 08:31:30 60136] Executing the following tracer actions:
+[T 08:31:30 60136] Tracer actions:
+[T 08:31:30 60136] pre_invocations(0)
+[T 08:31:30 60136] post_invocations(0)
+[T 08:31:30 60136] trace_languages(1): [java]
+[T 08:31:30 60136] Initializing tracer.
+[T 08:31:30 60136] Initialising tags...
+[T 08:31:30 60136] ID set to 000000000000EAE8_0000000000000002 (parent 000000000000EAE8_0000000000000001)
+[T 08:31:30 60136] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60136] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60136] Executing the following tracer actions:
+[T 08:31:30 60136] Tracer actions:
+[T 08:31:30 60136] pre_invocations(0)
+[T 08:31:30 60136] post_invocations(0)
+[T 08:31:30 60136] trace_languages(1): [java]
+[T 08:31:30 60137] Initializing tracer.
+[T 08:31:30 60137] Initialising tags...
+[T 08:31:30 60137] ID set to 000000000000EAE9_0000000000000001 (parent 000000000000EAE8_0000000000000002)
+[T 08:31:30 60137] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-version-name (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-version-name) ====
+[T 08:31:30 60137] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-version-name ===
+[T 08:31:30 60137] Executing the following tracer actions:
+[T 08:31:30 60137] Tracer actions:
+[T 08:31:30 60137] pre_invocations(0)
+[T 08:31:30 60137] post_invocations(0)
+[T 08:31:30 60137] trace_languages(1): [java]
+[T 08:31:30 60137] Initializing tracer.
+[T 08:31:30 60137] Initialising tags...
+[T 08:31:30 60137] ID set to 000000000000EAE9_0000000000000002 (parent 000000000000EAE9_0000000000000001)
+[T 08:31:30 60137] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60137] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60137] Executing the following tracer actions:
+[T 08:31:30 60137] Tracer actions:
+[T 08:31:30 60137] pre_invocations(0)
+[T 08:31:30 60137] post_invocations(0)
+[T 08:31:30 60137] trace_languages(1): [java]
+[T 08:31:30 60176] Initializing tracer.
+[T 08:31:30 60176] Initialising tags...
+[T 08:31:30 60176] ID set to 000000000000EB10_0000000000000001 (parent 000000000000EAE8_0000000000000002)
+[T 08:31:30 60176] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-hooks (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-hooks) ====
+[T 08:31:30 60176] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-hooks ===
+[T 08:31:30 60176] Executing the following tracer actions:
+[T 08:31:30 60176] Tracer actions:
+[T 08:31:30 60176] pre_invocations(0)
+[T 08:31:30 60176] post_invocations(0)
+[T 08:31:30 60176] trace_languages(1): [java]
+[T 08:31:30 60176] Initializing tracer.
+[T 08:31:30 60176] Initialising tags...
+[T 08:31:30 60176] ID set to 000000000000EB10_0000000000000002 (parent 000000000000EB10_0000000000000001)
+[T 08:31:30 60176] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60176] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60176] Executing the following tracer actions:
+[T 08:31:30 60176] Tracer actions:
+[T 08:31:30 60176] pre_invocations(0)
+[T 08:31:30 60176] post_invocations(0)
+[T 08:31:30 60176] trace_languages(1): [java]
+[T 08:31:30 60177] Initializing tracer.
+[T 08:31:30 60177] Initialising tags...
+[T 08:31:30 60177] ID set to 000000000000EB11_0000000000000001 (parent 000000000000EA92_0000000000000008)
+[T 08:31:30 60177] ==== Candidate to intercept: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-hooks (canonical: /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/jenv-hooks) ====
+[T 08:31:30 60177] Lua: === Intercepted call to /opt/homebrew/cellar/jenv/0.5.6/libexec/libexec/jenv-hooks ===
+[T 08:31:30 60177] Executing the following tracer actions:
+[T 08:31:30 60177] Tracer actions:
+[T 08:31:30 60177] pre_invocations(0)
+[T 08:31:30 60177] post_invocations(0)
+[T 08:31:30 60177] trace_languages(1): [java]
+[T 08:31:30 60177] Initializing tracer.
+[T 08:31:30 60177] Initialising tags...
+[T 08:31:30 60177] ID set to 000000000000EB11_0000000000000002 (parent 000000000000EB11_0000000000000001)
+[T 08:31:30 60177] ==== Candidate to intercept: /opt/homebrew/bin/bash (canonical: /opt/homebrew/Cellar/bash/5.2.15/bin/bash) ====
+[T 08:31:30 60177] Lua: === Intercepted call to /opt/homebrew/cellar/bash/5.2.15/bin/bash ===
+[T 08:31:30 60177] Executing the following tracer actions:
+[T 08:31:30 60177] Tracer actions:
+[T 08:31:30 60177] pre_invocations(0)
+[T 08:31:30 60177] post_invocations(0)
+[T 08:31:30 60177] trace_languages(1): [java]
+[T 08:31:30 60178] Attempting to switch stdout/stderr to 3...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/usr/bin/java.semmle.0000EA92.2BA64D18.slice.x86_64: replacing existing signature
+[T 08:31:30 60050] Initializing tracer.
+[T 08:31:30 60050] Initialising tags...
+[T 08:31:30 60050] ID set to 000000000000EA92_0000000000000009 (parent 000000000000EA92_0000000000000008)
+[T 08:31:30 60050] ==== Candidate to intercept: /usr/bin/java (canonical: /usr/bin/java) ====
+[T 08:31:30 60050] Lua: === Intercepted call to /usr/bin/java ===
+[T 08:31:30 60050] Executing the following tracer actions:
+[T 08:31:30 60050] Tracer actions:
+[T 08:31:30 60050] pre_invocations(0)
+[T 08:31:30 60050] post_invocations(0)
+[T 08:31:30 60050] trace_languages(1): [java]
+[T 08:31:30 60182] Attempting to switch stdout/stderr to 3...
+/Library/Developer/CommandLineTools/usr/bin/install_name_tool: warning: changes being made to the file will invalidate the code signature in: /Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java.semmle.0000EA92.37F71660.slice.arm64
+/Library/Developer/CommandLineTools/usr/bin/install_name_tool: warning: changes being made to the file will invalidate the code signature in: /Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java.semmle.0000EA92.37F71660.slice.arm64
+/Library/Developer/CommandLineTools/usr/bin/install_name_tool: warning: changes being made to the file will invalidate the code signature in: /Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java.semmle.0000EA92.37F71660.slice.arm64
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java.semmle.0000EA92.37F71660.slice.arm64: replacing existing signature
+[T 08:31:31 60050] Initializing tracer.
+[T 08:31:31 60050] Initialising tags...
+[T 08:31:31 60050] ID set to 000000000000EA92_000000000000000A (parent 000000000000EA92_0000000000000009)
+[T 08:31:31 60050] ==== Candidate to intercept: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java (canonical: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java) ====
+[T 08:31:31 60050] Lua: === Intercepted call to /opt/homebrew/cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/contents/home/bin/java ===
+[T 08:31:31 60050] Executing the following tracer actions:
+[T 08:31:31 60050] Tracer actions:
+[T 08:31:31 60050] pre_invocations(0)
+[T 08:31:31 60050] post_invocations(0)
+[T 08:31:31 60050] trace_languages(1): [java]
+[T 08:31:31 60050] Passing through -javaagent:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar=ignore-project,java,kotlin to underlying JVM.
+[T 08:31:31 60050] Passing through -Xbootclasspath/a:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar to underlying JVM.
+[T 08:31:31 60050] Intercepted JVM creation with extra hidden args: ['-javaagent:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar=ignore-project,java,kotlin' '-Xbootclasspath/a:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar' ] (result: 1, 0).
+[T 08:31:33 60196] Initializing tracer.
+[T 08:31:33 60196] Initialising tags...
+[T 08:31:33 60196] ID set to 000000000000EB24_0000000000000001 (parent 000000000000EA92_0000000000000009)
+[T 08:31:33 60196] Warning: SEMMLE_EXEC and SEMMLE_EXECP not set. Falling back to path lookup on argv[0].
+[T 08:31:33 60196] ==== Candidate to intercept: 380:383 (canonical: 380:383) ====
+[T 08:31:33 60196] Will try to resolve 380:383 in path /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec:/Users/lkemperman/Documents/codeql:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/Users/lkemperman/.jenv/shims:/Users/lkemperman/.jenv/bin:/Users/lkemperman/.rbenv/shims:/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.1.0/bin:/usr/bin/rails:/opt/homebrew/opt/ruby/bin:/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.1.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin.
+[T 08:31:33 60196]  -> path lookup for 380:383 as /opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /Users/lkemperman/Documents/codeql/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /opt/homebrew/opt/gnu-sed/libexec/gnubin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /Users/lkemperman/.jenv/shims/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /Users/lkemperman/.jenv/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /Users/lkemperman/.rbenv/shims/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /opt/homebrew/opt/ruby/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /opt/homebrew/lib/ruby/gems/3.1.0/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /usr/bin/rails/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /opt/homebrew/opt/ruby/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /usr/local/opt/ruby/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /usr/local/lib/ruby/gems/3.1.0/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /opt/homebrew/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /opt/homebrew/sbin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /usr/local/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /usr/bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /bin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /usr/sbin/380:383...
+[T 08:31:33 60196]  -> path lookup for 380:383 as /sbin/380:383...
+[T 08:31:33 60196] WARNING: Failed to resolve barename '380:383' in exec call; we may have missed a compiler call.
+[T 08:31:33 60196] Lua: === Intercepted call to 380:383 ===
+[T 08:31:33 60196] Executing the following tracer actions:
+[T 08:31:33 60196] Tracer actions:
+[T 08:31:33 60196] pre_invocations(0)
+[T 08:31:33 60196] post_invocations(0)
+[T 08:31:33 60196] trace_languages(1): [java]
+[T 08:31:33 60196] Initializing tracer.
+[T 08:31:33 60196] Initialising tags...
+[T 08:31:33 60196] ID set to 000000000000EB24_0000000000000002 (parent 000000000000EB24_0000000000000001)
+[T 08:31:33 60196] ==== Candidate to intercept: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java (canonical: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java) ====
+[T 08:31:33 60196] Lua: === Intercepted call to /opt/homebrew/cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/contents/home/bin/java ===
+[T 08:31:33 60196] Executing the following tracer actions:
+[T 08:31:33 60196] Tracer actions:
+[T 08:31:33 60196] pre_invocations(0)
+[T 08:31:33 60196] post_invocations(0)
+[T 08:31:33 60196] trace_languages(1): [java]
+[T 08:31:33 60196] Passing through -javaagent:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar=ignore-project,java,kotlin to underlying JVM.
+[T 08:31:33 60196] Passing through -Xbootclasspath/a:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar to underlying JVM.
+[T 08:31:33 60196] Intercepted JVM creation with extra hidden args: ['-javaagent:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar=ignore-project,java,kotlin' '-Xbootclasspath/a:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar' ] (result: 1, 0).
+[T 08:31:37 60214] Attempting to switch stdout/stderr to 246...
+/Library/Developer/CommandLineTools/usr/bin/install_name_tool: warning: changes being made to the file will invalidate the code signature in: /Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/lib/jspawnhelper.semmle.0000EB24.329D2F10.slice.arm64
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/lib/jspawnhelper.semmle.0000EB24.329D2F10.slice.arm64: replacing existing signature
+[T 08:31:38 60218] Initializing tracer.
+[T 08:31:38 60218] Initialising tags...
+[T 08:31:38 60218] ID set to 000000000000EB3A_0000000000000001 (parent 000000000000EB24_0000000000000002)
+[T 08:31:38 60218] ==== Candidate to intercept: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/lib/jspawnhelper (canonical: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/lib/jspawnhelper) ====
+[T 08:31:38 60218] Lua: === Intercepted call to /opt/homebrew/cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/contents/home/lib/jspawnhelper ===
+[T 08:31:38 60218] Executing the following tracer actions:
+[T 08:31:38 60218] Tracer actions:
+[T 08:31:38 60218] pre_invocations(0)
+[T 08:31:38 60218] post_invocations(0)
+[T 08:31:38 60218] trace_languages(1): [java]
+[T 08:31:38 60219] Attempting to switch stdout/stderr to 4...
+/Users/lkemperman/Documents/la-doc-uploader/codeql-dbs/working/copy-root/000001F5/Users/lkemperman/.cache/selenium/chromedriver/mac-arm64/118.0.5993.70/chromedriver.semmle.0000EB3A.01500388.slice.arm64: replacing existing signature
+[T 08:31:38 60218] Initializing tracer.
+[T 08:31:38 60218] Initialising tags...
+[T 08:31:38 60218] ID set to 000000000000EB3A_0000000000000002 (parent 000000000000EB3A_0000000000000001)
+[T 08:31:38 60218] ==== Candidate to intercept: /Users/lkemperman/.cache/selenium/chromedriver/mac-arm64/118.0.5993.70/chromedriver (canonical: /Users/lkemperman/.cache/selenium/chromedriver/mac-arm64/118.0.5993.70/chromedriver) ====
+[T 08:31:38 60218] Lua: === Intercepted call to /users/lkemperman/.cache/selenium/chromedriver/mac-arm64/118.0.5993.70/chromedriver ===
+[T 08:31:38 60218] Executing the following tracer actions:
+[T 08:31:38 60218] Tracer actions:
+[T 08:31:38 60218] pre_invocations(0)
+[T 08:31:38 60218] post_invocations(0)
+[T 08:31:38 60218] trace_languages(1): [java]
+[T 08:31:38 60225] Attempting to switch stdout/stderr to 3...
+relocator: nothing to relocate for /Applications/Google Chrome.app/Contents/MacOS/Google Chrome (no thin slices)
+[T 08:31:40 60243] Initializing tracer.
+[T 08:31:40 60243] Initialising tags...
+[T 08:31:40 60243] ID set to 000000000000EB53_0000000000000001 (parent 000000000000EB24_0000000000000002)
+[T 08:31:40 60243] ==== Candidate to intercept: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/lib/jspawnhelper (canonical: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/lib/jspawnhelper) ====
+[T 08:31:40 60243] Lua: === Intercepted call to /opt/homebrew/cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/contents/home/lib/jspawnhelper ===
+[T 08:31:40 60243] Executing the following tracer actions:
+[T 08:31:40 60243] Tracer actions:
+[T 08:31:40 60243] pre_invocations(0)
+[T 08:31:40 60243] post_invocations(0)
+[T 08:31:40 60243] trace_languages(1): [java]
+[T 08:31:40 60243] Initializing tracer.
+[T 08:31:40 60243] Initialising tags...
+[T 08:31:40 60243] ID set to 000000000000EB53_0000000000000002 (parent 000000000000EB53_0000000000000001)
+[T 08:31:40 60243] ==== Candidate to intercept: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java (canonical: /opt/homebrew/Cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/Contents/Home/bin/java) ====
+[T 08:31:40 60243] Lua: === Intercepted call to /opt/homebrew/cellar/openjdk@17/17.0.8.1/libexec/openjdk.jdk/contents/home/bin/java ===
+[T 08:31:40 60243] Executing the following tracer actions:
+[T 08:31:40 60243] Tracer actions:
+[T 08:31:40 60243] pre_invocations(0)
+[T 08:31:40 60243] post_invocations(0)
+[T 08:31:40 60243] trace_languages(1): [java]
+[T 08:31:40 60243] Passing through -javaagent:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar=ignore-project,java,kotlin to underlying JVM.
+[T 08:31:40 60243] Passing through -Xbootclasspath/a:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar to underlying JVM.
+[T 08:31:40 60243] Intercepted JVM creation with extra hidden args: ['-javaagent:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar=ignore-project,java,kotlin' '-Xbootclasspath/a:/Users/lkemperman/Documents/codeql/java/tools/codeql-java-agent.jar' ] (result: 1, 0).
