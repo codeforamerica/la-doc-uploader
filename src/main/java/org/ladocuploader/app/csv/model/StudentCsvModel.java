@@ -86,7 +86,7 @@ public class StudentCsvModel extends BaseCsvModel {
         List<BaseCsvModel> students = new ArrayList<>();
         List<Map<String, Object>> household = (List)inputData.get("household");
 
-        if (household != null || !household.isEmpty()) {
+        if (household != null && !household.isEmpty()) {
             for (Map<String, Object> member : household) {
                 String relationship = (String) member.get("householdMemberRelationship");
                 if (relationship == null || !relationship.equalsIgnoreCase("child")) {

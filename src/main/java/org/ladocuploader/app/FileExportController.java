@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.StringEscapeUtils;
 import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.enums.CsvType;
@@ -69,10 +70,13 @@ public class FileExportController {
         Locale locale
     ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
-        log.info("GET downloadCSV ParentGuardian (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow,
-            submissionId);
+        String cleanedFlow = StringEscapeUtils.escapeHtml4(flow);
+        String cleanedSubmissionId = StringEscapeUtils.escapeHtml4(submissionId);
 
-        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.PARENT_GUARDIAN);
+        log.info("GET downloadCSV ParentGuardian (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
+            cleanedFlow, cleanedSubmissionId);
+
+        return handleCsvGeneration(cleanedFlow, request, cleanedSubmissionId, httpSession, locale, CsvType.PARENT_GUARDIAN);
     }
 
     @GetMapping("{flow}/student/{submissionId}")
@@ -84,9 +88,13 @@ public class FileExportController {
         Locale locale
     ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
-        log.info("GET downloadCSV Student (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow, submissionId);
+        String cleanedFlow = StringEscapeUtils.escapeHtml4(flow);
+        String cleanedSubmissionId = StringEscapeUtils.escapeHtml4(submissionId);
 
-        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.STUDENT);
+        log.info("GET downloadCSV Student (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
+            cleanedFlow, cleanedSubmissionId);
+
+        return handleCsvGeneration(cleanedFlow, request, cleanedSubmissionId, httpSession, locale, CsvType.STUDENT);
     }
 
     @GetMapping("{flow}/rel/{submissionId}")
@@ -98,16 +106,19 @@ public class FileExportController {
         Locale locale
     ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
-        log.info("GET downloadCSV Relationship (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow, submissionId);
+        String cleanedFlow = StringEscapeUtils.escapeHtml4(flow);
+        String cleanedSubmissionId = StringEscapeUtils.escapeHtml4(submissionId);
 
-        return handleCsvGeneration(flow, request, submissionId, httpSession, locale, CsvType.RELATIONSHIP);
+        log.info("GET downloadCSV Relationship (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
+            cleanedFlow, cleanedSubmissionId);
 
+        return handleCsvGeneration(cleanedFlow, request, cleanedSubmissionId, httpSession, locale, CsvType.RELATIONSHIP);
     }
 
-    protected static void throwNotFoundError(String flow, String screen, String message) {
+    protected static void throwNotFoundError(String flow, String message) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                String.format("There was a problem with the request (flow: %s, screen: %s): %s",
-                        flow, screen, message));
+                String.format("There was a problem with the request during CSV Generation (flow: %s): %s",
+                        flow, message));
 
     }
 
@@ -120,14 +131,13 @@ public class FileExportController {
     private ResponseEntity handleCsvGeneration(String flow, HttpServletRequest request, String submissionId, HttpSession httpSession,
         Locale locale, CsvType csvType) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
 
-        log.info("GET downloadCSV (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(), flow, submissionId);
         if (!doesFlowExist(flow)) {
-            throwNotFoundError(flow, null, String.format("Could not find flow %s in your application's flow configuration.", flow));
+            throwNotFoundError(flow, String.format("Could not find flow %s in your application's flow configuration.", flow));
         }
         // TODO: get list of submissions based on another column - like transmission?
         Optional<Submission> maybeSubmission = submissionRepositoryService.findById(UUID.fromString(submissionId));
         if (getSubmissionIdForFlow(httpSession, flow).toString().equals(submissionId) && maybeSubmission.isPresent()) {
-            log.info("Downloading CSV with submission_id: " + submissionId);
+            log.info("Generating CSV with submission_id: " + submissionId);
             Submission submission = maybeSubmission.get();
             CsvDocument csvDoc = csvService.generateCsvFormattedData(List.of(submission), csvType);
             HttpHeaders headers = new HttpHeaders();
