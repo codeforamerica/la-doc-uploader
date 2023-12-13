@@ -29,6 +29,7 @@ flow:
     nextScreens:
       - name: languagePreference
   languagePreference:
+    beforeSaveAction: SetExperimentGroups
     nextScreens:
       - name: choosePrograms
   choosePrograms:
