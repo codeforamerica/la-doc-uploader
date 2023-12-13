@@ -34,12 +34,15 @@ def useLocalLibrary = System.getenv('USE_LOCAL_LIBRARY')
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'org.springframework.shell:spring-shell-starter:3.0.4'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation("com.mixpanel:mixpanel-java:1.5.2")
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.14'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.0'
+    implementation 'com.opencsv:opencsv:5.7.0'
 
     if (profile == 'dev' || useLocalLibrary == 'true') {
         implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
@@ -53,8 +56,10 @@ dependencies {
     testImplementation 'org.projectlombok:lombok:1.18.30'
 
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.0.0'
-
     implementation 'io.sentry:sentry-logback:7.0.0'
+
+    testImplementation 'junit:junit:4.13.1'
+
 
     compileOnly 'org.projectlombok:lombok'
 
@@ -79,6 +84,12 @@ dependencies {
 
 springBoot {
     buildInfo()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.shell:spring-shell-dependencies:3.0.4"
+    }
 }
 
 test {

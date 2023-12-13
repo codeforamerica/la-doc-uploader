@@ -1,9 +1,15 @@
+sftp:
+  username: ${SFTP_USERNAME:}
+  password: ${SFTP_PASSWORD:}
+  upload-url: ${SFTP_UPLOAD_URL:}
+  environment-path: 'prod'
 form-flow:
   disabled-flows:
     - flow: laDigitalAssister
       staticRedirectPage: /
   pdf:
     path: ~
+    map-file: parent-guardian-csv-map.yaml
   inputs: 'org.ladocuploader.app.inputs.'
   path: 'flows-config.yaml'
   uploads:
