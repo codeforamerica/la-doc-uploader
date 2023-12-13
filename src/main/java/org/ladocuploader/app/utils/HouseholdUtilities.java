@@ -1,10 +1,15 @@
 package org.ladocuploader.app.utils;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
 
 public class HouseholdUtilities {
 
-  public static boolean isMember18orOlder(int day, int month, int year) {
+  public static boolean isMember18orOlder(int day, int month, int year) throws NumberFormatException {
+
+    if (day <= 0 || month <= 0 || year <= 0 ) {
+      throw new NumberFormatException("cannot analyze birthdate as fields are missing");
+    }
 
     Calendar memberBirthDayCal = Calendar.getInstance();
     memberBirthDayCal.set(Calendar.YEAR, year);

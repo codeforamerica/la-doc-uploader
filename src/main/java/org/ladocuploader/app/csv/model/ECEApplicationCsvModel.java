@@ -10,12 +10,14 @@ import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 import org.ladocuploader.app.utils.HouseholdUtilities;
 
 @Getter
 @Setter
+@Slf4j
 public class ECEApplicationCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="cfa_reference_id")
@@ -802,11 +804,27 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
         int numberOfAdultsInHousehold = 0;
 
         for (Map<String, Object> member : householdList) {
-            boolean is18orOlder = HouseholdUtilities.isMember18orOlder(
-                Integer.parseInt((String)member.get("householdMemberBirthDay")),
-                Integer.parseInt((String)member.get("householdMemberBirthMonth")),
-                Integer.parseInt((String)member.get("householdMemberBirthYear"))
-            );
+            int birthDay = 0;
+            int birthMonth = 0;
+            int birthYear = 0;
+            boolean is18orOlder = false;
+
+            try {
+                birthDay = Integer.parseInt((String)member.get("householdMemberBirthDay"));
+                birthMonth = Integer.parseInt((String)member.get("householdMemberBirthMonth"));
+                birthYear = Integer.parseInt((String)member.get("householdMemberBirthYear"));
+
+                is18orOlder = HouseholdUtilities.isMember18orOlder(birthDay, birthMonth, birthYear);
+            } catch (NumberFormatException e) {
+                // TODO what to do if this does fail?? ignore and keep going? probably
+                log.error("Unable to work with household member {}'s birthday ({}/{}/{}): {}",
+                    member.get("householdMemberFirstName"),
+                    (String)member.get("householdMemberBirthDay"),
+                    (String)member.get("householdMemberBirthMonth"),
+                    (String)member.get("householdMemberBirthYear"),
+                    e.getMessage()
+                );
+            }
 
             if (is18orOlder) {
                 numberOfAdultsInHousehold++;

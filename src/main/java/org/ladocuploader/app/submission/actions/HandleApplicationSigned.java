@@ -12,8 +12,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class HandleApplicationSigned implements Action {
+
   @Autowired
   private TransmissionRepositoryService transmissionRepositoryService;
+
+  @Override
   public void run(Submission submission) {
     // Create WIC + ECE records if they don't exist
     if (!transmissionRepositoryService.transmissionExists(submission, TransmissionType.WIC)) {
@@ -25,8 +28,5 @@ public class HandleApplicationSigned implements Action {
       // already submitted WIC. don't do anything again.
       transmissionRepositoryService.createTransmissionRecord(submission, TransmissionType.ECE);
     }
-
-
-
   }
 }

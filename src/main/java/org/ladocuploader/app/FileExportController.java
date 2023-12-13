@@ -76,7 +76,7 @@ public class FileExportController {
         log.info("GET downloadCSV ParentGuardian (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
             cleanedFlow, cleanedSubmissionId);
 
-        return handleCsvGeneration(cleanedFlow, request, cleanedSubmissionId, httpSession, locale, CsvType.PARENT_GUARDIAN);
+        return handleCsvGeneration(cleanedFlow, cleanedSubmissionId, httpSession, locale, CsvType.PARENT_GUARDIAN);
     }
 
     @GetMapping("{flow}/student/{submissionId}")
@@ -94,7 +94,7 @@ public class FileExportController {
         log.info("GET downloadCSV Student (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
             cleanedFlow, cleanedSubmissionId);
 
-        return handleCsvGeneration(cleanedFlow, request, cleanedSubmissionId, httpSession, locale, CsvType.STUDENT);
+        return handleCsvGeneration(cleanedFlow, cleanedSubmissionId, httpSession, locale, CsvType.STUDENT);
     }
 
     @GetMapping("{flow}/rel/{submissionId}")
@@ -112,7 +112,7 @@ public class FileExportController {
         log.info("GET downloadCSV Relationship (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
             cleanedFlow, cleanedSubmissionId);
 
-        return handleCsvGeneration(cleanedFlow, request, cleanedSubmissionId, httpSession, locale, CsvType.RELATIONSHIP);
+        return handleCsvGeneration(cleanedFlow, cleanedSubmissionId, httpSession, locale, CsvType.RELATIONSHIP);
     }
 
     protected static void throwNotFoundError(String flow, String message) {
@@ -128,7 +128,7 @@ public class FileExportController {
         );
     }
 
-    private ResponseEntity handleCsvGeneration(String flow, HttpServletRequest request, String submissionId, HttpSession httpSession,
+    private ResponseEntity handleCsvGeneration(String flow, String submissionId, HttpSession httpSession,
         Locale locale, CsvType csvType) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
 
         if (!doesFlowExist(flow)) {
