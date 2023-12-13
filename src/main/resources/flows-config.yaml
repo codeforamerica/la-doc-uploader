@@ -655,6 +655,18 @@ flow:
   docUploadInstructions:
     nextScreens:
       - name: docUploadRecommendations
+  docUploadRecommendations:
+    nextScreens:
+      - name: docUpload
+  docUpload:
+    nextScreens:
+      - name: docUploadType
+  docUploadType:
+    nextScreens:
+      - name: docUploadSubmit
+  docUploadSubmit:
+    nextScreens:
+      - name: confirmation
   confirmation:
     beforeDisplayAction: FormatSubmittedAtDate
     nextScreens:
