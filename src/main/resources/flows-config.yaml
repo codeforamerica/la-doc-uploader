@@ -134,7 +134,7 @@ flow:
       - name: householdBenefits
   householdPregnancyWho:
     nextScreens:
-      -name: householdPregnancyDueDate
+      - name: householdPregnancyDueDate
   householdPregnancyDueDate:
     nextScreens:
       - name: householdBenefits
@@ -270,14 +270,6 @@ flow:
      - name: householdEmployerName
   householdIncomeDeleteConfirmation:
     nextScreens: null
-  householdMonthlyIncome:
-    nextScreens:
-      - name: householdIncomeTotal
-  householdIncomeTotal:
-    nextScreens:
-      - name: householdAdditionalIncome
-        condition: NonItemizedIncome
-      - name: householdIncomeWho
   householdEmployerName:
     subflow: income
     nextScreens:
@@ -447,7 +439,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesHeating:
     nextScreens:
       - name: utilitiesCooling
@@ -466,7 +458,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesCooling:
     nextScreens:
       - name: utilitiesElectricity
@@ -483,7 +475,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesElectricity:
     nextScreens:
       - name: utilitiesWater
@@ -498,7 +490,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesWater:
     nextScreens:
       - name: utilitiesPhone
@@ -511,7 +503,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesPhone:
     nextScreens:
       - name: utilitiesGarbage
@@ -522,7 +514,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesGarbage:
     nextScreens:
       - name: utilitiesSewer
@@ -531,19 +523,19 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesSewer:
     nextScreens:
       - name: utilitiesCookingFuel
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesCookingFuel:
     nextScreens:
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesOther:
     nextScreens:
       - name: energyAssistance
