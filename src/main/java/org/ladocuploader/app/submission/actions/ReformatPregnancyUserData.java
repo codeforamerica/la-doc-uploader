@@ -15,7 +15,7 @@ public class ReformatPregnancyUserData implements Action {
 
   @Override
   public void run(Submission submission) {
-    submission.getInputData().put("pregnanciesFullNames[]", HouseholdUtilities.reformatSubmitterData(submission, "pregnancies[]"));
+    submission.getInputData().put("pregnanciesFullNames[]", HouseholdUtilities.formattedHouseholdData(submission, "pregnancies[]"));
   }
 
 }

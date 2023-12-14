@@ -25,7 +25,7 @@ public class HouseholdUtilities {
     return memberBirthDayCal.compareTo(cal) <= 0;
   }
 
-  public static ArrayList<LinkedHashMap> reformatSubmitterData(Submission submission, String key) {
+  public static ArrayList<LinkedHashMap> formattedHouseholdData(Submission submission, String key) {
     Map<String, Object> inputData = submission.getInputData();
 
     ArrayList<LinkedHashMap> householdMembers = (ArrayList) inputData.get("household");
@@ -37,7 +37,8 @@ public class HouseholdUtilities {
           if (id.equals("you")) {
             user.put("uuid", id);
             user.put("firstName", inputData.get("firstName") + " (you)");
-            user.put("lastName", inputData.get("lastName"));
+            user.put("firstNamePossessive", inputData.get("firstName") + "'s (your)");
+
             householdDataObject.add(user);
           } else {
             householdDataObject.add(householdData(householdMembers, id));
@@ -55,7 +56,7 @@ public class HouseholdUtilities {
       if (hhmember.get("uuid").equals(uuid)) {
         user.put("uuid", uuid);
         user.put("firstName", hhmember.get("householdMemberFirstName"));
-        user.put("lastName", hhmember.get("householdMemberLastName"));
+        user.put("firstNamePossessive", hhmember.get("householdMemberFirstName")+ "'s");
         continue;
       }
     }

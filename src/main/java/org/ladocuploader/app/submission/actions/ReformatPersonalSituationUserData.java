@@ -15,7 +15,7 @@ public class ReformatPersonalSituationUserData implements Action {
 
   @Override
   public void run(Submission submission) {
-    submission.getInputData().put("affectedByPersonalSituations[]", HouseholdUtilities.reformatSubmitterData(submission, "personalSituationsHouseholdUUID[]"));
+    submission.getInputData().put("affectedByPersonalSituations[]", HouseholdUtilities.formattedHouseholdData(submission, "personalSituationsHouseholdUUID[]"));
   }
 
 }

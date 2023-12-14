@@ -15,7 +15,7 @@ public class ReformatStudentsUserData implements Action {
 
   @Override
   public void run(Submission submission) {
-    submission.getInputData().put("studentsFullNames[]", HouseholdUtilities.reformatSubmitterData(submission, "students[]"));
+    submission.getInputData().put("studentsFullNames[]", HouseholdUtilities.formattedHouseholdData(submission, "students[]"));
   }
 
 }
