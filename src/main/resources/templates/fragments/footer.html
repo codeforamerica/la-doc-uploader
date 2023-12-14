@@ -5,10 +5,10 @@
   <a class="text--small font-white spacing-below-15" target="_blank" rel="noopener noreferrer" href="/privacy"
      th:text="#{footer.privacy}"></a>
   <th:block th:if="${#arrays.contains(@environment.getActiveProfiles(), 'demo') || #arrays.contains(@environment.getActiveProfiles(), 'dev')}">
-
-    <br><a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/pg/' + ${submission.getId()}">Download Parent Guardian Summary CSV</a><br/>
-    <br><a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/rel/' + ${submission.getId()}">Download Relationship Summary CSV</a><br/>
-    <br><a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/student/' + ${submission.getId()}">Download Student Summary CSV</a><br/>
+    <br>Download links (demo-only):
+    <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/pg/' + ${submission.getId()}">Parent Guardian Summary CSV</a> |
+    <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/rel/' + ${submission.getId()}">Relationship Summary CSV</a> |
+    <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/student/' + ${submission.getId()}">Student Summary CSV</a>
   </th:block>
   <div class="footer-logos spacing-below-15">
     <div class="spacing-above-15">
