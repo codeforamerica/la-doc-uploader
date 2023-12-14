@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class ReformatPersonalSituationUserData implements Action {
+public class ReformatPregnancyUserData implements Action {
 
   @Override
   public void run(Submission submission) {
-    submission.getInputData().put("affectedByPersonalSituations[]", HouseholdUtilities.reformatSubmitterData(submission, "personalSituationsHouseholdUUID[]"));
+    submission.getInputData().put("pregnanciesFullNames[]", HouseholdUtilities.reformatSubmitterData(submission, "pregnancies[]"));
   }
 
 }

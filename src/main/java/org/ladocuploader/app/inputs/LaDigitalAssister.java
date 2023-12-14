@@ -123,11 +123,21 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String schoolInd;
 
-  private String students;
+  @NotEmpty
+  private List<String> students;
+
+  @NotBlank
+  @DynamicField
+  private String schoolName;
+
+  @NotEmpty
+  @DynamicField
+  private String schoolEnrollmentLevel;
 
   private String pregnancyInd;
 
-  private String pregnancies;
+  @NotEmpty
+  private List<String> pregnancies;
 
   private String outOfStateBenefitsInd;
 
