@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.ladocuploader.app.utils.SubmissionUtilities.EDUCATION_MAP;
-import static org.ladocuploader.app.utils.SubmissionUtilities.MARITAL_STATUS_MAP;
+import static org.ladocuploader.app.utils.SubmissionUtilities.*;
 
 @Component
 public class HouseholdDetailsPreparer implements SubmissionFieldPreparer {
@@ -42,6 +41,9 @@ public class HouseholdDetailsPreparer implements SubmissionFieldPreparer {
 
         var maritalStatus = householdMember.get("householdMemberMaritalStatus");
         results.put("householdMaritalStatus" + i, new SingleField("householdMaritalStatusFormatted", MARITAL_STATUS_MAP.get(maritalStatus), i + 1));
+
+        var relationshipStatus = householdMember.get("householdMemberRelationship");
+        results.put("householdRelationship" + i, new SingleField("householdRelationshipFormatted", RELATIONSHIP_MAP.get(relationshipStatus), i + 1));
 
         var birthday = Stream.of("householdMemberBirthMonth", "householdMemberBirthDay", "householdMemberBirthYear")
             .map(householdMember::get)

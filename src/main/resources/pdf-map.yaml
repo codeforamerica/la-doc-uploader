@@ -109,8 +109,8 @@ subflowInfo:
     inputFields:
       householdMemberFirstName: householdMemberFirstName
       householdMemberLastName: householdMemberLastName
-      householdRelationship: householdRelationship
-      householdSex: householdSex
+      householdMemberSex: householdSex
+      householdRelationshipFormatted: householdRelationship
       householdMaritalStatusFormatted: householdMaritalStatus
       householdHighestEducationFormatted: householdHighestEducation
       householdBirthdayFormatted: householdBirthday

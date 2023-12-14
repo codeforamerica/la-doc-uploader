@@ -13,6 +13,8 @@ public class SubmissionUtilities {
     public static final Map<String, String> EDUCATION_MAP = new HashMap<>();
     public static final Map<String, String> MARITAL_STATUS_MAP = new HashMap<>();
 
+    public static final Map<String, String> RELATIONSHIP_MAP = new HashMap<>();
+
     static {
         EDUCATION_MAP.put("firstGrade", "1st grade");
         EDUCATION_MAP.put("secondGrade", "2nd grade");
@@ -39,6 +41,23 @@ public class SubmissionUtilities {
         MARITAL_STATUS_MAP.put("LegallySeparated", "Separated");
         MARITAL_STATUS_MAP.put("Divorced", "Divorced");
         MARITAL_STATUS_MAP.put("Widowed", "Widowed");
+
+        RELATIONSHIP_MAP.put("child", "child");
+        RELATIONSHIP_MAP.put("stepChild", "step child");
+        RELATIONSHIP_MAP.put("spouse", "spouse");
+        RELATIONSHIP_MAP.put("partner", "partner");
+        RELATIONSHIP_MAP.put("sibling", "sibling");
+        RELATIONSHIP_MAP.put("stepSibling", "step sibling");
+        RELATIONSHIP_MAP.put("halfSibling", "half sibling");
+        RELATIONSHIP_MAP.put("parent", "parent");
+        RELATIONSHIP_MAP.put("grandparent", "grandparent");
+        RELATIONSHIP_MAP.put("childsParent", "child's parent");
+        RELATIONSHIP_MAP.put("auntOrUncle", "aunt or uncle");
+        RELATIONSHIP_MAP.put("nieceOrNephew", "niece or nephew");
+        RELATIONSHIP_MAP.put("roommate", "roommate");
+        RELATIONSHIP_MAP.put("friend", "friend");
+        RELATIONSHIP_MAP.put("grandchild", "grandchild");
+        RELATIONSHIP_MAP.put("other", "other");
     }
     public static String formatMoney(String value) {
         if (value == null) {

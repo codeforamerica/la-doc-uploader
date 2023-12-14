@@ -18,9 +18,11 @@ class HouseholdDetailsPreparerTest {
     @Test
     public void testWithHouseholdMember() {
         Submission submission = new SubmissionTestBuilder()
-                .withHouseholdMember("Betty", "White", "10", "2", "1999", "child", "F", "NeverMarried", "firstGrade", "123456789")
+                .withHouseholdMember("Betty", "White", "10", "2", "1999", "halfSibling", "F", "NeverMarried", "firstGrade", "123456789")
                 .build();
         Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
+        assertThat(result.get("householdRelationship0"))
+            .isEqualTo(new SingleField("householdRelationshipFormatted", "half sibling", 1));
         assertThat(result.get("householdMaritalStatus0"))
                 .isEqualTo(new SingleField("householdMaritalStatusFormatted", "Never Married", 1));
         assertThat(result.get("householdHighestEducation0"))
@@ -38,6 +40,8 @@ class HouseholdDetailsPreparerTest {
                 .withNonCitizens(List.of("betty-white"))
                 .build();
         Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
+        assertThat(result.get("householdRelationship0"))
+            .isEqualTo(new SingleField("householdRelationshipFormatted", "child", 1));
         assertThat(result.get("householdMaritalStatus0"))
                 .isEqualTo(new SingleField("householdMaritalStatusFormatted", "Never Married", 1));
         assertThat(result.get("householdHighestEducation0"))

@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.ladocuploader.app.utils.SubmissionUtilities.getDecryptedSSNKeyName;
-
 public class SubmissionTestBuilder {
 
     private final Submission submission = new Submission();
@@ -55,7 +53,7 @@ public class SubmissionTestBuilder {
         member.put("householdMemberSex", sex);
         member.put("householdMemberMaritalStatus", maritalStatus);
         member.put("householdMemberHighestEducation", education);
-        member.put(getDecryptedSSNKeyName(uuid), ssn);
+        member.put("householdMemberEncryptedSSN", ssn);
 
         household.add(member);
         submission.getInputData().put("household", household);

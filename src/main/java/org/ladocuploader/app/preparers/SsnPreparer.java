@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.ladocuploader.app.utils.SubmissionUtilities.getDecryptedSSNKeyName;
+import static org.ladocuploader.app.utils.SubmissionUtilities.ENCRYPTED_SSNS_INPUT_NAME;
 
 @Component
 public class SsnPreparer implements SubmissionFieldPreparer {
@@ -39,7 +39,7 @@ public class SsnPreparer implements SubmissionFieldPreparer {
     if(householdMembers != null) {
       int i = 1;
       for (Map<String, Object> hhmember : householdMembers) {
-        encryptedSSN = (String) hhmember.get(getDecryptedSSNKeyName((String) hhmember.get("uuid")));
+        encryptedSSN = (String) hhmember.get(ENCRYPTED_SSNS_INPUT_NAME);
         String decryptedSSN = encryptor.decrypt(encryptedSSN);
         results.put("ssns_" + i, new SingleField("ssns_" + i, decryptedSSN, null));
         i++;
