@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.ladocuploader.app.utils.SubmissionUtilities.EDUCATION_MAP;
+import static org.ladocuploader.app.utils.SubmissionUtilities.PDF_EDUCATION_MAP;
 
 @Component
 public class ApplicantDetailsPreparer implements SubmissionFieldPreparer {
@@ -42,7 +42,7 @@ public class ApplicantDetailsPreparer implements SubmissionFieldPreparer {
     results.put("applicantBirthday", new SingleField("applicantBirthdayFormatted", (String) birthday, null));
 
     var educationStatus = inputData.get("highestEducation");
-    results.put("highestEducation", new SingleField("highestEducationFormatted", EDUCATION_MAP.get(educationStatus), null));
+    results.put("highestEducation", new SingleField("highestEducationFormatted", PDF_EDUCATION_MAP.get(educationStatus), null));
 
     return results;
   }

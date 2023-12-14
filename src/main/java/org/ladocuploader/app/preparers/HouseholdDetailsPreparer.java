@@ -21,39 +21,32 @@ public class HouseholdDetailsPreparer implements SubmissionFieldPreparer {
 
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
-    var household = (List<Map<String, Object>>) submission.getInputData().get("household");
+    Map<String, SubmissionField> results = new HashMap<>();
 
     var nonCitizens = (List<String>) submission.getInputData().getOrDefault("nonCitizens[]", new ArrayList<>());
-    Map<String, SubmissionField> results = new HashMap<>();
-    if (nonCitizens != null && household != null) {
-      for (int i = 0; i < household.size(); i++) {
-        Map<String, Object> householdMember = household.get(i);
-        var uuid = householdMember.get("uuid");
-        results.put("householdUSCitizen" + i, new SingleField("householdUSCitizenDerived", nonCitizens.contains(uuid) ? "No" : "Yes", i + 1));
-      }
-    }
-
+    var household = (List<Map<String, Object>>) submission.getInputData().get("household");
     if (household != null) {
       for (int i = 0; i < household.size(); i++) {
         Map<String, Object> householdMember = household.get(i);
         var educationStatus = householdMember.get("householdMemberHighestEducation");
-        results.put("householdHighestEducation" + i, new SingleField("householdHighestEducationFormatted", EDUCATION_MAP.get(educationStatus), i + 1));
+        results.put("householdHighestEducation" + i, new SingleField("householdHighestEducationFormatted", PDF_EDUCATION_MAP.get(educationStatus), i + 1));
 
         var maritalStatus = householdMember.get("householdMemberMaritalStatus");
-        results.put("householdMaritalStatus" + i, new SingleField("householdMaritalStatusFormatted", MARITAL_STATUS_MAP.get(maritalStatus), i + 1));
+        results.put("householdMaritalStatus" + i, new SingleField("householdMaritalStatusFormatted", PDF_MARITAL_STATUS_MAP.get(maritalStatus), i + 1));
 
         var relationshipStatus = householdMember.get("householdMemberRelationship");
-        results.put("householdRelationship" + i, new SingleField("householdRelationshipFormatted", RELATIONSHIP_MAP.get(relationshipStatus), i + 1));
+        results.put("householdRelationship" + i, new SingleField("householdRelationshipFormatted", PDF_RELATIONSHIP_MAP.get(relationshipStatus), i + 1));
 
         var birthday = Stream.of("householdMemberBirthMonth", "householdMemberBirthDay", "householdMemberBirthYear")
             .map(householdMember::get)
             .reduce((e, c) -> e + "/" + c)
             .get();
         results.put("householdBirthday" + i, new SingleField("householdBirthdayFormatted", (String) birthday, i + 1));
+
+        var uuid = householdMember.get("uuid");
+        results.put("householdUSCitizen" + i, new SingleField("householdUSCitizenDerived", nonCitizens != null && nonCitizens.contains(uuid) ? "No" : "Yes", i + 1));
       }
     }
-
-
     return results;
   }
 }
