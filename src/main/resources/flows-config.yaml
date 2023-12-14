@@ -662,6 +662,10 @@ flow:
     nextScreens:
       - name: docUploadType
   docUploadType:
+    beforeSaveAction: AssociateDocTypeLabel
+    nextScreens:
+      - name: docUploadReview
+  docUploadReview:
     nextScreens:
       - name: docUploadSubmit
   docUploadSubmit:

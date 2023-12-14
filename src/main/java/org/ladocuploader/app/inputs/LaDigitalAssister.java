@@ -10,12 +10,15 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class LaDigitalAssister extends FlowInputs {
+
+  MultipartFile uploadDocuments;
 
   // Language
   private String languageRead;
@@ -413,5 +416,9 @@ public class LaDigitalAssister extends FlowInputs {
   private String digitalAssisterFeedbackDetail;
 
   private String addIncome;
+
+  @NotBlank(message = "{doc-type.select-a-type}")
+  @DynamicField
+  private String docType;
 }
 

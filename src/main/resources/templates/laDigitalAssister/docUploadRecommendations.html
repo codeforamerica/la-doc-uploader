@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title=#{doc-upload-recommendations.title})}"></head>
 <body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{doc-upload-recommendations.header}, subtext=#{doc-upload-recommendations.subtext})}"/>
+        <div class="form-card__content">
+          <th:block th:replace="~{'fragments/reveal' :: reveal(
+                controlId='r1',
+                linkLabel=~{::revealLabel1},
+                content=~{::revealContent1})}">
+            <th:block th:ref="revealLabel1">
+            <span class="clipboard-icon">
+              <i class="icon-">&#xE862;</i>
+            </span>
+              <span th:text="#{doc-upload-recommendations.recommended}"></span>
+            </th:block>
+            <th:block th:ref="revealContent1">
+              <b th:text="#{doc-upload-recommendations.income}"></b>
+              <p th:text="#{doc-upload-recommendations.income-content}"></p>
+              <b th:text="#{doc-upload-recommendations.residency}"></b>
+              <p th:text="#{doc-upload-recommendations.residency-content}"></p>
+              <b th:text="#{doc-upload-recommendations.identity}"></b>
+              <p th:text="#{doc-upload-recommendations.identity-conent}"></p>
+              <b th:text="#{doc-upload-recommendations.types-of-files}"></b>
+              <p th:text="#{doc-upload-recommendations.types-of-files-content}"></p>
+            </th:block>
+          </th:block>
 
+        </div>
+        <div class="form-card__footer">
+          <th:block th:replace="~{fragments/continueButton :: continue}"/>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>
