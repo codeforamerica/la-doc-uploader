@@ -129,6 +129,7 @@ flow:
     nextScreens:
       - name: householdSchoolDetails
   householdSchoolDetails:
+    beforeDisplayAction: ReformatStudentsUserData
     nextScreens:
       - name: householdPregnancy
   householdPregnancy:
