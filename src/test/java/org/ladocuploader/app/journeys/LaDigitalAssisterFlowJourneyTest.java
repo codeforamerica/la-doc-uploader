@@ -589,11 +589,26 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
+    testPage.goBack();
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare-expenses.title"));
-    testPage.goBack();
+    testPage.enter("expensesDependentCare", "15");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
     testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.title"));
+    testPage.goBack();
+
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
+    testPage.enter("expensesChildSupport", "150");
+    testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.title"));
     testPage.clickElementById("householdInsuranceExpenses-Dental insurance premiums-label");

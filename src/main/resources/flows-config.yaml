@@ -554,13 +554,15 @@ flow:
     nextScreens:
       - name: expensesDependentCareAmount
         condition: HasDependentCareExpenses
-      - name: expensesInsurance
+      - name: expensesChildSupport
   expensesDependentCareAmount:
     nextScreens:
       - name: expensesChildSupport
   expensesChildSupport:
     nextScreens:
       - name: expensesChildSupportAmount
+        condition: HasChildSupportExpenses
+      - name: expensesInsurance
   expensesChildSupportAmount:
     nextScreens:
       - name: expensesInsurance
