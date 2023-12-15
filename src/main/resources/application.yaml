@@ -96,6 +96,11 @@ server:
   servlet:
     session:
       persistent: true
+ftps:
+  username: ${FTPS_USERNAME:-""}
+  password: ${FTPS_PASSWORD:-""}
+  upload-url: ${FTPS_UPLOAD_URL:-""}
+  upload-dir: ${FTPS_UPLOAD_DIR:-""}
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6
