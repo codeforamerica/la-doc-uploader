@@ -130,7 +130,16 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String schoolInd;
 
-  private String students;
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> students;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String schoolName;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String schoolEnrollmentLevel;
 
   private String pregnancyInd;
 
