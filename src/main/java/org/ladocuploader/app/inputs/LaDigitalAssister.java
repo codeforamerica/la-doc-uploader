@@ -374,6 +374,8 @@ public class LaDigitalAssister extends FlowInputs {
   private String interestedInWicInd;
 
   // Final Screen
+  private String needsNewEbtCard;
+
   private String authorizedRepresentative;
 
   private String authorizedRepCommsAuthorization;
