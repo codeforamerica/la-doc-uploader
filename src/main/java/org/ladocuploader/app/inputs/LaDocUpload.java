@@ -1,7 +1,6 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
-import formflow.library.data.annotations.DynamicField;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
