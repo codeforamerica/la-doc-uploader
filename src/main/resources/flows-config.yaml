@@ -274,14 +274,6 @@ flow:
      - name: householdEmployerName
   householdIncomeDeleteConfirmation:
     nextScreens: null
-  householdMonthlyIncome:
-    nextScreens:
-      - name: householdIncomeTotal
-  householdIncomeTotal:
-    nextScreens:
-      - name: householdAdditionalIncome
-        condition: NonItemizedIncome
-      - name: householdIncomeWho
   householdEmployerName:
     subflow: income
     nextScreens:
