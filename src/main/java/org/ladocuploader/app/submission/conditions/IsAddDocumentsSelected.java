@@ -4,9 +4,9 @@ import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AddDocumentsSelected extends BasicCondition {
+public class IsAddDocumentsSelected extends BasicCondition {
     @Override
     public Boolean run(Submission submission) {
-        return run(submission, "addIncome", "true");
+        return run(submission, "addDocuments", "true");
     }
 }

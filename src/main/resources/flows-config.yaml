@@ -640,7 +640,7 @@ flow:
   docUploadIntro:
     nextScreens:
       - name: docUploadSignpost
-        condition: AddDocumentsSelected
+        condition: IsAddDocumentsSelected
       - name: confirmation
   docUploadSignpost:
     nextScreens:
