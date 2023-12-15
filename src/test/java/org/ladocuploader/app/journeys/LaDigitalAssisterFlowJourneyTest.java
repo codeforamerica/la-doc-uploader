@@ -692,14 +692,15 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
 
     testPage.navigateToFlowScreen("laDigitalAssister/docUploadIntro");
-    testPage.clickButton("doc-upload-intro.continue");
+    testPage.clickButton(message("doc-upload-intro.continue"));
     assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-signpost.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-recommendations.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("how-to-add-documents.title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-recommendations.title"));
+    testPage.clickContinue();
 
     // Upload documents
     assertThat(testPage.getTitle()).isEqualTo(message("upload-documents.title"));
