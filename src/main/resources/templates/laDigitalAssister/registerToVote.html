@@ -30,7 +30,7 @@
             <div class="form-card__footer">
               <th:block th:replace="'fragments/inputs/submitButton' :: submitButton(
                 text=#{general.inputs.continue})"/>
-              <th:block th:replace="~{'fragments/reveal' :: reveal(
+              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
@@ -44,7 +44,7 @@
                 </th:block>
               </th:block>
 
-              <th:block th:replace="~{'fragments/reveal' :: reveal(
+              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r2',
                 linkLabel=~{::revealLabel2},
                 content=~{::revealContent2},

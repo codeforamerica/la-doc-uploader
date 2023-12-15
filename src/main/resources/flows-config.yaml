@@ -124,6 +124,9 @@ flow:
       - name: householdPregnancy
   householdSchoolWho:
     nextScreens:
+      - name: householdSchoolDetails
+  householdSchoolDetails:
+    nextScreens:
       - name: householdPregnancy
   householdPregnancy:
     nextScreens:
@@ -131,6 +134,9 @@ flow:
         condition: IsPregnant
       - name: householdBenefits
   householdPregnancyWho:
+    nextScreens:
+      - name: householdPregnancyDueDate
+  householdPregnancyDueDate:
     nextScreens:
       - name: householdBenefits
   householdBenefits:
@@ -316,6 +322,9 @@ flow:
       - name: expensesSignPost
   householdMoneyOnHand:
     nextScreens:
+      - name: householdMoneyOnHandWhich
+  householdMoneyOnHandWhich:
+    nextScreens:
       - name: expensesSignPost
   expensesSignPost:
     nextScreens:
@@ -439,7 +448,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesHeating:
     nextScreens:
       - name: utilitiesCooling
@@ -458,7 +467,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesCooling:
     nextScreens:
       - name: utilitiesElectricity
@@ -475,7 +484,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesElectricity:
     nextScreens:
       - name: utilitiesWater
@@ -490,7 +499,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesWater:
     nextScreens:
       - name: utilitiesPhone
@@ -503,7 +512,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesPhone:
     nextScreens:
       - name: utilitiesGarbage
@@ -514,7 +523,7 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesGarbage:
     nextScreens:
       - name: utilitiesSewer
@@ -523,20 +532,26 @@ flow:
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesSewer:
     nextScreens:
       - name: utilitiesCookingFuel
         condition: ExpensesIncludeCookingFuel
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesCookingFuel:
     nextScreens:
       - name: utilitiesOther
         condition: ExpensesIncludeOtherUtilities
-      - name: expensesDependentCare
+      - name: energyAssistance
   utilitiesOther:
+    nextScreens:
+      - name: energyAssistance
+  energyAssistance:
+    nextScreens:
+      - name: liheap
+  liheap:
     nextScreens:
       - name: expensesDependentCare
   expensesDependentCare:
@@ -545,6 +560,12 @@ flow:
         condition: HasDependentCareExpenses
       - name: expensesInsurance
   expensesDependentCareAmount:
+    nextScreens:
+      - name: expensesChildSupport
+  expensesChildSupport:
+    nextScreens:
+      - name: expensesChildSupportAmount
+  expensesChildSupportAmount:
     nextScreens:
       - name: expensesInsurance
   expensesInsurance:
@@ -591,6 +612,9 @@ flow:
     nextScreens:
       - name: finalSignPost
   finalSignPost:
+    nextScreens:
+      - name: ebtCard
+  ebtCard:
     nextScreens:
       - name: authorizedRepAuthorization
   authorizedRepAuthorization:
