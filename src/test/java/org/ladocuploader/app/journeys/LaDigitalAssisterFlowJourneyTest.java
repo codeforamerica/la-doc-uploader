@@ -353,6 +353,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("students-you");
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo(message("schooldetails.title"));
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo(message("pregnancy.title"));
     testPage.clickButton("No");
 
@@ -362,6 +365,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("pregnancy-who.title"));
     testPage.clickElementById("pregnancies-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("pregnantduedate.title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("out-of-state-benefits.title"));
@@ -561,6 +567,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("moneyOnHand", "0");
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo(message("moneyonhand-types.title"));
+    testPage.clickContinue();
+
     //    Expenses SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("expenses-signpost.title"));
     testPage.clickContinue();
@@ -594,6 +603,12 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("none__checkbox-label"); // none selected
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance-title"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("liheap-title"));
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
     testPage.clickButton("Yes");
 
@@ -621,6 +636,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     //    Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("ebtcard-title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep.title"));
