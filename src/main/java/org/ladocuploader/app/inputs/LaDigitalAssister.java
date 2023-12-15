@@ -332,6 +332,10 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesOther;
 
+  private String receivesEnergyAssistance;
+
+  private String assistanceThroughLiheap;
+
   private String hasDependentCareExpenses;
 
   @Money(message="{error.invalid-money}")
