@@ -17,7 +17,8 @@
             <th:block th:with="expenseInputName=${'medicalExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
               <th:block
                 th:replace="~{fragments/inputs/money :: money(inputName=${expenseInputName},
-                ariaLabel=${expense}
+                ariaLabel=${expense},
+                postfix='/month'
                 )}"/>
             </th:block>
             <hr>
