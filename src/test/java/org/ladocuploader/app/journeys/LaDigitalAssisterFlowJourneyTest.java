@@ -582,11 +582,17 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("none__checkbox-label"); // none selected
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance-title"));
-    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance.title"));
+    testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("liheap-title"));
-    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
+    testPage.goBack();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance.title"));
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("liheap.title"));
+    testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
     testPage.clickButton("No");

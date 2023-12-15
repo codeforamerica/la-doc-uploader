@@ -547,6 +547,8 @@ flow:
   energyAssistance:
     nextScreens:
       - name: liheap
+        condition: ReceivesEnergyAssistance
+      - name: expensesDependentCare
   liheap:
     nextScreens:
       - name: expensesDependentCare
