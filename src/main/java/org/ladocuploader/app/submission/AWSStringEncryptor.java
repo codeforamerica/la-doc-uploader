@@ -33,6 +33,10 @@ public class AWSStringEncryptor implements StringEncryptor {
 
   @Override
   public String decrypt(String ciphertext) {
+    if (ciphertext == null || ciphertext.isEmpty()) {
+      return "";
+    }
+
     DecryptRequest decryptRequest = new DecryptRequest()
         .withEncryptionAlgorithm("RSAES_OAEP_SHA_256")
         .withKeyId(keyArn)
@@ -44,6 +48,10 @@ public class AWSStringEncryptor implements StringEncryptor {
 
   @Override
   public String encrypt(String plaintext) {
+    if (plaintext == null || plaintext.isEmpty()) {
+      return "";
+    }
+
     EncryptRequest req = new EncryptRequest()
         .withEncryptionAlgorithm("RSAES_OAEP_SHA_256")
         .withKeyId(keyArn)
