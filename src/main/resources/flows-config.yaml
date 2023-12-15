@@ -141,6 +141,7 @@ flow:
     nextScreens:
       - name: householdPregnancyDueDate
   householdPregnancyDueDate:
+    beforeDisplayAction: ReformatPregnancyUserData
     nextScreens:
       - name: householdBenefits
   householdBenefits:
