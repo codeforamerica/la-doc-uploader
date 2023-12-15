@@ -122,31 +122,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  void monthlyIncomeFlow(){
-    loadUserPersonalData();
-    loadHouseHoldData("Third", "User", "12", "22", "1991");
-    loadHouseHoldData("Fourth", "User", "01", "23", "1997");
-    preloadIncomeScreen();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
-    testPage.clickLink(message("income-by-job.enter-directly"));
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-annual-income.title"));
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.missing-dollar-amount")));
-    testPage.enter("monthlyHouseholdIncome", "abc");
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.invalid-money")));
-    testPage.enter("monthlyHouseholdIncome", "1286.55");
-
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("income-list.title"));
-  }
-
-  @Test
   void otherIncomeFlow(){
     loadUserPersonalData();
     loadHouseHoldData("Third", "User", "12", "22", "1991");
@@ -530,17 +505,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
-
-    testPage.clickLink(message("income-by-job.enter-directly"));
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-annual-income.title"));
-
-    testPage.enter("monthlyHouseholdIncome", "200");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("income-list.title"));
-
-    testPage.clickButton(message("household-income-total.yes"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
