@@ -2,7 +2,11 @@ package org.ladocuploader.app.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,11 +34,6 @@ public class UserFileUtilities {
         ObjectMapper objectMapper = new ObjectMapper();
         UserFileMap userFileMap = objectMapper.readValue(userFileMapString, UserFileMap.class);
         Map<UUID, Map<String, String>> sessionFiles = userFileMap.getFiles(flow, inputName);
-
-        List<UUID> fileIds = userFiles.stream()
-                .sorted(Comparator.comparing(UserFile::getCreatedAt))
-                .map(UserFile::getFileId)
-                .collect(Collectors.toList());
 
         userFiles.forEach(uFile -> {
             Map<String,String> fileFromSession = sessionFiles.get(uFile.getFileId());
