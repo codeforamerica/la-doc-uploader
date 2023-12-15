@@ -1,0 +1,120 @@
+flow: laDigitalAssister
+pdf: /pdfs/la_application_for_assistance.pdf
+inputFields:
+  # submission field name --> PDF field name
+
+  # Cross-check this list against the PDF with this command:
+  #   diff \
+  #     <(pdftk src/main/resources/pdfs/la_application_for_assistance.pdf dump_data_fields | grep 'FieldName: ' | cut -d' ' -f2 | sort) \
+  #     <(ruby -ryaml -e "y = YAML.load_file('src/main/resources/pdf-map.yaml'); puts y['inputFields'].values.concat(y['dbFields'].values)" | sort)
+  #
+  # Red lines = in PDF but not YAML
+  # Green lines = in YAML but not PDF
+
+  # Overview Page
+  firstName: firstName
+  lastName: lastName
+  applicantSsn: applicantSsn
+  homeAddressStreetAddress1: homeAddressStreetAddress1
+  homeAddressStreetAddress2: homeAddressStreetAddress2
+  homeAddressZipCode: homeAddressZipCode
+  homeAddressState: homeAddressState
+  homeAddressCity: homeAddressCity
+  mailingAddressZipCode: mailingAddressZipCode
+  mailingAddressState: mailingAddressState
+  mailingAddressCity: mailingAddressCity
+  mailingAddressStreetAddress2: mailingAddressStreetAddress2
+  mailingAddressStreetAddress1: mailingAddressStreetAddress1
+  signature: signature
+  applicantBirthdayFormatted: applicantBirthday
+  emailAddress: emailAddress
+  sex: sex
+  highestEducationFormatted: highestEducation
+  ethnicitySelected: ethnicitySelected
+  raceSelected:
+    American Indian or Alaskan Native: RACE_American Indian or Alaskan Native
+    Asian: RACE_Asian
+    Black or African American: RACE_Black or African American
+    Native Hawaiian or Other Pacific Islander: RACE_Native Hawaiian or Other Pacific Islander
+    White: RACE_White
+  maritalStatus: maritalStatus
+  applicantStudentInd: applicantStudentInd
+  applicantNonCitizenInd: applicantNonCitizenInd
+  applicantHomelessInd: applicantHomelessInd
+
+  authorizedRepresentative: authorizedRepresentative
+  authorizedRepFirstName: authorizedRepFirstName
+  authorizedRepLastName: authorizedRepLastName
+  authorizedRepStreetAddress1: authorizedRepStreetAddress1
+  authorizedRepStreetAddress2: authorizedRepStreetAddress2
+  authorizedRepZipCode: authorizedRepZipCode
+  authorizedRepState: authorizedRepState
+  authorizedRepCity: authorizedRepCity
+  authorizedRepPhoneNumber: authorizedRepPhoneNumber
+  needsMedicaid: needsMedicaid
+  ssns_1: ssns_1
+  ssns_2: ssns_2
+  ssns_3: ssns_3
+  ssns_4: ssns_4
+  ssns_5: ssns_5
+  ssns_6: ssns_6
+  ssns_7: ssns_7
+
+  hasDependentCareExpenses: hasDependentCareExpenses
+  personalSituationDisablityInd: disablityInd
+  pregnancyInd: pregnancyInd
+  schoolInd: schoolInd
+  buyPrepareMealsSeparateIndicator: buyPrepareMealsSeparateIndicator
+  outOfStateBenefitsInd: outOfStateBenefitsInd
+  veteranInd: veteranInd
+  fosterAgedOutInd: fosterAgedOutInd
+
+  jobSearch: jobSearch
+  migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
+  roomRentalInd: roomRentalInd
+
+  additionalIncome:
+    SSI: SSI
+    SocialSecurity: SocialSecurity
+    Unemployment: Unemployment
+    WorkersCompensation: WorkersCompensation
+    ChildSupport: ChildSupport
+    VeteransBenefits: VeteransBenefits
+    Contributions: Contributions
+
+  householdUtilitiesExpenses:
+    Electricity: Electricity
+    Water: Water
+    Phone/Cell Phone: Phone/Cell Phone
+    Garbage: Garbage
+    Sewer: Sewer
+    Cooking Fuel: Cooking Fuel
+    Other: Other
+  householdHomeExpenses:
+    Rent: Rent
+    Mortgage: Mortgage
+    Homeowner's Insurance: Homeowner's Insurance
+    Property Tax: Property Tax
+    Condominium Fees: Condominium Fees
+    Lot Rent: Lot Rent
+    Flood Insurance: Flood Insurance
+    Other: Other
+
+  votingRegistrationRequested: votingRegistrationRequested
+  votingRegistrationHelpRequested: votingRegistrationHelpRequested
+
+subflowInfo:
+  household:
+    totalIterations: 7
+    inputFields:
+      householdMemberFirstName: householdMemberFirstName
+      householdMemberLastName: householdMemberLastName
+      householdMemberSex: householdSex
+      householdRelationshipFormatted: householdRelationship
+      householdMaritalStatusFormatted: householdMaritalStatus
+      householdHighestEducationFormatted: householdHighestEducation
+      householdBirthdayFormatted: householdBirthday
+      householdUSCitizenDerived: householdUSCitizen
+
+dbFields:
+  submittedAt: submission-timestamp

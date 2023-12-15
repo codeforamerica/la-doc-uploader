@@ -5,8 +5,60 @@ import formflow.library.data.Submission;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class SubmissionUtilities {
+import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 
+public class SubmissionUtilities {
+    public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
+
+    public static final Map<String, String> PDF_EDUCATION_MAP = new HashMap<>();
+    public static final Map<String, String> PDF_MARITAL_STATUS_MAP = new HashMap<>();
+
+    public static final Map<String, String> PDF_RELATIONSHIP_MAP = new HashMap<>();
+
+    static {
+        PDF_EDUCATION_MAP.put("firstGrade", "1st grade");
+        PDF_EDUCATION_MAP.put("secondGrade", "2nd grade");
+        PDF_EDUCATION_MAP.put("thirdGrade", "3rd grade");
+        PDF_EDUCATION_MAP.put("fourthGrade", "4th grade");
+        PDF_EDUCATION_MAP.put("fifthGrade", "5th grade");
+        PDF_EDUCATION_MAP.put("sixthGrade", "6th grade");
+        PDF_EDUCATION_MAP.put("seventhGrade", "7th grade");
+        PDF_EDUCATION_MAP.put("eighthGrade", "8th grade");
+        PDF_EDUCATION_MAP.put("ninthGrade", "9th grade");
+        PDF_EDUCATION_MAP.put("tenthGrade", "10th grade");
+        PDF_EDUCATION_MAP.put("eleventhGrade", "11th grade");
+        PDF_EDUCATION_MAP.put("highSchoolOrEquivalent", "High school / GED");
+        PDF_EDUCATION_MAP.put("associatesDegree", "Associate's degree");
+        PDF_EDUCATION_MAP.put("bachelorsDegree", "Bachelor's degree");
+        PDF_EDUCATION_MAP.put("graduateDegree", "Graduate/Master's degree");
+        PDF_EDUCATION_MAP.put("certificateOrDiploma", "Other certificate or diploma");
+        PDF_EDUCATION_MAP.put("noFormalEducation", "None");
+        PDF_EDUCATION_MAP.put("notSure", "Not sure");
+
+        PDF_MARITAL_STATUS_MAP.put("NeverMarried", "Never Married");
+        PDF_MARITAL_STATUS_MAP.put("MarriedLivingWithSpouse", "Married");
+        PDF_MARITAL_STATUS_MAP.put("MarriedNotLivingWithSpouse", "Married");
+        PDF_MARITAL_STATUS_MAP.put("LegallySeparated", "Separated");
+        PDF_MARITAL_STATUS_MAP.put("Divorced", "Divorced");
+        PDF_MARITAL_STATUS_MAP.put("Widowed", "Widowed");
+
+        PDF_RELATIONSHIP_MAP.put("child", "child");
+        PDF_RELATIONSHIP_MAP.put("stepChild", "step child");
+        PDF_RELATIONSHIP_MAP.put("spouse", "spouse");
+        PDF_RELATIONSHIP_MAP.put("partner", "partner");
+        PDF_RELATIONSHIP_MAP.put("sibling", "sibling");
+        PDF_RELATIONSHIP_MAP.put("stepSibling", "step sibling");
+        PDF_RELATIONSHIP_MAP.put("halfSibling", "half sibling");
+        PDF_RELATIONSHIP_MAP.put("parent", "parent");
+        PDF_RELATIONSHIP_MAP.put("grandparent", "grandparent");
+        PDF_RELATIONSHIP_MAP.put("childsParent", "child's parent");
+        PDF_RELATIONSHIP_MAP.put("auntOrUncle", "aunt or uncle");
+        PDF_RELATIONSHIP_MAP.put("nieceOrNephew", "niece or nephew");
+        PDF_RELATIONSHIP_MAP.put("roommate", "roommate");
+        PDF_RELATIONSHIP_MAP.put("friend", "friend");
+        PDF_RELATIONSHIP_MAP.put("grandchild", "grandchild");
+        PDF_RELATIONSHIP_MAP.put("other", "other");
+    }
     public static String formatMoney(String value) {
         if (value == null) {
             return "";
@@ -109,5 +161,9 @@ public class SubmissionUtilities {
         }});
 
         return items;
+    }
+
+    public static String getDecryptedSSNKeyName(String uuid) {
+        return "householdMemberSsn%s%s".formatted(DYNAMIC_FIELD_MARKER, uuid);
     }
 }
