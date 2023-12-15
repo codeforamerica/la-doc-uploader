@@ -12,13 +12,6 @@ flow:
       - name: uploadDocuments
   uploadDocuments:
     nextScreens:
-      - name: addDocumentTypes
-  addDocumentTypes:
-    beforeSaveAction: AssociateDocTypeLabel
-    nextScreens:
-      - name: reviewDocumentTypes
-  reviewDocumentTypes:
-    nextScreens:
       - name: docSubmitConfirmation
   docSubmitConfirmation:
     nextScreens:

@@ -46,9 +46,5 @@ public class LaDocUpload extends FlowInputs {
   private String uploadDocumentsFeedback;
 
   private String uploadDocumentsFeedbackDetail;
-
-  @NotBlank(message = "{doc-type.select-a-type}")
-  @DynamicField
-  private String docType;
 }
 
