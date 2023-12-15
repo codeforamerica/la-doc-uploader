@@ -7,8 +7,14 @@
   --dark-grey: #121111;
 }
 
-body {
+html,
+body,
+.slab--off-white {
   background-color: var(--light);
+}
+
+body {
+  margin-bottom: 0;
 }
 
 .subflow-list__item-actions {
@@ -348,16 +354,6 @@ input[type="number"] {
   background-color: var(--primary);
 }
 
-.main-footer-la {
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  bottom: 0%;
-
-  background: #00284D;
-}
-
 .center {
   display: block;
   margin-left: auto !important;
@@ -439,7 +435,7 @@ p.grey-text {
 }
 
 .page-wrapper {
-  padding-bottom: 140px;
+  padding-bottom: 0;
 }
 
 .clipboard-icon {
@@ -458,3 +454,10 @@ p.grey-text {
 button.button.button--secondary{
   margin-left: 0;
 }
+
+.main-footer {
+  position: static;
+}
+
+
+
