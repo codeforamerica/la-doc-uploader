@@ -633,7 +633,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("ebtcard-title"));
-    testPage.clickContinue();
+    testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep.title"));
     testPage.clickButton("No");
