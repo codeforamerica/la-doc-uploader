@@ -123,21 +123,34 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String schoolInd;
 
-  @NotEmpty
+  @NotEmpty(message="{error.missing-general}")
   private List<String> students;
 
-  @NotBlank
+  @NotBlank(message="{error.missing-general}")
   @DynamicField
   private String schoolName;
 
-  @NotEmpty
+  @NotBlank(message="{error.missing-general}")
   @DynamicField
   private String schoolEnrollmentLevel;
 
   private String pregnancyInd;
 
-  @NotEmpty
+  @NotEmpty(message="{error.missing-general}")
   private List<String> pregnancies;
+
+//  With dynamic fields and the date template, the data is stored as pregnancyDueDate<wildcard><uuid>Day
+//  @NotBlank(message="{error.missing-general}")
+//  @DynamicField
+  private String pregnancyDueDateDay;
+
+//  @NotBlank(message="{error.missing-general}")
+//  @DynamicField
+  private String pregnancyDueDateMonth;
+
+//  @NotBlank(message="{error.missing-general}")
+//  @DynamicField
+  private String pregnancyDueDateYear;
 
   private String outOfStateBenefitsInd;
 
