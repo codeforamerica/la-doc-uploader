@@ -415,7 +415,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String digitalAssisterFeedbackDetail;
 
-  private String addIncome;
+  private String addDocuments;
 
   @NotBlank(message = "{doc-type.select-a-type}")
   @DynamicField

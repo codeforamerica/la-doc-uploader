@@ -7,7 +7,7 @@ public enum DocTypeEnum {
     BIRTH_CERTIFICATE ("BirthCertificate", "add-document-types.doc-type-label.permanent-documents.birth-certificate"),
     DRIVERS_LICENSE("DriversLicense", "add-document-types.doc-type-label.permanent-documents.drivers-license"),
     SOCIAL_SECURITY_CARD("SocialSecurityCard", "add-document-types.doc-type-label.permanent-documents.social-security-card"),
-    CHECK_STUP("CheckStub", "add-document-types.doc-type-label.income.check-stub"),
+    CHECK_STUB("CheckStub", "add-document-types.doc-type-label.income.check-stub"),
     OTHER_INCOME("OtherIncome", "add-document-types.doc-type-label.income.other-income"),
     BILL("Bill", "add-document-types.doc-type-label.expenses.bills"),
     MEDICAL_INFO("MedicalInfo", "add-document-types.doc-type-label.medical.medical-info"),
