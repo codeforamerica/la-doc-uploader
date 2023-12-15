@@ -23,17 +23,17 @@
                   label=#{household-info.last-name-question},
                   helpText=#{household-info.name-help})}"/>
               <th:block th:replace="~{'fragments/inputs/text' ::
-                  text(inputName='householdOtherNames',
+                  text(inputName='householdMemberOtherNames',
                   label=#{household-info.other-names-question},
                   helpText=#{personal-info.othernames-help})}" />
               <th:block th:replace="~{'fragments/inputs/date' ::
-                  date(inputName='householdBirth',
+                  date(inputName='householdMemberBirth',
                   label=#{household-info.birthday-question},
                   helpText='personal-info.date-of-birth.help',
-                  groupName='householdBirthDate'
+                  groupName='householdMemberBirthDate'
                   )}"/>
               <th:block
-                  th:replace="~{fragments/inputs/select :: select(label=#{household-info.relationship-question}, inputName='householdRelationship', content=~{::relationship})}">
+                  th:replace="~{fragments/inputs/select :: select(label=#{household-info.relationship-question}, inputName='householdMemberRelationship', content=~{::relationship})}">
                 <th:block th:ref="relationship">
                   <th:block
                       th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{household-info.relationship-placeholder})}"/>
@@ -56,43 +56,45 @@
                 </th:block>
               </th:block>
               <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
-                              radioFieldset(inputName='householdSex',
+                              radioFieldset(inputName='householdMemberSex',
                               label=#{household-info.sex},
                               fieldsetHelpText=#{household-info.sex-helper},
                               content=~{::sexOptions})}">
                 <th:block th:ref="sexOptions">
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdSex',value='F', label=#{personal-info.sex-female})}"/>
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMemberSex',value='F', label=#{personal-info.sex-female})}"/>
 
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdSex',value='M', label=#{personal-info.sex-male})}"/>
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMemberSex',value='M', label=#{personal-info.sex-male})}"/>
                 </th:block>
               </th:block>
               <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
-                              radioFieldset(inputName='householdMaritalStatus',
+                              radioFieldset(inputName='householdMemberMaritalStatus',
                               label=#{household-info.marital-status},
                               fieldsetHelpText=#{personal-info.marital-status-help},
                               content=~{::maritalStatusOptions})}">
                 <th:block th:ref="maritalStatusOptions">
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMaritalStatus',value='NeverMarried', label=#{personal-info.never-married})}"/>
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMemberMaritalStatus',value='NeverMarried', label=#{personal-info.never-married})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMaritalStatus',value='MarriedLivingWithSpouse', label=#{personal-info.married-living-with-spouse})}"/>
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMemberMaritalStatus',value='MarriedLivingWithSpouse', label=#{personal-info.married-living-with-spouse})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMaritalStatus',value='MarriedNotLivingWithSpouse', label=#{personal-info.married-not-living-with-spouse})}"/>
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMemberMaritalStatus',value='MarriedNotLivingWithSpouse', label=#{personal-info.married-not-living-with-spouse})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMaritalStatus',value='LegallySeparated', label=#{personal-info.legally-separated})}"/>
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMemberMaritalStatus',value='LegallySeparated', label=#{personal-info.legally-separated})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMaritalStatus',value='Divorced', label=#{personal-info.divorced})}"/>
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMemberMaritalStatus',value='Divorced', label=#{personal-info.divorced})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMaritalStatus',value='Widowed', label=#{personal-info.widowed})}"/>
+                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='householdMemberMaritalStatus',value='Widowed', label=#{personal-info.widowed})}"/>
                 </th:block>
               </th:block>
               <th:block
-                  th:replace="~{'fragments/inputs/select' :: select(label=#{household-info.education}, inputName='householdHighestEducation', helpText=#{personal-info.highest-education-help}, content=~{::highestEducation})}">
+                  th:replace="~{'fragments/inputs/select' :: select(label=#{household-info.education}, inputName='householdMemberHighestEducation', helpText=#{personal-info.highest-education-help}, content=~{::highestEducation})}">
                 <th:block th:ref="highestEducation">
                   <!-- Copy the below option if you want more options -->
                   <!-- If you want a placeholder option you can use the cfa:selectOptionPlaceholder live template -->
+                  <th:block
+                      th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{personal-info.select-education})}"/>
                   <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='firstGrade', optionText=#{personal-info.first-grade})}"/>
                   <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='secondGrade', optionText=#{personal-info.second-grade})}"/>
                   <th:block th:replace="~{'fragments/inputs/selectOption' :: selectOption(value='thirdGrade', optionText=#{personal-info.third-grade})}"/>

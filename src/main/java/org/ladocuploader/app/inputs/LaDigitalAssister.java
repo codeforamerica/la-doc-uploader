@@ -1,14 +1,15 @@
 package org.ladocuploader.app.inputs;
 
 import formflow.library.data.FlowInputs;
+import formflow.library.data.annotations.DynamicField;
 import formflow.library.data.annotations.Money;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.NumberFormat;
 
 import java.util.List;
 
@@ -22,21 +23,19 @@ public class LaDigitalAssister extends FlowInputs {
   private String needInterpreter;
 
   // Choose programs
+  @NotEmpty(message="{error.missing-general}")
   private List<String> programs;
-  @NotBlank
+
+  // Who is Applying
+  @NotBlank(message="{error.missing-general}")
   private String whosApplying;
 
-  @NotBlank
+  // Personal Information
+  @NotBlank(message="{error.missing-firstname}")
   private String firstName;
 
-  @NotBlank
+  @NotBlank(message="{error.missing-lastname}")
   private String lastName;
-
-  private String highestEducation;
-
-  private String maritalStatus;
-
-  private String sex;
 
   private String otherNames;
 
@@ -44,63 +43,83 @@ public class LaDigitalAssister extends FlowInputs {
   private String birthMonth;
   private String birthYear;
 
+  @NotBlank(message="{error.missing-general}")
+  private String sex;
+
+  private String maritalStatus;
+
+  private String highestEducation;
+
+  // home address
+  private String noHomeAddress;
+
+  private String homeAddressStreetAddress1;
+
+  private String homeAddressStreetAddress2;
+
+  private String homeAddressCity;
+
+  private String homeAddressState;
+
+  private String homeAddressZipCode;
+
+  //Mailing Address
+  private String sameAsHomeAddress;
+
+  private String mailingAddressStreetAddress1;
+
+  private String mailingAddressStreetAddress2;
+
+  private String mailingAddressCity;
+
+  private String mailingAddressState;
+
+  private String mailingAddressZipCode;
+
+  //Contact Info
   private String phoneNumber;
 
   private String identifiesAsDeaf;
 
   private String preferredCommsMethod;
 
-  private String remindersMethod;
-
   private String emailAddress;
 
+  private List<String> remindersMethod;
+
+  // Household
   private String multiplePersonHousehold;
 
+  @NotBlank(message="{error.missing-firstname}")
   private String householdMemberFirstName;
 
+  @NotBlank(message="{error.missing-lastname}")
   private String householdMemberLastName;
 
-  private String householdBirthDay;
+  private String householdMemberOtherNames;
 
-  private String householdBirthMonth;
+  private String householdMemberBirthDay;
 
-  private String householdBirthYear;
+  private String householdMemberBirthMonth;
 
-  private String householdOtherNames;
+  private String householdMemberBirthYear;
 
-  private String householdRelationship;
+  @NotBlank(message="{error.missing-general}")
+  private String householdMemberRelationship;
 
-  private String householdSex;
+  @NotBlank(message="{error.missing-general}")
+  private String householdMemberSex;
 
-  private String householdMaritalStatus;
+  private String householdMemberMaritalStatus;
 
-  private String householdHighestEducation;
+  private String householdMemberHighestEducation;
 
-  private String ssns;
+  @Size(min=9, max=9, message="{error.invalid-ssn}")
+  private String ssn;
 
-  private String homeAddressZipCode;
-
-  private String homeAddressState;
-
-  private String homeAddressCity;
-
-  private String noHomeAddress;
-
-  private String homeAddressStreetAddress2;
-
-  private String homeAddressStreetAddress1;
-
-  private String sameAsHomeAddress;
-
-  private String mailingAddressZipCode;
-
-  private String mailingAddressState;
-
-  private String mailingAddressCity;
-
-  private String mailingAddressStreetAddress2;
-
-  private String mailingAddressStreetAddress1;
+  @Size(min=9, max=9, message="{error.invalid-ssn}")
+  @DynamicField
+  private String householdMemberSsn;
 
   private String schoolInd;
 
@@ -124,18 +143,6 @@ public class LaDigitalAssister extends FlowInputs {
   private String migrantOrSeasonalFarmWorkerInd;
 
   private String citizenshipInd;
-
-  private String selfEmploymentIncome;
-
-  @NotBlank
-  private String householdMemberJobAdd;
-
-  @NotBlank
-  private String employerName;
-
-  private String selfEmployed;
-
-  private String jobPaidByHour;
 
   private String nonCitizens;
 
@@ -165,12 +172,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String meals;
 
-  // Income
-  private String householdSearchingForJob;
-
-  private String jobSearch;
-
-  private String workDisqualificationInd;
 
   //  Sensitive Questions
   private String householdHasPersonalSituations;
@@ -193,68 +194,158 @@ public class LaDigitalAssister extends FlowInputs {
   
   private String personalSituationDisability;
 
+  // Income
+  private String householdSearchingForJob;
 
-  @Money
-  @NotBlank
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> jobSearch;
+
+  private String workDisqualificationInd;
+
+  private String selfEmploymentIncome;
+
+  @NotBlank(message="{error.missing-general}")
+  private String householdMemberJobAdd;
+
+  @NotBlank(message="{error.missing-general}")
+  private String employerName;
+
+  private String selfEmployed;
+
+  private String jobPaidByHour;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String hourlyWage;
 
-  @Range(min=1, max=100)
-  @NotBlank
+  @Range(message="{error.invalid-range}", min=1, max=100)
+  @NotBlank(message="{error.missing-general}")
   private String hoursPerWeek;
 
-  @NotBlank
+  @NotBlank(message="{error.missing-pay-period}")
   private String payPeriod;
 
-  @Money
-  @NotBlank
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String payPeriodAmount;
 
-  private String additionalIncome;
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> additionalIncome;
 
-  @Money
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String moneyOnHand;
-  
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String monthlyHouseholdIncome;
   
   private String switchToIncomeByJob;
 
+  @NotEmpty(message="{error.missing-general}")
   private List<String> householdHomeExpenses;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesRent;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesMortgage;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesHomeownerInsurance;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesPropertyTax;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesCondoFees;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesLotRental;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesFloodInsurance;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesOther;
 
+  @NotEmpty(message="{error.missing-general}")
   private List<String> householdUtilitiesExpenses;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesHeating;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesCooling;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesElectricity;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesWater;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesPhone;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesGarbage;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesSewer;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesCookingFuel;
 
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesOther;
+
+  private String hasDependentCareExpenses;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expensesDependentCare;
+
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> householdInsuranceExpenses;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expensesMedicalInsurance;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expensesDentalInsurance;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expensesVisionInsurance;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expensesMedicalBills;
+
+  private String hasElderlyCareExpenses;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expensesElderlyCare;
 
   // Final Screen
   private String authorizedRepresentative;
@@ -265,65 +356,56 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String authorizedRepSpendingAuthorization;
 
-  @NotBlank
+  @NotBlank(message="{error.missing-firstname}")
   private String authorizedRepFirstName;
 
-  @NotBlank
+  @NotBlank(message="{error.missing-lastname}")
   private String authorizedRepLastName;
 
   private String authorizedRepOtherNames;
 
+  @NotBlank(message="{error.missing-general}")
   private String authorizedRepStreetAddress1;
 
   private String authorizedRepStreetAddress2;
 
-  private String authorizedRepZipCode;
-
-  private String authorizedRepState;
-
+  @NotBlank(message="{error.missing-general}")
   private String authorizedRepCity;
 
+  @NotBlank(message="{error.missing-general}")
+  private String authorizedRepState;
+
+  @NotBlank(message="{error.missing-general}")
+  @Pattern(regexp = "\\d{5}", message = "{error.format-zip}")
+  private String authorizedRepZipCode;
+
+  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
   private String authorizedRepPhoneNumber;
 
   private String needsMedicaid;
 
+  @NotBlank(message="{error.missing-general}")
   private String votingRegistrationRequested;
 
+  @NotBlank(message="{error.missing-general}")
   private String votingRegistrationHelpRequested;
 
   private String permissionToAskAboutRace;
 
   private String ethnicitySelected;
 
-  private String raceSelected;
+  private List<String> raceSelected;
 
-  private String rightsAndResponsibilitiesAgree;
+  private List<String> rightsAndResponsibilitiesAgree;
 
-  private String noIncorrectInformationAgree;
+  private List<String> noIncorrectInformationAgree;
 
-  private String programsSharingDataAccessAgree;
+  private List<String> programsSharingDataAccessAgree;
 
-  private String nonDiscriminationStatementAgree;
+  private List<String> nonDiscriminationStatementAgree;
 
+  @NotBlank(message="{error.missing-general}")
   private String signature;
-
-  private String hasDependentCareExpenses;
-
-  private String expensesDependentCare;
-
-  private String householdInsuranceExpenses;
-
-  private String expensesMedicalInsurance;
-
-  private String expensesDentalInsurance;
-
-  private String expensesVisionInsurance;
-
-  private String expensesMedicalBills;
-
-  private String hasElderlyCareExpenses;
-
-  private String expensesElderlyCare;
 
   @NotBlank(message = "{final-confirmation.answer-feedback-question}")
   private String digitalAssisterFeedback;

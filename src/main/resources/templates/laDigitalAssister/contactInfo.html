@@ -21,6 +21,23 @@
                   label=#{contact-info.phone-number},
                   helpText=#{contact-info.phone-number.help})}"/>
 
+              <th:block th:replace="~{fragments/inputs/text ::
+                  text(inputName='emailAddress',
+                  label=#{contact-info.email-address},
+                  helpText=#{contact-info.email-address.help})}"/>
+
+              <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+                  checkboxFieldset(inputName='remindersMethod',
+                  label=#{contact-info.reminders},
+                  fieldsetHelpText=#{contact-info.email-address.check-all-that-apply},
+                  content=~{::reminderMethodCheckbox})}">
+                <th:block th:ref="reminderMethodCheckbox">
+                  <th:block
+                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='remindersMethod',value=#{contact-info.text}, label=#{contact-info.text})}"/>
+                  <th:block
+                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='remindersMethod',value=#{contact-info.email}, label=#{contact-info.email})}"/>
+                </th:block>
+              </th:block>
               <th:block th:replace="~{fragments/inputs/radioFieldset ::
                             radioFieldset(
                             label=#{contact-info.deaf-or-hoh},
@@ -39,29 +56,11 @@
                   th:replace="~{fragments/inputs/select :: select(label=#{contact-info.deaf-contact-preference}, inputName='preferredCommsMethod', helpText=#{contact-info.email-address.check-all-that-apply}, content=~{::preferredComms})}">
                 <th:block th:ref="preferredComms">
                   <th:block
-                    th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{contact-info.deaf-contact-preference.placeholder})}"/>
+                      th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{contact-info.deaf-contact-preference.placeholder})}"/>
                   <th:block
                       th:replace="~{fragments/inputs/selectOption :: selectOption(value=#{contact-info.deaf-contact-preference.option1}, optionText=#{contact-info.deaf-contact-preference.option1})}"/>
                   <th:block
                       th:replace="~{fragments/inputs/selectOption :: selectOption(value=#{contact-info.deaf-contact-preference.option2}, optionText=#{contact-info.deaf-contact-preference.option2})}"/>
-                </th:block>
-              </th:block>
-
-              <th:block th:replace="~{fragments/inputs/text ::
-                  text(inputName='emailAddress',
-                  label=#{contact-info.email-address},
-                  helpText=#{contact-info.email-address.help})}"/>
-
-              <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
-                  checkboxFieldset(inputName='remindersMethod',
-                  label=#{contact-info.reminders},
-                  helpText=#{contact-info.email-address.check-all-that-apply},
-                  content=~{::reminderMethodCheckbox})}">
-                <th:block th:ref="reminderMethodCheckbox">
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='remindersMethod',value=#{contact-info.text}, label=#{contact-info.text})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='remindersMethod',value=#{contact-info.email}, label=#{contact-info.email})}"/>
                 </th:block>
               </th:block>
               <p th:text="#{contact-info.message-rates}" class="grey-text font-size--smaller"></p>

@@ -21,12 +21,13 @@
                  value='true'
                  )}"/>
 
-
-              <th:block th:replace="~{fragments/inputs/address ::
-                                  address(
-                                    validate=false,
-                                    inputName='homeAddress'
-                                  )}" />
+              <span id="hidden-home-address-fields">
+                  <th:block th:replace="~{fragments/inputs/address ::
+                                      address(
+                                        validate=false,
+                                        inputName='homeAddress'
+                                      )}" />
+              </span>
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(

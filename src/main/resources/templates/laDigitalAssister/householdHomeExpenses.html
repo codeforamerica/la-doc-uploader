@@ -34,7 +34,8 @@
                       th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.flood-insurance}, label=#{home-expenses.flood-insurance})"/>
                   <th:block
                       th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.other}, label=#{home-expenses.other})"/>
-
+                  <th:block
+                      th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdHomeExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)"/>
                 </th:block>
               </th:block>
             <div class="form-card__footer">
