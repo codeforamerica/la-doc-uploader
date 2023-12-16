@@ -22,6 +22,9 @@ flow:
 ---
 name: laDigitalAssister
 flow:
+  parish:
+    nextScreens:
+      - name: howThisWorks
   howThisWorks:
     nextScreens:
       - name: timeoutNotice

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{parish.title})}"></head>
+<body>
+<div class="page-wrapper">
+    <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+    <section class="slab">
+        <div class="grid">
+            <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+            <main id="content" role="main" class="form-card spacing-above-35">
+                <th:block th:replace="~{fragments/icons :: county}"></th:block>
+                <th:block
+                        th:replace="~{fragments/cardHeader :: cardHeader(header=#{parish.header})}"/>
+                <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContents})}">
+                    <th:block th:ref="formContents">
+                        <th:block
+                                th:replace="~{fragments/inputs/select :: select(helpText=#{parish.subheader}, ariaLabel=#{parish.select}, inputName='parish', content=~{::selectContent})}">
+                            <th:block th:ref="selectContent">
+                                <th:block
+                                        th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{parish.select})}"/>
+                                <th:block th:each="parishEnum : ${T(org.ladocuploader.app.utils.Parish).values()}">
+                                    <th:block
+                                            th:replace="~{fragments/inputs/selectOption :: selectOption(value=${parishEnum}, optionText=${parishEnum.getDisplayName()})}"/>
+                                </th:block>
+                            </th:block>
+                        </th:block>
+
+                        <div class="form-card__footer spacing-below-60">
+                            <th:block
+                                    th:replace="~{fragments/inputs/submitButton :: submitButton( text=#{general.inputs.continue})}"/>
+                        </div>
+                    </th:block>
+                </th:block>
+            </main>
+        </div>
+    </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>
