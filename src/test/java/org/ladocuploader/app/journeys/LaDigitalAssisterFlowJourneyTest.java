@@ -653,6 +653,14 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
       testPage.clickButton("Yes");
       assertThat(testPage.getTitle()).isEqualTo("WIC link");
       testPage.clickButton("Yes");
+    } else if ("ECE apply".equals(title)) {
+      testPage.clickButton("Yes, start my free childcare app");
+      testPage.clickContinue();
+      testPage.clickButton("Yes");
+      testPage.selectRadio("adultsWorking", "Some of them");
+      assertThat(testPage.getTitle()).isEqualTo("WIC apply");
+      testPage.clickButton("Yes, start my WIC app");
+      testPage.clickContinue();
     }
 
     // Final SignPost
