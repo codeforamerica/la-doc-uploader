@@ -1,0 +1,37 @@
+<th:block
+  th:fragment="fileDetails(userFile)"
+  th:id="${userFile.get('originalFilename')}"
+  th:with="extIndex=${userFile.get('originalFilename').lastIndexOf('.')},
+            docTypeInfo=${showDocType != null ? showDocType : true}">
+  <div class="dz-preview spacing-below-15 dz-success dz-complete dz-image-preview">
+    <div class="dz-details display-flex">
+      <div class="thumbnail" style="width: 64px; height: 60px;">
+        <img class="dz-thumb" data-dz-thumbnail th:alt="${userFile.get('originalFilename')}" th:src="${userFile.get('thumbnailUrl')}"/>
+      </div>
+
+      <div class="file">
+        <div class="dz-filename">
+
+          <div class="filename-text">
+            <span class="filename-text-name" th:text="${userFile.get('originalFilename').substring(0, extIndex)}"></span>
+            <span class="filename-text-ext" th:text="${userFile.get('originalFilename').substring(extIndex)}"></span>
+
+            </span>
+          </div>
+        </div>
+        <div class="display-flex file-details">
+          <div class="dz-detail">
+            <span th:if="${docTypeInfo == true}" th:text="${'Type: ' + #messages.msg(T(org.ladocuploader.app.file.DocTypeEnum).findNameSrcForValue(userFile.get('docTypeLabel')))}"></span>
+          </div>
+        </div>
+        <div class="display-flex body-gray file-details">
+          <div class="dz-size">
+            <strong th:text="${T(org.ladocuploader.app.utils.UserFileUtilities).getFileMbFromBytes(userFile.get('filesize'))}"></strong>
+            MB
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</th:block>
