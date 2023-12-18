@@ -80,11 +80,11 @@ public class SubmissionUtilities {
     }
 
     public static boolean isNolaParish(Submission submission) {
-        return ORLEANS.name().equals(submission.getInputData().getOrDefault("parish", ""));
+        return ORLEANS.name().equals(submission.getInputData().get("parish"));
     }
 
     public static boolean inExperimentGroup(String groupName, Submission submission) {
-        return groupName.equals(submission.getInputData().getOrDefault("experimentGroup", ""));
+        return groupName.equals(submission.getInputData().get("experimentGroup"));
     }
 
     public static String householdMemberFullName(Map<String, String> householdMember) {
