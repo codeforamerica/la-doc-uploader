@@ -17,18 +17,17 @@
             <div class="form-card__content">
               <div th:each="individual, iter: ${inputData.get('pregnanciesFullNames[]')}" class="spacing-below-15">
                 <hr>
-                <th:block th:with="pregnancyDueDateInputName=${'pregnancyDueDate' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
-                  <th:block th:replace="~{fragments/inputs/date ::
-                    date(inputName=${pregnancyDueDateInputName},
+                <th:block th:with="pregnancyDueDateInputName=${'PregnancyDueDate' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
+                  <th:block th:replace="~{fragments/inputs/duedate ::
+                    duedate(inputName=${pregnancyDueDateInputName},
                     label=#{pregnantduedate.question(${individual.firstNamePossessive})},
-                    groupName='pregnancyDueDate')}"/>
+                    groupName='PregnancyDueDate')}"/>
                 </th:block>
               </div>
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="~{fragments/continueButton :: continue}" />
-<!--              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(-->
-<!--                text=#{general.inputs.continue})}" />-->
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                text=#{general.inputs.continue})}" />
             </div>
           </th:block>
         </th:block>

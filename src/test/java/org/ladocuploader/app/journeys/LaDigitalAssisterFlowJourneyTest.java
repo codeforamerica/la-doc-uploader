@@ -357,6 +357,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("pregnantduedate.title"));
+    testPage.enter("monthPregnancyDueDate_wildcard_you", "12");
+    testPage.enter("dayPregnancyDueDate_wildcard_you", "12");
+    testPage.enter("yearPregnancyDueDate_wildcard_you", "2025");
+
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("out-of-state-benefits.title"));
