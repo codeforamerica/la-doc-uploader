@@ -71,7 +71,7 @@ jobs:
           category: "/language:${{matrix.language}}"
 
       - name: Save results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CodeQL results
           path: /home/runner/work/la-doc-uploader/results
