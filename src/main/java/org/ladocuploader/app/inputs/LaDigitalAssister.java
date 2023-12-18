@@ -146,18 +146,18 @@ public class LaDigitalAssister extends FlowInputs {
   @NotEmpty(message="{error.missing-general}")
   private List<String> pregnancies;
 
-//  With dynamic fields and the date template, the data is stored as pregnancyDueDate<wildcard><uuid>Day
-//  @NotBlank(message="{error.missing-general}")
-//  @DynamicField
-  private String pregnancyDueDateDay;
+//  With dynamic fields and the date template, the data is stored as pregnancyDueDate<wildcard><uuid>Day so changed the ordering to start with the date piece
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String dayPregnancyDueDate;
 
-//  @NotBlank(message="{error.missing-general}")
-//  @DynamicField
-  private String pregnancyDueDateMonth;
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String monthPregnancyDueDate;
 
-//  @NotBlank(message="{error.missing-general}")
-//  @DynamicField
-  private String pregnancyDueDateYear;
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String yearPregnancyDueDate;
 
   private String outOfStateBenefitsInd;
 
