@@ -1,6 +1,7 @@
 package org.ladocuploader.app.data;
 
 import formflow.library.data.Submission;
+import formflow.library.data.UserFile;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,7 @@ public interface TransmissionRepository extends JpaRepository<Transmission, UUID
     List<Submission> submissionsToTransmit(Sort sort, TransmissionType transmissionType);
 
     Transmission findBySubmissionAndTransmissionType(Submission submission, TransmissionType transmissionType);
+
+    @Query(value = "SELECT u FROM UserFile u WHERE u.submission_id = :submissionId ORDER BY u.createdAt")
+    List<UserFile> userFilesBySubmission(UUID submissionId);
 }

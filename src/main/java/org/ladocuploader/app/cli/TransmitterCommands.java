@@ -5,6 +5,7 @@ import com.jcraft.jsch.SftpException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
+import formflow.library.data.UserFile;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.ladocuploader.app.csv.CsvPackage;
@@ -15,12 +16,15 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
+import org.ladocuploader.app.upload.CloudFile;
+import org.ladocuploader.app.upload.ReadOnlyCloudFileRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -39,11 +43,14 @@ public class TransmitterCommands {
 
     private final CsvService csvService;
 
+    private final ReadOnlyCloudFileRepository fileRepository;
+
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService) {
+                               SftpClient sftpClient, CsvService csvService, ReadOnlyCloudFileRepository fileRepository) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
+        this.fileRepository = fileRepository;
     }
 
     @ShellMethod(key = "transmit")
@@ -62,7 +69,6 @@ public class TransmitterCommands {
 
     private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException{
         String zipFilename = createZipFilename(transmissionType);
-        // TODO: get errors for the packageType
         Map<String, Object> zipResults = zipFiles(submissions, zipFilename);
 
         List<UUID> successfullySubmittedIds = (List<UUID>) zipResults.get("success");
@@ -147,7 +153,6 @@ public class TransmitterCommands {
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
             Map<UUID, Map<CsvType, String>> submissionErrors = ecePackage.getErrorMessages();
-            log.info(submissionErrors.toString());
 
             submissionErrors.forEach((submissionId, submissionErrorMessages) -> {
                     successfullySubmittedIds.remove(submissionId);
@@ -157,6 +162,34 @@ public class TransmitterCommands {
             // TODO: at what point do we not submit the package/ mark as failed? does marking as failed mean that we should retry for this submission?
 
             addZipEntries(ecePackage, zos);
+            // TODO: get documents
+            successfullySubmittedIds.forEach(submissionId -> {
+                List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submissionId);
+                int fileCount = 0;
+                try {
+                    for (UserFile userFile: userFiles) {
+
+                        fileCount += 1;
+                        ZipEntry docEntry = new ZipEntry(submissionId + "_files"+ String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
+                        docEntry.setSize(userFile.getFilesize().longValue());
+                        zos.putNextEntry(docEntry);
+                        CloudFile docFile = fileRepository.download(userFile.getRepositoryPath());
+                        byte[] bytes = new byte[Math.toIntExact(docFile.getFilesize())];
+                        try (FileInputStream fis = new FileInputStream(docFile.getFile())) {
+                            fis.read(bytes);
+                            zos.write(bytes);
+                        }
+                        zos.closeEntry();
+                    }
+//                successfullySubmittedIds.add(submission.getId());
+            } catch (Exception e) {
+//                transmission.setLastTransmissionFailureReason("error_generating_files");
+//                transmissionRepository.save(transmission);
+//                log.error("Error generating file collection for submission ID {}", submission.getId(), e);
+            }
+
+            });
+
             results.put("failed", submissionErrors);
 
         } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
