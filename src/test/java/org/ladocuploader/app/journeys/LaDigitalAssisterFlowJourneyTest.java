@@ -3,8 +3,13 @@ package org.ladocuploader.app.journeys;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 @Slf4j
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
@@ -353,6 +358,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("students-you");
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo(message("schooldetails.title"));
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo(message("pregnancy.title"));
     testPage.clickButton("No");
 
@@ -362,6 +370,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("pregnancy-who.title"));
     testPage.clickElementById("pregnancies-you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("pregnantduedate.title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("out-of-state-benefits.title"));
@@ -561,6 +572,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("moneyOnHand", "0");
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo(message("moneyonhand-types.title"));
+    testPage.clickContinue();
+
     //    Expenses SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("expenses-signpost.title"));
     testPage.clickContinue();
@@ -594,6 +608,12 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("none__checkbox-label"); // none selected
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance-title"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("liheap-title"));
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
     testPage.clickButton("Yes");
 
@@ -621,6 +641,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     //    Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("ebtcard-title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep.title"));
@@ -682,7 +705,67 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("signature", "My signature");
     testPage.clickButton(message("signature-submit"));
 
+    assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-intro.title"));
+    testPage.clickButton(message("doc-upload-intro.skip"));
     assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
+
+    testPage.navigateToFlowScreen("laDigitalAssister/docUploadIntro");
+    testPage.clickButton(message("doc-upload-intro.continue"));
+    assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-signpost.title"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("how-to-add-documents.title"));
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-recommendations.title"));
+    testPage.clickContinue();
+
+    // Upload documents
+    assertThat(testPage.getTitle()).isEqualTo(message("upload-documents.title"));
+    assertThat(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none")).isTrue();
+    uploadJpgFile();
+    // give the system time to remove the "display-none" class.
+    await().atMost(5, TimeUnit.SECONDS).until(
+            () -> !(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none"))
+    );
+
+    testPage.clickContinue();
+
+    // Add document type
+    assertThat(testPage.getTitle()).isEqualTo(message("add-document-types.title"));
+
+    assertThat(driver.findElement(By.className("filename-text-name")).getText()).isEqualTo("test");
+    assertThat(driver.findElement(By.className("filename-text-ext")).getText()).isEqualTo(".jpeg");
+    WebElement docTypeSelect = driver.findElements(By.className("select__element")).get(0);
+    testPage.selectFromDropdown(docTypeSelect.getAttribute("name"), "Divorce Decree");
+    testPage.clickContinue();
+
+    // Doc type review page
+    assertThat(testPage.getTitle()).isEqualTo(message("review-documents.title"));
+    assertThat(driver.findElement(By.className("filename-text-name")).getText()).isEqualTo("test");
+    assertThat(driver.findElement(By.className("filename-text-ext")).getText()).isEqualTo(".jpeg");
+    assertThat(driver.findElement(By.className("dz-detail")).findElement(By.tagName("span")).getText()).isEqualTo("Type: Divorce Decree");
+    testPage.clickButton("Yes, continue");
+
+    // Confirm submit
+    assertThat(testPage.getTitle()).isEqualTo(message("doc-submit-confirmation.title"));
+    testPage.clickButton("No, add more documents");
+    assertThat(testPage.getTitle()).isEqualTo("Upload documents");
+    // add document types
+    testPage.clickContinue();
+    // review document types
+    testPage.clickContinue();
+    // doc submit confirmation
+    testPage.clickButton("Yes, continue");
+    // final confirmation
+    testPage.clickButton("Yes, submit and finish");
+
+    // Confirmation page
+    assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
+
+
+
+
   }
   void loadUserPersonalData() {
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");

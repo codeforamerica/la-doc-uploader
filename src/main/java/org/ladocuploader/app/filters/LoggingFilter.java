@@ -16,7 +16,6 @@ import org.joda.time.DateTime;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.UUID;
 import org.springframework.util.AntPathMatcher;
 

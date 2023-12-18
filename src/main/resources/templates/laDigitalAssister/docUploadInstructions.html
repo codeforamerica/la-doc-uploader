@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{how-to-add-documents.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35"
+            th:with="maxFiles=${@environment.getProperty('form-flow.uploads.max-files')},
+                     maxSize=${@environment.getProperty('form-flow.uploads.max-file-size')}">
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{how-to-add-documents.header})}"/>
+        <div class="center">
+          <th:block th:replace="~{fragments/icons :: takingPicWithPhone}"></th:block>
+        </div>
+        <ul class="list--bulleted">
+          <li th:text="#{how-to-add-documents.take-photos}"></li>
+          <li th:text="#{how-to-add-documents.select-files}"></li>
+          <li th:text="#{how-to-add-documents.take-screenshot}"></li>
+        </ul>
+        <span class="spacing-left-1_5" th:utext="${#messages.msg('how-to-add-documents.you-can-upload', maxFiles)}"></span>
+        <br/>
+        <span class="spacing-left-1_5" th:utext="${#messages.msg('how-to-add-documents.each-file', maxSize)}"></span>
+
+        <div class="vertical-steps spacing-above-25">
+          <div class="vertical-steps__step">
+            <div class="notice--warning steps-box spacing-below-0">
+<!--              <th:block th:replace="~{fragments/icons :: socialGroup}"></th:block>-->
+              <p th:utext="#{doc-upload-instructions.optional}"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card__footer">
+          <th:block th:replace="~{fragments/continueButton :: continue}" />
+        </div>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}" />
+</body>
+</html>

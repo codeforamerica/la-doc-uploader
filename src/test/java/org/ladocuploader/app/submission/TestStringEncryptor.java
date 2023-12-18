@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 public class TestStringEncryptor implements StringEncryptor {
   @Override
   public String decrypt(String ciphertext) {
-    return ciphertext;
+    return ciphertext != null ? ciphertext.replace("encrypted_", "") : "";
   }
 
   @Override
   public String encrypt(String plaintext) {
-    return plaintext;
+    return "encrypted_" + plaintext;
   }
 }

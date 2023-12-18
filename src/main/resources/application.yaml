@@ -8,11 +8,12 @@ form-flow:
     - flow: laDigitalAssister
       staticRedirectPage: /
   pdf:
-    path: ~
-    map-file: parent-guardian-csv-map.yaml
+    path: 'src/main/resources/pdfs/'
+    map-file: pdf-map.yaml
   inputs: 'org.ladocuploader.app.inputs.'
   path: 'flows-config.yaml'
   uploads:
+    default-doc-type-label: "NotSet"
     accepted-file-types: 'image/*,.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
     thumbnail-width: '64'
     thumbnail-height: '60'
@@ -95,6 +96,11 @@ server:
   servlet:
     session:
       persistent: true
+ftps:
+  username: ${FTPS_USERNAME:-""}
+  password: ${FTPS_PASSWORD:-""}
+  upload-url: ${FTPS_UPLOAD_URL:-""}
+  upload-dir: ${FTPS_UPLOAD_DIR:-""}
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6
