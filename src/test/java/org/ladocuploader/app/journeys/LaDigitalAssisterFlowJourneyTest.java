@@ -216,8 +216,16 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void fullDigitalAssisterFlow() {
+    // Parish
+    testPage.navigateToFlowScreen("laDigitalAssister/parish");
+    testPage.clickContinue();
+    assertThat(testPage.hasErrorText(message("error.missing-general"))).isTrue();
+
+    testPage.selectFromDropdown("parish", "Orleans");
+    testPage.clickContinue();
+
     // How this works
-    testPage.navigateToFlowScreen("laDigitalAssister/howThisWorks");
+    assertThat(testPage.getTitle()).isEqualTo("How this works");
     testPage.clickContinue();
 
     // Timeout notice
@@ -314,13 +322,12 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     testPage.clickButton("This looks correct");
 
+    // Household
     assertThat(testPage.getTitle()).isEqualTo(message("multiple-person-household.title"));
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("household-signpost.title"));
-
     testPage.clickContinue();
-    // Household
 
     assertThat(testPage.getTitle()).isEqualTo(message("household-info.title"));
     testPage.enter("householdMemberFirstName", "roomy");
@@ -579,7 +586,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("expenses-signpost.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));;
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));
+    ;
     testPage.clickElementById("householdHomeExpenses-Rent-label");
     testPage.clickContinue();
 
