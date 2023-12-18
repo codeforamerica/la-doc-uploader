@@ -163,15 +163,18 @@ public class TransmitterCommands {
 
             addZipEntries(ecePackage, zos);
             // TODO: get documents
-            successfullySubmittedIds.forEach(submissionId -> {
-                Submission submission = Submission.builder().id(submissionId).build();
+            submissions.forEach(submission -> {
                 List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submission);
+                log.info("Found " + userFiles.size() + " files associated with app.");
+
                 int fileCount = 0;
                 try {
+                    String subfolder = submission.getId() + "_files/";
+                    zos.putNextEntry(new ZipEntry(subfolder));
                     for (UserFile userFile: userFiles) {
 
                         fileCount += 1;
-                        ZipEntry docEntry = new ZipEntry(submissionId + "_files"+ String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
+                        ZipEntry docEntry = new ZipEntry(subfolder + String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
                         docEntry.setSize(userFile.getFilesize().longValue());
                         zos.putNextEntry(docEntry);
                         CloudFile docFile = fileRepository.download(userFile.getRepositoryPath());
@@ -183,11 +186,12 @@ public class TransmitterCommands {
                         zos.closeEntry();
                     }
 //                successfullySubmittedIds.add(submission.getId());
-            } catch (Exception e) {
-//                transmission.setLastTransmissionFailureReason("error_generating_files");
-//                transmissionRepository.save(transmission);
-                log.error("Error generating file collection for submission ID {}", submission.getId(), e);
-            }
+                } catch (Exception e) {
+                        // TODO: add documentation failures
+    //                transmission.setLastTransmissionFailureReason("error_generating_files");
+    //                transmissionRepository.save(transmission);
+                    log.error("Error generating file collection for submission ID {}", submission.getId(), e);
+                }
 
             });
 
