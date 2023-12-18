@@ -75,6 +75,8 @@ public class TransmitterCommands {
 
         Map<UUID, Map<CsvType, String>> failedSubmissions = (Map<UUID, Map<CsvType, String>>) zipResults.get("failed");
 
+        Map<UUID, Map<String, String>> failedDocumentation = (Map<UUID, Map<String, String>>) zipResults.get("failed_documentation");
+
         // send zip file
         log.info("Uploading zip file");
         String uploadLocation = transmissionType.getPackageType().getUploadLocation();
@@ -84,7 +86,7 @@ public class TransmitterCommands {
 
         UUID runId = UUID.randomUUID();
 
-        // Update transmission in DB for success
+        // Update transmission in DB for success TODO: make this less repetitive
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
             Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
@@ -103,6 +105,16 @@ public class TransmitterCommands {
             transmission.setSubmissionErrors(errorMessages);
             transmissionRepository.save(transmission);
                 }
+        );
+
+        failedDocumentation.forEach((id, errorMessages) -> {
+            Submission submission = Submission.builder().id(id).build();
+            Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
+            transmission.setStatus(TransmissionStatus.Failed);
+            transmission.setRunId(runId);
+            transmission.setDocumentationErrors(errorMessages);
+            transmissionRepository.save(transmission);
+        }
         );
 
 
@@ -192,6 +204,8 @@ public class TransmitterCommands {
                     }
 
             });
+
+            results.put("failed_documentation", documentationErrors);
 
             results.put("failed", submissionErrors);
 
