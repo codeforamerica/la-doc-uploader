@@ -366,6 +366,10 @@ public class LaDigitalAssister extends FlowInputs {
   private List<String> householdInsuranceExpenses;
 
   @Money(message="{error.invalid-money}")
+  @DynamicField
+  private String medicalExpenseAmount;
+
+  @Money(message="{error.invalid-money}")
   @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesMedicalInsurance;
 
