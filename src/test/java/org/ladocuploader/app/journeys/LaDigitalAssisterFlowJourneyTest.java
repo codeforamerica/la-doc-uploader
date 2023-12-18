@@ -647,7 +647,16 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.goBack();
     testPage.clickButton("No");
 
-    //    Final SignPost
+    var title = testPage.getTitle();
+    if ("ECE link".equals(title)) {
+      testPage.clickButton("Yes");
+      assertThat(testPage.getTitle()).isEqualTo("WIC link");
+      testPage.clickButton("Yes");
+    } else if ("WIC link".equals(title)) {
+      testPage.clickButton("Yes");
+    }
+
+    // Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.clickContinue();
 
