@@ -10,14 +10,22 @@
             <main id="content" role="main" class="form-card spacing-above-35">
                 <th:block th:replace="~{fragments/icons :: choosePrograms}"></th:block>
                 <th:block
-                        th:replace="~{fragments/cardHeader :: cardHeader(header=#{wic.header}, subtext=#{wic.based-on-your-answers})}"/>
+                        th:replace="~{fragments/cardHeader :: cardHeader(header=|#{general.good-news} #{wic.if-youre-approved}|, subtext=#{wic.subheader})}"/>
 
-                <div class="form-card__footer spacing-below-60">
-                    <a class="button button--primary" href="https://mywic.net/participantreferral"
-                       th:text="#{wic-links-button}"></a>
-                    <a class="button button--secondary spacing-left-0" th:href="|/flow/${flow}/${screen}/navigation|"
-                       th:text="#{general.continue-with-snap-only}"></a>
+                <div class="notice-info">
+                    <span class="spacing-below-25" th:text="#{wic-links.at-the-end-of-this-app}"></span>
                 </div>
+                <th:block
+                        th:replace="'fragments/form' :: form(action=('/flow/' + ${flow} + '/'+ ${screen} + '/submit' ), content=~{::submitForm})">
+                    <th:block th:ref="submitForm">
+                        <div class="form-card__footer spacing-below-60">
+                            <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
+                              label=#{wic-links.are-you-interested},
+                              inputName='interestedInWicInd',
+                              ariaDescribe='header')}"/>
+                        </div>
+                    </th:block>
+                </th:block>
             </main>
         </div>
     </section>
