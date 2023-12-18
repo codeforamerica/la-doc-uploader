@@ -610,8 +610,22 @@ flow:
     nextScreens:
       - name: expensesElderlyCareAmount
         condition: HasElderlyCareExpenses
+      - name: nolaEceLinks
+        condition: EligibleForNolaWicEceLinks
+      - name: eceLinks
+        condition: EligibleForOutsideNolaWicEceLinks
       - name: finalSignPost
   expensesElderlyCareAmount:
+    nextScreens:
+      - name: nolaEceLinks
+        condition: EligibleForNolaWicEceLinks
+      - name: wicLinks
+        condition: EligibleForOutsideNolaWicEceLinks
+      - name: finalSignPost
+  nolaEceLinks:
+    nextScreens:
+      - name: wicLinks
+  wicLinks:
     nextScreens:
       - name: finalSignPost
   finalSignPost:

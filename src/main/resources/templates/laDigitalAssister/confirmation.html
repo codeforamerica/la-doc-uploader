@@ -18,7 +18,7 @@
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
-            <th:block th:replace="~{'fragments/reveal' :: reveal(
+            <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
@@ -35,8 +35,9 @@
               </th:block>
             </th:block>
 
-            <hr>
+            <div th:replace="~{fragments/wicEceConfirmation :: wicEceConfirmation}"></div>
 
+            <hr>
             <h2 class="h2" th:text="#{confirmation.next-steps}"></h2>
 
             <div class="vertical-steps">

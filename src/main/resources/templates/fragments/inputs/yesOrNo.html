@@ -2,10 +2,12 @@
     th:fragment="yesOrNo(inputName, ariaDescribe)"
     th:with="
       hasHelpText=${!#strings.isEmpty(helpText)},
+      hasLabel=${!#strings.isEmpty(label)},
       hasAriaDescribe=${!#strings.isEmpty(ariaDescribe)},
       hasYesText=${!#strings.isEmpty(overrideYesText)},
       hasNoText=${!#strings.isEmpty(overrideNoText)}"
     th:assert="${!#strings.isEmpty(inputName)}, ${hasAriaDescribe}">
+  <label th:if="${hasLabel}" th:for="${inputName}" th:text="${label}" class="form-question"/>
   <div th:if="${hasHelpText}">
     <p th:id="${inputName + '-help-text'}"
        th:text="${helpText}"

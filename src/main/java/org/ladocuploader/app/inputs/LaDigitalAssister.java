@@ -354,6 +354,10 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesElderlyCare;
 
+  // WIC / ECE
+  private String interestedInEceInd;
+  private String interestedInWicInd;
+
   // Final Screen
   private String authorizedRepresentative;
 

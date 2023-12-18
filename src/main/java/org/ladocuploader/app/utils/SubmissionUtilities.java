@@ -6,13 +6,13 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
+import static org.ladocuploader.app.utils.Parish.ORLEANS;
 
 public class SubmissionUtilities {
     public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
 
     public static final Map<String, String> PDF_EDUCATION_MAP = new HashMap<>();
     public static final Map<String, String> PDF_MARITAL_STATUS_MAP = new HashMap<>();
-
     public static final Map<String, String> PDF_RELATIONSHIP_MAP = new HashMap<>();
 
     static {
@@ -77,6 +77,14 @@ public class SubmissionUtilities {
     public static String formatMoney(Double value) {
         DecimalFormat decimalFormat = new DecimalFormat("###.##");
         return "$" + decimalFormat.format(value);
+    }
+
+    public static boolean isNolaParish(Submission submission) {
+        return ORLEANS.name().equals(submission.getInputData().get("parish"));
+    }
+
+    public static boolean inExperimentGroup(String groupName, Submission submission) {
+        return groupName.equals(submission.getInputData().get("experimentGroup"));
     }
 
     public static String householdMemberFullName(Map<String, String> householdMember) {
