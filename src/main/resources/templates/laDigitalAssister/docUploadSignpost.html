@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{doc-upload-signpost.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <div class="grid__item spacing-above-35 text--centered">
+          <th:block th:replace="~{'fragments/icons' :: documentAndEnvelope}"></th:block>
+          <p class="text--help spacing-below-10"
+             th:text="#{doc-upload-signpost.step}"></p>
+          <th:block
+              th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{doc-upload-signpost.header})}"/>
+        </div>
+        <div class="form-card__content">
+          <div class="grid__item intro-section boxed-content spacing-below-60">
+            <h2 class="h3 text--centered intro-box__title" th:text="#{doc-upload-signpost.well-ask-about}"></h2>
+            <ol class="list--numbered spacing-above-10">
+              <li th:text="#{doc-upload-signpost.how-to-add-docs}"></li>
+              <li th:text="#{doc-upload-signpost.which-docs}"></li>
+              <li th:text="#{doc-upload-signpost.how-to-submit}"></li>
+            </ol>
+          </div>
+        </div>
+        <div class="form-card__footer text--centered">
+          <th:block th:replace="~{'fragments/continueButton' :: continue}"/>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>
