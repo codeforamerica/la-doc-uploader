@@ -1,0 +1,1 @@
+ALTER TABLE transmissions ADD COLUMN documentation_errors JSONB;

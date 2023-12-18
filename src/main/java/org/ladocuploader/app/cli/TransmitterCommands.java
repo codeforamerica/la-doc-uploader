@@ -164,7 +164,8 @@ public class TransmitterCommands {
             addZipEntries(ecePackage, zos);
             // TODO: get documents
             successfullySubmittedIds.forEach(submissionId -> {
-                List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submissionId);
+                Submission submission = Submission.builder().id(submissionId).build();
+                List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submission);
                 int fileCount = 0;
                 try {
                     for (UserFile userFile: userFiles) {
@@ -185,7 +186,7 @@ public class TransmitterCommands {
             } catch (Exception e) {
 //                transmission.setLastTransmissionFailureReason("error_generating_files");
 //                transmissionRepository.save(transmission);
-//                log.error("Error generating file collection for submission ID {}", submission.getId(), e);
+                log.error("Error generating file collection for submission ID {}", submission.getId(), e);
             }
 
             });
