@@ -80,11 +80,7 @@ public class TransmitterCommands {
         String uploadLocation = transmissionType.getPackageType().getUploadLocation();
         sftpClient.uploadFile(zipFilename, uploadLocation);
         File zip = new File(zipFilename);
-        if (zip.delete()) {
-            log.info("Deleted the folder: " + zip.getName());
-        } else {
-            log.info("Failed to delete the folder " + zip.getName());
-        }
+        zip.delete();
 
         UUID runId = UUID.randomUUID();
 
@@ -153,45 +149,47 @@ public class TransmitterCommands {
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
             Map<UUID, Map<CsvType, String>> submissionErrors = ecePackage.getErrorMessages();
+            Map<UUID, Map<String, String>> documentationErrors = new HashMap<>();
 
             submissionErrors.forEach((submissionId, submissionErrorMessages) -> {
                     successfullySubmittedIds.remove(submissionId);
                     }
             );
 
-            // TODO: at what point do we not submit the package/ mark as failed? does marking as failed mean that we should retry for this submission?
-
             addZipEntries(ecePackage, zos);
-            // TODO: get documents
             submissions.forEach(submission -> {
                 List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submission);
                 log.info("Found " + userFiles.size() + " files associated with app.");
 
                 int fileCount = 0;
-                try {
                     String subfolder = submission.getId() + "_files/";
-                    zos.putNextEntry(new ZipEntry(subfolder));
-                    for (UserFile userFile: userFiles) {
-
-                        fileCount += 1;
-                        ZipEntry docEntry = new ZipEntry(subfolder + String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
-                        docEntry.setSize(userFile.getFilesize().longValue());
-                        zos.putNextEntry(docEntry);
-                        CloudFile docFile = fileRepository.download(userFile.getRepositoryPath());
-                        byte[] bytes = new byte[Math.toIntExact(docFile.getFilesize())];
-                        try (FileInputStream fis = new FileInputStream(docFile.getFile())) {
-                            fis.read(bytes);
-                            zos.write(bytes);
-                        }
-                        zos.closeEntry();
+                    try {
+                        zos.putNextEntry(new ZipEntry(subfolder));
+                    } catch (Exception e){
+                        log.error("Error generating file collection for submission ID {}", submission.getId(), e);
                     }
-//                successfullySubmittedIds.add(submission.getId());
-                } catch (Exception e) {
-                        // TODO: add documentation failures
-    //                transmission.setLastTransmissionFailureReason("error_generating_files");
-    //                transmissionRepository.save(transmission);
-                    log.error("Error generating file collection for submission ID {}", submission.getId(), e);
-                }
+                    for (UserFile userFile: userFiles) {
+                        try {
+                            fileCount += 1;
+                            String fileName = userFile.getOriginalName();
+                            log.info("filename is: " + fileName);
+                            ZipEntry docEntry = new ZipEntry(subfolder + String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
+                            docEntry.setSize(userFile.getFilesize().longValue());
+                            zos.putNextEntry(docEntry);
+                            CloudFile docFile = fileRepository.download(userFile.getRepositoryPath());
+                            byte[] bytes = new byte[Math.toIntExact(docFile.getFilesize())];
+                            try (FileInputStream fis = new FileInputStream(docFile.getFile())) {
+                                fis.read(bytes);
+                                zos.write(bytes);
+                            }
+                            zos.closeEntry();
+                            File file = new File(userFile.getRepositoryPath());
+                            file.delete(); // delete after download and added to zipfile
+                        } catch (Exception e) {
+                            documentationErrors.put(submission.getId(), Map.of(userFile.getOriginalName(), e.getMessage()));
+                            log.error("Error generating file collection for submission ID {}", submission.getId(), e);
+                        }
+                    }
 
             });
 
