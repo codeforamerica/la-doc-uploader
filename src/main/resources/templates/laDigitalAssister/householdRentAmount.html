@@ -1,0 +1,14 @@
+<th:block
+  th:replace="~{fragments/screens/screenWithOneInput ::
+  screenWithOneInput(
+    title=#{household-rent-amount.title},
+    header=#{household-rent-amount.header},
+    iconName='householdFamilyIncome',
+    formAction=${formAction},
+    inputContent=~{::inputContent})}">
+  <th:block th:ref="inputContent">
+    <th:block th:replace="~{fragments/inputs/money ::
+      money(inputName='householdRentAmount',
+      ariaLabel='header')}"/>
+  </th:block>
+</th:block>

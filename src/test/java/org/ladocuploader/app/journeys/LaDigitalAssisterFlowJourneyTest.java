@@ -656,7 +656,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));
-
     testPage.clickElementById("householdHomeExpenses-rent-label");
     testPage.clickElementById("householdHomeExpenses-otherHomeExpenses-label");
     testPage.clickContinue();

@@ -88,11 +88,35 @@ flow:
   reviewContactInfo:
     nextScreens:
       - name: multiplePersonHousehold
+  expeditedSnapStart:
+    nextScreens:
+      - name: multiplePersonHousehold
   multiplePersonHousehold:
     nextScreens:
+      - name: householdIncomeLast30Days
+        condition: IsApplyingForExpeditedSnap
       - name: householdSignPost
-        condition: IsMultiplePersonHousehold
+        condition: IsMultiplePersonNonExpeditedHousehold
       - name: ssnForm
+  householdIncomeLast30Days:
+    nextScreens:
+      - name: householdMoneyOnHand
+  householdMoneyOnHand:
+    nextScreens:
+      - name: householdMoneyOnHandAmount
+        condition: HouseholdHasMoneyOnHand
+      - name: householdRent
+  expeditedIndividualMoneyOnHandAmount:
+    nextScreens:
+      - name: householdRent
+  householdRent:
+    nextScreens:
+      - name: householdRentAmount
+        condition: HouseholdPaysRent
+      - name: utilities
+  householdRentAmount:
+    nextScreens:
+      - name: utilities
   householdSignPost:
     nextScreens:
       - name: householdInfo
@@ -314,16 +338,18 @@ flow:
       - name: householdAdditionalIncome
   householdAdditionalIncome:
     nextScreens:
-      - name: householdMoneyOnHand
+      - name: householdMoneyOnHandAmount
         condition: ProgramsIncludeSnap
       - name: expensesSignPost
-  householdMoneyOnHand:
+  householdMoneyOnHandAmount:
     nextScreens:
       - name: householdMoneyOnHandDetails
         condition: HasMoneyOnHand
       - name: expensesSignPost
   householdMoneyOnHandDetails:
     nextScreens:
+      - name: householdRent
+        condition: IsApplyingForExpeditedSnap
       - name: expensesSignPost
   expensesSignPost:
     nextScreens:
