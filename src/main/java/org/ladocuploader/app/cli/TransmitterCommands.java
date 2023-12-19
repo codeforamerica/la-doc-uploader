@@ -180,6 +180,7 @@ public class TransmitterCommands {
                     } catch (Exception e){
                         log.error("Error generating file collection for submission ID {}", submission.getId(), e);
                     }
+                    Map<String, String> submissionDocumentationErrors = new HashMap<>();
                     for (UserFile userFile: userFiles) {
                         try {
                             fileCount += 1;
@@ -198,10 +199,12 @@ public class TransmitterCommands {
                             File file = new File(userFile.getRepositoryPath());
                             file.delete(); // delete after download and added to zipfile
                         } catch (Exception e) {
-                            documentationErrors.put(submission.getId(), Map.of(userFile.getOriginalName(), e.getMessage()));
+                            // TODO: need to update if submission is already in the map
+                            submissionDocumentationErrors.put(userFile.getOriginalName(), e.getMessage());
                             log.error("Error generating file collection for submission ID {}", submission.getId(), e);
                         }
                     }
+                documentationErrors.put(submission.getId(), submissionDocumentationErrors);
 
             });
 
