@@ -3,6 +3,7 @@
     th:with="
       hasLabel=${!#strings.isEmpty(label)},
       hasAriaLabel=${!#strings.isEmpty(ariaLabel)},
+      hasHelpText=${!#strings.isEmpty(groupHelpText)},
       hasErrorMonth=${
         errorMessages != null &&
         errorMessages.get('month' + inputName) != null &&
@@ -22,15 +23,16 @@
       <legend th:if="${hasLabel}" th:for="${inputName}" th:text="${label}"
               class="form-question"/>
       <p class="text--help">
-        <label th:for="${inputName}+'-month'"
+        <label th:if="${hasHelpText}" th:for="${inputName}+'-month'"
                th:id="${inputName}+'-month-label'"
-               th:text="#{general.month}"></label>
-        &nbsp;/&nbsp;
-        <label th:for="${inputName}+'-day'"
+               th:utext="${groupHelpText}"></label>
+        <label th:if="${!hasHelpText}" th:for="${inputName}+'-month'"
+               th:id="${inputName}+'-month-label'"
+               th:text="#{general.month}+'/'"></label>
+        <label th:if="${!hasHelpText}" th:for="${inputName}+'-day'"
                th:id="${inputName}+'-day-label'"
-               th:text="#{general.day}"></label>
-        &nbsp;/&nbsp;
-        <label th:for="${inputName}+'-year'"
+               th:text="#{general.day}+'/'"></label>
+        <label th:if="${!hasHelpText}" th:for="${inputName}+'-year'"
                th:id="${inputName}+'-year-label'"
                th:text="#{general.year}"></label>
       </p>

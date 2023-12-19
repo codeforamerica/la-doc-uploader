@@ -10,19 +10,20 @@
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: pregnant}"></th:block>
         <th:block
-          th:replace="'fragments/cardHeader' :: cardHeader(header=#{pregnantduedate.header}, subtext=#{pregnantduedate.subheader})"/>
+          th:replace="'fragments/cardHeader' :: cardHeader(header=#{pregnantduedate.header})"/>
         <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
           <th:block th:ref="formContent">
 
             <div class="form-card__content">
               <div th:each="individual, iter: ${inputData.get('pregnanciesFullNames[]')}" class="spacing-below-15">
-                <hr>
                 <th:block th:with="pregnancyDueDateInputName=${'PregnancyDueDate' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
                   <th:block th:replace="~{fragments/inputs/duedate ::
                     duedate(inputName=${pregnancyDueDateInputName},
                     label=#{pregnantduedate.question(${individual.firstNamePossessive})},
+                    groupHelpText=#{pregnantduedate.subheader},
                     groupName='PregnancyDueDate')}"/>
                 </th:block>
+                <hr>
               </div>
             </div>
             <div class="form-card__footer">
