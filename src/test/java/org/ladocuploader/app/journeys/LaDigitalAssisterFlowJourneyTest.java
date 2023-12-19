@@ -657,7 +657,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
       testPage.clickButton("Yes, start my free childcare app");
       testPage.clickContinue();
       testPage.clickButton("Yes");
-      testPage.selectRadio("adultsWorking", "Some of them");
+      testPage.selectRadio("adultsWorking", "SOME");
+      testPage.clickContinue();
       assertThat(testPage.getTitle()).isEqualTo("WIC apply");
       testPage.clickButton("Yes, start my WIC app");
       testPage.clickContinue();
