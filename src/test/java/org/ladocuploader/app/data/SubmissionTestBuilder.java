@@ -79,4 +79,9 @@ public class SubmissionTestBuilder {
         submission.getInputData().put("personalSituationDisability[]", uuids);
         return this;
     }
+
+    public SubmissionTestBuilder withPregnancies(List<String> uuids) {
+        submission.getInputData().put("pregnancies[]", uuids);
+        return this;
+    }
 }
