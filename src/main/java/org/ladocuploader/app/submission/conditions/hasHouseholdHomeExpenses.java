@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ExpensesIncludeCondoFees implements Condition {
+public class hasHouseholdHomeExpenses implements Condition {
 
     @Override
     public Boolean run(Submission submission) {
         var inputData = submission.getInputData();
         if (inputData.containsKey("householdHomeExpenses[]")) {
             var programArr = (ArrayList<String>) submission.getInputData().get("householdHomeExpenses[]");
-            return programArr.contains("Condominium Fees");
+            return !programArr.contains("None");
         }
         return false;
     }

@@ -558,22 +558,15 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));
-    ;
+
     testPage.clickElementById("householdHomeExpenses-Rent-label");
+    testPage.clickElementById("householdHomeExpenses-Other home expenses-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.rent"));
-    testPage.goBack();
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses-amount.title"));
 
-    testPage.clickElementById("householdHomeExpenses-Other-label");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.rent"));
-    testPage.enter("expensesRent", "500");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.other"));
-    testPage.enter("expensesOther", "15");
+    testPage.enter("householdHomeExpenseAmount_wildcard_Rent", "500");
+    testPage.enter("householdHomeExpenseAmount_wildcard_Other home expenses", "1500");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));

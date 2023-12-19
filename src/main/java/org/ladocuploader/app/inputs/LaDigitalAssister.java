@@ -275,37 +275,10 @@ public class LaDigitalAssister extends FlowInputs {
   @NotEmpty(message="{error.missing-general}")
   private List<String> householdHomeExpenses;
 
-  @Money(message="{error.invalid-money}")
   @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesRent;
-
   @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesMortgage;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesHomeownerInsurance;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesPropertyTax;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesCondoFees;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesLotRental;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesFloodInsurance;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesOther;
+  @DynamicField
+  private String householdHomeExpenseAmount;
 
   @NotEmpty(message="{error.missing-general}")
   private List<String> householdUtilitiesExpenses;
