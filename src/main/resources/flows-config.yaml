@@ -570,15 +570,15 @@ flow:
     nextScreens:
       - name: expensesInsurance
   expensesInsurance:
-    afterSaveAction: ReformatExpensesInsuranceData
+    beforeSaveAction: ReformatExpensesInsuranceData
     nextScreens:
       - name: expensesInsuranceAmount
   expensesInsuranceAmount:
+    beforeDisplayAction: Testing
     nextScreens:
-      - name: finalSignPost
-      - condition: AdditionalMedicalExpenses
       - name: expensesElderlyCare
   expensesElderlyCare:
+    beforeDisplayAction: Testing
     nextScreens:
       - name: expensesElderlyCareAmount
         condition: HasElderlyCareExpenses

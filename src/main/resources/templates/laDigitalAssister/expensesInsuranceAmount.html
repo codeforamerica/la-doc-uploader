@@ -1,37 +1,44 @@
-<!DOCTYPE html>
-<html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{insurance-expenses-amount.title})"></head>
-<body>
-<div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
-  <section class="slab">
-    <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
-      <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContents})}">
-          <th:block th:ref="formContents">
-            <div class="form-card__content">
-          <div th:each="expense, iter: ${inputData.get('householdInsuranceExpenses[]')}" class="spacing-below-15">
-            <th:block
-                th:replace="~{fragments/cardHeader :: cardHeader(header=#{insurance-expenses-amount.header(${expense})}, subtext=#{insurance-expenses-amount.subheader})}"/>
-            <th:block th:with="expenseInputName=${'medicalExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
-              <th:block
-                th:replace="~{fragments/inputs/money :: money(inputName=${expenseInputName},
-                ariaLabel=${expense},
-                postfix='/month'
-                )}"/>
+<th:block th:with="expense=${T(org.ladocuploader.app.utils.ExpensesUtilities).currentExpense(submission, param.expense)}">
+  <!DOCTYPE html>
+  <html th:lang="${#locale.language}">
+  <head th:replace="fragments/head :: head(title=#{home-expenses.lot-rent})"></head>
+  <body>
+  <div class="page-wrapper">
+    <div th:replace="fragments/toolbar :: toolbar"></div>
+    <section class="slab">
+      <div class="grid">
+        <div th:replace="fragments/goBack :: goBackLink"></div>
+        <main id="content" role="main" class="form-card spacing-above-35">
+          <th:block
+              th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContents})}">
+            <th:block th:ref="formContents">
+              <div class="form-card__content">
+                <th:block
+                    th:replace="~{fragments/cardHeader :: cardHeader(header=#{insurance-expenses-amount.header(${expense.name})}, subtext=#{insurance-expenses-amount.subheader})}"/>
+                <th:block
+                    th:replace="~{fragments/inputs/money :: money(inputName=${expense.inputName},
+                      ariaLabel=${expense.name},
+                      postfix='/month'
+                      )}"/>
+              </div>
+              <th:block th:if="${expense.next != ''}">
+                <a class="button button--primary"
+                   th:href="'/flow/' + ${flow} + '/expensesInsuranceAmount?expense='+ ${expense.next}"
+                   th:text="#{general.inputs.continue}"></a>
+              </th:block>
+              <th:block th:if="${expense.next == ''}">
+                <a class="button button--primary"
+                   th:href="'/flow/' + ${flow} + '/expensesElderlyCare'"
+                   th:text="#{general.optional}"></a>
+              </th:block>
+
             </th:block>
-            <hr>
-            </div>
-            <div class="form-card__footer">
-              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(text=#{general.inputs.continue})}"/>
-            </div>
           </th:block>
-        </th:block>
-      </main>
-    </div>
-  </section>
-</div>
-<th:block th:replace="fragments/footer :: footer" />
-</body>
-</html>
+        </main>
+      </div>
+    </section>
+  </div>
+  <th:block th:replace="fragments/footer :: footer"/>
+  </body>
+  </html>
+</th:block>

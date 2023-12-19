@@ -33,18 +33,14 @@ public class ReformatExpensesInsuranceData implements Action {
           ("medicalExpenseAmount" + formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER + expense));
 
       if (count.get() + 1 <= numberOfExpense) {
-        insuranceExpense.put("next", expenses.get(count.get()));
-        insuranceExpense.put("last", "false");
+        insuranceExpense.put("next", String.valueOf(count.get()));
         count.addAndGet(1);
       } else {
-        insuranceExpense.put("last", "true");
+        insuranceExpense.put("next", "");
       }
       householdExpensesIterator.add(insuranceExpense);
     };
 
-    submission.getInputData().put("householdInsuranceExpensesIterator", householdExpensesIterator);
-    submission.getInputData().put("householdInsuranceExpensesCurrent", householdExpensesIterator.get(0));
-    submission.getInputData().put("householdInsuranceExpensesComplete", "false");
-    submission.getInputData().put("bananas", "wiii");
+    submission.getInputData().put("householdInsuranceExpensesIterator[]", householdExpensesIterator);
   }
 }
