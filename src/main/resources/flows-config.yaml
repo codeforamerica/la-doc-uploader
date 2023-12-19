@@ -574,11 +574,9 @@ flow:
     nextScreens:
       - name: expensesInsuranceAmount
   expensesInsuranceAmount:
-    beforeDisplayAction: Testing
     nextScreens:
       - name: expensesElderlyCare
   expensesElderlyCare:
-    beforeDisplayAction: Testing
     nextScreens:
       - name: expensesElderlyCareAmount
         condition: HasElderlyCareExpenses
