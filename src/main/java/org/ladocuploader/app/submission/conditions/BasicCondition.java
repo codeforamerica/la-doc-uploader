@@ -2,6 +2,7 @@ package org.ladocuploader.app.submission.conditions;
 
 import formflow.library.config.submission.Condition;
 import formflow.library.data.Submission;
+import java.util.ArrayList;
 
 public class BasicCondition implements Condition {
 
