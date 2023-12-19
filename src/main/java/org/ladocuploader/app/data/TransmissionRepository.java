@@ -17,7 +17,7 @@ public interface TransmissionRepository extends JpaRepository<Transmission, UUID
             "JOIN Transmission t ON t.submission = s " +
             "WHERE s.submittedAt IS NOT NULL " +
             "AND t.transmissionType = :transmissionType " +
-            "AND (t.status = 'Queued') OR (t.status = 'Failed') " +
+            "AND (t.status = 'Queued')" +
             "ORDER BY s.updatedAt ASC ")
     List<Submission> submissionsToTransmit(Sort sort, TransmissionType transmissionType);
 

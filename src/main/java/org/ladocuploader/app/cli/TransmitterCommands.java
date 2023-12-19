@@ -106,7 +106,7 @@ public class TransmitterCommands {
             transmissionRepository.save(transmission);
                 }
         );
-
+    // TODO: should we mark as failed when the documentation step has failed? These would have already been marked above ^ based on CSV generation
         failedDocumentation.forEach((id, errorMessages) -> {
             Submission submission = Submission.builder().id(id).build();
             Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
@@ -199,7 +199,6 @@ public class TransmitterCommands {
                             File file = new File(userFile.getRepositoryPath());
                             file.delete(); // delete after download and added to zipfile
                         } catch (Exception e) {
-                            // TODO: need to update if submission is already in the map
                             submissionDocumentationErrors.put(userFile.getOriginalName(), e.getMessage());
                             log.error("Error generating file collection for submission ID {}", submission.getId(), e);
                         }
