@@ -362,10 +362,10 @@ flow:
     nextScreens:
       - name: expensesChildSupportAmount
         condition: HasChildSupportExpenses
-      - name: expensesInsurance
+      - name: householdMedicalExpenses
   expensesChildSupportAmount:
     nextScreens:
-      - name: expensesInsurance
+      - name: householdMedicalExpenses
   householdMedicalExpenses:
     nextScreens:
       - name: householdMedicalExpensesAmount

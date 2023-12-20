@@ -11,12 +11,18 @@ public class BasicArrayCondition implements Condition {
      */
     public Boolean run(Submission submission, String key) {
         var inputData = submission.getInputData();
+        ArrayList<String> other = new ArrayList<>();
+        other.add("Other");
         if (inputData.containsKey(key)){
             var array = (ArrayList) submission.getInputData().get(key);
             if(array.isEmpty()){
                 return false;
+            } else {
+                if(array.equals(other)){
+                    return false;
+                }
+                return !array.contains("None");
             }
-            return !array.contains("None");
         }
         return false;
     }
