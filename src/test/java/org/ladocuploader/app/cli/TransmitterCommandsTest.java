@@ -1,5 +1,7 @@
 package org.ladocuploader.app.cli;
 
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.UserFile;
 
 import com.jcraft.jsch.JSchException;
@@ -10,7 +12,11 @@ import formflow.library.data.UserFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.ladocuploader.app.csv.CsvDocument;
+import org.ladocuploader.app.csv.CsvPackage;
 import org.ladocuploader.app.csv.CsvService;
+import org.ladocuploader.app.csv.enums.CsvPackageType;
+import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
@@ -30,6 +36,8 @@ import java.util.Map;
 
 import static org.assertj.core.util.DateUtil.now;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -83,14 +91,25 @@ public class TransmitterCommandsTest {
 
         UserFile docfile = new UserFile();
         docfile.setFilesize(10.0f);
+        docfile.setSubmission(submissionWithDocs);
+        docfile.setOriginalName("originalFilename.png");
+        userFileRepository.save(docfile);
+
+        transmission = Transmission.fromSubmission(submissionWithDocs);
+        transmission.setTransmissionType(TransmissionType.ECE);
+        transmission.setStatus(TransmissionStatus.Queued);
 
 
     }
 
     @Disabled
     @Test
-    void transmitZipFile() throws IOException, JSchException, SftpException {
+    void transmitZipFile() throws IOException, JSchException, SftpException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         transmitterCommands.transmit();
+        CsvPackage ecePackage = new CsvPackage(CsvPackageType.ECE_PACKAGE);
+        CsvDocument csvDocument = new CsvDocument(CsvType.ECE_APPLICATION, "some bytes".getBytes());
+        ecePackage.addCsvDocument(csvDocument);
+        when(csvService.generateCsvPackage(any(), CsvPackageType.ECE_PACKAGE)).thenReturn(ecePackage);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
