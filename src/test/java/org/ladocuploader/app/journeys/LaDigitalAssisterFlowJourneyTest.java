@@ -191,6 +191,42 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("special-situations.title"));
   }
+  
+  @Test
+  void expeditedSnapFlow() {
+    loadUserPersonalData();
+    loadAddressData();
+    loadContactData();
+    testPage.navigateToFlowScreen("laDigitalAssister/reviewContactInfo");
+    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
+    testPage.clickLink(message("review-contact-info.submit-incomplete"));
+    // Expedited Snap Start
+    assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap-start.title"));
+    testPage.clickButton(message("expedited-snap-start.yes"));
+    // Multiple Person Household
+    assertThat(testPage.getTitle()).isEqualTo(message("multiple-person-household.title"));
+    testPage.clickButton(message("multiple-person-household.yes"));
+    // Household Income Last 30 Days
+    assertThat(testPage.getTitle()).isEqualTo(message("household-income-last-30-days.title"));
+    testPage.enter("householdIncomeLast30Days", "0");
+    testPage.clickContinue();
+    // Household Money on Hand
+    assertThat(testPage.getTitle()).isEqualTo(message("household-money-on-hand.title"));
+    testPage.clickButton("Yes");
+    // Expedited Money on Hand Amount
+    assertThat(testPage.getTitle()).isEqualTo(message("expedited-money-on-hand-amount.title"));
+    testPage.enter("expeditedMoneyOnHandAmount", "0");
+    testPage.clickContinue();
+    // Household Rent
+    assertThat(testPage.getTitle()).isEqualTo(message("household-rent.title"));
+    testPage.clickButton("Yes");
+    // Household Rent Amount
+    assertThat(testPage.getTitle()).isEqualTo(message("household-rent-amount.title"));
+    testPage.enter("householdRentAmount", "1200");
+    testPage.clickContinue();
+    // Utilities
+    assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
+  }
 
   @Test
   void raceEthnicityFlow() {
@@ -894,6 +930,25 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("householdMemberBirthYear", year);
     testPage.selectFromDropdown("householdMemberRelationship", message("household-info.relationship.step-child"));
     testPage.selectRadio("householdMemberSex", "F");
+    testPage.clickContinue();
+  }
+  
+  void loadAddressData() {
+    testPage.navigateToFlowScreen("laDigitalAssister/homeAddress");
+    testPage.enter("homeAddressStreetAddress1", "123 Test St");
+    testPage.enter("homeAddressCity", "Testland");
+    testPage.enter("homeAddressZipCode", "12345");
+    testPage.selectFromDropdown("homeAddressState", "LA - Louisiana");
+    testPage.clickContinue();
+    testPage.clickElementById("sameAsHomeAddress-true");
+    testPage.clickContinue();
+  }
+  
+  void loadContactData() {
+    testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
+    testPage.enter("emailAddress", "test@gmail.com");
+    testPage.enter("phoneNumber", "555-456-7891");
+    testPage.clickElementById("remindersMethod-By Email-label");
     testPage.clickContinue();
   }
 
