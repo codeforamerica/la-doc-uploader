@@ -18,7 +18,7 @@
                 <th:block th:with="schoolNameInputName=${'schoolName' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
                   <th:block th:replace="~{'fragments/inputs/text' ::
                     text(inputName=${schoolNameInputName},
-                    label=#{schooldetails.formquestion1(${individual.firstName})})}"/>
+                    label=#{schooldetails.formquestion1(${individual.firstNamePossessive})})}"/>
                 </th:block>
                 <th:block th:with="schoolEnrollmentInputName=${'schoolEnrollmentLevel' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
                   <th:block

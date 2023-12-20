@@ -130,11 +130,34 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String schoolInd;
 
-  private String students;
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> students;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String schoolName;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String schoolEnrollmentLevel;
 
   private String pregnancyInd;
 
-  private String pregnancies;
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> pregnancies;
+
+//  With dynamic fields and the date template, the data is stored as pregnancyDueDate<wildcard><uuid>Day so changed the ordering to start with the date piece
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String dayPregnancyDueDate;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String monthPregnancyDueDate;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String yearPregnancyDueDate;
 
   private String outOfStateBenefitsInd;
 
@@ -323,11 +346,21 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesUtilitiesOther;
 
+  private String receivesEnergyAssistance;
+
+  private String assistanceThroughLiheap;
+
   private String hasDependentCareExpenses;
 
   @Money(message="{error.invalid-money}")
   @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesDependentCare;
+
+  private String hasChildSupportExpenses;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expensesChildSupport;
 
   @NotEmpty(message="{error.missing-general}")
   private List<String> householdInsuranceExpenses;
@@ -359,6 +392,8 @@ public class LaDigitalAssister extends FlowInputs {
   private String interestedInWicInd;
 
   // Final Screen
+  private String needsNewEbtCard;
+
   private String authorizedRepresentative;
 
   private String authorizedRepCommsAuthorization;
