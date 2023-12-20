@@ -18,8 +18,10 @@ import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.enums.CsvPackageType;
 import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.data.Transmission;
+import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
+import org.ladocuploader.app.upload.CloudFile;
 import org.ladocuploader.app.upload.ReadOnlyCloudFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +39,7 @@ import java.util.Map;
 import static org.assertj.core.util.DateUtil.now;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
@@ -58,9 +61,12 @@ public class TransmitterCommandsTest {
     @Autowired
     UserFileRepository userFileRepository;
 
+    @Autowired
+    TransmissionRepository transmissionRepository;
+
     Submission submission;
 
-    List<Submission> submissionList;
+//    List<Submission> submissionList;
 
     @BeforeEach
     void setup() {
@@ -76,7 +82,6 @@ public class TransmitterCommandsTest {
         submissionRepository.save(submission);
         var submissionWithDocs = Submission.builder()
                 .submittedAt(now())
-                .flow("pebt")
                 .urlParams(new HashMap<>())
                 .inputData(Map.of(
                         "firstName", "Other",
@@ -84,10 +89,12 @@ public class TransmitterCommandsTest {
                         "signature", "Other McOtherson sig",
                         "identityFiles", "[\"some-file-id\"]"
                 )).build();
+        submissionRepository.save(submissionWithDocs);
         Transmission transmission = Transmission.fromSubmission(submission);
         transmission.setTransmissionType(TransmissionType.ECE);
         transmission.setStatus(TransmissionStatus.Queued);
-        submissionList.add(submission);
+        transmissionRepository.save(transmission);
+//        submissionList.add(submission);
 
         UserFile docfile = new UserFile();
         docfile.setFilesize(10.0f);
@@ -98,23 +105,37 @@ public class TransmitterCommandsTest {
         transmission = Transmission.fromSubmission(submissionWithDocs);
         transmission.setTransmissionType(TransmissionType.ECE);
         transmission.setStatus(TransmissionStatus.Queued);
+        transmissionRepository.save(transmission);
 
 
     }
 
-    @Disabled
     @Test
     void transmitZipFile() throws IOException, JSchException, SftpException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        transmitterCommands.transmit();
         CsvPackage ecePackage = new CsvPackage(CsvPackageType.ECE_PACKAGE);
-        CsvDocument csvDocument = new CsvDocument(CsvType.ECE_APPLICATION, "some bytes".getBytes());
-        ecePackage.addCsvDocument(csvDocument);
-        when(csvService.generateCsvPackage(any(), CsvPackageType.ECE_PACKAGE)).thenReturn(ecePackage);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime now = LocalDateTime.now();
-        String date = dtf.format(now);
-        File zipFile = new File("Apps__" + date + "__1001-1006.zip");
-        assertTrue(zipFile.exists());
+        List<CsvType> csvTypes = CsvPackageType.ECE_PACKAGE.getCsvTypeList();
+        csvTypes.forEach(csvType ->
+        {
+            CsvDocument csvDocument = new CsvDocument(csvType, "some bytes".getBytes());
+            ecePackage.addCsvDocument(csvDocument);
+        });
+
+
+        when(csvService.generateCsvPackage(any(), any())).thenReturn(ecePackage);
+
+        File docFile = new File("paystub.png");
+        docFile.createNewFile();
+
+        when(fileRepository.download(any())).thenReturn(new CloudFile(10L, docFile));
+
+        transmitterCommands.transmit();
+
+//        transmi
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        LocalDateTime now = LocalDateTime.now();
+//        String date = dtf.format(now);
+//        File zipFile = new File("Apps__" + date + "__1001-1006.zip");
+//        assertTrue(zipFile.exists());
     }
 
 

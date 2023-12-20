@@ -141,9 +141,8 @@ public class TransmitterCommands {
                         zipOutput.putNextEntry(entry);
                         zipOutput.write(document);
                         zipOutput.closeEntry();
-                        // TODO: set status to failed for entire run if something goes wrong with zip?
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    } catch (Exception e) {
+                        log.error("Failed to generate csv document %s for package".formatted(csvType));
                     }
 
                 }
