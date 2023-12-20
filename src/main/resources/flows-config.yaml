@@ -129,6 +129,7 @@ flow:
     nextScreens:
       - name: householdSchoolDetails
   householdSchoolDetails:
+    beforeDisplayAction: ReformatStudentsUserData
     nextScreens:
       - name: householdPregnancy
   householdPregnancy:
@@ -140,6 +141,7 @@ flow:
     nextScreens:
       - name: householdPregnancyDueDate
   householdPregnancyDueDate:
+    beforeDisplayAction: ReformatPregnancyUserData
     nextScreens:
       - name: householdBenefits
   householdBenefits:
@@ -274,14 +276,6 @@ flow:
      - name: householdEmployerName
   householdIncomeDeleteConfirmation:
     nextScreens: null
-  householdMonthlyIncome:
-    nextScreens:
-      - name: householdIncomeTotal
-  householdIncomeTotal:
-    nextScreens:
-      - name: householdAdditionalIncome
-        condition: NonItemizedIncome
-      - name: householdIncomeWho
   householdEmployerName:
     subflow: income
     nextScreens:
@@ -554,6 +548,8 @@ flow:
   energyAssistance:
     nextScreens:
       - name: liheap
+        condition: ReceivesEnergyAssistance
+      - name: expensesDependentCare
   liheap:
     nextScreens:
       - name: expensesDependentCare
@@ -561,13 +557,15 @@ flow:
     nextScreens:
       - name: expensesDependentCareAmount
         condition: HasDependentCareExpenses
-      - name: expensesInsurance
+      - name: expensesChildSupport
   expensesDependentCareAmount:
     nextScreens:
       - name: expensesChildSupport
   expensesChildSupport:
     nextScreens:
       - name: expensesChildSupportAmount
+        condition: HasChildSupportExpenses
+      - name: expensesInsurance
   expensesChildSupportAmount:
     nextScreens:
       - name: expensesInsurance

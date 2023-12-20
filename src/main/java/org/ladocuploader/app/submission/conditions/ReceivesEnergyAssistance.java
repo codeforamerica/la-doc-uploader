@@ -4,10 +4,10 @@ import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NonItemizedIncome extends BasicCondition {
+public class ReceivesEnergyAssistance extends BasicCondition {
 
   @Override
   public Boolean run(Submission submission) {
-    return run(submission, "switchToIncomeByJob", "true");
+    return run(submission, "receivesEnergyAssistance", "true");
   }
 }
