@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title=#{nola-ece-links.title})}"></head>
+<head th:replace="~{fragments/head :: head(title=#{nola-ece-apply.title})}"></head>
 <body>
 <div class="page-wrapper">
     <div th:replace="~{fragments/toolbar :: toolbar}"></div>
     <section class="slab">
         <div class="grid">
             <div th:replace="~{fragments/goBack :: goBackLink}"></div>
-            <main id="content" role="main" class="form-card spacing-above-35"
-                th:with="header=|#{general.good-news} #{nola-ece.if-youre-approved}|">
+            <main id="content" role="main" class="form-card spacing-above-35">
                 <th:block th:replace="~{fragments/icons :: choosePrograms}"></th:block>
                 <th:block
-                        th:replace="~{fragments/cardHeader :: cardHeader(header=${header}, subtext=#{nola-ece.subheader})}"/>
-
-                <div class="notice-info">
-                    <span class="spacing-below-25" th:text="#{nola-ece-links.at-the-end-of-this-app}"></span>
-                </div>
+                        th:replace="~{fragments/cardHeader :: cardHeader(header=|#{general.good-news} #{nola-ece.if-youre-approved}|, subtext=#{nola-ece.subheader})}"/>
                 <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::content})}">
                     <th:block th:ref="content">
                         <div class="form-card__footer spacing-below-60">
                             <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
-                              label=#{nola-ece-links.are-you-interested},
+                              label=#{nola-ece-apply.would-you-like},
+                              helpText=#{nola-ece-apply.would-you-like-help},
+                              overrideYesText=#{nola-ece-apply.yes-start-app},
+                              overrideNoText=#{general.not-interested},
                               inputName='interestedInEceInd',
                               ariaDescribe='header')}"/>
                         </div>

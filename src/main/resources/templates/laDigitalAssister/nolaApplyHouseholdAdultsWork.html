@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{nola-apply-household-working.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block th:replace="~{fragments/icons :: householdFamilyIncome}"></th:block>
+        <th:block th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{nola-apply-household-working.header})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
+          <th:block th:ref="content">
+            <div class="form-card__content">
+              <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
+                        radioFieldset(inputName='adultsWorking',
+                        ariaLabel='header',
+                        content=~{::options})}">
+                <th:block th:ref="options">
+                  <th:block
+                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='ALL', label=#{nola-apply-household.all-of-them})}"/>
+                  <th:block
+                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='SOME', label=#{nola-apply-household.some-of-them})}"/>
+                  <th:block
+                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='NONE', label=#{nola-apply-household.none-of-them})}"/>
+                </th:block>
+              </th:block>
+            </div>
+            <div class="form-card__footer">
+              <th:block
+                  th:replace="~{fragments/inputs/submitButton :: submitButton( text=#{general.inputs.continue})}"/>
+            </div>
+          </th:block>
+        </th:block>
+        <div class="spacing-above-25">
+          <a th:text="#{general.i-dont-know}" th:href="|/flow/${flow}/${screen}/navigation|"></a>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>
