@@ -390,6 +390,8 @@ public class LaDigitalAssister extends FlowInputs {
   // WIC / ECE
   private String interestedInEceInd;
   private String interestedInWicInd;
+  private String adultsWorking;
+  private String guardiansHaveDisabilityInd;
 
   // Final Screen
   private String needsNewEbtCard;

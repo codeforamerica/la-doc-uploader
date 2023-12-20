@@ -7,11 +7,13 @@
   <section class="slab">
     <div class="grid">
       <script th:inline="javascript">
-          $(function() {
+          $(function () {
               $('.reveal:not(.force-show-content)').removeClass('is-hiding-content');
           });
       </script>
-      <main id="content" role="main" class="form-card spacing-above-35">
+      <main id="content" role="main" class="form-card spacing-above-35"
+            th:with="inLinkGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('LINK', submission)},
+        inApplyGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('APPLY', submission)}">
         <th:block th:replace="~{fragments/icons :: computerWithCheckmark}"></th:block>
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{confirmation.header}, subtext=#{confirmation.subtext(${inputData.get('formattedSubmittedAt')})})}"/>
@@ -37,81 +39,42 @@
 
             <div th:replace="~{fragments/wicEceConfirmation :: wicEceConfirmation}"></div>
 
-            <hr>
-            <h2 class="h2" th:text="#{confirmation.next-steps}"></h2>
-
-            <div class="vertical-steps">
-              <div class="vertical-steps__step">
-                <div class="notice--warning steps-box spacing-below-0">
-                  <th:block th:replace="~{fragments/icons :: socialGroup}"></th:block>
-                  <p th:utext="#{confirmation.p1_html(${inputData.get('interviewDate')})}"></p>
+            <th:block th:unless="${inApplyGroup || inLinkGroup}">
+              <hr>
+              <h2 class="h2" th:text="#{confirmation.next-steps}"></h2>
+              <div class="vertical-steps">
+                <div class="vertical-steps__step">
+                  <div class="notice--warning steps-box spacing-below-0">
+                    <th:block th:replace="~{fragments/icons :: socialGroup}"></th:block>
+                    <p class="spacing-below-15"
+                       th:utext="#{confirmation.p1_html(${inputData.get('interviewDate')})}"></p>
+                  </div>
+                </div>
+                <div th:if="${inputData.getOrDefault('householdSearchingForJob', 'false').equals('true')}"
+                     class="vertical-steps__step">
+                  <div class="notice--warning steps-box spacing-below-0">
+                    <i class="icon-large icon-">&#xE8f9;</i>
+                    <p class="spacing-below-15" th:utext="#{confirmation.looking_for_job_html}"></p>
+                  </div>
+                </div>
+                <div class="vertical-steps__step">
+                  <div class="notice-info steps-box">
+                    <th:block th:replace="~{fragments/icons :: localPostOfficeBlack}"></th:block>
+                    <p th:utext="#{confirmation.p2_html}"></p>
+                  </div>
+                </div>
+                <div class="vertical-steps__step">
+                  <div class="notice-info steps-box vertical-step-bottom">
+                    <th:block th:replace="~{fragments/icons :: contactPhone}"></th:block>
+                    <p th:utext="#{confirmation.p3}"></p>
+                  </div>
                 </div>
               </div>
-              <div th:if="${inputData.getOrDefault('householdSearchingForJob', 'false').equals('true')}" class="vertical-steps__step">
-                <div class="notice--warning steps-box spacing-below-0">
-                  <i class="icon-large icon-">&#xE8f9;</i>
-                  <p th:utext="#{confirmation.looking_for_job_html}"></p>
-                </div>
-              </div>
-              <div class="vertical-steps__step">
-                <div class="notice-info steps-box">
-                  <th:block th:replace="~{fragments/icons :: localPostOfficeBlack}"></th:block>
-                  <p th:utext="#{confirmation.p2_html}"></p>
-                </div>
-              </div>
-              <div class="vertical-steps__step">
-                <div class="notice-info steps-box vertical-step-bottom">
-                  <th:block th:replace="~{fragments/icons :: contactPhone}"></th:block>
-                  <p th:utext="#{confirmation.p3}"></p>
-                </div>
-              </div>
-            </div>
+            </th:block>
 
-            <hr>
+            <div th:replace="~{fragments/feedback :: feedback}"></div>
 
-            <div
-                th:if="${(inputData.get('digitalAssisterFeedback') == null or inputData.get('digitalAssisterFeedback') == '')}"
-                id="client-feedback">
-
-              <p th:text="#{final-confirmation.provide-feedback}"></p>
-
-              <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
-                          radioFieldset(inputName='digitalAssisterFeedback',
-                          label=#{confirmation-feedback.how-easy},
-                          content=~{::feedbackOptions})}">
-                <th:block th:ref="feedbackOptions">
-                  <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o1}, label=#{final-confirmation.feedback-input.o1})}"/>
-                  <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o2}, label=#{final-confirmation.feedback-input.o2})}"/>
-                  <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o3}, label=#{final-confirmation.feedback-input.o3})}"/>
-                  <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o4}, label=#{final-confirmation.feedback-input.o4})}"/>
-                  <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o5}, label=#{final-confirmation.feedback-input.o5})}"/>
-                </th:block>
-              </th:block>
-              <th:block th:replace="~{'fragments/inputs/textArea' ::
-              textArea(inputName='digitalAssisterFeedbackDetail',
-              rows=3,
-              label=#{final-confirmation.additional-comments},
-              ariaLabel='digitalAssisterFeedback',
-              maxLength=100)}"/>
-              <div class="form-card__footer">
-                <th:block th:replace="~{'fragments/inputs/submitButton' :: submitButton(
-                      text=#{final-confirmation.feedback-submit-feedback}, classes='button button--primary center')}"/>
-              </div>
-            </div>
-            <div
-                th:if="${inputData.get('digitalAssisterFeedback') != null and inputData.get('digitalAssisterFeedback') != ''}"
-                id="feedback-submitted" class="spacing-above-15">
-              <th:block th:replace="~{'fragments/icons' :: checkbox}"></th:block>
-              <p th:text="#{final-confirmation.feedback-submitted}" class="spacing-above-35"
-                 style="font-weight: bold;"></p>
-            </div>
           </th:block>
-        </th:block>
         </th:block>
       </main>
     </div>

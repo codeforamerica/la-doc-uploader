@@ -612,6 +612,10 @@ flow:
         condition: EligibleForNolaWicEceLinks
       - name: eceLinks
         condition: EligibleForOutsideNolaWicEceLinks
+      - name: nolaApplyStart
+        condition: EligibleForNolaWicEceApply
+      - name: wicApply
+        condition: EligibleForOutsideNolaWicApply
       - name: finalSignPost
   expensesElderlyCareAmount:
     nextScreens:
@@ -619,11 +623,40 @@ flow:
         condition: EligibleForNolaWicEceLinks
       - name: wicLinks
         condition: EligibleForOutsideNolaWicEceLinks
+      - name: nolaApplyStart
+        condition: EligibleForNolaWicEceApply
+      - name: wicApply
+        condition: EligibleForOutsideNolaWicApply
       - name: finalSignPost
   nolaEceLinks:
     nextScreens:
       - name: wicLinks
   wicLinks:
+    nextScreens:
+      - name: finalSignPost
+  nolaApplyStart:
+    nextScreens:
+      - name: nolaApplyQuestions
+        condition: InterestedInECE
+      - name: wicApply
+  nolaApplyQuestions:
+    nextScreens:
+      - name: nolaApplyIEP
+  nolaApplyIEP:
+    nextScreens:
+      - name: nolaApplyHouseholdAdultsWork
+  nolaApplyHouseholdAdultsWork:
+    nextScreens:
+      - name: wicApply
+  wicApply:
+    nextScreens:
+      - name: nolaApplyThankYou
+        condition: InNolaParish
+      - name: outsideNolaApplyThankYou
+  nolaApplyThankYou:
+    nextScreens:
+      - name: finalSignPost
+  outsideNolaApplyThankYou:
     nextScreens:
       - name: finalSignPost
   finalSignPost:
@@ -634,9 +667,9 @@ flow:
       - name: authorizedRepAuthorization
   authorizedRepAuthorization:
     nextScreens:
-    - name: authorizedRepCommunication
-      condition: AddingAuthorizedRepresentative
-    - name: medicaid
+      - name: authorizedRepCommunication
+        condition: AddingAuthorizedRepresentative
+      - name: medicaid
   authorizedRepCommunication:
     nextScreens:
       - name: authorizedRepMail
@@ -660,9 +693,9 @@ flow:
       - name: raceEthnicityAsk
   raceEthnicityAsk:
     nextScreens:
-    - name: ethnicitySelection
-      condition: ApplicantRaceEthnicityQuestionsAllowed
-    - name: legalStuff
+      - name: ethnicitySelection
+        condition: ApplicantRaceEthnicityQuestionsAllowed
+      - name: legalStuff
   ethnicitySelection:
     nextScreens:
       - name: raceSelection
