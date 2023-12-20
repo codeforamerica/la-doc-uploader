@@ -9,6 +9,9 @@ import com.jcraft.jsch.SftpException;
 import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepository;
 import formflow.library.data.UserFileRepository;
+import formflow.library.file.CloudFile;
+import formflow.library.file.CloudFileRepository;
+import io.sentry.util.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -22,8 +25,6 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
-import org.ladocuploader.app.upload.CloudFile;
-import org.ladocuploader.app.upload.ReadOnlyCloudFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,6 +33,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -63,7 +65,7 @@ public class TransmitterCommandsTest {
     CsvService csvService;
 
     @MockBean
-    ReadOnlyCloudFileRepository fileRepository;
+    CloudFileRepository fileRepository;
 
     @Autowired
     UserFileRepository userFileRepository;
@@ -159,7 +161,9 @@ public class TransmitterCommandsTest {
         File docFile = new File("paystub.png");
         docFile.createNewFile();
 
-        when(fileRepository.download(any())).thenReturn(new CloudFile(10L, docFile));
+        byte[] bytes = Files.readAllBytes(docFile.toPath());
+
+        when(fileRepository.get(any())).thenReturn(new CloudFile(10L, bytes));
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();

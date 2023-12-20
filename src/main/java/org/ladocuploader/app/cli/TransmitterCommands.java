@@ -6,6 +6,8 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import formflow.library.data.UserFile;
+import formflow.library.file.CloudFile;
+import formflow.library.file.CloudFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.ladocuploader.app.csv.CsvPackage;
@@ -16,17 +18,12 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
-import org.ladocuploader.app.upload.CloudFile;
-import org.ladocuploader.app.upload.ReadOnlyCloudFileRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -43,14 +40,20 @@ public class TransmitterCommands {
 
     private final CsvService csvService;
 
-    private final ReadOnlyCloudFileRepository fileRepository;
+    private final CloudFileRepository fileRepository;
+
+    private final String failedSubmissionKey = "failed";
+
+    private final String failedDocumentationKey = "failed_documentation";
+
+    private final String successfulSubmissionKey = "success";
 
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, ReadOnlyCloudFileRepository fileRepository) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
-        this.fileRepository = fileRepository;
+        this.fileRepository = cloudFileRepository;
     }
 
     @ShellMethod(key = "transmit")
@@ -73,11 +76,11 @@ public class TransmitterCommands {
         String zipFilename = createZipFilename(transmissionType, runId);
         Map<String, Object> zipResults = zipFiles(submissions, zipFilename);
 
-        List<UUID> successfullySubmittedIds = (List<UUID>) zipResults.get("success");
+        List<UUID> successfullySubmittedIds = (List<UUID>) zipResults.get(successfulSubmissionKey);
 
-        Map<UUID, Map<CsvType, String>> failedSubmissions = (Map<UUID, Map<CsvType, String>>) zipResults.get("failed");
+        Map<UUID, Map<CsvType, String>> failedSubmissions = (Map<UUID, Map<CsvType, String>>) zipResults.get(failedSubmissionKey);
 
-        Map<UUID, Map<String, String>> failedDocumentation = (Map<UUID, Map<String, String>>) zipResults.get("failed_documentation");
+        Map<UUID, Map<String, String>> failedDocumentation = (Map<UUID, Map<String, String>>) zipResults.get(failedDocumentationKey);
 
         // send zip file
         log.info("Uploading zip file");
@@ -186,9 +189,10 @@ public class TransmitterCommands {
                             ZipEntry docEntry = new ZipEntry(subfolder + String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
                             docEntry.setSize(userFile.getFilesize().longValue());
                             zos.putNextEntry(docEntry);
-                            CloudFile docFile = fileRepository.download(userFile.getRepositoryPath());
-                            byte[] bytes = new byte[Math.toIntExact(docFile.getFilesize())];
-                            try (FileInputStream fis = new FileInputStream(docFile.getFile())) {
+                            CloudFile docFile = fileRepository.get(userFile.getRepositoryPath());
+                            byte[] bytes = new byte[Math.toIntExact(docFile.getFileSize())];
+
+                            try (ByteArrayInputStream fis = new ByteArrayInputStream(docFile.getFileBytes())) {
                                 fis.read(bytes);
                                 zos.write(bytes);
                             }
@@ -204,15 +208,15 @@ public class TransmitterCommands {
 
             });
 
-            results.put("failed_documentation", documentationErrors);
+            results.put(failedDocumentationKey, documentationErrors);
 
-            results.put("failed", submissionErrors);
+            results.put(failedSubmissionKey, submissionErrors);
 
         } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
             throw new RuntimeException(e);
         }
 
-        results.put("success", successfullySubmittedIds);
+        results.put(successfulSubmissionKey, successfullySubmittedIds);
 
         return results;
     }
