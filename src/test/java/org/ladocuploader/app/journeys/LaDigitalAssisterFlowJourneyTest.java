@@ -14,25 +14,26 @@ import static org.awaitility.Awaitility.await;
 @Slf4j
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
-  protected static final String RANGE_ERROR_MESSAGE="Make sure to provide a value between 1 and 100.";
+  protected static final String RANGE_ERROR_MESSAGE = "Make sure to provide a value between 1 and 100.";
 
   @Test
   void chooseProgramsFlow() {
     testPage.navigateToFlowScreen("laDigitalAssister/choosePrograms");
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(message("error.missing-general")));
     testPage.clickElementById("programs-SNAP");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap.title"));
   }
+
   @Test
   void whosApplyingFlow() {
     testPage.navigateToFlowScreen("laDigitalAssister/whosApplying");
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(message("error.missing-general")));
     testPage.clickElementById("whosApplying-Self");
     testPage.clickContinue();
 
@@ -48,9 +49,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("birthDay", "25");
     testPage.enter("birthYear", "1985");
 
-    assert(testPage.hasErrorText(message("error.missing-firstname")));
-    assert(testPage.hasErrorText(message("error.missing-lastname")));
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(message("error.missing-firstname")));
+    assert (testPage.hasErrorText(message("error.missing-lastname")));
+    assert (testPage.hasErrorText(message("error.missing-general")));
 
     testPage.enter("firstName", "test");
     testPage.enter("lastName", "test2");
@@ -62,7 +63,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  void hourlyIncomeFlow(){
+  void hourlyIncomeFlow() {
     loadUserPersonalData();
     loadHouseHoldData("First", "User", "12", "22", "1991");
     loadHouseHoldData("Second", "User", "01", "23", "1997");
@@ -73,7 +74,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
     testPage.clickContinue();
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(message("error.missing-general")));
 
     testPage.clickElementById("householdMemberJobAdd-you");
     testPage.clickContinue();
@@ -81,7 +82,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("employer-name.title"));
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(message("error.missing-general")));
     testPage.enter("employerName", "job1");
 
     testPage.clickContinue();
@@ -95,11 +96,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("job-hourly-wage.title"));
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.missing-dollar-amount")));
+    assert (testPage.hasErrorText(message("error.missing-dollar-amount")));
     testPage.enter("hourlyWage", "a");
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.invalid-money")));
+    assert (testPage.hasErrorText(message("error.invalid-money")));
     testPage.enter("hourlyWage", ".99");
 
     testPage.clickContinue();
@@ -107,13 +108,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("job-hours-per-week.title"));
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(RANGE_ERROR_MESSAGE));
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(RANGE_ERROR_MESSAGE));
+    assert (testPage.hasErrorText(message("error.missing-general")));
 
     testPage.enter("hoursPerWeek", "100000");
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(RANGE_ERROR_MESSAGE));
+    assert (testPage.hasErrorText(RANGE_ERROR_MESSAGE));
 
     testPage.enter("hoursPerWeek", "10");
     testPage.clickContinue();
@@ -122,32 +123,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  void monthlyIncomeFlow(){
-    loadUserPersonalData();
-    loadHouseHoldData("Third", "User", "12", "22", "1991");
-    loadHouseHoldData("Fourth", "User", "01", "23", "1997");
-    preloadIncomeScreen();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
-    testPage.clickLink(message("income-by-job.enter-directly"));
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-annual-income.title"));
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.missing-dollar-amount")));
-    testPage.enter("monthlyHouseholdIncome", "abc");
-    testPage.clickContinue();
-
-    assert(testPage.hasErrorText(message("error.invalid-money")));
-    testPage.enter("monthlyHouseholdIncome", "1286.55");
-
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("income-list.title"));
-  }
-
-  @Test
-  void otherIncomeFlow(){
+  void otherIncomeFlow() {
     loadUserPersonalData();
     loadHouseHoldData("Third", "User", "12", "22", "1991");
     loadHouseHoldData("Fourth", "User", "01", "23", "1997");
@@ -158,7 +134,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
     testPage.clickContinue();
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(message("error.missing-general")));
 
     testPage.clickElementById("householdMemberJobAdd-you");
     testPage.clickContinue();
@@ -166,7 +142,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("employer-name.title"));
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(message("error.missing-general")));
     testPage.enter("employerName", "job1");
 
     testPage.clickContinue();
@@ -178,7 +154,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("No");
 
     testPage.clickContinue();
-    assert(testPage.hasErrorText(message("error.missing-pay-period")));
+    assert (testPage.hasErrorText(message("error.missing-pay-period")));
 
     testPage.selectRadio("payPeriod", "Every month");
     testPage.clickContinue();
@@ -188,7 +164,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("payPeriodAmount", "a");
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.invalid-money")));
+    assert (testPage.hasErrorText(message("error.invalid-money")));
     testPage.enter("payPeriodAmount", "282.99");
 
     testPage.clickContinue();
@@ -197,7 +173,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  void socialSecurityFlow(){
+  void socialSecurityFlow() {
     loadUserPersonalData();
 
     testPage.navigateToFlowScreen("laDigitalAssister/ssnForm");
@@ -207,7 +183,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("ssn", "1234");
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.invalid-ssn")));
+    assert (testPage.hasErrorText(message("error.invalid-ssn")));
     testPage.enter("ssn", "");
     testPage.clickContinue();
 
@@ -216,8 +192,16 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void fullDigitalAssisterFlow() {
+    // Parish
+    testPage.navigateToFlowScreen("laDigitalAssister/parish");
+    testPage.clickContinue();
+    assertThat(testPage.hasErrorText(message("error.missing-general"))).isTrue();
+
+    testPage.selectFromDropdown("parish", "Orleans");
+    testPage.clickContinue();
+
     // How this works
-    testPage.navigateToFlowScreen("laDigitalAssister/howThisWorks");
+    assertThat(testPage.getTitle()).isEqualTo("How this works");
     testPage.clickContinue();
 
     // Timeout notice
@@ -314,13 +298,12 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     testPage.clickButton("This looks correct");
 
+    // Household
     assertThat(testPage.getTitle()).isEqualTo(message("multiple-person-household.title"));
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("household-signpost.title"));
-
     testPage.clickContinue();
-    // Household
 
     assertThat(testPage.getTitle()).isEqualTo(message("household-info.title"));
     testPage.enter("householdMemberFirstName", "roomy");
@@ -359,6 +342,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("schooldetails.title"));
+    testPage.enter("schoolName_wildcard_you", "School Name");
+    testPage.clickElementById("schoolEnrollmentLevel_wildcard_you-Half-time");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("pregnancy.title"));
@@ -373,6 +358,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("pregnantduedate.title"));
+    testPage.enter("monthPregnancyDueDate_wildcard_you", "12");
+    testPage.enter("dayPregnancyDueDate_wildcard_you", "12");
+    testPage.enter("yearPregnancyDueDate_wildcard_you", "2025");
+
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("out-of-state-benefits.title"));
@@ -523,17 +512,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
-
-    testPage.clickLink(message("income-by-job.enter-directly"));
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-annual-income.title"));
-
-    testPage.enter("monthlyHouseholdIncome", "200");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("income-list.title"));
-
-    testPage.clickButton(message("household-income-total.yes"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
@@ -579,22 +557,15 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("expenses-signpost.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));;
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));
+
     testPage.clickElementById("householdHomeExpenses-Rent-label");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.rent"));
-    testPage.goBack();
-
     testPage.clickElementById("householdHomeExpenses-Other-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.rent"));
-    testPage.enter("expensesRent", "500");
-    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses-amount.title"));
 
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.other"));
-    testPage.enter("expensesOther", "15");
+    testPage.enter("householdHomeExpenseAmount_wildcard_Rent", "500");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
@@ -602,30 +573,52 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("householdUtilitiesExpenses-Water-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("utilities.water"));
+    assertThat(testPage.getTitle()).isEqualTo(message("utilities-expenses-amount.title"));
     testPage.goBack();
 
     testPage.clickElementById("none__checkbox-label"); // none selected
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance-title"));
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("liheap-title"));
-    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance.title"));
+    testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
+    testPage.goBack();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance.title"));
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("liheap.title"));
+    testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
+    testPage.goBack();
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare-expenses.title"));
-    testPage.goBack();
+    testPage.enter("expensesDependentCare", "15");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
     testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.title"));
-    testPage.clickElementById("householdInsuranceExpenses-Dental insurance premiums-label");
+    testPage.goBack();
+
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
+    testPage.enter("expensesChildSupport", "150");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.dental-insurance-premium"));
+    assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.title"));
+
+    testPage.clickElementById("householdMedicalExpenses-Dental insurance premiums-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses-amount.title"));
     testPage.goBack();
 
     testPage.clickElementById("none__checkbox-label"); // none selected
@@ -639,12 +632,28 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.goBack();
     testPage.clickButton("No");
 
-    //    Final SignPost
+    var title = testPage.getTitle();
+    if ("ECE link".equals(title)) {
+      testPage.clickButton("Yes");
+      assertThat(testPage.getTitle()).isEqualTo("WIC link");
+      testPage.clickButton("Yes");
+    } else if ("ECE apply".equals(title)) {
+      testPage.clickButton("Yes, start my free childcare app");
+      testPage.clickContinue();
+      testPage.clickButton("Yes");
+      testPage.selectRadio("adultsWorking", "SOME");
+      testPage.clickContinue();
+      assertThat(testPage.getTitle()).isEqualTo("WIC apply");
+      testPage.clickButton("Yes, start my WIC app");
+      testPage.clickContinue();
+    }
+
+    // Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("ebtcard-title"));
-    testPage.clickContinue();
+    testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep.title"));
     testPage.clickButton("No");
@@ -699,6 +708,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("legal-title"));
+    testPage.clickElementById("rightsAndResponsibilitiesAgree-true");
+    testPage.clickElementById("noIncorrectInformationAgree-true");
+    testPage.clickElementById("programsSharingDataAccessAgree-true");
+    testPage.clickElementById("nonDiscriminationStatementAgree-true");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("signature-title"));
@@ -726,7 +739,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     uploadJpgFile();
     // give the system time to remove the "display-none" class.
     await().atMost(5, TimeUnit.SECONDS).until(
-            () -> !(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none"))
+        () -> !(testPage.findElementById("form-submit-button").getAttribute("class").contains("display-none"))
     );
 
     testPage.clickContinue();
@@ -764,9 +777,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
 
 
-
-
   }
+
   void loadUserPersonalData() {
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
 
@@ -791,7 +803,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
   }
 
-  void preloadIncomeScreen(){
+  void preloadIncomeScreen() {
     testPage.navigateToFlowScreen("laDigitalAssister/incomeSignPost");
     testPage.clickContinue();
 
@@ -800,7 +812,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("job-search-who.title"));
     testPage.clickContinue();
 
-    assert(testPage.hasErrorText(message("error.missing-general")));
+    assert (testPage.hasErrorText(message("error.missing-general")));
 
     testPage.clickElementById("jobSearch-you");
     testPage.clickContinue();

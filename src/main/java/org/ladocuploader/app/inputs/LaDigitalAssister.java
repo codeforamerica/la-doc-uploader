@@ -20,6 +20,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   MultipartFile uploadDocuments;
 
+  // Parish (WIC/ECE)
+  @NotEmpty(message="{error.missing-general}")
+  private String parish;
+
   // Language
   private String languageRead;
   private String languageSpeak;
@@ -126,11 +130,34 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String schoolInd;
 
-  private String students;
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> students;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String schoolName;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String schoolEnrollmentLevel;
 
   private String pregnancyInd;
 
-  private String pregnancies;
+  @NotEmpty(message="{error.missing-general}")
+  private List<String> pregnancies;
+
+//  With dynamic fields and the date template, the data is stored as pregnancyDueDate<wildcard><uuid>Day so changed the ordering to start with the date piece
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String dayPregnancyDueDate;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String monthPregnancyDueDate;
+
+  @NotBlank(message="{error.missing-general}")
+  @DynamicField
+  private String yearPregnancyDueDate;
 
   private String outOfStateBenefitsInd;
 
@@ -248,76 +275,22 @@ public class LaDigitalAssister extends FlowInputs {
   @NotEmpty(message="{error.missing-general}")
   private List<String> householdHomeExpenses;
 
-  @Money(message="{error.invalid-money}")
   @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesRent;
-
   @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesMortgage;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesHomeownerInsurance;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesPropertyTax;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesCondoFees;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesLotRental;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesFloodInsurance;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesOther;
+  @DynamicField
+  private String householdHomeExpenseAmount;
 
   @NotEmpty(message="{error.missing-general}")
   private List<String> householdUtilitiesExpenses;
 
-  @Money(message="{error.invalid-money}")
   @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesHeating;
+  @Money(message="{error.invalid-money}")
+  @DynamicField
+  private String householdUtilitiesExpenseAmount;
 
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesCooling;
+  private String receivesEnergyAssistance;
 
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesElectricity;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesWater;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesPhone;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesGarbage;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesSewer;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesCookingFuel;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesUtilitiesOther;
+  private String assistanceThroughLiheap;
 
   private String hasDependentCareExpenses;
 
@@ -325,24 +298,19 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesDependentCare;
 
+  private String hasChildSupportExpenses;
+
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expensesChildSupport;
+
   @NotEmpty(message="{error.missing-general}")
-  private List<String> householdInsuranceExpenses;
+  private List<String> householdMedicalExpenses;
 
-  @Money(message="{error.invalid-money}")
   @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesMedicalInsurance;
-
   @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesDentalInsurance;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesVisionInsurance;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesMedicalBills;
+  @DynamicField
+  private String householdMedicalExpenseAmount;
 
   private String hasElderlyCareExpenses;
 
@@ -350,7 +318,15 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank(message="{error.missing-dollar-amount}")
   private String expensesElderlyCare;
 
+  // WIC / ECE
+  private String interestedInEceInd;
+  private String interestedInWicInd;
+  private String adultsWorking;
+  private String guardiansHaveDisabilityInd;
+
   // Final Screen
+  private String needsNewEbtCard;
+
   private String authorizedRepresentative;
 
   private String authorizedRepCommsAuthorization;
@@ -399,12 +375,16 @@ public class LaDigitalAssister extends FlowInputs {
 
   private List<String> raceSelected;
 
+  @NotEmpty(message="{error.missing-checkbox}")
   private List<String> rightsAndResponsibilitiesAgree;
 
+  @NotEmpty(message="{error.missing-checkbox}")
   private List<String> noIncorrectInformationAgree;
 
+  @NotEmpty(message="{error.missing-checkbox}")
   private List<String> programsSharingDataAccessAgree;
 
+  @NotEmpty(message="{error.missing-checkbox}")
   private List<String> nonDiscriminationStatementAgree;
 
   @NotBlank(message="{error.missing-general}")

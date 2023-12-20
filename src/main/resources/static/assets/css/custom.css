@@ -220,13 +220,14 @@ input[type="number"] {
   border: 1px solid #003865;
   border-radius: 3px;
   position: relative;
-  padding: 20px 15px 0 15px;
+  padding: 20px 15px;
 }
 
 .steps-box {
   display: flex;
   align-items: flex-start;
   gap: 20px;
+  padding-bottom: 0;
 }
 
 .steps-box svg {

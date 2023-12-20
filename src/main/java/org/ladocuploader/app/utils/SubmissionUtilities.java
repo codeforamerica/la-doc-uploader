@@ -3,17 +3,22 @@ package org.ladocuploader.app.utils;
 import formflow.library.data.Submission;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
+import static java.util.Collections.emptyList;
+import static org.ladocuploader.app.utils.Parish.ORLEANS;
 
 public class SubmissionUtilities {
     public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
 
     public static final Map<String, String> PDF_EDUCATION_MAP = new HashMap<>();
     public static final Map<String, String> PDF_MARITAL_STATUS_MAP = new HashMap<>();
-
     public static final Map<String, String> PDF_RELATIONSHIP_MAP = new HashMap<>();
+
+    private static final LocalDate FIVE_YEARS_AGO = LocalDate.now().minusYears(5);
 
     static {
         PDF_EDUCATION_MAP.put("firstGrade", "1st grade");
@@ -77,6 +82,41 @@ public class SubmissionUtilities {
     public static String formatMoney(Double value) {
         DecimalFormat decimalFormat = new DecimalFormat("###.##");
         return "$" + decimalFormat.format(value);
+    }
+
+    public static boolean isNolaParish(Submission submission) {
+        return ORLEANS.name().equals(submission.getInputData().get("parish"));
+    }
+
+    public static boolean isEligibleForExperiment(Submission submission) {
+        // Someone in household is pregnant
+        var pregnancies = (List) submission.getInputData().getOrDefault("pregnancies[]", emptyList());
+        if (!pregnancies.isEmpty()) {
+            return true;
+        }
+
+        // Has child under 5
+        var household = submission.getInputData().get("household");
+        if (household != null) {
+            for (Map<String, Object> member : ((List<Map<String, Object>>) household)) {
+                if ("child".equals(member.get("householdMemberRelationship"))) {
+                    var birthday = Stream.of("householdMemberBirthYear","householdMemberBirthMonth", "householdMemberBirthDay")
+                            .map(key -> (String)member.get(key))
+                            .reduce((e, c) -> e + "-" + c)
+                            .get();
+                    LocalDate birthdate = LocalDate.parse(birthday);
+                    if (birthdate.isAfter(FIVE_YEARS_AGO)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean inExperimentGroup(String groupName, Submission submission) {
+        return groupName.equals(submission.getInputData().get("experimentGroup"));
     }
 
     public static String householdMemberFullName(Map<String, String> householdMember) {

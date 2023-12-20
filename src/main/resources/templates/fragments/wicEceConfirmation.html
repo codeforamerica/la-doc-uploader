@@ -1,0 +1,75 @@
+<th:block th:fragment="wicEceConfirmation">
+  <th:block th:with="
+        inNola=${T(org.ladocuploader.app.utils.SubmissionUtilities).isNolaParish(submission)},
+        inLinkGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('LINK', submission)},
+        inApplyGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('APPLY', submission)},
+        isInterestedInECE=${'true'.equals(inputData.get('interestedInEceInd'))},
+        isInterestedInWIC=${'true'.equals(inputData.get('interestedInWicInd'))}">
+
+    <th:block th:if="${inApplyGroup || inLinkGroup}">
+      <h2 class="h2" th:text="#{confirmation.next-steps-immediate}"></h2>
+      <div class="notice--warning steps-box">
+        <th:block th:replace="~{fragments/icons :: socialGroup}"></th:block>
+        <p class="spacing-below-15"
+           th:utext="|<b>SNAP:</b> #{confirmation.p1_html(${inputData.get('interviewDate')})}|"></p>
+      </div>
+    </th:block>
+
+    <div th:if="${inNola && inApplyGroup && isInterestedInECE}"
+         class="notice--warning steps-box">
+      <div class="large-icon"><i class="icon-">&#xE625;</i></div>
+      <p class="spacing-below-15" th:utext="#{ece-notice-confirmation}"></p>
+    </div>
+
+    <div th:if="${inApplyGroup && isInterestedInWIC}"
+         class="notice--warning steps-box spacing-below-0">
+      <th:block th:replace="~{fragments/icons :: socialGroup}"></th:block>
+      <p class="spacing-below-15" th:utext="#{wic-notice-confirmation}"></p>
+    </div>
+
+    <th:block th:if="${inNola}">
+      <th:block th:if="${!isInterestedInECE}">
+        <hr>
+        <h2 class="h2" th:text="#{ece-no-confirmation.header}"></h2>
+      </th:block>
+      <th:block th:if="${inLinkGroup && isInterestedInECE}">
+        <hr>
+        <h2 class="h2" th:text="#{ece-yes-confirmation.header}"></h2>
+      </th:block>
+      <th:block th:if="${!isInterestedInECE || inLinkGroup}">
+        <p th:text="#{nola-ece.if-youre-approved}"></p>
+        <p th:utext="#{nola-ece.subheader}"></p>
+        <a class="button button--primary" href="http://apply.avela.org/nolaps"
+           th:text="#{nola-ece-go-to-application}"></a>
+      </th:block>
+    </th:block>
+
+    <th:block th:if="${inApplyGroup || inLinkGroup}">
+      <th:block th:if="${inLinkGroup && isInterestedInWIC}">
+        <hr>
+        <h2 class="h2" th:text="#{wic-yes-confirmation.header}"></h2>
+      </th:block>
+      <th:block th:unless="${isInterestedInWIC}">
+        <hr>
+        <h2 class="h2" th:text="#{wic-no-confirmation.header}"></h2>
+      </th:block>
+      <th:block th:if="${!isInterestedInWIC || inLinkGroup}">
+        <p th:text="#{wic.if-youre-approved}"></p>
+        <p th:utext="#{wic.subheader}"></p>
+        <a class="button button--primary" href="https://mywic.net/participantreferral"
+           th:text="#{wic-go-to-application}"></a>
+      </th:block>
+
+      <hr>
+      <h2 class="h2" th:text="#{confirmation-what-to-expect-after}"></h2>
+      <div class="notice-info steps-box spacing-below-15">
+        <th:block th:replace="~{fragments/icons :: localPostOfficeBlack}"></th:block>
+        <p th:utext="|#{confirmation-for-snap}: #{confirmation.p2_html}|"></p>
+      </div>
+      <div class="notice-info steps-box spacing-below-15">
+        <th:block th:replace="~{fragments/icons :: contactPhone}"></th:block>
+        <p th:utext="|#{confirmation-for-snap-questions}: #{confirmation.p3}|"></p>
+      </div>
+    </th:block>
+  </th:block>
+</th:block>
