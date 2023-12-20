@@ -14,20 +14,20 @@
             <th:block th:ref="insuranceExpenses">
               <div class="form-card__content">
                 <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
-                  checkboxFieldset(inputName='householdInsuranceExpenses',
+                  checkboxFieldset(inputName='householdMedicalExpenses',
                   ariaLabel=#{insurance-expenses.header},
                   content=~{::whichHouseholdExpenses})}">
                     <th:block th:ref="whichHouseholdExpenses">
                       <th:block
-                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.medical-insurance-premium}, label=#{insurance-expenses.medical-insurance-premium})}"/>
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{insurance-expenses.medical-insurance-premium}, label=#{insurance-expenses.medical-insurance-premium})}"/>
                       <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.dental-insurance-premium}, label=#{insurance-expenses.dental-insurance-premium})}"/>
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{insurance-expenses.dental-insurance-premium}, label=#{insurance-expenses.dental-insurance-premium})}"/>
                       <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.vision-insurance-premium}, label=#{insurance-expenses.vision-insurance-premium})}"/>
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{insurance-expenses.vision-insurance-premium}, label=#{insurance-expenses.vision-insurance-premium})}"/>
                       <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.medical-bills}, label=#{insurance-expenses.medical-bills})}"/>
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{insurance-expenses.medical-bills}, label=#{insurance-expenses.medical-bills})}"/>
                       <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdInsuranceExpenses',value=#{insurance-expenses.none}, label=#{insurance-expenses.none}, noneOfTheAbove=true)}"/>
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value='None', label=#{insurance-expenses.none}, noneOfTheAbove=true)}"/>
                     </th:block>
                 </th:block>
                 

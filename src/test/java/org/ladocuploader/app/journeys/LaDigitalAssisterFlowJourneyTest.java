@@ -558,22 +558,14 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));
-    ;
+
     testPage.clickElementById("householdHomeExpenses-Rent-label");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.rent"));
-    testPage.goBack();
-
     testPage.clickElementById("householdHomeExpenses-Other-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.rent"));
-    testPage.enter("expensesRent", "500");
-    testPage.clickContinue();
+    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses-amount.title"));
 
-    assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.other"));
-    testPage.enter("expensesOther", "15");
+    testPage.enter("householdHomeExpenseAmount_wildcard_Rent", "500");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
@@ -581,7 +573,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("householdUtilitiesExpenses-Water-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("utilities.water"));
+    assertThat(testPage.getTitle()).isEqualTo(message("utilities-expenses-amount.title"));
     testPage.goBack();
 
     testPage.clickElementById("none__checkbox-label"); // none selected
@@ -622,10 +614,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.title"));
-    testPage.clickElementById("householdInsuranceExpenses-Dental insurance premiums-label");
+
+    testPage.clickElementById("householdMedicalExpenses-Dental insurance premiums-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.dental-insurance-premium"));
+    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses-amount.title"));
     testPage.goBack();
 
     testPage.clickElementById("none__checkbox-label"); // none selected

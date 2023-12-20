@@ -328,221 +328,18 @@ flow:
       - name: householdHomeExpenses
   householdHomeExpenses:
     nextScreens:
-      - name: expensesRent
-        condition: ExpensesIncludeRent
-      - name: expensesMortgage
-        condition: ExpensesIncludeMortgage
-      - name: expensesHomeownerInsurance
-        condition: ExpensesIncludeHomeownerInsurance
-      - name: expensesPropertyTax
-        condition: ExpensesIncludePropertyTax
-      - name: expensesCondoFees
-        condition: ExpensesIncludeCondoFees
-      - name: expensesLotRent
-        condition: ExpensesIncludeLotRent
-      - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloodInsurance
-      - name: expensesOther
-        condition: ExpensesIncludeOther
-      - name: utilities
-  expensesRent:
+      - name: householdHomeExpensesAmount
+        condition: HasHouseholdHomeExpenses
+      - name: householdUtilities
+  householdHomeExpensesAmount:
     nextScreens:
-      - name: expensesMortgage
-        condition: ExpensesIncludeMortgage
-      - name: expensesHomeownerInsurance
-        condition: ExpensesIncludeHomeownerInsurance
-      - name: expensesPropertyTax
-        condition: ExpensesIncludePropertyTax
-      - name: expensesCondoFees
-        condition: ExpensesIncludeCondoFees
-      - name: expensesLotRent
-        condition: ExpensesIncludeLotRent
-      - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloodInsurance
-      - name: expensesOther
-        condition: ExpensesIncludeOther
-      - name: utilities
-  expensesMortgage:
+      - name: householdUtilities
+  householdUtilities:
     nextScreens:
-      - name: expensesHomeownerInsurance
-        condition: ExpensesIncludeHomeownerInsurance
-      - name: expensesPropertyTax
-        condition: ExpensesIncludePropertyTax
-      - name: expensesCondoFees
-        condition: ExpensesIncludeCondoFees
-      - name: expensesLotRent
-        condition: ExpensesIncludeLotRent
-      - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloodInsurance
-      - name: expensesOther
-        condition: ExpensesIncludeOther
-      - name: utilities
-  expensesHomeownerInsurance:
-    nextScreens:
-      - name: expensesPropertyTax
-        condition: ExpensesIncludePropertyTax
-      - name: expensesCondoFees
-        condition: ExpensesIncludeCondoFees
-      - name: expensesLotRent
-        condition: ExpensesIncludeLotRent
-      - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloodInsurance
-      - name: expensesOther
-        condition: ExpensesIncludeOther
-      - name: utilities
-  expensesPropertyTax:
-    nextScreens:
-      - name: expensesCondoFees
-        condition: ExpensesIncludeCondoFees
-      - name: expensesLotRent
-        condition: ExpensesIncludeLotRent
-      - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloodInsurance
-      - name: expensesOther
-        condition: ExpensesIncludeOther
-      - name: utilities
-  expensesCondoFees:
-    nextScreens:
-      - name: expensesLotRent
-        condition: ExpensesIncludeLotRent
-      - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloodInsurance
-      - name: expensesOther
-        condition: ExpensesIncludeOther
-      - name: utilities
-  expensesLotRent:
-    nextScreens:
-      - name: expensesFloodInsurance
-        condition: ExpensesIncludeFloodInsurance
-      - name: expensesOther
-        condition: ExpensesIncludeOther
-      - name: utilities
-  expensesFloodInsurance:
-    nextScreens:
-      - name: expensesOther
-        condition: ExpensesIncludeOther
-      - name: utilities
-  expensesOther:
-    nextScreens:
-      - name: utilities
-  utilities:
-    nextScreens:
-      - name: utilitiesHeating
-        condition: ExpensesIncludeHeating
-      - name: utilitiesCooling
-        condition: ExpensesIncludeCooling
-      - name: utilitiesElectricity
-        condition: ExpensesIncludeElectricity
-      - name: utilitiesWater
-        condition: ExpensesIncludeWater
-      - name: utilitiesPhone
-        condition: ExpensesIncludePhone
-      - name: utilitiesGarbage
-        condition: ExpensesIncludeGarbage
-      - name: utilitiesSewer
-        condition: ExpensesIncludeSewer
-      - name: utilitiesCookingFuel
-        condition: ExpensesIncludeCookingFuel
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
+      - name: householdUtilitiesAmount
+        condition: HasUtilitiesExpenses
       - name: energyAssistance
-  utilitiesHeating:
-    nextScreens:
-      - name: utilitiesCooling
-        condition: ExpensesIncludeCooling
-      - name: utilitiesElectricity
-        condition: ExpensesIncludeElectricity
-      - name: utilitiesWater
-        condition: ExpensesIncludeWater
-      - name: utilitiesPhone
-        condition: ExpensesIncludePhone
-      - name: utilitiesGarbage
-        condition: ExpensesIncludeGarbage
-      - name: utilitiesSewer
-        condition: ExpensesIncludeSewer
-      - name: utilitiesCookingFuel
-        condition: ExpensesIncludeCookingFuel
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
-      - name: energyAssistance
-  utilitiesCooling:
-    nextScreens:
-      - name: utilitiesElectricity
-        condition: ExpensesIncludeElectricity
-      - name: utilitiesWater
-        condition: ExpensesIncludeWater
-      - name: utilitiesPhone
-        condition: ExpensesIncludePhone
-      - name: utilitiesGarbage
-        condition: ExpensesIncludeGarbage
-      - name: utilitiesSewer
-        condition: ExpensesIncludeSewer
-      - name: utilitiesCookingFuel
-        condition: ExpensesIncludeCookingFuel
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
-      - name: energyAssistance
-  utilitiesElectricity:
-    nextScreens:
-      - name: utilitiesWater
-        condition: ExpensesIncludeWater
-      - name: utilitiesPhone
-        condition: ExpensesIncludePhone
-      - name: utilitiesGarbage
-        condition: ExpensesIncludeGarbage
-      - name: utilitiesSewer
-        condition: ExpensesIncludeSewer
-      - name: utilitiesCookingFuel
-        condition: ExpensesIncludeCookingFuel
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
-      - name: energyAssistance
-  utilitiesWater:
-    nextScreens:
-      - name: utilitiesPhone
-        condition: ExpensesIncludePhone
-      - name: utilitiesGarbage
-        condition: ExpensesIncludeGarbage
-      - name: utilitiesSewer
-        condition: ExpensesIncludeSewer
-      - name: utilitiesCookingFuel
-        condition: ExpensesIncludeCookingFuel
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
-      - name: energyAssistance
-  utilitiesPhone:
-    nextScreens:
-      - name: utilitiesGarbage
-        condition: ExpensesIncludeGarbage
-      - name: utilitiesSewer
-        condition: ExpensesIncludeSewer
-      - name: utilitiesCookingFuel
-        condition: ExpensesIncludeCookingFuel
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
-      - name: energyAssistance
-  utilitiesGarbage:
-    nextScreens:
-      - name: utilitiesSewer
-        condition: ExpensesIncludeSewer
-      - name: utilitiesCookingFuel
-        condition: ExpensesIncludeCookingFuel
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
-      - name: energyAssistance
-  utilitiesSewer:
-    nextScreens:
-      - name: utilitiesCookingFuel
-        condition: ExpensesIncludeCookingFuel
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
-      - name: energyAssistance
-  utilitiesCookingFuel:
-    nextScreens:
-      - name: utilitiesOther
-        condition: ExpensesIncludeOtherUtilities
-      - name: energyAssistance
-  utilitiesOther:
+  householdUtilitiesAmount:
     nextScreens:
       - name: energyAssistance
   energyAssistance:
@@ -565,43 +362,16 @@ flow:
     nextScreens:
       - name: expensesChildSupportAmount
         condition: HasChildSupportExpenses
-      - name: expensesInsurance
+      - name: householdMedicalExpenses
   expensesChildSupportAmount:
     nextScreens:
-      - name: expensesInsurance
-  expensesInsurance:
+      - name: householdMedicalExpenses
+  householdMedicalExpenses:
     nextScreens:
-      - name: expensesMedicalInsurance
-        condition: ExpensesIncludeMedicalInsurancePremium
-      - name: expensesDentalInsurance
-        condition: ExpensesIncludeDentalInsurancePremium
-      - name: expensesVisionInsurance
-        condition: ExpensesIncludeVisionInsurancePremium
-      - name: expensesMedicalBills
-        condition: ExpensesIncludeMedicalBills
+      - name: householdMedicalExpensesAmount
+        condition: HasMedicalExpenses
       - name: expensesElderlyCare
-  expensesMedicalInsurance:
-    nextScreens:
-      - name: expensesDentalInsurance
-        condition: ExpensesIncludeDentalInsurancePremium
-      - name: expensesVisionInsurance
-        condition: ExpensesIncludeVisionInsurancePremium
-      - name: expensesMedicalBills
-        condition: ExpensesIncludeMedicalBills
-      - name: expensesElderlyCare
-  expensesDentalInsurance:
-    nextScreens:
-      - name: expensesVisionInsurance
-        condition: ExpensesIncludeVisionInsurancePremium
-      - name: expensesMedicalBills
-        condition: ExpensesIncludeMedicalBills
-      - name: expensesElderlyCare
-  expensesVisionInsurance:
-    nextScreens:
-      - name: expensesMedicalBills
-        condition: ExpensesIncludeMedicalBills
-      - name: expensesElderlyCare
-  expensesMedicalBills:
+  householdMedicalExpensesAmount:
     nextScreens:
       - name: expensesElderlyCare
   expensesElderlyCare:
