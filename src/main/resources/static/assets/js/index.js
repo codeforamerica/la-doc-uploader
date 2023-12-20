@@ -26,13 +26,15 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   }
+
 });
+
 
 function setCsrf(cookieName) {
   console.log("attempting to set cookie");
   var element = document.getElementById("token");
   if (element) {
-    let cookie = cookieName + '=' + element.getAttribute("value") + ';';
+    let cookie = cookieName + '=' + element.getAttribute("value") + '; Secure; SameSite=Lax;';
     document.cookie = cookie;
     console.log("setting CSRF to: " + cookie);
   }

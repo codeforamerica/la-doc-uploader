@@ -1,4 +1,5 @@
 form-flow:
+  csrf-key: 123456789
   disabled-flows: ~
   uploads:
     default-doc-type: "NotSet"

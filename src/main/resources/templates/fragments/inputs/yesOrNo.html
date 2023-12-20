@@ -19,8 +19,8 @@
       th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"
       type="submit"
       value="true"
-      class="button button--primary"
-      th:onclick="setCsrf([[${cookieName}]])">
+      class="button button--primary">
+      <!--th:onclick="setCsrf([[${cookieName}]])"> -->
     <span th:text="${hasYesText ? overrideYesText : #messages.msg('general.inputs.yes')}"></span>
   </button>
   <button
@@ -28,8 +28,8 @@
       th:aria-describedby="${hasHelpText ? ariaDescribe + ' ' + inputName + '-help-text' : ariaDescribe}"
       value="false"
       th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
-      class="button button--secondary"
-      th:onclick="setCsrf([[${cookieName}]])">
+      class="button button--secondary">
+      <!---th:onclick="setCsrf([[${cookieName}]])"> -->
     <span th:text="${hasNoText ? overrideNoText : #messages.msg('general.inputs.no')}"></span>
   </button>
 </th:block>

@@ -1,6 +1,7 @@
 package org.ladocuploader.app.config;
 
 import org.ladocuploader.app.filters.StatelessCsrfFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,6 +17,7 @@ public class SecurityConfiguration {
   public static final String CSRF_FIELD = "csrfField";
   public static final String CSRF_HEADER = "X-CSRF-TOKEN";
 
+  @Autowired
   private final StatelessCsrfFilter statelessCsrfFilter = new StatelessCsrfFilter();
 
   @Bean

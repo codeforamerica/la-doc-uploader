@@ -94,8 +94,14 @@ public abstract class AbstractBasePageTest {
             .isBlank());
   }
 
-  public String message(String message) {
+  protected String message(String message) {
     return messageSource
         .getMessage(message, null, Locale.ENGLISH);
+  }
+
+  protected String getApplicantIdFromUrl(String url) {
+    assertThat(url.contains("applicantId")).isTrue();
+    int index = url.lastIndexOf("=");
+    return url.substring(index);
   }
 }

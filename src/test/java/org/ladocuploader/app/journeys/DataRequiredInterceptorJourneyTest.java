@@ -146,12 +146,6 @@ public class DataRequiredInterceptorJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo("How this works");
   }
 
-  private String getApplicantIdFromUrl(String url) {
-    assertThat(url.contains("applicantId")).isTrue();
-    int index = url.lastIndexOf("=");
-    return url.substring(index);
-  }
-
   private void testSelectValue(String elementId, String expectedValue) {
     String elementValue = driver.findElement(By.id(elementId))
         .findElements(By.tagName("option")).stream()

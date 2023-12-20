@@ -34,8 +34,9 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
   private LandmarkConfiguration landmarkConfiguration;
 
   // for each flow, only supply one page and whatever fields on that page you want to check.
-  // <flow, <pageName, inputName>>
-  // For any POST page in a flow, it MUST have the data listed, unless it is the page that the
+  // Map <String flow, <String pageName, String inputName>>
+  // Any POST to a page in a flow will be checked against this map. The Submission associated with the
+  // POST MUST have the data listed, unless it is the page that the data is gathered on.
   private static final Map<String, Map<String,String>> REQUIRED_DATA = Map.of(
           "laDocUpload",  Map.of("clientInfo", "firstName"),
           "laDigitalAssister", Map.of("languagePreference", "languageRead")
@@ -108,12 +109,12 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
         }
       }
 
-      // Session/submission issues have been resolved.
       //
-      // Don't check data on a GET - this could cause weird flow if the GET page is _before_
-      // the first page where we collect data.
-      // If we check data on a GET, we may get bumped forward to the first page where we collect
-      // data, thereby ruining the flow.
+      // Session/submission issues have been resolved. Now let's look at the data
+      //
+
+      // Don't check data on a GET.  If we check data on a GET, we may get bumped FORWARD to the first page
+      // where we collect data, thereby ruining the flow.
       if ("GET".equals(request.getMethod())) {
         return true;
       }
