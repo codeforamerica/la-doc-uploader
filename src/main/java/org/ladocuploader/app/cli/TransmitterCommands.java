@@ -68,7 +68,9 @@ public class TransmitterCommands {
     }
 
     private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException{
-        String zipFilename = createZipFilename(transmissionType);
+
+        UUID runId = UUID.randomUUID();
+        String zipFilename = createZipFilename(transmissionType, runId);
         Map<String, Object> zipResults = zipFiles(submissions, zipFilename);
 
         List<UUID> successfullySubmittedIds = (List<UUID>) zipResults.get("success");
@@ -85,8 +87,6 @@ public class TransmitterCommands {
         zip.delete();
 
         // TODO: make it possible to correlate run id with filename - put in filename?
-
-        UUID runId = UUID.randomUUID();
 
         // Update transmission in DB for success TODO: make this less repetitive
         successfullySubmittedIds.forEach(id -> {
@@ -121,12 +121,12 @@ public class TransmitterCommands {
     }
 
     @NotNull
-    private static String createZipFilename(TransmissionType transmissionType) {
-        // Format: Apps__<TRANSMISSION_TYPE>__2023-07-05.zip
+    private static String createZipFilename(TransmissionType transmissionType, UUID runId) {
+        // Format: Apps__<TRANSMISSION_TYPE>__<RUN_ID>__2023-07-05.zip
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
-        return "Apps__" + transmissionType.name() + "__" + date + ".zip";
+        return "Apps__" + transmissionType.name() + "__" + runId + "__" + date + ".zip";
     }
 
     private void addZipEntries(CsvPackage csvPackage, ZipOutputStream zipOutput){
@@ -170,7 +170,9 @@ public class TransmitterCommands {
             submissions.forEach(submission -> {
                 List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submission);
                 log.info("Found " + userFiles.size() + " files associated with app.");
-
+                if (userFiles.size() == 0){
+                    return;
+                }
                 int fileCount = 0;
                     String subfolder = submission.getId() + "_files/";
                     try {

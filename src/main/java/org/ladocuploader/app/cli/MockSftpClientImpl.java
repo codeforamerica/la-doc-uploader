@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class MockSftpClientImpl implements SftpClient {
 
   @Override
-  public void uploadFile(String zipFilename, @Value("${sftp.environment-path:}") String environmentPath) {
+  public void uploadFile(String zipFilename, String filePath) {
     // Do nothing
     log.info("Mock uploading file " + zipFilename);
   }
