@@ -86,9 +86,6 @@ public class TransmitterCommands {
         File zip = new File(zipFilename);
         zip.delete();
 
-        // TODO: make it possible to correlate run id with filename - put in filename?
-
-        // Update transmission in DB for success TODO: make this less repetitive
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
             Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
