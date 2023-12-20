@@ -5,7 +5,8 @@
   <button id="form-submit-button"
           th:class="${classes != null ? classes : 'button button--primary'}"
           type="submit"
-          th:text="${text}">
-          <!--th:onclick="setCsrf([[${cookieName}]])"> -->
+          th:text="${text}"
+          th:onclick="setCsrf([[${cookieName}]])"
+          th:classappend="${isHidden}? 'display-none'">
   </button>
 </th:block>

@@ -10,8 +10,7 @@
       th:enctype="${enctype}"
       th:id="${formId}"
       autocomplete="off"
-      method="post"
-      th:onclick="setCsrf([[${cookieName}]])">
+      method="post">
   <input type="hidden" th:attr="name=${csrfFieldName}" th:value="${csrfToken}" id="token">
   <th:block th:replace="${content}"/>
 </form>

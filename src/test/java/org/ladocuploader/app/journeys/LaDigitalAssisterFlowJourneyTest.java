@@ -1,20 +1,33 @@
 package org.ladocuploader.app.journeys;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.ladocuploader.app.interceptors.DataRequiredInterceptor;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @Slf4j
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
+  @MockBean
+  DataRequiredInterceptor dataRequiredInterceptor;
+
   protected static final String RANGE_ERROR_MESSAGE = "Make sure to provide a value between 1 and 100.";
+
+  @BeforeEach
+  void setup() throws Exception {
+    when(dataRequiredInterceptor.preHandle(any(), any(), any())).thenReturn(true);
+  }
 
   @Test
   void chooseProgramsFlow() {

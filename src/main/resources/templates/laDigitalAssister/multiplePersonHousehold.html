@@ -36,16 +36,16 @@
                     th:aria-describedby="${hasHelpText ? inputName + '-help-text' : ariaDescribe}"
                     type="submit"
                     value="true"
-                    class="button button--primary">
-                    <!--th:onclick="setCsrf([[${cookieName}]])"> -->
+                    class="button button--primary"
+                    th:onclick="setCsrf([[${cookieName}]])">
                   <span th:text="#{general.inputs.yes}"></span>
                 </button>
                 <button
                     th:name="${inputName}"
                     th:aria-describedby="${hasHelpText ? inputName + '-help-text' : ariaDescribe}"
                     value="false"
-                    class="button spacing-left-0">
-                <!--th:onclick="setCsrf([[${cookieName}]])"> -->
+                    class="button spacing-left-0"
+                    th:onclick="setCsrf([[${cookieName}]])">
                   <span th:text="#{multiple-person-household.no-its-just-me}"></span>
                 </button>
               </th:block>

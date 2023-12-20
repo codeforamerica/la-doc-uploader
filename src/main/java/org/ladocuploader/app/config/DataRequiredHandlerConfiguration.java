@@ -17,10 +17,13 @@ public class DataRequiredHandlerConfiguration implements WebMvcConfigurer {
     @Autowired
     List<FlowConfiguration> flowConfigurations;
 
+    @Autowired
+    DataRequiredInterceptor dataRequiredInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry
-            .addInterceptor(new DataRequiredInterceptor(this.submissionRepositoryService, this.flowConfigurations))
+            .addInterceptor(dataRequiredInterceptor)
             .addPathPatterns(DataRequiredInterceptor.PATH_FORMAT, DataRequiredInterceptor.PATH_FORMAT_NAV);
     }
 }
