@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{utilities-expenses-amount.title})"></head>
+<head th:replace="fragments/head :: head(title=#{medical-expenses-amount.title})"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="fragments/toolbar :: toolbar"></div>
@@ -8,16 +8,16 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <p class="grey-text" th:text="#{utilities-expenses-amount.title}"></p>
+        <p class="grey-text" th:text="#{medical-expenses-amount.title}"></p>
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formDetails})}">
           <th:block th:ref="formDetails">
             <div class="form-card__content">
-              <div th:each="expense, iter:${inputData.get('householdUtilitiesExpenses[]')}"
+              <div th:each="expense, iter:${inputData.get('householdMedicalExpenses[]')}"
                    class="spacing-below-15">
                 <div th:if="${expense != 'Other'}">
                   <th:block
-                      th:with="inputName=${'householdUtilitiesExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
+                      th:with="inputName=${'householdMedicalExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
                     <h2 th:text="#{home-expenses-amount.question(${expense})}"></h2>
                     <p class="text--help" th:text="#{expenses-estimate-ok}"></p>
                     <th:block

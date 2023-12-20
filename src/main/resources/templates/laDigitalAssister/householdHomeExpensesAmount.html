@@ -8,7 +8,7 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <p class="grey-text" th:text="#{home-expenses-amount.header}"></p>
+        <p class="grey-text" th:text="#{home-expenses-amount.title}"></p>
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formDetails})}">
           <th:block th:ref="formDetails">
@@ -22,7 +22,7 @@
                     <p class="text--help" th:text="#{expenses-estimate-ok}"></p>
                     <th:block
                         th:replace="~{fragments/inputs/money :: money(inputName=${inputName},
-                  ariaLabel=#{home-expenses-amount.header})}"/>
+                  ariaLabel=${expense})}"/>
                   </th:block>
                   <hr/>
                 </div>

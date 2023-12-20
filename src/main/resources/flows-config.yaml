@@ -366,39 +366,12 @@ flow:
   expensesChildSupportAmount:
     nextScreens:
       - name: expensesInsurance
-  expensesInsurance:
+  householdMedicalExpenses:
     nextScreens:
-      - name: expensesMedicalInsurance
-        condition: ExpensesIncludeMedicalInsurancePremium
-      - name: expensesDentalInsurance
-        condition: ExpensesIncludeDentalInsurancePremium
-      - name: expensesVisionInsurance
-        condition: ExpensesIncludeVisionInsurancePremium
-      - name: expensesMedicalBills
-        condition: ExpensesIncludeMedicalBills
+      - name: householdMedicalExpensesAmount
+        condition: HasMedicalExpenses
       - name: expensesElderlyCare
-  expensesMedicalInsurance:
-    nextScreens:
-      - name: expensesDentalInsurance
-        condition: ExpensesIncludeDentalInsurancePremium
-      - name: expensesVisionInsurance
-        condition: ExpensesIncludeVisionInsurancePremium
-      - name: expensesMedicalBills
-        condition: ExpensesIncludeMedicalBills
-      - name: expensesElderlyCare
-  expensesDentalInsurance:
-    nextScreens:
-      - name: expensesVisionInsurance
-        condition: ExpensesIncludeVisionInsurancePremium
-      - name: expensesMedicalBills
-        condition: ExpensesIncludeMedicalBills
-      - name: expensesElderlyCare
-  expensesVisionInsurance:
-    nextScreens:
-      - name: expensesMedicalBills
-        condition: ExpensesIncludeMedicalBills
-      - name: expensesElderlyCare
-  expensesMedicalBills:
+  householdMedicalExpensesAmount:
     nextScreens:
       - name: expensesElderlyCare
   expensesElderlyCare:

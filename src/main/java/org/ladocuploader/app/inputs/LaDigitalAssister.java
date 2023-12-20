@@ -305,23 +305,12 @@ public class LaDigitalAssister extends FlowInputs {
   private String expensesChildSupport;
 
   @NotEmpty(message="{error.missing-general}")
-  private List<String> householdInsuranceExpenses;
+  private List<String> householdMedicalExpenses;
 
-  @Money(message="{error.invalid-money}")
   @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesMedicalInsurance;
-
   @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesDentalInsurance;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesVisionInsurance;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesMedicalBills;
+  @DynamicField
+  private String householdMedicalExpenseAmount;
 
   private String hasElderlyCareExpenses;
 
