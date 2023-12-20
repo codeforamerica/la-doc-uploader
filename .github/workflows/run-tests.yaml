@@ -52,7 +52,7 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Save screenshot from flaky tests
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: flaky test screenshot
           path: flakeyTestScreenshot.jpg
