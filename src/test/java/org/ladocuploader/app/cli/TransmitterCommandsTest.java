@@ -38,8 +38,10 @@ import java.util.Map;
 
 import static org.assertj.core.util.DateUtil.now;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
@@ -63,6 +65,9 @@ public class TransmitterCommandsTest {
 
     @Autowired
     TransmissionRepository transmissionRepository;
+
+    @MockBean
+    SftpClient sftpClient;
 
     Submission submission;
 
@@ -99,6 +104,7 @@ public class TransmitterCommandsTest {
         UserFile docfile = new UserFile();
         docfile.setFilesize(10.0f);
         docfile.setSubmission(submissionWithDocs);
+        docfile.setRepositoryPath("originalFilename.png");
         docfile.setOriginalName("originalFilename.png");
         userFileRepository.save(docfile);
 
@@ -129,6 +135,17 @@ public class TransmitterCommandsTest {
         when(fileRepository.download(any())).thenReturn(new CloudFile(10L, docFile));
 
         transmitterCommands.transmit();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        String date = dtf.format(now);
+
+        File zipFile = new File("Apps__ECE__" + date + ".zip");
+        verify(sftpClient).uploadFile(zipFile.getName(), "/la-du-moveit-transfer/nola-ps");
+
+        docFile.delete();
+
+        Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.ECE);
+        assertNotNull(transmission.getRunId());
 
 //        transmi
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
