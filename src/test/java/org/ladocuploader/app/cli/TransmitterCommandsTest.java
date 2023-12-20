@@ -1,9 +1,12 @@
 package org.ladocuploader.app.cli;
 
+import formflow.library.data.UserFile;
+
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepository;
+import formflow.library.data.UserFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -11,6 +14,7 @@ import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
+import org.ladocuploader.app.upload.ReadOnlyCloudFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -40,6 +44,12 @@ public class TransmitterCommandsTest {
     @MockBean
     CsvService csvService;
 
+    @MockBean
+    ReadOnlyCloudFileRepository fileRepository;
+
+    @Autowired
+    UserFileRepository userFileRepository;
+
     Submission submission;
 
     List<Submission> submissionList;
@@ -56,10 +66,25 @@ public class TransmitterCommandsTest {
                 ))
                 .build();
         submissionRepository.save(submission);
+        var submissionWithDocs = Submission.builder()
+                .submittedAt(now())
+                .flow("pebt")
+                .urlParams(new HashMap<>())
+                .inputData(Map.of(
+                        "firstName", "Other",
+                        "lastName", "McOtherson",
+                        "signature", "Other McOtherson sig",
+                        "identityFiles", "[\"some-file-id\"]"
+                )).build();
         Transmission transmission = Transmission.fromSubmission(submission);
         transmission.setTransmissionType(TransmissionType.ECE);
         transmission.setStatus(TransmissionStatus.Queued);
         submissionList.add(submission);
+
+        UserFile docfile = new UserFile();
+        docfile.setFilesize(10.0f);
+
+
     }
 
     @Disabled

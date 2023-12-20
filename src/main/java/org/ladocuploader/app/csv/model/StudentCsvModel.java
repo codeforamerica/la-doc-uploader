@@ -27,25 +27,25 @@ public class StudentCsvModel extends BaseCsvModel {
     @CsvBindByName(column="reference_id")
     private String id; // uuid of student
 
-    @CsvBindByName(column="first_name", required=true)
+    @CsvBindByName(column="first_name")
     private String firstName; // student's first name
 
-    @CsvBindByName(column="last_name", required=true)
+    @CsvBindByName(column="last_name")
     private String lastName; // student's last name
 
-    @CsvCustomBindByName(column="street_address", required=true, converter=AddressStreetConverter.class)
+    @CsvCustomBindByName(column="street_address", converter=AddressStreetConverter.class)
     private Map<String, String> homeAddressStreet = new HashMap<>();
 
-    @CsvBindByName(column="city", required=true)
+    @CsvBindByName(column="city")
     private String homeAddressCity;
 
-    @CsvBindByName(column="state", required=true)
+    @CsvBindByName(column="state")
     private String homeAddressState;
 
-    @CsvBindByName(column="zip_code", required=true)
+    @CsvBindByName(column="zip_code")
     private String homeAddressZipCode;
 
-    @CsvCustomBindByName(column="birth_date", required=true, converter= HouseholdBirthDateConverter.class)
+    @CsvCustomBindByName(column="birth_date", converter= HouseholdBirthDateConverter.class)
     private Map<String, Integer> birthDate = new HashMap<>();
 
     @JsonSetter(value="memberBirthDay")

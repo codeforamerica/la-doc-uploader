@@ -84,6 +84,8 @@ public class TransmitterCommands {
         File zip = new File(zipFilename);
         zip.delete();
 
+        // TODO: make it possible to correlate run id with filename - put in filename?
+
         UUID runId = UUID.randomUUID();
 
         // Update transmission in DB for success TODO: make this less repetitive
@@ -106,12 +108,9 @@ public class TransmitterCommands {
             transmissionRepository.save(transmission);
                 }
         );
-    // TODO: should we mark as failed when the documentation step has failed? These would have already been marked above ^ based on CSV generation
         failedDocumentation.forEach((id, errorMessages) -> {
             Submission submission = Submission.builder().id(id).build();
             Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, transmissionType);
-            transmission.setStatus(TransmissionStatus.Failed);
-            transmission.setRunId(runId);
             transmission.setDocumentationErrors(errorMessages);
             transmissionRepository.save(transmission);
         }
@@ -161,7 +160,7 @@ public class TransmitterCommands {
              ZipOutputStream zos = new ZipOutputStream(baos)) {
             CsvPackage ecePackage = csvService.generateCsvPackage(submissions, CsvPackageType.ECE_PACKAGE);
             Map<UUID, Map<CsvType, String>> submissionErrors = ecePackage.getErrorMessages();
-            Map<UUID, Map<String, String>> documentationErrors = new HashMap<>();
+            Map<UUID, Map<UUID, String>> documentationErrors = new HashMap<>();
 
             submissionErrors.forEach((submissionId, submissionErrorMessages) -> {
                     successfullySubmittedIds.remove(submissionId);
@@ -180,7 +179,7 @@ public class TransmitterCommands {
                     } catch (Exception e){
                         log.error("Error generating file collection for submission ID {}", submission.getId(), e);
                     }
-                    Map<String, String> submissionDocumentationErrors = new HashMap<>();
+                    Map<UUID, String> submissionDocumentationErrors = new HashMap<>();
                     for (UserFile userFile: userFiles) {
                         try {
                             fileCount += 1;
@@ -199,7 +198,7 @@ public class TransmitterCommands {
                             File file = new File(userFile.getRepositoryPath());
                             file.delete(); // delete after download and added to zipfile
                         } catch (Exception e) {
-                            submissionDocumentationErrors.put(userFile.getOriginalName(), e.getMessage());
+                            submissionDocumentationErrors.put(userFile.getFileId(), e.getMessage());
                             log.error("Error generating file collection for submission ID {}", submission.getId(), e);
                         }
                     }
