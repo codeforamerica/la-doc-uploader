@@ -9,6 +9,7 @@ public class BasicArrayCondition implements Condition {
     /**
      * Return true if the array corresponding to the key exists and ( is not empty or does not have "None" as its value)
      */
+    @Override
     public Boolean run(Submission submission, String key) {
         var inputData = submission.getInputData();
         ArrayList<String> other = new ArrayList<>();
