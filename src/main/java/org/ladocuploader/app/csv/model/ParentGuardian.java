@@ -12,15 +12,15 @@ import com.opencsv.bean.CsvBindByName;
 @NoArgsConstructor
 public class ParentGuardian {
 
-    @CsvBindByName(column = "first_name", required = true)
+    @CsvBindByName(column = "first_name")
     private String firstName;
-    @CsvBindByName(column = "last_name", required = true)
+    @CsvBindByName(column = "last_name")
     private String lastName;
 
-    @CsvBindByName(column = "email_address", required = true)
+    @CsvBindByName(column = "email_address")
     private String emailAddress;
 
-    @CsvBindByName(column = "phone_number", required = true)
+    @CsvBindByName(column = "phone_number")
     private String phoneNumber;
 
 //    private Map<String, String> columnMappings = Map.of(

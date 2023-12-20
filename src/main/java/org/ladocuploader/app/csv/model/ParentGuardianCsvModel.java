@@ -18,34 +18,34 @@ import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 @Setter
 public class ParentGuardianCsvModel extends BaseCsvModel {
 
-    @CsvBindByName(column = "active", required=true)
+    @CsvBindByName(column = "active")
     private Boolean active = true;
 
     @CsvBindByName(column="reference_id")
     private String id;
 
-    @CsvBindByName(column="first_name", required=true)
+    @CsvBindByName(column="first_name")
     private String firstName;
 
-    @CsvBindByName(column="last_name", required=true)
+    @CsvBindByName(column="last_name")
     private String lastName;
 
-    @CsvBindByName(column="email_address", required=true)
+    @CsvBindByName(column="email_address")
     private String emailAddress;
 
-    @CsvCustomBindByName(column="phone_number", required=true, converter= PhoneNumberConverter.class)
+    @CsvCustomBindByName(column="phone_number", converter= PhoneNumberConverter.class)
     private String phoneNumber;
 
-    @CsvCustomBindByName(column="street_address", required=true, converter=AddressStreetConverter.class)
+    @CsvCustomBindByName(column="street_address", converter=AddressStreetConverter.class)
     private Map<String, String> homeAddressStreet = new HashMap<>();
 
-    @CsvBindByName(column="city", required=true)
+    @CsvBindByName(column="city")
     private String homeAddressCity;
 
-    @CsvBindByName(column="state", required=true)
+    @CsvBindByName(column="state")
     private String homeAddressState;
 
-    @CsvBindByName(column="zip_code", required=true)
+    @CsvBindByName(column="zip_code")
     private String homeAddressZipCode;
 
     @JsonSetter(value="homeAddressStreetAddress1")

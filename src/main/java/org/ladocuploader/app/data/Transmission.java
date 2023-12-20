@@ -50,6 +50,10 @@ public class Transmission {
     @Column(name="submission_errors", columnDefinition = "jsonb")
     private Map<CsvType, String> submissionErrors;
 
+    @Type(JsonType.class)
+    @Column(name="documentation_errors", columnDefinition = "jsonb")
+    private Map<String, String> documentationErrors;
+
     public static Transmission fromSubmission(Submission submission) {
         var transmission = new Transmission();
         transmission.setSubmission(submission);

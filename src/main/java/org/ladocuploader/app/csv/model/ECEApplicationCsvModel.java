@@ -20,11 +20,11 @@ import org.ladocuploader.app.utils.HouseholdUtilities;
 @Slf4j
 public class ECEApplicationCsvModel extends BaseCsvModel {
 
-    @CsvBindByName(column="cfa_reference_id")
+    @CsvBindByName(column="cfa_reference_id", required=true)
     private String id;
 
     // they will populate this field, we put it in for convenience
-    @CsvBindByName(column="Student Id {{student-id}}", required=true)
+    @CsvBindByName(column="Student Id {{student-id}}")
     private String studentId;
 
     // **********  BEGIN Avela required fields ************* //
