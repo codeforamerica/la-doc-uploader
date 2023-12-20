@@ -171,8 +171,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String outOfStateBenefitsRecipients;
 
-  private String receivedOutOfStateBenefits;
-
   // SNAP
   private String buyPrepareMealsSeparateIndicator;
 

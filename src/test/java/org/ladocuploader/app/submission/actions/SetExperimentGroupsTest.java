@@ -46,7 +46,7 @@ class SetExperimentGroupsTest {
   void shouldSetExperimentGroupForHouseholdWithPregnancy() {
     Submission submission = new SubmissionTestBuilder()
         .withHouseholdMember("Butter", "Ball", "", "", "", "", "", "", "", "")
-        .withPregnancies(List.of("Butter-Ball"))
+        .withPregnancies(List.of("Butter-Ball"), List.of("12/12/1212"))
         .build();
     Action setExperimentGroups = new SetExperimentGroups();
     setExperimentGroups.run(submission);

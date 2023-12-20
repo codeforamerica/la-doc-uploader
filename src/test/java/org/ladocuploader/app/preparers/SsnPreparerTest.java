@@ -66,8 +66,8 @@ class SsnPreparerTest {
 
         assertThat(result.size()).isEqualTo(4);
         assertThat(result.get("applicantSsn")).isEqualTo(new SingleField("applicantSsn", null, null));
-        assertThat(result.get("ssns_1")).isEqualTo(new SingleField("ssns_1", "111223333", null));
-        assertThat(result.get("ssns_2")).isEqualTo(new SingleField("ssns_2", null, null));
-        assertThat(result.get("ssns_3")).isEqualTo(new SingleField("ssns_3", "444556666", null));
+        assertThat(result.get("ssns1")).isEqualTo(new SingleField("ssns", "111223333", 1));
+        assertThat(result.get("ssns2")).isEqualTo(new SingleField("ssns", null, 2));
+        assertThat(result.get("ssns3")).isEqualTo(new SingleField("ssns", "444556666", 3));
     }
 }

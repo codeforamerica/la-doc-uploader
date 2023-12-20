@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
+import static java.util.Collections.emptyList;
 import static org.ladocuploader.app.utils.Parish.ORLEANS;
 
 public class SubmissionUtilities {
@@ -119,7 +120,7 @@ public class SubmissionUtilities {
         return groupName.equals(submission.getInputData().get("experimentGroup"));
     }
 
-    public static String householdMemberFullName(Map<String, String> householdMember) {
+    public static String householdMemberFullName(Map<String, Object> householdMember) {
         return householdMember.get("householdMemberFirstName") + " " + householdMember.get("householdMemberLastName");
     }
 
@@ -132,7 +133,7 @@ public class SubmissionUtilities {
         ArrayList<String> names = new ArrayList<>();
 
         var applicantName = submission.getInputData().get("firstName") + " " + submission.getInputData().get("lastName");
-        var householdMembers = (List<Map<String, String>>) submission.getInputData().getOrDefault("household", new ArrayList<HashMap<String, Object>>());
+        var householdMembers = (List<Map<String, Object>>) submission.getInputData().getOrDefault("household", new ArrayList<HashMap<String, Object>>());
 
         names.add(applicantName);
         householdMembers.forEach(hh -> names.add(householdMemberFullName(hh)));
@@ -140,6 +141,15 @@ public class SubmissionUtilities {
         return names;
     }
 
+    public static String getHouseholdMemberFullnameByUUID(String uuid, Map<String, Object> inputData) {
+        var members = (List<Map<String, Object>>) inputData.getOrDefault("household", emptyList());
+        for (var member : members) {
+            if (uuid.equals(member.get("uuid"))) {
+                return householdMemberFullName(member);
+            }
+        }
+        return "%s %s".formatted(inputData.get("firstName"), inputData.get("lastName"));
+    }
     public static ArrayList<HashMap<String, Object>> getHouseholdIncomeReviewItems(Submission submission) {
         var applicantFullName = submission.getInputData().getOrDefault("firstName", "") + " " + submission.getInputData().getOrDefault("lastName", "");
         var notYetShownNames = getHouseholdMemberNames(submission);
