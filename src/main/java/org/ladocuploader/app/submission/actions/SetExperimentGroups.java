@@ -4,14 +4,8 @@ import formflow.library.config.submission.Action;
 import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 import static org.ladocuploader.app.utils.SubmissionUtilities.isEligibleForExperiment;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.stream.Stream;
 
-import static java.util.Collections.emptyList;
 
 @Component
 public class SetExperimentGroups implements Action {
