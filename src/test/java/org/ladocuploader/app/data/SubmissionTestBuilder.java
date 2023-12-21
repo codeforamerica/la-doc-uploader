@@ -81,6 +81,7 @@ public class SubmissionTestBuilder {
     }
 
     public SubmissionTestBuilder withPregnancies(List<String> uuids) {
+        submission.getInputData().put("pregnancyInd", "true");
         submission.getInputData().put("pregnancies[]", uuids);
         return this;
     }
