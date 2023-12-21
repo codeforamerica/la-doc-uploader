@@ -41,12 +41,7 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
 
     @Test
     void userCanCompleteDocumentUploadFlow() {
-        testPage.clickElementById("translate-button");
-        testPage.clickLink("Español");
-        testPage.clickElementById("translate-button");
-        testPage.clickLink("English");
-
-        testPage.clickButton("Upload documents");
+        testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
         // Client Info
         testPage.enter("firstName", "Britney");
