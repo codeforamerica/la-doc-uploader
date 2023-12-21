@@ -69,10 +69,11 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{matrix.language}}"
-
+      - name: Generate unique artifact name
+        run: echo ARTIFACT_ID=CodeQL results--$(date +%s) >> $GITHUB_ENV
       - name: Save results
         uses: actions/upload-artifact@v4
         with:
-          name: CodeQL results
+          name: ${{ env.ARTIFACT_ID }}
           path: /home/runner/work/la-doc-uploader/results
           retention-days: 14
