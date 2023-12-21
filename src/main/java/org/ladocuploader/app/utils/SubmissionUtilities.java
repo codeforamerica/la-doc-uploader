@@ -4,15 +4,16 @@ import formflow.library.data.Submission;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Stream;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
-import static java.util.Collections.emptyList;
 import static org.ladocuploader.app.utils.Parish.ORLEANS;
 
 public class SubmissionUtilities {
     public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
+
+    public static final DateTimeFormatter MM_DD_YYYY = DateTimeFormatter.ofPattern("M/d/uuuu");
 
     public static final Map<String, String> PDF_EDUCATION_MAP = new HashMap<>();
     public static final Map<String, String> PDF_MARITAL_STATUS_MAP = new HashMap<>();
@@ -90,8 +91,8 @@ public class SubmissionUtilities {
 
     public static boolean isEligibleForExperiment(Submission submission) {
         // Someone in household is pregnant
-        var pregnancies = (List) submission.getInputData().getOrDefault("pregnancies[]", emptyList());
-        if (!pregnancies.isEmpty()) {
+        var pregnancyInHousehold = (String) submission.getInputData().getOrDefault("pregnancyInd", "false");
+        if ("true".equals(pregnancyInHousehold)) {
             return true;
         }
 
@@ -100,11 +101,10 @@ public class SubmissionUtilities {
         if (household != null) {
             for (Map<String, Object> member : ((List<Map<String, Object>>) household)) {
                 if ("child".equals(member.get("householdMemberRelationship"))) {
-                    var birthday = Stream.of("householdMemberBirthYear","householdMemberBirthMonth", "householdMemberBirthDay")
-                            .map(key -> (String)member.get(key))
-                            .reduce((e, c) -> e + "-" + c)
-                            .get();
-                    LocalDate birthdate = LocalDate.parse(birthday);
+                    var day = member.get("householdMemberBirthDay");
+                    var year = member.get("householdMemberBirthYear");
+                    var month = member.get("householdMemberBirthMonth");
+                    LocalDate birthdate =LocalDate.parse("%s/%s/%s".formatted(month, day, year), MM_DD_YYYY);
                     if (birthdate.isAfter(FIVE_YEARS_AGO)) {
                         return true;
                     }

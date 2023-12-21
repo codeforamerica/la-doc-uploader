@@ -120,7 +120,6 @@ flow:
     nextScreens:
       - name: householdSchool
   householdSchool:
-    beforeSaveAction: SetExperimentGroups
     nextScreens:
       - name: householdSchoolWho
         condition: GoingToSchool
@@ -133,6 +132,7 @@ flow:
     nextScreens:
       - name: householdPregnancy
   householdPregnancy:
+    beforeSaveAction: SetExperimentGroups
     nextScreens:
       - name: householdPregnancyWho
         condition: IsPregnant
