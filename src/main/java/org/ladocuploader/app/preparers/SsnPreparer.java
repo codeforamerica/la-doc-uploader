@@ -22,10 +22,6 @@ public class SsnPreparer implements SubmissionFieldPreparer {
     encryptor = stringEncryptor;
   }
 
-  private StringEncryptor getEncryptor() {
-    return encryptor;
-  }
-
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> results = new HashMap<>();
@@ -41,7 +37,7 @@ public class SsnPreparer implements SubmissionFieldPreparer {
       for (Map<String, Object> hhmember : householdMembers) {
         encryptedSSN = (String) hhmember.get(ENCRYPTED_SSNS_INPUT_NAME);
         String decryptedSSN = encryptor.decrypt(encryptedSSN);
-        results.put("ssns_" + i, new SingleField("ssns_" + i, decryptedSSN, null));
+        results.put("ssns" + i, new SingleField("ssns", decryptedSSN, i));
         i++;
       }
     }
