@@ -86,6 +86,14 @@ public class LaDigitalAssister extends FlowInputs {
   //Contact Info
   private String phoneNumber;
 
+  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
+  private String cellPhoneNumber;
+
+  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
+  private String workPhoneNumber;
+
+  private String wantsReminders;
+
   private String identifiesAsDeaf;
 
   private String preferredCommsMethod;
