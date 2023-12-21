@@ -906,6 +906,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
 
   void loadUserPersonalData() {
+    testPage.navigateToFlowScreen("laDigitalAssister/parish");
+    testPage.enter("parish", "Orleans");
+    testPage.clickContinue();
+
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
 
     testPage.enter("firstName", "test");
