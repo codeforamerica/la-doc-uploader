@@ -319,8 +319,10 @@ flow:
       - name: expensesSignPost
   householdMoneyOnHand:
     nextScreens:
-      - name: householdMoneyOnHandWhich
-  householdMoneyOnHandWhich:
+      - name: householdMoneyOnHandDetails
+        condition: HasMoneyOnHand
+      - name: expensesSignPost
+  householdMoneyOnHandDetails:
     nextScreens:
       - name: expensesSignPost
   expensesSignPost:

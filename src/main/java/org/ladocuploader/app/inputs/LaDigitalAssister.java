@@ -86,6 +86,14 @@ public class LaDigitalAssister extends FlowInputs {
   //Contact Info
   private String phoneNumber;
 
+  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
+  private String cellPhoneNumber;
+
+  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
+  private String workPhoneNumber;
+
+  private String wantsReminders;
+
   private String identifiesAsDeaf;
 
   private String preferredCommsMethod;
@@ -262,9 +270,15 @@ public class LaDigitalAssister extends FlowInputs {
   @NotEmpty(message="{error.missing-general}")
   private List<String> additionalIncome;
 
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String moneyOnHand;
+  @NotEmpty
+  private List<String> moneyOnHandTypes;
+
+  @DynamicField
+  private String moneyOnHandOwner;
+
+  @Money
+  @DynamicField
+  private String moneyOnHandValue;
 
   @Money(message="{error.invalid-money}")
   @NotBlank(message="{error.missing-dollar-amount}")
@@ -373,7 +387,13 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String ethnicitySelected;
 
+  @DynamicField
+  private String householdMemberEthnicity;
+
   private List<String> raceSelected;
+
+  @DynamicField
+  private List<String> householdMemberRace;
 
   @NotEmpty(message="{error.missing-checkbox}")
   private List<String> rightsAndResponsibilitiesAgree;
