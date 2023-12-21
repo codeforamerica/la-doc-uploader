@@ -3,7 +3,6 @@ package org.ladocuploader.app.preparers;
 import formflow.library.data.Submission;
 import formflow.library.pdf.SingleField;
 import formflow.library.pdf.SubmissionField;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.data.SubmissionTestBuilder;
 
@@ -26,7 +25,8 @@ class HouseholdExpensesPreparerTest {
   @Test
   public void shouldAddFieldsForHouseholdExpenses() {
     Submission submission = new SubmissionTestBuilder()
-        .with("householdHomeExpenses[]", List.of("Phone", "Mortgage", "Homeowner's Insurance"))
+        .with("householdHomeExpenses[]", List.of("Mortgage", "Homeowner's Insurance"))
+        .with("householdUtilitiesExpenses[]", List.of("Phone", "Heating"))
         .with("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "10")
         .with("householdHomeExpenseAmount_wildcard_Mortgage", "20")
         .with("householdHomeExpenseAmount_wildcard_Homeowner's Insurance", "30")
@@ -35,6 +35,8 @@ class HouseholdExpensesPreparerTest {
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
     assertThat(result.size()).isEqualTo(10);
+    assertThat(result.get("heatingOrCoolingInd"))
+        .isEqualTo(new SingleField("heatingOrCoolingInd", "true", null));
     assertThat(result.get("householdExpensesType1"))
         .isEqualTo(new SingleField("householdExpensesType", "Homeowner's Insurance", 1));
     assertThat(result.get("householdExpensesAmount1"))
@@ -57,17 +59,19 @@ class HouseholdExpensesPreparerTest {
         .isEqualTo(new SingleField("householdExpensesFreq", "Monthly", 3));
   }
 
-  @Ignore // Not sure if we're collecting this info
+  @Test
   public void shouldCombineOtherExpenses() {
     Submission submission = new SubmissionTestBuilder()
         .with("householdHomeExpenses[]", List.of("Other"))
-        .with("expensesUtilitiesOther", "10")
-        .with("expensesOther", "22")
+        .with("householdUtilitiesExpenseAmount_wildcard_Other utilities expenses", "10")
+        .with("householdHomeExpenseAmount_wildcard_Other home expenses", "22")
         .build();
 
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result.size()).isEqualTo(5);
+    assertThat(result.get("heatingOrCoolingInd"))
+        .isEqualTo(new SingleField("heatingOrCoolingInd", "false", null));
     assertThat(result.get("Other"))
         .isEqualTo(new SingleField("Other", "Yes", null));
     assertThat(result.get("householdExpensesType_1"))

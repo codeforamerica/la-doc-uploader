@@ -60,15 +60,16 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
       // Check for "Other" - theres only one spot for this in the PDF so just combine them
       var totalOtherAmount = 0.0;
       try {
-        var expensesOther = submission.getInputData().get("expensesOther");
+        var expensesOther = submission.getInputData().get("householdHomeExpenseAmount_wildcard_Other home expenses");
         if (expensesOther != null) {
           totalOtherAmount += Double.parseDouble((String) expensesOther);
         }
-        var expensesUtilitiesOther = submission.getInputData().get("expensesUtilitiesOther");
+        var expensesUtilitiesOther = submission.getInputData().get("householdUtilitiesExpenseAmount_wildcard_Other utilities expenses");
         if (expensesUtilitiesOther != null) {
           totalOtherAmount += Double.parseDouble((String) expensesUtilitiesOther);
         }
       } catch (NumberFormatException e) {
+        // We should have validations in place for this already
         log.warn("Could not parse amount", e);
       }
 
