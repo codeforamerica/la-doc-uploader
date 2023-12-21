@@ -21,17 +21,19 @@
                  th:text="#{delete-confirmation-back-redirect.button}"></a>
             </div>
           </th:block>
-          <th:block th:if="${noEntryToDelete == null}">
+          <th:block th:if="${noEntryToDelete == null}"
+                    th:with="applicantUrlParam=${T(org.ladocuploader.app.config.UrlParams).APPLICANT_ID_URL_PARAM},
+                      applicantIdParam=${applicantId != null ? '?' + applicantUrlParam + '=' + applicantId : ''}">
             <div class="form-card__content">
               <th:block th:replace="~{'fragments/icons' :: 'deleteDocument'}"></th:block>
               <h1 class="h2"
                   th:text="${title}"></h1>
             </div>
             <div class="form-card__footer">
-              <a class="button button--primary" th:href="'/flow/' + ${flow} + '/incomeReview?applicantId=' + ${applicantId}"
+              <a class="button button--primary" th:href="'/flow/' + ${flow} + '/incomeReview' + ${applicantIdParam}"
                  th:text="#{income-delete-confirmation.no}"></a>
               <form method="post"
-                    th:action="'/flow/' + ${flow} + '/' + ${subflow} + '/' + ${param.uuid} + '/delete?applicantId=' + ${applicantId}">
+                    th:action="'/flow/' + ${flow} + '/' + ${subflow} + '/' + ${param.uuid} + '/delete' + ${applicantIdParam}">
                 <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   classes='button button--danger',
                   text=#{income-delete-confirmation.yes})}"/>

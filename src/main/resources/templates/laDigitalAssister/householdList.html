@@ -51,16 +51,20 @@
                       <span th:text="${householdMember.householdMemberFirstName}"></span>
                       <span th:text="${householdMember.householdMemberLastName}"></span>
                     </span>
-                    <span class="text--small spacing-below-0">
-                      <a th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${householdMember.uuid} + '/edit?applicantId=' + ${applicantId}"
-                         th:text="#{general.edit}"
-                         th:id="'edit-iteration-' + ${householdMember.uuid}"
-                         class="subflow-edit"></a>
-                      <a th:href="'/flow/laDigitalAssister/household/' + ${householdMember.uuid} + '/deleteConfirmation?applicantId=' + ${applicantId}"
-                         th:text="#{general.delete}"
-                         class="subflow-delete"
-                         th:id="'delete-iteration-' + ${householdMember.uuid}"></a>
-                    </span>
+                    <th:block
+                        th:with="applicantUrlParam=${T(org.ladocuploader.app.config.UrlParams).APPLICANT_ID_URL_PARAM},
+                                 applicantIdParam=${applicantId != null ? '?' + applicantUrlParam + '=' + applicantId : ''}">
+                      <span class="text--small spacing-below-0">
+                        <a th:href="'/flow/laDigitalAssister/' + ${iterationStartScreen} + '/' + ${householdMember.uuid} + '/edit' + ${applicantIdParam}"
+                           th:text="#{general.edit}"
+                           th:id="'edit-iteration-' + ${householdMember.uuid}"
+                           class="subflow-edit"></a>
+                        <a th:href="'/flow/laDigitalAssister/household/' + ${householdMember.uuid} + '/deleteConfirmation' + ${applicantIdParam}"
+                           th:text="#{general.delete}"
+                           class="subflow-delete"
+                           th:id="'delete-iteration-' + ${householdMember.uuid}"></a>
+                      </span>
+                    </th:block>
                   </span>
                 </li>
               </th:block>

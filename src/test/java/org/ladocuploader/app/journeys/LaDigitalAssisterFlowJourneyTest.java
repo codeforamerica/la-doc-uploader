@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.when;
 
 @Slf4j
@@ -27,6 +28,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   @BeforeEach
   void setup() throws Exception {
     when(dataRequiredInterceptor.preHandle(any(), any(), any())).thenReturn(true);
+    doCallRealMethod().when(dataRequiredInterceptor).postHandle(any(), any(), any(), any());
   }
 
   @Test

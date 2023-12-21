@@ -1,0 +1,11 @@
+<th:block
+    th:fragment="submitButton"
+    th:with="text=${text} ? ${text} : #{general.inputs.submit}, isHidden=${isHidden} ? ${isHidden}: false">
+  <button id="form-submit-button"
+          class="button button--secondary"
+          type="submit"
+          th:text="${text}"
+          th:onclick="setCsrf([[${cookieName}]])"
+          th:classappend="${isHidden}? 'display-none'">
+  </button>
+</th:block>
