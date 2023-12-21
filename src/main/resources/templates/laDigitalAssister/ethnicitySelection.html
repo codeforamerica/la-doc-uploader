@@ -8,12 +8,13 @@
     <div class="grid">
       <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block
-            th:replace="'fragments/cardHeader' :: cardHeader(header=#{ethnicity-selection.header}, subtext=#{ethnicity-selection.subheader})"/>
+        <th:block th:replace="~{'fragments/icons' :: raceAndEthnicity}"></th:block>
         <th:block
             th:replace="'fragments/form' :: form(action=${formAction}, content=~{::ethnicitySelection})">
           <th:block th:ref="ethnicitySelection">
             <div class="form-card__content">
+              <h2 th:text="#{ethnicity-selection.header(${inputData.firstName})}"></h2>
+              <p class="text--help" th:text="#{ethnicity-selection.subheader}"></p>
               <th:block th:replace="'fragments/inputs/radioFieldset' ::
                         radioFieldset(inputName='ethnicitySelected',
                         ariaLabel=#{ethnicity-selection.header},
@@ -24,6 +25,27 @@
                   <th:block
                       th:replace="'fragments/inputs/radio' :: radio(inputName='ethnicitySelected',value=#{ethnicity-selection.option2}, label=#{ethnicity-selection.option2})"/>
                 </th:block>
+              </th:block>
+              <hr/>
+              <th:block th:if="${fieldData.containsKey('household')}">
+                <div th:each="householdMember, iter: ${fieldData.household}" class="spacing-below-15">
+                  <th:block th:with="householdInputName=${'householdMemberEthnicity' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + householdMember.uuid}">
+                    <h2 th:text="#{ethnicity-selection.question(${householdMember.householdMemberFirstName})}"></h2>
+                    <p class="text--help" th:text="#{ethnicity-selection.subheader}"></p>
+                    <th:block th:replace="'fragments/inputs/radioFieldset' ::
+                        radioFieldset(inputName=${householdInputName},
+                        ariaLabel=#{ethnicity-selection.question(${householdMember.householdMemberFirstName})},
+                        content=~{::householdEthnicitySelectionFieldSet})">
+                      <th:block th:ref="householdEthnicitySelectionFieldSet">
+                        <th:block
+                            th:replace="'fragments/inputs/radio' :: radio(inputName=${householdInputName},value=#{ethnicity-selection.option1}, label=#{ethnicity-selection.option1})"/>
+                        <th:block
+                            th:replace="'fragments/inputs/radio' :: radio(inputName=${householdInputName},value=#{ethnicity-selection.option2}, label=#{ethnicity-selection.option2})"/>
+                      </th:block>
+                    </th:block>
+                  </th:block>
+                  <hr/>
+                </div>
               </th:block>
             </div>
             <div class="form-card__footer">

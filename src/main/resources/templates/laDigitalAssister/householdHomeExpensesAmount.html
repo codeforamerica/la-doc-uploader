@@ -15,17 +15,15 @@
             <div class="form-card__content">
               <div th:each="expense, iter:${inputData.get('householdHomeExpenses[]')}"
                    class="spacing-below-15">
-                <div th:if="${expense != 'Other'}">
+                <th:block
+                    th:with="inputName=${'householdHomeExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
+                  <h2 th:text="#{home-expenses-amount.question(${expense})}"></h2>
+                  <p class="text--help" th:text="#{expenses-estimate-ok}"></p>
                   <th:block
-                      th:with="inputName=${'householdHomeExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
-                    <h2 th:text="#{home-expenses-amount.question(${expense})}"></h2>
-                    <p class="text--help" th:text="#{expenses-estimate-ok}"></p>
-                    <th:block
-                        th:replace="~{fragments/inputs/money :: money(inputName=${inputName},
-                  ariaLabel=${expense})}"/>
-                  </th:block>
-                  <hr/>
-                </div>
+                      th:replace="~{fragments/inputs/money :: money(inputName=${inputName},
+                ariaLabel=${expense})}"/>
+                </th:block>
+                <hr/>
               </div>
             </div>
             <div class="form-card__footer">

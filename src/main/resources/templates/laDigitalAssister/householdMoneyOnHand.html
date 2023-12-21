@@ -1,23 +1,54 @@
 <!DOCTYPE html>
-<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head(title=#{money-on-hand.title})}"></head>
+<html th:lang="${#locale.language}">
+<head th:replace="fragments/head :: head(title=#{moneyonhand-types.title})"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <div th:replace="fragments/toolbar :: toolbar"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <div th:replace="fragments/goBack :: goBackLink"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: assetsCashAccounts}"></th:block>
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{money-on-hand.header}, subtext=#{money-on-hand.subtext})}"/>
-        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
+            th:replace="'fragments/cardHeader' :: cardHeader(header=#{moneyonhand-types.header}, subtext=#{moneyonhand-types.subheader})"/>
+        <p th:text="#{moneyonhand-types.paragraph1}"></p>
+        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
           <th:block th:ref="formContent">
             <div class="form-card__content">
-              <th:block th:replace="'fragments/inputs/money' :: money(inputName='moneyOnHand', ariaLabel='header')"/>
+              <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+                checkboxFieldset(inputName='moneyOnHandTypes',
+                ariaLabel=#{moneyonhand-types.header},
+                content=~{::moneyOnHand})}">
+                  <th:block th:ref="moneyOnHand">
+                    <th:block
+                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option1}, label=#{moneyonhand-types.option1})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option2}, label=#{moneyonhand-types.option2})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option3}, label=#{moneyonhand-types.option3})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option4}, label=#{moneyonhand-types.option4})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option5}, label=#{moneyonhand-types.option5})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option6}, label=#{moneyonhand-types.option6})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option7}, label=#{moneyonhand-types.option7})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option8}, label=#{moneyonhand-types.option8})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option9}, label=#{moneyonhand-types.option9})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option10}, label=#{moneyonhand-types.option10})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value='None', label=#{moneyonhand-types.option11}, noneOfTheAbove=true)}"/>
+                  </th:block>
+              </th:block>
+
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="fragments/inputs/submitButton :: submitButton( text=#{general.inputs.continue})" />
+              <th:block th:replace="'fragments/inputs/submitButton' :: submitButton(
+                text=#{general.inputs.continue})"/>
             </div>
           </th:block>
         </th:block>
@@ -25,6 +56,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="~{fragments/footer :: footer}" />
+<th:block th:replace="fragments/footer :: footer" />
 </body>
 </html>
