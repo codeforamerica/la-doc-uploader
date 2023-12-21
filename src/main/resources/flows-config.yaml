@@ -102,7 +102,6 @@ flow:
     nextScreens:
       - name: householdList
   householdList:
-    beforeSaveAction: SetExperimentGroups
     nextScreens:
       - name: ssnForm
         condition: ProgramsIncludeSnap
@@ -121,6 +120,7 @@ flow:
     nextScreens:
       - name: householdSchool
   householdSchool:
+    beforeSaveAction: SetExperimentGroups
     nextScreens:
       - name: householdSchoolWho
         condition: GoingToSchool
