@@ -3,6 +3,7 @@ package org.ladocuploader.app.data.enums;
 import org.ladocuploader.app.csv.enums.CsvPackageType;
 
 public enum TransmissionType {
+    SNAP(null),
     ECE(CsvPackageType.ECE_PACKAGE),
     WIC(CsvPackageType.WIC_PACKAGE);
 

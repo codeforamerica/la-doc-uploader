@@ -25,4 +25,7 @@ public interface TransmissionRepository extends JpaRepository<Transmission, UUID
 
     @Query(value = "SELECT u FROM UserFile u WHERE u.submission = :submission ORDER BY u.createdAt")
     List<UserFile> userFilesBySubmission(Submission submission);
+
+    @Query(value = "SELECT nextval('batch_seq')")
+    Long nextValueBatchSequence();
 }

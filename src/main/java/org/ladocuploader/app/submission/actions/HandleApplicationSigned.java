@@ -35,5 +35,9 @@ public class HandleApplicationSigned implements Action {
         transmissionRepositoryService.createTransmissionRecord(submission, TransmissionType.ECE);
       }
     }
+
+    if(!transmissionRepositoryService.transmissionExists(submission, TransmissionType.SNAP)) {
+      transmissionRepositoryService.createTransmissionRecord(submission, TransmissionType.SNAP);
+    }
   }
 }

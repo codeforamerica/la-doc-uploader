@@ -8,6 +8,11 @@ import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.ladocuploader.app.data.Transmission;
+import org.ladocuploader.app.data.TransmissionRepository;
+import org.ladocuploader.app.data.enums.TransmissionStatus;
+import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,23 +20,20 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static org.assertj.core.util.DateUtil.now;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -42,6 +44,9 @@ class SubmissionTransferTest {
 
   @Autowired
   SubmissionRepository submissionRepository;
+
+  @Autowired
+  TransmissionRepository transmissionRepository;
 
   @Autowired
   UserFileRepository userFileRepository;
@@ -55,91 +60,116 @@ class SubmissionTransferTest {
   @MockBean
   FtpsClient ftpsClient;
 
+  @MockBean
+  PGPEncryptor encryptor;
 
   Submission submission;
 
   @BeforeEach
-  void setup() {
-    String batchIndex = "0005";
+  void setup() throws IOException {
+    when(pdfService.getFilledOutPDF(any())).thenReturn("some bytes".getBytes());
+    when(encryptor.signAndEncryptPayload(anyString())).thenReturn(new byte[]{});
+    doAnswer(args -> {
+      String zipfilename = (String) args.getArguments()[0];
+      String transmitlocation = "src/test/resources/output/mocktransmit_" + args.getArguments()[0];
+      try (FileInputStream instream = new FileInputStream(zipfilename);
+           FileOutputStream outstream = new FileOutputStream(transmitlocation)) {
+        outstream.write(instream.readAllBytes());
+      }
+      return null;
+    }).when(ftpsClient).uploadFile(anyString(), any());
+
+    Date submittedDate = new Date(new Date().getTime() - (1000 * 60 * 60) * 2);
     submission = Submission.builder()
-        .submittedAt(now())
+        .submittedAt(submittedDate)
         .flow("laDigitalAssister")
         .urlParams(new HashMap<>())
         .inputData(Map.of(
             "firstName", "Tester",
             "lastName", "McTest",
+            "birthDay", "3",
+            "birthMonth", "12",
+            "birthYear", "4567",
             "signature", "Tester McTest sig"
         )).build();
     submissionRepository.save(submission);
+    saveTransmissionRecord(submission);
 
     var submissionWithDocs = Submission.builder()
-        .submittedAt(now())
+        .submittedAt(submittedDate)
         .flow("laDigitalAssister")
         .urlParams(new HashMap<>())
-        .inputData(Map.of(
+        .inputData(new HashMap<>(Map.of(
             "firstName", "Other",
             "lastName", "McOtherson",
+            "birthDay", "1",
+            "birthMonth", "11",
+            "birthYear", "1111",
             "signature", "Other McOtherson sig"
-        )).build();
+        ))).build();
+    submissionRepository.save(submissionWithDocs);
+    UUID docId1 = saveUserFile(submissionWithDocs, "applicant1_birth-certificate.jpeg", "originalFilename.png");
+    UUID docId2 = saveUserFile(submissionWithDocs, "applicant1_license.jpeg", "originalFilename.png");
+    UUID docId3 = saveUserFile(submissionWithDocs, "applicant1_pay-stub.png", "weird/:\\filename.jpg");
+    saveTransmissionRecord(submissionWithDocs);
+    submissionWithDocs.getInputData().putAll(Map.of("uploadDocuments", "[\"%s\",\"%s\",\"%s\"]".formatted(docId1, docId2, docId3),
+        "docType_wildcard_" + docId1, "BirthCertificate",
+        "docType_wildcard_" + docId2, "Other",
+        "docType_wildcard_" + docId3, "DriversLicense"));
     submissionRepository.save(submissionWithDocs);
 
-    UserFile docfile = new UserFile();
-    docfile.setFilesize(10.0f);
-    docfile.setSubmission(submissionWithDocs);
-    docfile.setOriginalName("originalFilename.png");
-    userFileRepository.save(docfile);
-
-    UserFile docfileSameName = new UserFile();
-    docfileSameName.setFilesize(10.0f);
-    docfileSameName.setSubmission(submissionWithDocs);
-    docfileSameName.setOriginalName("originalFilename.png");
-    userFileRepository.save(docfileSameName);
-
-    UserFile docfileWeirdFilename = new UserFile();
-    docfileWeirdFilename.setFilesize(10.0f);
-    docfileWeirdFilename.setSubmission(submissionWithDocs);
-    docfileWeirdFilename.setOriginalName("weird/:\\filename.jpg");
-    userFileRepository.save(docfileWeirdFilename);
+    Stream.of("applicant1_birth-certificate.jpeg", "applicant1_license.jpeg", "applicant1_pay-stub.png")
+        .forEach(filename -> {
+          try (FileInputStream docFileStream = new FileInputStream("src/test/resources/inputs/" + filename)) {
+            byte[] docFileData = docFileStream.readAllBytes();
+            when(fileRepository.get(eq(filename))).thenReturn(new CloudFile(10L, docFileData));
+          } catch (IOException e) {
+            throw new IllegalStateException(e);
+          }
+        });
   }
 
-//  @Test
-  void transmitZipFile() throws IOException {
-    when(pdfService.getFilledOutPDF(any())).thenReturn("some bytes".getBytes());
-    when(pdfService.generatePdfName(any())).thenReturn("applicant_summary");
+  private void saveTransmissionRecord(Submission submission) {
+    Transmission transmission = Transmission.fromSubmission(submission);
+    transmission.setTransmissionType(TransmissionType.SNAP);
+    transmission.setStatus(TransmissionStatus.Queued);
+    transmissionRepository.save(transmission);
+  }
 
-    File docFile = new File("paystub.png");
-    docFile.createNewFile();
-    byte[] docFileData;
-    try (FileInputStream docFileStream = new FileInputStream(docFile)) {
-      docFileData = docFileStream.readAllBytes();
-      when(fileRepository.get(any())).thenReturn(new CloudFile(10L, docFileData));
-    }
+  private UUID saveUserFile(Submission submission, String repoPath, String originalName) {
+    UserFile docFile = new UserFile();
+    docFile.setFilesize(10.0f);
+    docFile.setSubmission(submission);
+    docFile.setRepositoryPath(repoPath);
+    docFile.setOriginalName(originalName);
+    userFileRepository.save(docFile);
+    return docFile.getFileId();
+  }
 
+  @Test
+  public void transmitZipFile() throws IOException {
     submissionTransfer.transferSubmissions();
 
-    File zipFile = new File("0005.zip");
+    File zipFile = new File("src/test/resources/output/mocktransmit_00050000000.zip");
     assertTrue(zipFile.exists());
 
-    verify(ftpsClient).uploadFile(zipFile.getName(), docFileData);
+    verify(ftpsClient).uploadFile(any(), any());
 
     String destDir = "output";
     List<String> fileNames = unzip(zipFile.getPath(), destDir);
 
     assertThat(fileNames, hasItem("output/1/"));
     assertThat(fileNames, hasItem("output/1/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/1/doc.png"));
     assertThat(fileNames, hasItem("output/2/"));
     assertThat(fileNames, hasItem("output/2/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/2/01_originalFilename.png"));
-    assertThat(fileNames, hasItem("output/2/02_originalFilename.png"));
-    assertThat(fileNames, hasItem("output/2/weird___filename.jpg"));
-    assertThat(fileNames, not(hasItem("output/3/01_originalFilename.png")));
-    assertThat(fileNames, not(hasItem("output/3/01_doc.png")));
+    assertThat(fileNames, hasItem("output/2/originalFilename.png"));
+    assertThat(fileNames, hasItem("output/2/2_originalFilename.png"));
+    assertThat(fileNames, hasItem("output/2/weird/:\\filename.jpg"));
+    assertThat(fileNames, hasItem("output/00050000000.txt"));
     assertEquals(8, fileNames.size());
 
     // cleanup
     zipFile.delete();
-    docFile.delete();
   }
 
   private static List<String> unzip(String zipFilePath, String destDir) {

@@ -1,5 +1,6 @@
 package org.ladocuploader.app.cli;
 
+import com.google.common.base.Strings;
 import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepository;
 import formflow.library.data.UserFile;
@@ -8,22 +9,55 @@ import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
 import lombok.extern.slf4j.Slf4j;
+import org.ladocuploader.app.data.TransmissionRepository;
+import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
+import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import static org.ladocuploader.app.file.DocTypeEnum.*;
+
 @Slf4j
 @ShellComponent
 public class SubmissionTransfer {
+  private static final Map<String, String> DOCTYPE_FORMAT_MAP = new HashMap<>();
+
+  static {
+    DOCTYPE_FORMAT_MAP.put(BIRTH_CERTIFICATE.getValue(), "PD-Birth Verification");
+    DOCTYPE_FORMAT_MAP.put(DRIVERS_LICENSE.getValue(), "PD-Identification");
+    DOCTYPE_FORMAT_MAP.put(SOCIAL_SECURITY_CARD.getValue(), "PD-SSN");
+    DOCTYPE_FORMAT_MAP.put(CHECK_STUB.getValue(), "INC-Wage Documents");
+    DOCTYPE_FORMAT_MAP.put(OTHER_INCOME.getValue(), "INC - Other Unearned Income");
+    DOCTYPE_FORMAT_MAP.put(BILL.getValue(), "EXP - Utility");
+    DOCTYPE_FORMAT_MAP.put(MEDICAL_INFO.getValue(), "MED - Medical Forms");
+    DOCTYPE_FORMAT_MAP.put(BANKING_INFO.getValue(), "RES - Bank Statement");
+    DOCTYPE_FORMAT_MAP.put(MARRIAGE_LICENSE.getValue(), "LEG - Marriage License");
+    DOCTYPE_FORMAT_MAP.put(DIVORCE_DECREE.getValue(), "LEG - Divorce Decree");
+    DOCTYPE_FORMAT_MAP.put(COURT_ORDER.getValue(), "LEG - Court Order");
+    DOCTYPE_FORMAT_MAP.put(PATERNITY.getValue(), "PAT - Acknowledgement of Paternity (ES)");
+    DOCTYPE_FORMAT_MAP.put(OTHER.getValue(), "CORR - Customer Correspondence");
+  }
+
+  private final int BATCH_INDEX_LEN = "00050000000".length();
+
+  private final long TWO_HOURS = (1000 * 60 * 60) * 2;
+
+  private final SimpleDateFormat MMDDYYYY_HHMMSS = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+
   private final SubmissionRepository submissionRepository;
+
+  private final TransmissionRepository transmissionRepository;
   private final UserFileRepositoryService fileRepositoryService;
   private final CloudFileRepository fileRepository;
   private final PdfService pdfService;
@@ -32,8 +66,9 @@ public class SubmissionTransfer {
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
 
-  public SubmissionTransfer(SubmissionRepository submissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
+  public SubmissionTransfer(SubmissionRepository submissionRepository, TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.submissionRepository = submissionRepository;
+    this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;
     this.pdfService = pdfService;
@@ -43,55 +78,36 @@ public class SubmissionTransfer {
   }
 
   public void transferSubmissions() {
-    // TODO get submissions to transfer
-
-    String batchIndex = "5000"; // TODO Prob needs a counter
+    // Get submissions to transfer
+    String batchSeq = Long.toString(transmissionRepository.nextValueBatchSequence());
+    String batchIndex = Strings.padStart(batchSeq, BATCH_INDEX_LEN, '0');
     String zipFileName = batchIndex + ".zip";
-
     log.info(String.format("Beginning transfer of batch %s", batchIndex));
 
-    // for each, add to zipfile
-    List<Submission> submissionsBatch = new ArrayList<>(); // TODO Get from transmission table
+    // for each submission, add to zipfile
+    List<Submission> submissionsBatch = transmissionRepository.submissionsToTransmit(Sort.unsorted(), TransmissionType.SNAP);
     try (FileOutputStream baos = new FileOutputStream(zipFileName);
          ZipOutputStream zos = new ZipOutputStream(baos)) {
+      long now = new Date().getTime();
       StringBuilder docMeta = new StringBuilder();
+      int subfolderidx = 1;
       for (Submission submission : submissionsBatch) {
-        String subfolder = "1"; // TODO Something unique
+        if (submission.getSubmittedAt().getTime() + TWO_HOURS > now) {
+          // Give a 2-hour wait for folks to upload documents
+          continue;
+        }
+
+        String subfolder = Integer.toString(subfolderidx++);
         try {
-          if ("laDigitalAssister".equals(submission.getFlow())) {
-            log.info("Generate applicant summary");
-            byte[] file = pdfService.getFilledOutPDF(submission); // TODO Handle generate-pdf crashes
-            String fileName = String.format("%s_application.pdf", subfolder);
-            zos.putNextEntry(new ZipEntry(subfolder));
-            ZipEntry entry = new ZipEntry(subfolder + fileName);
-            entry.setSize(file.length);
-            zos.putNextEntry(entry);
-            zos.write(file);
-            zos.closeEntry();
-            String metaEntry = generateMetaDataEntry(batchIndex, subfolder, fileName, "APP-OFS 4APP", submission);
-            docMeta.append(metaEntry);
+          log.info("Generate applicant summary");
+          packageSnapApplication(batchIndex, zos, docMeta, submission, subfolder);
 
-            log.info("Adding uploaded docs");
-            List<UserFile> userFiles = fileRepositoryService.findAllBySubmission(submission);
-            for (UserFile userFile : userFiles) {
-              String docUploadFilename = "somethingunique"; // TODO this can be anything
-              ZipEntry docEntry = new ZipEntry(subfolder + docUploadFilename);
-              docEntry.setSize(userFile.getFilesize().longValue());
-              zos.putNextEntry(docEntry);
-
-              CloudFile docFile = fileRepository.get(userFile.getRepositoryPath());
-              zos.write(docFile.getFileBytes());
-              zos.closeEntry();
-
-              // write doc metadata - TODO add docType
-              metaEntry = generateMetaDataEntry(batchIndex, userFile.getOriginalName(), "", "", submission);
-              docMeta.append(metaEntry);
-            }
-          }
+          log.info("Adding uploaded docs");
+          packageUploadedDocuments(batchIndex, zos, docMeta, submission, subfolder);
         } catch (Exception e) {
           log.error("Error generating file collection for submission ID {}", submission.getId(), e);
         }
-      } // end for loop
+      }
 
       // Add metadata entry to zip
       ZipEntry docEntry = new ZipEntry(batchIndex + ".txt");
@@ -99,6 +115,8 @@ public class SubmissionTransfer {
       docEntry.setSize(docMetaData.length);
       zos.putNextEntry(docEntry);
       zos.write(docMetaData);
+      zos.closeEntry();
+      zos.close();
 
       // Encrypt and transfer
       byte[] data = pgpEncryptor.signAndEncryptPayload(zipFileName);
@@ -116,19 +134,81 @@ public class SubmissionTransfer {
     log.info(String.format("Completed transfer of batch %s", batchIndex));
   }
 
+  private void packageUploadedDocuments(String batchIndex, ZipOutputStream zos, StringBuilder docMeta, Submission submission, String subfolder) throws IOException {
+    List<UserFile> userFiles = fileRepositoryService.findAllBySubmission(submission);
+    Map<String, Integer> filenameDuplicates = new HashMap<>();
+    for (UserFile userFile : userFiles) {
+      // Account for files of the same name
+      String docUploadFilename = userFile.getOriginalName();
+      filenameDuplicates.putIfAbsent(docUploadFilename, 0);
+      filenameDuplicates.computeIfPresent(docUploadFilename, (s, i) -> i + 1);
+      Integer filecount = filenameDuplicates.get(docUploadFilename);
+      if(filecount > 1) {
+        docUploadFilename = "%s_%s".formatted(filecount, docUploadFilename);
+      }
+
+      ZipEntry docEntry = new ZipEntry(subfolder + "/" + docUploadFilename);
+      docEntry.setSize(userFile.getFilesize().longValue());
+      zos.putNextEntry(docEntry);
+
+      CloudFile docFile = fileRepository.get(userFile.getRepositoryPath());
+      zos.write(docFile.getFileBytes());
+      zos.closeEntry();
+
+      // write doc metadata
+      String docType = (String) submission.getInputData().get("docType_wildcard_" + userFile.getFileId());
+      String metaEntry = generateMetaDataEntry(batchIndex, subfolder, docUploadFilename, DOCTYPE_FORMAT_MAP.get(docType), submission);
+      docMeta.append(metaEntry);
+    }
+  }
+
+  private void packageSnapApplication(String batchIndex, ZipOutputStream zos, StringBuilder docMeta, Submission submission, String subfolder) throws IOException {
+    byte[] file = pdfService.getFilledOutPDF(submission); // TODO Handle generate-pdf crashes
+    String fileName = "SNAP_application.pdf";
+    zos.putNextEntry(new ZipEntry(subfolder + "/"));
+    ZipEntry entry = new ZipEntry(subfolder + "/" + fileName);
+    entry.setSize(file.length);
+    zos.putNextEntry(entry);
+    zos.write(file);
+    zos.closeEntry();
+    String metaEntry = generateMetaDataEntry(batchIndex, subfolder, fileName, "APP-OFS 4APP", submission);
+    docMeta.append(metaEntry);
+  }
+
   private String generateMetaDataEntry(String batchIndex, String subfolder, String filename, String documentType, Submission submission) {
     Map<String, Object> inputData = submission.getInputData();
+    String formattedSSN = encryptor.decrypt((String) inputData.getOrDefault("encryptedSSN", ""));
+    String formattedFilename = removeFileExtension(filename);
+    String formattedBirthdate = formatBirthdate(submission.getInputData());
+    String formattedSubmissionDate = MMDDYYYY_HHMMSS.format(submission.getSubmittedAt());
+    String filelocation = String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename);
+
     return "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n"
         .formatted(
             batchIndex,
-            filename, // TODO remove file extension
+            formattedFilename,
             documentType,
             inputData.getOrDefault("firstName", ""),
             inputData.getOrDefault("lastName", ""),
-            inputData.getOrDefault("ssns", ""), // TODO decrypt
-            inputData.getOrDefault("birthdate", ""), // TODO format
-            submission.getSubmittedAt(), // TODO format
-            String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename));
+            formattedSSN,
+            formattedBirthdate,
+            formattedSubmissionDate,
+            filelocation);
   }
 
+  private static String removeFileExtension(String filename) {
+    int extIdx = filename.indexOf('.');
+    if (extIdx != -1) {
+      return filename.substring(0, extIdx);
+    }
+    return filename;
+  }
+
+  private static String formatBirthdate(Map<String, Object> inputData) {
+    String day = (String) inputData.get("birthDay");
+    String month = (String) inputData.get("birthMonth");
+    String year = (String) inputData.get("birthYear");
+
+    return "%s/%s/%s".formatted(Strings.padStart(day, 2, '0'), Strings.padStart(month, 2, '0'), year);
+  }
 }
