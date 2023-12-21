@@ -192,10 +192,22 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
   @Test
   void fullDigitalAssisterFlow() {
-    // Parish
-    testPage.navigateToFlowScreen("laDigitalAssister/parish");
-    testPage.clickContinue();
-    assertThat(testPage.hasErrorText(message("error.missing-general"))).isTrue();
+    // Landing screen (language toggled)
+    assertThat(testPage.getTitle()).isEqualTo("Louisiana Digital Assister");
+    testPage.clickElementById("translate-button");
+    String languages = testPage.getElementText("menu2");
+    assertThat(languages).contains("Español");
+    assertThat(languages).contains("English");
+    assertThat(languages).contains("Tiếng Việt");
+    testPage.clickLink("Español");
+    assertThat(testPage.getElementText("translate-button")).contains("Traducir");
+    testPage.clickElementById("translate-button");
+    testPage.clickLink("Tiếng Việt");
+    assertThat(testPage.getElementText("translate-button")).contains("Phiên dịch");
+    testPage.clickElementById("translate-button");
+    testPage.clickLink("English");
+
+    testPage.clickButton("Apply Now");
 
     testPage.selectFromDropdown("parish", "Orleans");
     testPage.clickContinue();

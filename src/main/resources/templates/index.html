@@ -75,89 +75,22 @@
       </div>
     </section>
 
-    <section class="slab slab--white">
-      <h2 class="spacing-above-5 spacing-below-35 text--centered"
-          th:text="#{index.recommended-documents}"></h2>
-      <div class="grid">
-        <div class="grid__item width-five-twelfths">
-          <span class="large-icon"><i class="icon-person"></i></span>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.identity}"></p>
-          <p th:text="#{index.identity-examples}"></p>
-        </div>
-        <div class="grid__item width-five-twelfths shift-one-twelfth">
-          <th:block th:replace="~{fragments/icons :: smallMoneyIcon}"/>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.income}"></p>
-          <p th:text="#{index.income-examples}"></p>
-        </div>
-      </div>
-
-      <div class="grid">
-        <div class="grid__item width-five-twelfths">
-          <th:block th:replace="~{fragments/icons :: smallMoneyIcon}"/>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.non-work-income}"></p>
-          <p th:text="#{index.non-work-income-examples}"></p>
-        </div>
-
-        <div class="grid__item width-five-twelfths shift-one-twelfth">
-          <th:block th:replace="~{fragments/icons :: monetization}"/>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.expenses}"></p>
-          <p th:text="#{index.expenses-examples}"></p>
-        </div>
-      </div>
-
-      <div class="grid">
-        <div class="grid__item width-five-twelfths">
-          <span class="large-icon">
-            <i class="icon-">&#xE539;</i>
-          </span>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immigration-status}"></p>
-          <p th:text="#{index.immigration-status-examples}"></p>
-        </div>
-
-        <div class="grid__item width-five-twelfths shift-one-twelfth">
-          <th:block th:replace="~{fragments/icons :: syringe}"/>
-          <p class="spacing-below-5 spacing-above-10" th:utext="#{index.immunization-records}"></p>
-          <p th:text="#{index.immunization-record-examples}"></p>
-        </div>
-      </div>
-    </section>
-
     <section class="slab slab--yellow spacing-below-0">
-      <h2 class="spacing-above-5 spacing-below-35 text--centered"
-          th:text="#{index.this-tool}"></h2>
-      <div class="grid">
-        <div class="grid__item width-five-twelfths">
-          <p class="spacing-below-10" th:utext="#{index.food-programs}"></p>
-          <ul class="bulleted-list-items">
-            <li th:utext="#{index.food-programs-l1}"></li>
-            <li th:utext="#{index.food-programs-l2}"></li>
-          </ul>
-        </div>
-        <div class="grid__item width-five-twelfths shift-one-twelfth">
-          <p class="spacing-below-0" th:utext="#{index.cash-programs}"></p>
-          <ul class="bulleted-list-items">
-            <li th:utext="#{index.cash-programs-l1}"></li>
-            <li th:utext="#{index.cash-programs-l2}"></li>
-          </ul>
-        </div>
-      </div>
-      <div class="grid">
-        <div class="grid__item width-five-twelfths">
-          <div class="blurb" th:utext="#{index.snap.description}"></div>
-          <div class="blurb" th:utext="#{index.lacap.description}"></div>
-        </div>
-        <div class="grid__item width-five-twelfths shift-one-twelfth">
-          <div class="blurb" th:utext="#{index.fitap.description}"></div>
-          <div class="blurb" th:utext="#{index.kscp.description}"></div>
-        </div>
-      </div>
+      <h2 class="spacing-above-5 spacing-below-35"
+          th:text="#{index.apply-for-snap}"></h2>
 
-      <div class="grid shift-one-twelfth spacing-above-35">
-        <p th:utext="#{index.looking-for-help}"></p>
-        <p th:utext="#{index.visit-dcfs-website}"></p>
+      <div class="spacing-above-35">
+        <p th:utext="#{index.apply-for-snap.paragraph}"></p>
       </div>
 
 
+    </section>
+    <section class="slab slab--white">
+      <h2 class="spacing-above-5 spacing-below-35"
+          th:text="#{index.assistance-question}"></h2>
+      <div class="spacing-above-35">
+        <p th:utext="#{index.assistance-subheader}"></p>
+      </div>
     </section>
   </main>
 </div>
