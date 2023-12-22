@@ -33,7 +33,9 @@
                       <th:block
                           th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.nursing-home}, label=#{medical-expenses.nursing-home})}"/>
                       <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.other}, label=#{medical-expenses.other})}"/>
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{expenses-general-other}, label=#{expenses-general-other})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)}"/>
                     </th:block>
                 </th:block>
                 

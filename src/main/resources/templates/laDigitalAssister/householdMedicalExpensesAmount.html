@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{medical-expenses-amount.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{medical-expenses-amount.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <p class="grey-text" th:text="#{medical-expenses-amount.title}"></p>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{expenses-amount.question(#{medical-expenses})})}"/>
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formDetails})}">
           <th:block th:ref="formDetails">
@@ -17,11 +18,11 @@
                    class="spacing-below-15">
                 <th:block
                     th:with="inputName=${'householdMedicalExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
-                  <h2 th:text="#{medical-expenses-amount.header(${expense})}"></h2>
-                  <p class="text--help" th:text="#{expenses-estimate-ok}"></p>
                   <th:block
                       th:replace="~{fragments/inputs/money :: money(inputName=${inputName},
-                  ariaLabel=${expense}, postfix='/month')}"/>
+                      label=${expense.equals(#messages.msg('expenses-general-other')) ? #messages.msg('medical-expenses.other') : expense},
+                      helpText=#{expenses-estimate-ok},
+                      postfix='/month')}"/>
                 </th:block>
                 <hr/>
               </div>
@@ -36,6 +37,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer"/>
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

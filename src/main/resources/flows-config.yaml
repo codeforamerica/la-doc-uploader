@@ -348,8 +348,16 @@ flow:
     nextScreens:
       - name: liheap
         condition: ReceivesEnergyAssistance
-      - name: expensesDependentCare
+      - name: householdMedicalExpenses
   liheap:
+    nextScreens:
+      - name: householdMedicalExpenses
+  householdMedicalExpenses:
+    nextScreens:
+      - name: householdMedicalExpensesAmount
+        condition: HasMedicalExpenses
+      - name: expensesDependentCare
+  householdMedicalExpensesAmount:
     nextScreens:
       - name: expensesDependentCare
   expensesDependentCare:
@@ -364,16 +372,8 @@ flow:
     nextScreens:
       - name: expensesChildSupportAmount
         condition: HasChildSupportExpenses
-      - name: householdMedicalExpenses
-  expensesChildSupportAmount:
-    nextScreens:
-      - name: householdMedicalExpenses
-  householdMedicalExpenses:
-    nextScreens:
-      - name: householdMedicalExpensesAmount
-        condition: HasMedicalExpenses
       - name: expensesElderlyCare
-  householdMedicalExpensesAmount:
+  expensesChildSupportAmount:
     nextScreens:
       - name: expensesElderlyCare
   expensesElderlyCare:

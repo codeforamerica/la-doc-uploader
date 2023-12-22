@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{utilities.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{utilities.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block th:replace="~{fragments/cardHeader :: cardHeader(header=#{utilities.header}, subtext=#{utilities.subheader})}" />
+
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::whichHouseholdUtilities})}">
           <th:block th:ref="whichHouseholdUtilities">
-            <th:block th:replace="'fragments/inputs/checkboxFieldset' ::
+            <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
                   checkboxFieldset(inputName='householdUtilitiesExpenses',
                   ariaLabel=#{utilities.header},
-                  content=~{::whichHomeExpenses})">
+                  content=~{::whichHomeExpenses})}">
               <th:block th:ref="whichHomeExpenses">
-                <h2 th:text="#{utilities.header}"></h2>
-                <p th:text="#{utilities.subheader}"></p>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.heating}, label=#{utilities.heating})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.heating}, label=#{utilities.heating})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.cooling}, label=#{utilities.cooling})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.cooling}, label=#{utilities.cooling})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.electricity}, label=#{utilities.electricity})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.electricity}, label=#{utilities.electricity})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.water}, label=#{utilities.water})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.water}, label=#{utilities.water})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.phone}, label=#{utilities.phone})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.phone}, label=#{utilities.phone})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.garbage}, label=#{utilities.garbage})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.garbage}, label=#{utilities.garbage})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.sewer}, label=#{utilities.sewer})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.sewer}, label=#{utilities.sewer})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.cooking-fuel}, label=#{utilities.cooking-fuel})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.cooking-fuel}, label=#{utilities.cooking-fuel})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.other}, label=#{utilities.other})"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{expenses-general-other}, label=#{expenses-general-other})}"/>
                 <th:block
-                    th:replace="'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='householdUtilitiesExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)"/>
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)}"/>
               </th:block>
             </th:block>
             <div class="form-card__footer">
-              <th:block th:replace="'fragments/inputs/submitButton' :: submitButton(
-                  text=#{general.inputs.continue})"/>
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>
@@ -50,6 +50,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
