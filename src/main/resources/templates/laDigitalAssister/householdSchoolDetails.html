@@ -14,15 +14,15 @@
         <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
           <th:block th:ref="formContent">
             <div class="form-card__content">
-              <div th:each="individual, iter: ${inputData.get('studentsFullNames[]')}" class="spacing-below-15">
+              <div th:each="individual, iter: ${inputData.get('studentsFullNames[]')}" class="spacing-below-15" th:with="messageVariant=${individual.uuid == 'you' ? 'self' : 'householdMember'}">
                 <th:block th:with="schoolNameInputName=${'schoolName' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
                   <th:block th:replace="~{'fragments/inputs/text' ::
                     text(inputName=${schoolNameInputName},
-                    label=#{schooldetails.formquestion1(${individual.firstNamePossessive})})}"/>
+                    label=${messageVariant == 'self' ? #messages.msgWithParams('schooldetails.formquestion1.posessive', individual.firstName) : #messages.msgWithParams('schooldetails.formquestion1', individual.firstName)})}"/>
                 </th:block>
                 <th:block th:with="schoolEnrollmentInputName=${'schoolEnrollmentLevel' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
                   <th:block
-                    th:replace="~{fragments/inputs/radioFieldset :: radioFieldset(label=#{schooldetails.formquestion2(${individual.firstName})}, inputName=${schoolEnrollmentInputName}, fieldsetHelpText=#{schooldetails.question2-helptext}, content=~{::schoolEnrollmentLevels})}">
+                    th:replace="~{fragments/inputs/radioFieldset :: radioFieldset(label=${messageVariant == 'self' ? #messages.msgWithParams('schooldetails.formquestion2.posessive', individual.firstName) : #messages.msgWithParams('schooldetails.formquestion2', individual.firstName)}, inputName=${schoolEnrollmentInputName}, fieldsetHelpText=#{schooldetails.question2-helptext}, content=~{::schoolEnrollmentLevels})}">
                     <th:block th:ref="schoolEnrollmentLevels">
                       <th:block th:replace="~{fragments/inputs/radio :: radio(value=#{schooldetails.fulltime}, label=#{schooldetails.fulltime})}"/>
                       <th:block th:replace="~{fragments/inputs/radio :: radio(value=#{schooldetails.halftime}, label=#{schooldetails.halftime})}"/>

@@ -17,9 +17,10 @@
               <th:block th:replace="~{'fragments/inputs/checkboxFieldset' ::
                   checkboxFieldset(inputName='personalSituationsListed',
                   ariaLabel='header',
-                  content=~{::whichPersonalSituations})}">
+                  content=~{::whichPersonalSituations})}"
+                        th:with="messageVariant=${individual.uuid == 'you' ? 'self' : 'householdMember'}">
                 <th:block th:ref="whichPersonalSituations">
-                  <h2 th:text="#{personal-situations-which.subheader(${individual.firstName})}"></h2>
+                  <h2 th:text="${messageVariant == 'self' ? #messages.msgWithParams('personal-situations-which-you.subheader', individual.firstName) : #messages.msgWithParams('personal-situations-which.subheader', individual.firstName)}"></h2>
                   <p th:text="#{general.check-all-that-apply}"></p>
                   <th:block
                       th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='personalSituationHomelessSwitch',value=${individual.uuid}, label=#{personal-situations.which.option1})}"/>
