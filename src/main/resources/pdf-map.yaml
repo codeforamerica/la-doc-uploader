@@ -103,6 +103,16 @@ inputFields:
     Other: Other
   receivesEnergyAssistance: receivesEnergyAssistance
   assistanceThroughLiheap: assistanceThroughLiheap
+  householdMedicalExpense:
+    Dental bills: Dental bills
+    Hospital bills: Hospital bills
+    Prescribed medicine: Prescribed medicine
+    Prescription drug plan premium: Prescription drug plan premium
+    Medical appliances: Medical appliances
+    Health insurance or Medicare premiums: Health insurance or Medicare premiums
+    Nursing home: Nursing home
+    Other medical expenses: Other medical expenses
+
 
   needsNewEbtCard: needsNewEbtCard
 
@@ -116,12 +126,18 @@ subflowInfo:
       studentName: studentName
       schoolName: schoolName
       attendance: attendance
-  expenses:
+  householdExpenses:
     totalIterations: 7
     inputFields:
       householdExpensesType: householdExpensesType
       householdExpensesAmount: householdExpensesAmount
       householdExpensesFreq: householdExpensesFreq
+  medicalExpenses:
+    totalIterations: 7
+    inputFields:
+      medicalExpensesType: medicalExpensesType
+      medicalExpensesAmount: medicalExpensesAmount
+      medicalExpensesFreq: medicalExpensesFreq
   household:
     totalIterations: 7
     inputFields:
