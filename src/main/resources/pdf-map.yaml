@@ -104,6 +104,28 @@ inputFields:
   receivesEnergyAssistance: receivesEnergyAssistance
   assistanceThroughLiheap: assistanceThroughLiheap
 
+  householdMedicalExpenses:
+    Dental bills: Dental bills
+    Hospital bills: Hospital bills
+    Prescribed medicine: Prescribed medicine
+    Prescription drug plan premium: Prescription drug plan premium
+    Medical appliances: Medical appliances
+    Health insurance or Medicare premiums: Health insurance or Medicare premiums
+    Nursing home: Nursing home
+    Other medical expenses: Other medical expenses
+
+  moneyOnHandTypes:
+    Checking account: Checking account
+    Savings account: Savings account
+    Joint account: Joint account
+    Bonds: Bonds
+    Cash on hand: Cash on hand
+    Certificate of Deposit (CD): Certificate of Deposit (CD)
+    Money Market Account: Money Market Account
+    Mutual funds: Mutual funds
+    Savings bond: Savings bond
+    Stocks: Stocks
+
   needsNewEbtCard: needsNewEbtCard
 
   votingRegistrationRequested: votingRegistrationRequested
@@ -116,12 +138,24 @@ subflowInfo:
       studentName: studentName
       schoolName: schoolName
       attendance: attendance
-  expenses:
+  householdExpenses:
     totalIterations: 7
     inputFields:
       householdExpensesType: householdExpensesType
       householdExpensesAmount: householdExpensesAmount
       householdExpensesFreq: householdExpensesFreq
+  medicalExpenses:
+    totalIterations: 7
+    inputFields:
+      medicalExpensesType: medicalExpensesType
+      medicalExpensesAmount: medicalExpensesAmount
+      medicalExpensesFreq: medicalExpensesFreq
+  householdResources:
+    totalIterations: 7
+    inputFields:
+      moneyOnHandType: moneyOnHandType
+      moneyOnHandAmount: moneyOnHandAmount
+      moneyOnHandOwner: moneyOnHandOwner
   household:
     totalIterations: 7
     inputFields:
