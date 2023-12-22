@@ -9,7 +9,7 @@ import static org.ladocuploader.app.utils.SubmissionUtilities.inExperimentGroup;
 import static org.ladocuploader.app.utils.SubmissionUtilities.isNolaParish;
 
 @Component
-public class EligibleForOutsideNolaWicEceLinks implements Condition {
+public class EligibleForOutsideNolaWicLinks implements Condition {
 
   @Override
   public Boolean run(Submission submission) {

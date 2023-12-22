@@ -382,8 +382,8 @@ flow:
         condition: HasElderlyCareExpenses
       - name: nolaEceLinks
         condition: EligibleForNolaWicEceLinks
-      - name: eceLinks
-        condition: EligibleForOutsideNolaWicEceLinks
+      - name: wicLinks
+        condition: EligibleForOutsideNolaWicLinks
       - name: nolaApplyStart
         condition: EligibleForNolaWicEceApply
       - name: wicApply
@@ -394,7 +394,7 @@ flow:
       - name: nolaEceLinks
         condition: EligibleForNolaWicEceLinks
       - name: wicLinks
-        condition: EligibleForOutsideNolaWicEceLinks
+        condition: EligibleForOutsideNolaWicLinks
       - name: nolaApplyStart
         condition: EligibleForNolaWicEceApply
       - name: wicApply
