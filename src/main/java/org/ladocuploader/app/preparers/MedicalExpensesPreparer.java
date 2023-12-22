@@ -8,6 +8,7 @@ import formflow.library.pdf.SubmissionFieldPreparer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,17 +18,18 @@ import static java.util.Collections.emptyList;
 @Component
 @Slf4j
 public class MedicalExpensesPreparer implements SubmissionFieldPreparer {
-  private static final Map<String, String> EXPENSES = new HashMap<>();
+  private static final String AMOUNT_PREFIX = "householdMedicalExpenseAmount_wildcard_";
+  private static final List<String> EXPENSES = new ArrayList<>();
 
   static {
-    EXPENSES.put("householdMedicalExpenseAmount_wildcard_Dental bills", "Dental bills");
-    EXPENSES.put("householdMedicalExpenseAmount_wildcard_Hospital bills", "Hospital bills");
-    EXPENSES.put("householdMedicalExpenseAmount_wildcard_Prescribed medicine", "Prescribed medicine");
-    EXPENSES.put("householdMedicalExpenseAmount_wildcard_Prescription drug plan premium", "Prescription drug plan premium");
-    EXPENSES.put("householdMedicalExpenseAmount_wildcard_Medical appliances", "Medical appliances");
-    EXPENSES.put("householdMedicalExpenseAmount_wildcard_Health insurance or Medicare premiums", "Health insurance or Medicare premiums");
-    EXPENSES.put("householdMedicalExpenseAmount_wildcard_Nursing home", "Nursing home");
-    EXPENSES.put("householdMedicalExpenseAmount_wildcard_Other medical expenses", "Other medical expenses");
+    EXPENSES.add("Dental bills");
+    EXPENSES.add("Hospital bills");
+    EXPENSES.add("Prescribed medicine");
+    EXPENSES.add("Prescription drug plan premium");
+    EXPENSES.add("Medical appliances");
+    EXPENSES.add("Health insurance or Medicare premiums");
+    EXPENSES.add("Nursing home");
+    EXPENSES.add("Other medical expenses");
   }
 
   @Override
@@ -36,12 +38,11 @@ public class MedicalExpensesPreparer implements SubmissionFieldPreparer {
 
     var expenses = (List) submission.getInputData().getOrDefault("householdMedicalExpenses[]", emptyList());
     if (!expenses.isEmpty()) {
-      List<String> sortedExpenses = EXPENSES.keySet().stream().sorted().toList();
       int i = 1;
-      for (String expense : sortedExpenses) {
-        var expenseInput = submission.getInputData().get(expense);
+      for (String expense : EXPENSES) {
+        var expenseInput = submission.getInputData().get(AMOUNT_PREFIX + expense);
         if (expenseInput != null) {
-          results.put("medicalExpensesType" + i, new SingleField("medicalExpensesType", EXPENSES.get(expense), i));
+          results.put("medicalExpensesType" + i, new SingleField("medicalExpensesType", expense, i));
           results.put("medicalExpensesAmount" + i, new SingleField("medicalExpensesAmount", (String) expenseInput, i));
           results.put("medicalExpensesFreq" + i, new SingleField("medicalExpensesFreq", "Monthly", i));
           i++;

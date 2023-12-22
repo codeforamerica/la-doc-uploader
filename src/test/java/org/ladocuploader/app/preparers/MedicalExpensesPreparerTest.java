@@ -50,16 +50,16 @@ class MedicalExpensesPreparerTest {
         .isEqualTo(new SingleField("medicalExpensesFreq", "Monthly", 2));
 
     assertThat(result.get("medicalExpensesType3"))
-        .isEqualTo(new SingleField("medicalExpensesType", "Nursing home", 3));
+        .isEqualTo(new SingleField("medicalExpensesType", "Prescribed medicine", 3));
     assertThat(result.get("medicalExpensesAmount3"))
-        .isEqualTo(new SingleField("medicalExpensesAmount", "30", 3));
+        .isEqualTo(new SingleField("medicalExpensesAmount", "40", 3));
     assertThat(result.get("medicalExpensesFreq3"))
         .isEqualTo(new SingleField("medicalExpensesFreq", "Monthly", 3));
 
     assertThat(result.get("medicalExpensesType4"))
-        .isEqualTo(new SingleField("medicalExpensesType", "Prescribed medicine", 4));
+        .isEqualTo(new SingleField("medicalExpensesType", "Nursing home", 4));
     assertThat(result.get("medicalExpensesAmount4"))
-        .isEqualTo(new SingleField("medicalExpensesAmount", "40", 4));
+        .isEqualTo(new SingleField("medicalExpensesAmount", "30", 4));
     assertThat(result.get("medicalExpensesFreq4"))
         .isEqualTo(new SingleField("medicalExpensesFreq", "Monthly", 4));
   }

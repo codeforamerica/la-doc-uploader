@@ -41,20 +41,27 @@ public class HouseholdResourcesPreparer implements SubmissionFieldPreparer {
 
     var types = (List) submission.getInputData().getOrDefault("moneyOnHandTypes[]", emptyList());
     if (!types.isEmpty()) {
-      List<String> sortedResources = RESOURCES.stream().sorted().toList();
       int i = 1;
-      for (String expense : sortedResources) {
+      for (String expense : RESOURCES) {
         var amount = submission.getInputData().get(AMOUNT_PREFIX + expense);
         if (amount != null) {
-          var owner = submission.getInputData().get(OWNER_PREFIX + expense);
+          var owner = getHouseholdResourceOwner(submission.getInputData(), OWNER_PREFIX+expense);
           results.put("moneyOnHandType" + i, new SingleField("moneyOnHandType", expense, i));
           results.put("moneyOnHandAmount" + i, new SingleField("moneyOnHandAmount", (String) amount, i));
-          results.put("moneyOnHandOwner" + i, new SingleField("moneyOnHandOwner", (String) owner, i));
+          results.put("moneyOnHandOwner" + i, new SingleField("moneyOnHandOwner", owner, i));
           i++;
         }
       }
     }
 
     return results;
+  }
+
+  private static String getHouseholdResourceOwner(Map<String, Object> inputData, String key) {
+    var owner = inputData.get(key);
+    if("you".equals(owner)) {
+      return "%s %s".formatted(inputData.get("firstName"), inputData.get("lastName"));
+    }
+    return (String) owner;
   }
 }

@@ -25,11 +25,12 @@ class HouseholdResourcesPreparerTest {
   @Test
   public void shouldAddFieldsForHouseholdResources() {
     Submission submission = new SubmissionTestBuilder()
+        .withPersonalInfo("Person", "One", "","","","","","","","")
         .with("moneyOnHandTypes[]", List.of("Stonks"))
         .with("moneyOnHandValue_wildcard_Mutual funds", "10")
         .with("moneyOnHandValue_wildcard_Savings bond", "20")
         .with("moneyOnHandValue_wildcard_Stocks", "30")
-        .with("moneyOnHandOwner_wildcard_Mutual funds", "Person One")
+        .with("moneyOnHandOwner_wildcard_Mutual funds", "you")
         .with("moneyOnHandOwner_wildcard_Savings bond", "Person Two")
         .with("moneyOnHandOwner_wildcard_Stocks", "Person Three")
         .build();
