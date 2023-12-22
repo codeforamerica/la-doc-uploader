@@ -30,14 +30,14 @@
     <th:block th:if="${inNola}">
       <th:block th:if="${!isInterestedInECE}">
         <hr>
-        <h2 class="h2" th:text="#{ece-no-confirmation.header}"></h2>
+        <h2 class="h2" th:utext="#{ece-no-confirmation.header}"></h2>
       </th:block>
       <th:block th:if="${inLinkGroup && isInterestedInECE}">
         <hr>
-        <h2 class="h2" th:text="#{ece-yes-confirmation.header}"></h2>
+        <h2 class="h2" th:utext="#{ece-yes-confirmation.header}"></h2>
       </th:block>
       <th:block th:if="${!isInterestedInECE || inLinkGroup}">
-        <p th:text="#{nola-ece.if-youre-approved}"></p>
+        <p th:utext="#{nola-ece.if-youre-approved}"></p>
         <p th:utext="#{nola-ece.subheader}"></p>
         <a class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
            th:text="#{nola-ece-go-to-application}"></a>

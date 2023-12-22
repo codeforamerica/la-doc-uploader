@@ -20,23 +20,6 @@
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
-            <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
-                controlId='r1',
-                linkLabel=~{::revealLabel1},
-                content=~{::revealContent1},
-                forceShowContent='true')}">
-              <th:block th:ref="revealLabel1">
-                <i class="icon-">&#xE862;</i>
-                <th:span th:text="#{confirmation.helpful-resources}"></th:span>
-              </th:block>
-              <th:block th:ref="revealContent1">
-                <ul class="list--bulleted">
-                  <li th:utext="#{confirmation.helpful-resources.l1}"></li>
-                  <li th:utext="#{confirmation.helpful-resources.l2}"></li>
-                </ul>
-              </th:block>
-            </th:block>
-
             <div th:replace="~{fragments/wicEceConfirmation :: wicEceConfirmation}"></div>
 
             <th:block th:unless="${inApplyGroup || inLinkGroup}">
@@ -70,6 +53,23 @@
                   </div>
                 </div>
               </div>
+            </th:block>
+
+            <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
+                controlId='r1',
+                linkLabel=~{::revealLabel1},
+                content=~{::revealContent1},
+                forceShowContent='true')}">
+              <th:block th:ref="revealLabel1">
+                <i class="icon-">&#xE862;</i>
+                <th:span th:text="#{confirmation.helpful-resources}"></th:span>
+              </th:block>
+              <th:block th:ref="revealContent1">
+                <ul class="list--bulleted">
+                  <li th:utext="#{confirmation.helpful-resources.l1}"></li>
+                  <li th:utext="#{confirmation.helpful-resources.l2}"></li>
+                </ul>
+              </th:block>
             </th:block>
 
             <div th:replace="~{fragments/feedback :: feedback}"></div>
