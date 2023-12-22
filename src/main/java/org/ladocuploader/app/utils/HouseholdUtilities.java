@@ -40,8 +40,9 @@ public class HouseholdUtilities {
           LinkedHashMap user = new LinkedHashMap();
           if (id.equals("you")) {
             user.put("uuid", id);
-            user.put("firstName", inputData.get("firstName") + " (you)");
-            user.put("firstNamePossessive", inputData.get("firstName") + "'s (your)");
+            user.put("firstName", inputData.get("firstName"));
+//            user.put("firstName", inputData.get("firstName") + " (you)");
+//            user.put("firstNamePossessive", inputData.get("firstName") + "'s (your)");
 
             householdDataObject.add(user);
           } else {
@@ -60,7 +61,7 @@ public class HouseholdUtilities {
       if (hhmember.get("uuid").equals(uuid)) {
         user.put("uuid", uuid);
         user.put("firstName", hhmember.get("householdMemberFirstName"));
-        user.put("firstNamePossessive", hhmember.get("householdMemberFirstName")+ "'s");
+//        user.put("firstNamePossessive", hhmember.get("householdMemberFirstName")+ "'s");
         continue;
       }
     }
