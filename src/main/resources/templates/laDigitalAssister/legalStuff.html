@@ -10,7 +10,8 @@
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{'fragments/icons' :: uploadDocuments}"></th:block>
         <th:block
-            th:replace="'fragments/cardHeader' :: cardHeader(header=#{legal-header1}, subtext=#{legal-subheader})"/>
+            th:replace="'fragments/cardHeader' :: cardHeader(header=#{legal-header1})"/>
+        <h3 class="spacing-above-0" th:utext="#{legal-subheader}"></h3>
         <p th:utext="#{legal-main-body}"></p>
         <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::legalExpand1})">
           <th:block th:ref="legalExpand1">

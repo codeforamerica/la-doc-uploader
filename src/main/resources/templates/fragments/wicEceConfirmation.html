@@ -39,7 +39,7 @@
       <th:block th:if="${!isInterestedInECE || inLinkGroup}">
         <p th:text="#{nola-ece.if-youre-approved}"></p>
         <p th:utext="#{nola-ece.subheader}"></p>
-        <a class="button button--primary" href="http://apply.avela.org/nolaps"
+        <a class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
            th:text="#{nola-ece-go-to-application}"></a>
       </th:block>
     </th:block>
@@ -56,7 +56,7 @@
       <th:block th:if="${!isInterestedInWIC || inLinkGroup}">
         <p th:text="#{wic.if-youre-approved}"></p>
         <p th:utext="#{wic.subheader}"></p>
-        <a class="button button--primary" href="https://mywic.net/participantreferral"
+        <a class="button button--primary" target="_blank" href="https://mywic.net/participantreferral"
            th:text="#{wic-go-to-application}"></a>
       </th:block>
 

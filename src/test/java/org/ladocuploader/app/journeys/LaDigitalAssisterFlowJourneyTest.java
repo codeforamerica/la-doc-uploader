@@ -546,11 +546,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("none__checkbox");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("money-on-hand.title"));
-    testPage.enter("moneyOnHand", "0");
+    assertThat(testPage.getTitle()).isEqualTo(message("moneyonhand-types.title"));
+    testPage.clickElementById("moneyOnHandTypes-Savings bond-label");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("moneyonhand-types.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("moneyonhand-details.title"));
     testPage.clickContinue();
 
     //    Expenses SignPost
@@ -560,12 +560,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));
 
     testPage.clickElementById("householdHomeExpenses-Rent-label");
-    testPage.clickElementById("householdHomeExpenses-Other-label");
+    testPage.clickElementById("householdHomeExpenses-Other home expenses-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("home-expenses-amount.title"));
 
     testPage.enter("householdHomeExpenseAmount_wildcard_Rent", "500");
+    testPage.enter("householdHomeExpenseAmount_wildcard_Other home expenses", "100");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
@@ -605,7 +606,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
     testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses.title"));
     testPage.goBack();
 
     testPage.clickButton("Yes");
@@ -613,15 +614,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("expensesChildSupport", "150");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("insurance-expenses.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses.title"));
 
-    testPage.clickElementById("householdMedicalExpenses-Dental insurance premiums-label");
+    testPage.clickElementById("householdMedicalExpenses-Dental bills-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses-amount.title"));
-    testPage.goBack();
-
-    testPage.clickElementById("none__checkbox-label"); // none selected
+    testPage.enter("householdMedicalExpenseAmount_wildcard_Dental bills", "200");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));

@@ -52,22 +52,23 @@ inputFields:
   authorizedRepCity: authorizedRepCity
   authorizedRepPhoneNumber: authorizedRepPhoneNumber
   needsMedicaid: needsMedicaid
-  ssns_1: ssns_1
-  ssns_2: ssns_2
-  ssns_3: ssns_3
-  ssns_4: ssns_4
-  ssns_5: ssns_5
-  ssns_6: ssns_6
-  ssns_7: ssns_7
 
   hasDependentCareExpenses: hasDependentCareExpenses
+  expensesDependentCare: expensesDependentCare
+  hasChildSupportExpenses: hasChildSupportExpenses
+  expensesChildSupport: expensesChildSupport
   personalSituationDisablityInd: disablityInd
   pregnancyInd: pregnancyInd
+  pregnantMemberNames: pregnantMemberNames
+  pregnantMemberDueDates: pregnantMemberDueDates
   schoolInd: schoolInd
   buyPrepareMealsSeparateIndicator: buyPrepareMealsSeparateIndicator
-  outOfStateBenefitsInd: outOfStateBenefitsInd
   veteranInd: veteranInd
   fosterAgedOutInd: fosterAgedOutInd
+  outOfStateBenefitsRecipientsNames: outOfStateBenefitsRecipientsNames
+  veteransNames: veteransNames
+  fostersAgedOutNames: fostersAgedOutNames
+  preparesFoodNames: preparesFoodNames
 
   jobSearch: jobSearch
   migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
@@ -82,6 +83,7 @@ inputFields:
     VeteransBenefits: VeteransBenefits
     Contributions: Contributions
 
+  heatingOrCoolingInd: heatingOrCoolingInd
   householdUtilitiesExpenses:
     Electricity: Electricity
     Water: Water
@@ -99,11 +101,61 @@ inputFields:
     Lot Rent: Lot Rent
     Flood Insurance: Flood Insurance
     Other: Other
+  receivesEnergyAssistance: receivesEnergyAssistance
+  assistanceThroughLiheap: assistanceThroughLiheap
+
+  householdMedicalExpenses:
+    Dental bills: Dental bills
+    Hospital bills: Hospital bills
+    Prescribed medicine: Prescribed medicine
+    Prescription drug plan premium: Prescription drug plan premium
+    Medical appliances: Medical appliances
+    Health insurance or Medicare premiums: Health insurance or Medicare premiums
+    Nursing home: Nursing home
+    Other medical expenses: Other medical expenses
+
+  moneyOnHandTypes:
+    Checking account: Checking account
+    Savings account: Savings account
+    Joint account: Joint account
+    Bonds: Bonds
+    Cash on hand: Cash on hand
+    Certificate of Deposit (CD): Certificate of Deposit (CD)
+    Money Market Account: Money Market Account
+    Mutual funds: Mutual funds
+    Savings bond: Savings bond
+    Stocks: Stocks
+
+  needsNewEbtCard: needsNewEbtCard
 
   votingRegistrationRequested: votingRegistrationRequested
   votingRegistrationHelpRequested: votingRegistrationHelpRequested
 
 subflowInfo:
+  students:
+    totalIterations: 7
+    inputFields:
+      studentName: studentName
+      schoolName: schoolName
+      attendance: attendance
+  householdExpenses:
+    totalIterations: 7
+    inputFields:
+      householdExpensesType: householdExpensesType
+      householdExpensesAmount: householdExpensesAmount
+      householdExpensesFreq: householdExpensesFreq
+  medicalExpenses:
+    totalIterations: 7
+    inputFields:
+      medicalExpensesType: medicalExpensesType
+      medicalExpensesAmount: medicalExpensesAmount
+      medicalExpensesFreq: medicalExpensesFreq
+  householdResources:
+    totalIterations: 7
+    inputFields:
+      moneyOnHandType: moneyOnHandType
+      moneyOnHandAmount: moneyOnHandAmount
+      moneyOnHandOwner: moneyOnHandOwner
   household:
     totalIterations: 7
     inputFields:
@@ -115,6 +167,19 @@ subflowInfo:
       householdHighestEducationFormatted: householdHighestEducation
       householdBirthdayFormatted: householdBirthday
       householdUSCitizenDerived: householdUSCitizen
+      ssns: ssns
+  income:
+    totalIterations: 7
+    inputFields:
+      employeeName: employeeName
+      employerName: employerName
+      employmentPayFreq: employmentPayFreq
+      employeeHoursPerWeek: employeeHoursPerWeek
+      employeeHourlyWage: employeeHourlyWage
+      selfEmploymentName: selfEmploymentName
+      selfEmploymentDesc: selfEmploymentDesc
+      selfEmploymentMonthlyIncome: selfEmploymentMonthlyIncome
+      selfEmploymentHoursPerWeek: selfEmploymentHoursPerWeek
 
 dbFields:
   submittedAt: submission-timestamp

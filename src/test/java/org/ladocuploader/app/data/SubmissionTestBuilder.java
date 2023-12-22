@@ -80,9 +80,48 @@ public class SubmissionTestBuilder {
         return this;
     }
 
-    public SubmissionTestBuilder withPregnancies(List<String> uuids) {
+    public SubmissionTestBuilder withPregnancies(List<String> uuids, List<String> dueDates) {
         submission.getInputData().put("pregnancyInd", "true");
         submission.getInputData().put("pregnancies[]", uuids);
+        for (int i = 0; i < uuids.size(); i++) {
+            String uuid = uuids.get(i);
+            String dueDate = dueDates.get(i);
+            String[] dateComponents = dueDate.split("/");
+            submission.getInputData().put("monthPregnancyDueDate_wildcard_" + uuid, dateComponents[0]);
+            submission.getInputData().put("dayPregnancyDueDate_wildcard_" + uuid, dateComponents[1]);
+            submission.getInputData().put("yearPregnancyDueDate_wildcard_" + uuid, dateComponents[2]);
+        }
+        return this;
+    }
+
+    public SubmissionTestBuilder withJob(String employeeName, String employerName, String freq, String amount, String isSelfEmployed, String jobPaidByHour) {
+        List<Map<String, Object>> income = (List<Map<String, Object>>) submission.getInputData().get("income");
+        if (income == null) {
+            income = new ArrayList<>();
+        }
+
+        Map<String, Object> job = new HashMap<>();
+        String uuid = employeeName.toLowerCase();
+        job.put("uuid", uuid);
+        job.put("householdMemberJobAdd", employeeName);
+        job.put("employerName", employerName);
+        job.put("selfEmployed", isSelfEmployed);
+        job.put("jobPaidByHour", jobPaidByHour);
+        if (jobPaidByHour.equals("true")) {
+            job.put("hourlyWage", amount);
+            job.put("hoursPerWeek", freq);
+        } else {
+            job.put("payPeriodAmount", amount);
+            job.put("payPeriod", freq);
+        }
+
+        income.add(job);
+        submission.getInputData().put("income", income);
+        return this;
+    }
+
+    public SubmissionTestBuilder with(String key, Object value) {
+        submission.getInputData().put(key, value);
         return this;
     }
 }
