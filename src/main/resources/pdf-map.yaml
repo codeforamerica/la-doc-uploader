@@ -103,7 +103,8 @@ inputFields:
     Other: Other
   receivesEnergyAssistance: receivesEnergyAssistance
   assistanceThroughLiheap: assistanceThroughLiheap
-  householdMedicalExpense:
+
+  householdMedicalExpenses:
     Dental bills: Dental bills
     Hospital bills: Hospital bills
     Prescribed medicine: Prescribed medicine
@@ -113,6 +114,17 @@ inputFields:
     Nursing home: Nursing home
     Other medical expenses: Other medical expenses
 
+  moneyOnHandTypes:
+    Checking account: Checking account
+    Savings account: Savings account
+    Joint account: Joint account
+    Bonds: Bonds
+    Cash on hand: Cash on hand
+    Certificate of Deposit (CD): Certificate of Deposit (CD)
+    Money Market Account: Money Market Account
+    Mutual funds: Mutual funds
+    Savings bond: Savings bond
+    Stocks: Stocks
 
   needsNewEbtCard: needsNewEbtCard
 
@@ -138,6 +150,12 @@ subflowInfo:
       medicalExpensesType: medicalExpensesType
       medicalExpensesAmount: medicalExpensesAmount
       medicalExpensesFreq: medicalExpensesFreq
+  householdResources:
+    totalIterations: 7
+    inputFields:
+      moneyOnHandType: moneyOnHandType
+      moneyOnHandAmount: moneyOnHandAmount
+      moneyOnHandOwner: moneyOnHandOwner
   household:
     totalIterations: 7
     inputFields:
