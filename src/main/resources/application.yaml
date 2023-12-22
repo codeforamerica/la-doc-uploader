@@ -6,7 +6,7 @@ sftp:
 form-flow:
   lock-after-submitted:
     - flow: laDigitalAssister
-      redirect: docUploadIntro
+      redirect: confirmation
   disabled-flows:
     - flow: laDigitalAssister
       staticRedirectPage: /
