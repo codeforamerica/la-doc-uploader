@@ -132,7 +132,6 @@ flow:
     nextScreens:
       - name: householdPregnancy
   householdPregnancy:
-    beforeSaveAction: SetExperimentGroups
     nextScreens:
       - name: householdPregnancyWho
         condition: IsPregnant
@@ -377,6 +376,7 @@ flow:
     nextScreens:
       - name: expensesElderlyCare
   expensesElderlyCare:
+    beforeSaveAction: SetExperimentGroups
     nextScreens:
       - name: expensesElderlyCareAmount
         condition: HasElderlyCareExpenses
