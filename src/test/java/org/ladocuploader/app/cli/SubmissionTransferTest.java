@@ -71,7 +71,7 @@ class SubmissionTransferTest {
     when(encryptor.signAndEncryptPayload(anyString())).thenReturn(new byte[]{});
     doAnswer(args -> {
       String zipfilename = (String) args.getArguments()[0];
-      String transmitlocation = "src/test/resources/output/mocktransmit_" + args.getArguments()[0];
+      String transmitlocation = "mocktransmit_" + args.getArguments()[0];
       try (FileInputStream instream = new FileInputStream(zipfilename);
            FileOutputStream outstream = new FileOutputStream(transmitlocation)) {
         outstream.write(instream.readAllBytes());
@@ -150,7 +150,7 @@ class SubmissionTransferTest {
   public void transmitZipFile() throws IOException {
     submissionTransfer.transferSubmissions();
 
-    File zipFile = new File("src/test/resources/output/mocktransmit_00050000000.zip");
+    File zipFile = new File("mocktransmit_00050000000.zip");
     assertTrue(zipFile.exists());
 
     verify(ftpsClient).uploadFile(any(), any());
