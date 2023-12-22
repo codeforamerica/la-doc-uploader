@@ -404,6 +404,7 @@ flow:
     nextScreens:
       - name: expensesElderlyCare
   expensesElderlyCare:
+    beforeSaveAction: SetExperimentGroups
     nextScreens:
       - name: expensesElderlyCareAmount
         condition: HasElderlyCareExpenses
