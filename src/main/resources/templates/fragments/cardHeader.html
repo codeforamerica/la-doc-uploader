@@ -1,0 +1,10 @@
+<header
+    th:fragment="cardHeader"
+    th:with="hasSubtext=${!#strings.isEmpty(subtext)}"
+    th:assert="${!#strings.isEmpty(header)}"
+    class="form-card__header">
+  <h1 id="header" class="h2" th:utext="${header}"></h1>
+  <p id="header-help-message"
+     th:if="${hasSubtext}"
+     th:utext="${subtext}"></p>
+</header>

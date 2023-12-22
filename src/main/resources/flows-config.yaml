@@ -423,8 +423,10 @@ flow:
   wicApply:
     nextScreens:
       - name: nolaApplyThankYou
-        condition: InNolaParish
+        condition: InterestedInWicEce
       - name: outsideNolaApplyThankYou
+        condition: InterestedInWIC
+      - name: finalSignPost
   nolaApplyThankYou:
     nextScreens:
       - name: finalSignPost
