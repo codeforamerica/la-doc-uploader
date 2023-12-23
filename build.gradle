@@ -44,13 +44,13 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.1'
     implementation 'com.opencsv:opencsv:5.9'
 
-//    if (profile == 'dev' || useLocalLibrary == 'true') {
-//        implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
-//        println "📦 Using local library"
-//    } else {
+    if (profile == 'dev' || useLocalLibrary == 'true') {
+        implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
+        println "📦 Using local library"
+    } else {
         implementation "org.codeforamerica.platform:form-flow:${formFlowLibraryVersion}"
         println "📚Using form flow library ${formFlowLibraryVersion}"
-//    }
+    }
 
     implementation 'com.amazonaws:aws-encryption-sdk-java:3.0.0'
     implementation 'org.bouncycastle:bcpg-jdk15on:1.70'
