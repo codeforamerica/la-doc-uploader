@@ -208,9 +208,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("household-income-last-30-days.title"));
     testPage.enter("householdIncomeLast30Days", "0");
     testPage.clickContinue();
-    // Household Money on Hand
-    assertThat(testPage.getTitle()).isEqualTo(message("household-money-on-hand.title"));
-    testPage.clickButton("Yes");
     // Expedited Money on Hand Amount
     assertThat(testPage.getTitle()).isEqualTo(message("expedited-money-on-hand-amount.title"));
     testPage.enter("expeditedMoneyOnHandAmount", "0");
@@ -224,9 +221,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     // Utilities
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
-    testPage.enter("householdUtilitiesExpenses", List.of("None"));
+    testPage.clickElementById("none__checkbox");
     testPage.clickContinue();
     // Seasonal Farm Worker
+    assertThat(testPage.getTitle()).isEqualTo(message("seasonal-farmworker.title"));
+    testPage.clickButton("No");
+    // Expedited Snap Qualification Notice
+    assertThat(testPage.getTitle()).isEqualTo(message("expedited-qualification-notice.title"));
   }
 
   @Test

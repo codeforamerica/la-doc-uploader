@@ -14,6 +14,6 @@ public class IsNotApplyingForExpeditedSnap implements Condition {
             return inputData.get("isApplyingForExpeditedSnap").equals("false");
         }
         // They never saw the expedited snap question, so they're not applying for it
-        return false;
+        return true;
     }
 }
