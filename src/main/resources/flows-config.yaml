@@ -100,12 +100,7 @@ flow:
       - name: ssnForm
   householdIncomeLast30Days:
     nextScreens:
-      - name: householdMoneyOnHand
-  householdMoneyOnHand:
-    nextScreens:
       - name: expeditedMoneyOnHandAmount
-        condition: HouseholdHasMoneyOnHand
-      - name: householdRent
   expeditedMoneyOnHandAmount:
     nextScreens:
       - name: householdRent
@@ -113,10 +108,10 @@ flow:
     nextScreens:
       - name: householdRentAmount
         condition: HouseholdPaysRent
-      - name: utilities
+      - name: householdUtilities
   householdRentAmount:
     nextScreens:
-      - name: utilities
+      - name: householdUtilities
   householdSignPost:
     nextScreens:
       - name: householdInfo
@@ -189,8 +184,19 @@ flow:
     nextScreens:
       - name: householdSeasonalFarmWorker
   householdSeasonalFarmWorker:
+    beforeSaveAction: CheckExpeditedSnapEligibility
     nextScreens:
       - name: householdCitizenship
+        condition: IsNotApplyingForExpeditedSnap
+      - name: expeditedSnapQualificationNotice
+        condition: IsEligibleForExpeditedSnap
+      - name: expeditedSnapDeferredNotice
+  expeditedSnapQualificationNotice:
+    nextScreens:
+      - name: finalSignPost
+  expeditedSnapDeferredNotice:
+    nextScreens:
+      - name: finalSignPost
   householdCitizenship:
     nextScreens:
       - name: householdVeteran
@@ -338,10 +344,10 @@ flow:
       - name: householdAdditionalIncome
   householdAdditionalIncome:
     nextScreens:
-      - name: householdMoneyOnHandAmount
+      - name: householdMoneyOnHand
         condition: ProgramsIncludeSnap
       - name: expensesSignPost
-  householdMoneyOnHandAmount:
+  householdMoneyOnHand:
     nextScreens:
       - name: householdMoneyOnHandDetails
         condition: HasMoneyOnHand
@@ -364,11 +370,15 @@ flow:
       - name: householdUtilities
   householdUtilities:
     nextScreens:
+      - name: householdSeasonalFarmWorker
+        condition: IsApplyingForExpeditedSnapAndHasNoUtilityExpenses
       - name: householdUtilitiesAmount
         condition: HasUtilitiesExpenses
       - name: energyAssistance
   householdUtilitiesAmount:
     nextScreens:
+      - name: householdSeasonalFarmWorker
+        condition: IsApplyingForExpeditedSnap
       - name: energyAssistance
   energyAssistance:
     nextScreens:

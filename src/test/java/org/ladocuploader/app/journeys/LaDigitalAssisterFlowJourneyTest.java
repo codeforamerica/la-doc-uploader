@@ -1,7 +1,5 @@
 package org.ladocuploader.app.journeys;
 
-import java.util.List;
-import java.util.Locale;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
@@ -205,7 +203,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton(message("expedited-snap-start.yes"));
     // Multiple Person Household
     assertThat(testPage.getTitle()).isEqualTo(message("multiple-person-household.title"));
-    testPage.clickButton(message("multiple-person-household.yes"));
+    testPage.clickButton("Yes");
     // Household Income Last 30 Days
     assertThat(testPage.getTitle()).isEqualTo(message("household-income-last-30-days.title"));
     testPage.enter("householdIncomeLast30Days", "0");
@@ -226,6 +224,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     // Utilities
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
+    testPage.enter("householdUtilitiesExpenses", List.of("None"));
+    testPage.clickContinue();
+    // Seasonal Farm Worker
   }
 
   @Test

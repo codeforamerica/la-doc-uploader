@@ -413,15 +413,11 @@ public class LaDigitalAssister extends FlowInputs {
   
   // Household 30 Day Income
   @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
   private String householdIncomeLast30Days;
   
   // Household Money on Hand
   private String householdMoneyOnHand;
-
-  // Household Money on Hand Amount
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String householdMoneyOnHandAmount ;
   
   // Expedited Money on Hand Amount
   @Money(message="{error.invalid-money}")
