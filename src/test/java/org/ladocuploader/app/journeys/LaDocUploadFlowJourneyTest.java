@@ -197,40 +197,8 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  void uploadDocumentButton() {
-    // Landing page
-    assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
-
-    testPage.clickButton("Tải lên tài liệu");
-    assertThat(testPage.getElementText("header")).isEqualTo("Trước khi quý vị bắt đầu, chúng tôi cần so sánh đúng tài liệu của quý vị với đơn của quý vị");
-    testPage.clickLink("< Quay lại");
-
-    testPage.clickButton("Subir documentos");
-    assertThat(testPage.getElementText("header")).isEqualTo("Antes de comenzar necesitamos vincular su caso con sus documentos");
-    testPage.clickLink("< Volver");
-
-    testPage.clickButton("Upload documents");
-    assertThat(testPage.getElementText("header")).isEqualTo("Before you start, we need to match your documents to your application");
-  }
-
-  @Test
   void fullUploadDocumentFlow() {
-    // Landing screen (language toggled)
-    assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
-    testPage.clickElementById("translate-button");
-    String languages = testPage.getElementText("menu2");
-    assertThat(languages).contains("Español");
-    assertThat(languages).contains("English");
-    assertThat(languages).contains("Tiếng Việt");
-    testPage.clickLink("Español");
-    assertThat(testPage.getElementText("translate-button")).contains("Traducir");
-    testPage.clickElementById("translate-button");
-    testPage.clickLink("Tiếng Việt");
-    assertThat(testPage.getElementText("translate-button")).contains("Phiên dịch");
-    testPage.clickElementById("translate-button");
-    testPage.clickLink("English");
-
-    testPage.clickButton("Upload documents");
+    testPage.navigateToFlowScreen("laDocUpload/clientInfo");
 
     // Client Info
     assertThat(testPage.getTitle()).isEqualTo("Match Info");

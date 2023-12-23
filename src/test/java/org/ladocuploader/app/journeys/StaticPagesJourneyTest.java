@@ -18,11 +18,11 @@ public class StaticPagesJourneyTest extends AbstractBasePageTest {
   @Test
   void staticPagesJourney() {
     // Landing screen
-    assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
+    assertThat(testPage.getTitle()).isEqualTo("Louisiana Digital Assister");
     assertThat(driver.getWindowHandles().size()).isEqualTo(1);
     String originalWindow = driver.getWindowHandle();
     // Back on landing screen
-    assertThat(testPage.getTitle()).isEqualTo("Louisiana Document Uploader");
+    assertThat(testPage.getTitle()).isEqualTo("Louisiana Digital Assister");
     assertThat(driver.getWindowHandles().size()).isEqualTo(1);
     // Go to privacy policy tab
     testPage.clickLink("Privacy Policy");
