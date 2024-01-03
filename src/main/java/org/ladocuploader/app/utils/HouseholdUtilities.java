@@ -5,7 +5,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class HouseholdUtilities {
 
@@ -29,15 +31,15 @@ public class HouseholdUtilities {
     return memberBirthDayCal.compareTo(cal) <= 0;
   }
 
-  public static ArrayList<LinkedHashMap> formattedHouseholdData(Submission submission, String key) {
+  public static List<Map<String, Object>> formattedHouseholdData(Submission submission, String key) {
     Map<String, Object> inputData = submission.getInputData();
 
-    ArrayList<LinkedHashMap> householdMembers = (ArrayList) inputData.get("household");
-    ArrayList<String> hasPersonalSituations = (ArrayList) inputData.get(key);
-    ArrayList<LinkedHashMap> householdDataObject = new ArrayList<>();
+    List<Map<String, Object>> householdMembers = (List) inputData.get("household");
+    List<String> hasPersonalSituations = (List) inputData.get(key);
+    List<Map<String, Object>> householdDataObject = new ArrayList<>();
 
     hasPersonalSituations.forEach((String id) -> {
-          LinkedHashMap user = new LinkedHashMap();
+          Map<String, Object> user = new LinkedHashMap<>();
           if (id.equals("you")) {
             user.put("uuid", id);
             user.put("firstName", inputData.get("firstName"));
@@ -53,9 +55,9 @@ public class HouseholdUtilities {
 
   }
 
-  protected static LinkedHashMap householdData(ArrayList<LinkedHashMap> household, String uuid) {
-    LinkedHashMap user = new LinkedHashMap();
-    for (LinkedHashMap hhmember : household) {
+  private static Map<String, Object> householdData(List<Map<String, Object>> household, String uuid) {
+    Map<String, Object> user = new LinkedHashMap<>();
+    for (Map<String, Object> hhmember : household) {
       if (hhmember.get("uuid").equals(uuid)) {
         user.put("uuid", uuid);
         user.put("firstName", hhmember.get("householdMemberFirstName"));
@@ -64,5 +66,27 @@ public class HouseholdUtilities {
     }
 
     return user;
+  }
+
+  /**
+   * Gathers the UUID's from each map in the list passed in.
+   * We pass in something called "household", but this will work on any list with Maps that have
+   * "uuid" in it.
+   *
+   * @param household List of Maps containing "uuid" entries
+   * @return List of UUID's pulled from the maps
+   */
+  public static List<String> getHouseholdUuids(List<Map<String, Object>> household) {
+    List<String> uuids = new ArrayList<>();
+
+    if (household == null || household.isEmpty()) {
+      return uuids;
+    }
+
+    for(Map<String, Object> member : household) {
+      uuids.add((String)member.get("uuid"));
+    }
+
+    return uuids;
   }
 }

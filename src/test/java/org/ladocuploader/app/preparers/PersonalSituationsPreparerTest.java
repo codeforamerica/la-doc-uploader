@@ -36,7 +36,7 @@ class PersonalSituationsPreparerTest {
     @Test
     public void testHouseholdDisablityIndicator() {
         Submission submission = new SubmissionTestBuilder()
-                .withHouseholdMember("test", "test", "","","","","","","","")
+                .withHouseholdMember("test", "test", "","","","","","","","", null, null)
                 .withPersonalSituations(List.of("test-test"))
                 .build();
         Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);

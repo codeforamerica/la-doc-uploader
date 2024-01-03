@@ -32,7 +32,8 @@ inputFields:
   highestEducationFormatted: highestEducation
   ethnicitySelected: ethnicitySelected
   raceSelected:
-    American Indian or Alaskan Native: RACE_American Indian or Alaskan Native
+    American Indian: RACE_American Indian or Alaskan Native
+    Alaskan Native: RACE_American Indian or Alaskan Native
     Asian: RACE_Asian
     Black or African American: RACE_Black or African American
     Native Hawaiian or Other Pacific Islander: RACE_Native Hawaiian or Other Pacific Islander
@@ -167,6 +168,7 @@ subflowInfo:
       householdHighestEducationFormatted: householdHighestEducation
       householdBirthdayFormatted: householdBirthday
       householdUSCitizenDerived: householdUSCitizen
+      householdRaceEthnicCode: householdRaceEthnicCode
       ssns: ssns
   income:
     totalIterations: 7
