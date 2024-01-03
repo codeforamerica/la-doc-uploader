@@ -1,13 +1,11 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class HouseholdUtilities {
 
@@ -66,27 +64,5 @@ public class HouseholdUtilities {
     }
 
     return user;
-  }
-
-  /**
-   * Gathers the UUID's from each map in the list passed in.
-   * We pass in something called "household", but this will work on any list with Maps that have
-   * "uuid" in it.
-   *
-   * @param household List of Maps containing "uuid" entries
-   * @return List of UUID's pulled from the maps
-   */
-  public static List<String> getHouseholdUuids(List<Map<String, Object>> household) {
-    List<String> uuids = new ArrayList<>();
-
-    if (household == null || household.isEmpty()) {
-      return uuids;
-    }
-
-    for(Map<String, Object> member : household) {
-      uuids.add((String)member.get("uuid"));
-    }
-
-    return uuids;
   }
 }
