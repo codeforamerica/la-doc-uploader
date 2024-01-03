@@ -5,7 +5,6 @@ import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Component
 public class IsDocUploadExpired implements Condition {
