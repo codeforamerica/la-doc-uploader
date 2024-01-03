@@ -13,7 +13,7 @@ public enum CsvPackageType {
 
   // TODO: abstract environment
   ECE_PACKAGE (List.of(PARENT_GUARDIAN, STUDENT, RELATIONSHIP, ECE_APPLICATION), "/la-du-moveit-transfer/nola-ps"),
-  WIC_PACKAGE (List.of(WIC_APPLICATION), "/la-du-moveit-transfer/wic");
+  WIC_PACKAGE (List.of(WIC_APPLICATION), "/la-du-moveit-transfer/dcfs");
 
   private final List<CsvType> csvTypeList;
 
