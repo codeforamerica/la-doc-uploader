@@ -23,16 +23,10 @@
                       <th:block th:ref="whichPersonalSituations">
                         <h2 th:text="${messageVariant == 'self' ? #messages.msgWithParams('personal-situations-which-you.subheader', individual.firstName) : #messages.msgWithParams('personal-situations-which.subheader', individual.firstName)}"></h2>
                         <p th:text="#{general.check-all-that-apply}"></p>
-                        <th:block
-                            th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName=${inputName}, value='homelessSwitch', label=#{personal-situations.which.option1})}"/>
-                        <th:block
-                            th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName=${inputName}, value='strugglingDrugsAlcohol', label=#{personal-situations.which.option2})}"/>
-                        <th:block
-                            th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName=${inputName}, value='domesticViolenceFlag', label=#{personal-situations.which.option3})}"/>
-                        <th:block
-                            th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName=${inputName}, value='disability', label=#{personal-situations.which.option4})}"/>
-                        <th:block
-                            th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName=${inputName} ,value='other', label=#{personal-situations.which.option5})}"/>
+                        <th:block th:each="personalSituation : ${T(org.ladocuploader.app.data.enums.PersonalSituationType).values()}">
+                          <th:block
+                              th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName=${inputName}, value=${personalSituation.getValue()}, label=#{${personalSituation.getLabelSrc()}})}"/>
+                        </th:block>
                       </th:block>
                     </th:block>
                   </th:block>
