@@ -51,8 +51,9 @@ jobs:
           'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
-          'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
-          'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
+          'SFTP_USERNAME=${{ secrets.SFTP_USERNAME_PROD }}' \
+          'SFTP_PASSWORD=${{ secrets.SFTP_PASSWORD_PROD }}' \
+          'SFTP_UPLOAD_URL=${{ secrets.SFTP_UPLOAD_URL }}' \
           'demo=false' \
           'RELEASE_HEALTHCHECK_TIMEOUT=900'
   deploy_es:

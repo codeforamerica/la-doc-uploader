@@ -46,6 +46,9 @@ jobs:
           'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_STAGING }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_STAGING }}' \
+          'SFTP_USERNAME=${{ secrets.SFTP_USERNAME_STAGING }}' \
+          'SFTP_PASSWORD=${{ secrets.SFTP_PASSWORD_STAGING }}' \
+          'SFTP_UPLOAD_URL=${{ secrets.SFTP_UPLOAD_URL }}' \
           'demo=true' \
           'RELEASE_HEALTHCHECK_TIMEOUT=900'
   draft-release:
