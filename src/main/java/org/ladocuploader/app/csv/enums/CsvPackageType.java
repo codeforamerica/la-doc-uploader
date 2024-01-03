@@ -7,7 +7,6 @@ import static org.ladocuploader.app.csv.enums.CsvType.STUDENT;
 import static org.ladocuploader.app.csv.enums.CsvType.WIC_APPLICATION;
 
 import java.util.List;
-import org.ladocuploader.app.csv.CsvService;
 
 public enum CsvPackageType {
 
