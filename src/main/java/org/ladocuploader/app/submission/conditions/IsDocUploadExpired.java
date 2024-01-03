@@ -10,8 +10,6 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class IsDocUploadExpired implements Condition {
 
-    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-
     public Long expiryHours = 2L;
 
 
@@ -21,7 +19,6 @@ public class IsDocUploadExpired implements Condition {
         OffsetDateTime now = OffsetDateTime.now();
 
         if (submittedAt != null){
-            String formattedSubmittedAt = submittedAt.format(DATE_FORMAT);
             OffsetDateTime expiryTime = submittedAt.plusHours(expiryHours);
 
             return expiryTime.isAfter(now);
