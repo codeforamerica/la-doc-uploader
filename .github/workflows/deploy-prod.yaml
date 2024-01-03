@@ -53,6 +53,7 @@ jobs:
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'SFTP_USERNAME=${{ secrets.SFTP_USERNAME_PROD }}' \
           'SFTP_PASSWORD=${{ secrets.SFTP_PASSWORD_PROD }}' \
+          'SFTP_UPLOAD_URL=${{ secrets.SFTP_UPLOAD_URL }}' \
           'demo=false' \
           'RELEASE_HEALTHCHECK_TIMEOUT=900'
   deploy_es:
