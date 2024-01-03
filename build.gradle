@@ -35,13 +35,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.jcraft:jsch:0.1.55'
-    implementation 'org.springframework.shell:spring-shell-starter:3.1.6'
+    implementation 'org.springframework.shell:spring-shell-starter:3.2.0'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation("com.mixpanel:mixpanel-java:1.5.2")
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.14'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.0'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.1'
     implementation 'com.opencsv:opencsv:5.9'
 
     if (profile == 'dev' || useLocalLibrary == 'true') {
@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.amazonaws:aws-encryption-sdk-java:3.0.0'
     implementation 'org.bouncycastle:bcpg-jdk15on:1.70'
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
-    implementation 'org.springframework.shell:spring-shell-starter:3.1.6'
+    implementation 'org.springframework.shell:spring-shell-starter:3.2.0'
 
     implementation 'commons-net:commons-net:3.10.0'
     testImplementation 'org.projectlombok:lombok:1.18.30'
@@ -78,7 +78,7 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.16.1'
     testImplementation 'io.percy:percy-java-selenium:2.0.2'
     testImplementation 'org.awaitility:awaitility'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.6.2'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
     testImplementation 'com.deque.html.axe-core:selenium:4.8.0'
 
     testAnnotationProcessor 'org.projectlombok:lombok'
