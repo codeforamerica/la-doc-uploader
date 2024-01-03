@@ -22,9 +22,9 @@ public class IsDocUploadExpired implements Condition {
 
         if (submittedAt != null){
             String formattedSubmittedAt = submittedAt.format(DATE_FORMAT);
-            OffsetDateTime expiryTime = submittedAt.minusHours(expiryHours);
+            OffsetDateTime expiryTime = submittedAt.plusHours(expiryHours);
 
-            return expiryTime.isBefore(now);
+            return expiryTime.isAfter(now);
         }
         return false;
     }
