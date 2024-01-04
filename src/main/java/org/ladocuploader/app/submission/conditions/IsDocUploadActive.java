@@ -6,11 +6,11 @@ import org.ladocuploader.app.utils.SubmissionUtilities;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IsDocUploadExpired implements Condition {
+public class IsDocUploadActive implements Condition {
 
 
     @Override
     public Boolean run(Submission submission){
-        return SubmissionUtilities.isDocUploadExpired(submission);
+        return SubmissionUtilities.isDocUploadActive(submission);
     }
 }

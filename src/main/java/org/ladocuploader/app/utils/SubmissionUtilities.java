@@ -119,14 +119,14 @@ public class SubmissionUtilities {
         return false;
     }
 
-    public static boolean isDocUploadExpired(Submission submission){
+    public static boolean isDocUploadActive(Submission submission){
         OffsetDateTime submittedAt = submission.getSubmittedAt();
         OffsetDateTime now = OffsetDateTime.now();
 
         if (submittedAt != null){
             OffsetDateTime expiryTime = submittedAt.plusHours(expiryHours);
 
-            return expiryTime.isAfter(now);
+            return expiryTime.isBefore(now);
         }
         return false;
     }
