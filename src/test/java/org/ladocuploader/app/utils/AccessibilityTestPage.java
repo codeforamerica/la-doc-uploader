@@ -7,6 +7,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.context.MessageSource;
 
 
 @Slf4j
@@ -14,8 +15,8 @@ public class AccessibilityTestPage extends Page {
     public List<Rule> resultsList = new ArrayList<>();
 
 
-    public AccessibilityTestPage(RemoteWebDriver driver, String localServerPort) {
-        super(driver, localServerPort);
+    public AccessibilityTestPage(RemoteWebDriver driver, String localServerPort, MessageSource messageSource) {
+        super(driver, localServerPort, messageSource);
     }
 
     @Override

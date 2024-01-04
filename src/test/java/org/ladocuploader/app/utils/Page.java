@@ -1,6 +1,7 @@
 package org.ladocuploader.app.utils;
 
 import io.percy.selenium.Percy;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.context.MessageSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -21,11 +23,13 @@ public class Page {
 
   private static final String DOC_UPLOAD_FLOW = "laDocUpload";
 
+  private MessageSource messageSource;
 
-  public Page(RemoteWebDriver driver, String localServerPort) {
+  public Page(RemoteWebDriver driver, String localServerPort, MessageSource messageSource) {
     this.driver = driver;
     this.percy = new Percy(driver);
     this.localServerPort = localServerPort;
+    this.messageSource = messageSource;
   }
 
   public String getTitle() {
@@ -46,7 +50,7 @@ public class Page {
     await().atMost(20, TimeUnit.SECONDS).until(
         () -> !(driver.findElements(By.id("back-link")).isEmpty())
     );
-    driver.findElement(By.partialLinkText("Go Back")).click();
+    driver.findElement(By.id("back-link")).click();
   }
 
   public void clickLink(String linkText) {
@@ -74,7 +78,12 @@ public class Page {
   }
 
   public void clickContinue() {
-    clickButton("Continue");
+    clickContinue(Locale.ENGLISH);
+  }
+
+  public void clickContinue(Locale locale) {
+    clickButton(messageSource
+        .getMessage("general.inputs.continue", null, locale));
     checkForBadMessageKeys(); // introduce delay
   }
 
