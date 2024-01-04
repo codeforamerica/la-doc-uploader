@@ -1,5 +1,8 @@
 package org.ladocuploader.app.cli;
 
+import formflow.library.file.CloudFile;
+import formflow.library.file.S3CloudFileRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.bcpg.CompressionAlgorithmTags;
 import org.bouncycastle.bcpg.SymmetricKeyAlgorithmTags;
@@ -19,23 +22,41 @@ import java.util.Iterator;
 @Component
 public class PGPEncryptor {
 
-  private final String pubkeyFilename;
-  private final String sigkeyFilename;
-  private final String sigkeyPassword;
+  @Value("${pgp.sigkey-password}")
+  private String sigkeyPassword;
+  @Value("${pgp.seckey-file-path}")
+  private String seckeyFilePath;
+  @Value("${pgp.pubkey-file-path}")
+  private String pubkeyFilePath;
+  @Value("${pgp.bucket-name}")
+  private String bucketName;
 
-  public PGPEncryptor(@Value("${pgp.pubkey_filename:}") String pubkeyFilename, @Value("${pgp.sigkey_filename:}") String sigkeyFilename, @Value("${pgp.sigkey_password:}") String sigkeyPassword) {
-    this.pubkeyFilename = pubkeyFilename;
-    this.sigkeyFilename = sigkeyFilename;
-    this.sigkeyPassword = sigkeyPassword;
+  @Value("${form-flow.aws.access_key}")
+  private String accessKey;
+  @Value("${form-flow.aws.secret_key}")
+  private String secretKey;
+  @Value("${form-flow.aws.region}")
+  private String region;
+
+  private PGPSecretKey signingKey;
+  private PGPPublicKey pubKey;
+
+  @PostConstruct
+  public void init() {
+    log.info("Retrieving keys for signing and encryption");
+    S3CloudFileRepository repository = new S3CloudFileRepository(accessKey, secretKey, bucketName, region);
+    CloudFile pubKey = repository.get(pubkeyFilePath);
+    CloudFile sigKey = repository.get(seckeyFilePath);
+    try {
+      initPubKey(pubKey.getFileBytes());
+      initSigKey(sigKey.getFileBytes());
+    } catch (IOException e) {
+      throw new IllegalStateException("Issue initializing encryption keys", e);
+    }
   }
 
   public byte[] signAndEncryptPayload(String filename) throws IOException {
     FileInputStream instream = new FileInputStream(filename);
-
-    log.info("Retrieving keys for signing and encryption");
-    PGPSecretKey signingKey = getSecretKey();
-    PGPPublicKey pubKey = getPublicKey();
-
     ByteArrayOutputStream outstream = new ByteArrayOutputStream();
     try {
       log.info("Signing and encrypting payload");
@@ -49,9 +70,9 @@ public class PGPEncryptor {
     }
   }
 
-  private PGPPublicKey getPublicKey() throws IOException {
+  private void initPubKey(byte[] fileBytes) throws IOException {
     PGPPublicKey pubKey = null;
-    InputStream inputStream = new FileInputStream(pubkeyFilename);
+    InputStream inputStream = new ByteArrayInputStream(fileBytes);
     inputStream = PGPUtil.getDecoderStream(inputStream);
     try {
       JcaPGPPublicKeyRingCollection ringCollection = new JcaPGPPublicKeyRingCollection(inputStream);
@@ -68,11 +89,11 @@ public class PGPEncryptor {
     } finally {
       inputStream.close();
     }
-    return pubKey;
+    this.pubKey = pubKey;
   }
 
-  private PGPSecretKey getSecretKey() throws IOException {
-    try (InputStream fileInputStream = new FileInputStream(sigkeyFilename);) {
+  private void initSigKey(byte[] sigkeyFileBytes) throws IOException {
+    try (InputStream fileInputStream = new ByteArrayInputStream(sigkeyFileBytes);) {
       InputStream inputStream = PGPUtil.getDecoderStream(fileInputStream);
       KeyFingerPrintCalculator fpCalculator = new JcaKeyFingerprintCalculator();
       PGPSecretKeyRingCollection pgpSec = new PGPSecretKeyRingCollection(inputStream, fpCalculator);
@@ -86,7 +107,8 @@ public class PGPEncryptor {
           PGPSecretKey key = keyIter.next();
 
           if (key.isSigningKey()) {
-            return key;
+            signingKey = key;
+            return;
           }
         }
       }
@@ -103,7 +125,7 @@ public class PGPEncryptor {
   }
 
   private byte[] signAndEncryptPayload(InputStream inputStream, PGPSecretKey secKey, PGPPublicKey pubKey,
-                                      ByteArrayOutputStream outputStream) throws PGPException, IOException {
+                                       ByteArrayOutputStream outputStream) throws PGPException, IOException {
     int BUFFER_SIZE = 1 << 16;
 
     // Encryption
