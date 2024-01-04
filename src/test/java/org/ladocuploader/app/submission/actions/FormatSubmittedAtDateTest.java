@@ -3,7 +3,11 @@ package org.ladocuploader.app.submission.actions;
 import formflow.library.data.Submission;
 import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Test;
+import org.ladocuploader.app.utils.TestUtils;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -13,9 +17,11 @@ class FormatSubmittedAtDateTest {
 
   private final FormatSubmittedAtDate action = new FormatSubmittedAtDate();
 
+  ZoneId zoneId = ZoneId.systemDefault();
+
   @Test
   public void testWeekday() {
-    Date friday = new LocalDate("2023-12-22").toDate();
+    OffsetDateTime friday = TestUtils.makeOffsetDateTime("2023-12-22");
     Submission submission = Submission.builder()
         .urlParams(new HashMap<>())
         .inputData(new HashMap<>())
@@ -32,7 +38,8 @@ class FormatSubmittedAtDateTest {
 
   @Test
   public void testSaturday() {
-    Date friday = new LocalDate("2023-12-23").toDate();
+//    Date friday = new LocalDate("2023-12-23").toDate();
+    OffsetDateTime friday = TestUtils.makeOffsetDateTime("2023-12-23");
     Submission submission = Submission.builder()
         .urlParams(new HashMap<>())
         .inputData(new HashMap<>())
@@ -49,7 +56,8 @@ class FormatSubmittedAtDateTest {
 
   @Test
   public void testSunday() {
-    Date friday = new LocalDate("2023-12-24").toDate();
+    OffsetDateTime friday = TestUtils.makeOffsetDateTime("2023-12-24");
+//    Date friday = new LocalDate("2023-12-24").toDate();
     Submission submission = Submission.builder()
         .urlParams(new HashMap<>())
         .inputData(new HashMap<>())
