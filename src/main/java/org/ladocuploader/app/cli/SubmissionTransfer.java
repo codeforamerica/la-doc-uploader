@@ -52,7 +52,7 @@ public class SubmissionTransfer {
 
   private final int BATCH_INDEX_LEN = "00050000000".length();
 
-  private final long TWO_HOURS = (1000 * 60 * 60) * 2L;
+  private final long TWO_HOURS = 2L;
 
   private final SimpleDateFormat MMDDYYYY_HHMMSS = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 
