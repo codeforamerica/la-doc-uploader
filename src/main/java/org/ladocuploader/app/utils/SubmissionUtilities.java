@@ -126,7 +126,7 @@ public class SubmissionUtilities {
         if (submittedAt != null){
             OffsetDateTime expiryTime = submittedAt.plusHours(expiryHours);
 
-            return expiryTime.isBefore(now);
+            return expiryTime.isAfter(now);
         }
         return false;
     }
