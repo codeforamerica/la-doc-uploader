@@ -18,6 +18,9 @@
         <div th:if="${lockedSubmissionMessage}" class="notice--warning">
           <p th:text="${lockedSubmissionMessage}"></p>
         </div>
+        <div th:if="${!isDocUploadActive}" class="notice--warning">
+          <p th:text="#{doc-upload.not-active}"></p>
+        </div>
         <th:block th:replace="~{fragments/icons :: computerWithCheckmark}"></th:block>
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{confirmation.header}, subtext=#{confirmation.subtext(${inputData.get('formattedSubmittedAt')})})}"/>
