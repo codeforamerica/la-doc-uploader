@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -51,7 +52,7 @@ public class SubmissionTransfer {
 
   private final int BATCH_INDEX_LEN = "00050000000".length();
 
-  private final long TWO_HOURS = (1000 * 60 * 60) * 2;
+  private final long TWO_HOURS = (1000 * 60 * 60) * 2L;
 
   private final SimpleDateFormat MMDDYYYY_HHMMSS = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 
@@ -91,10 +92,11 @@ public class SubmissionTransfer {
     int subfolderidx = 1;
     try (FileOutputStream baos = new FileOutputStream(zipFileName);
          ZipOutputStream zos = new ZipOutputStream(baos)) {
-      long now = new Date().getTime();
+      OffsetDateTime now = OffsetDateTime.now();
       StringBuilder docMeta = new StringBuilder();
       for (Submission submission : submissionsBatch) {
-        if (submission.getSubmittedAt().getTime() + TWO_HOURS > now) {
+
+        if (submission.getSubmittedAt().plusHours(TWO_HOURS).isAfter(now)) {
           // Give a 2-hour wait for folks to upload documents
           continue;
         }
