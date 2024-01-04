@@ -521,6 +521,8 @@ flow:
     afterSaveAction: HandleApplicationSigned
     nextScreens:
       - name: docUploadIntro
+        condition: IsDocUploadActive
+      - name: confirmation
   docUploadIntro:
     nextScreens:
       - name: docUploadSignpost
