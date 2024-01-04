@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Component
-@Profile({"dev", "test"})
+@Profile({"dev", "test", "demo"})
 public class MockPGPEncryptorImpl implements PGPEncryptor {
 
   @Override
