@@ -17,22 +17,10 @@
                   ariaLabel=#{home-expenses.header},
                   content=~{::whichHomeExpenses})}">
                 <th:block th:ref="whichHomeExpenses">
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.rent}, label=#{home-expenses.rent})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.mortgage}, label=#{home-expenses.mortgage})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.homeinsurance}, label=#{home-expenses.homeinsurance})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.tax}, label=#{home-expenses.tax})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.condo-fees}, label=#{home-expenses.condo-fees})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.lot-rent}, label=#{home-expenses.lot-rent})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value=#{home-expenses.flood-insurance}, label=#{home-expenses.flood-insurance})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value=#{expenses-general-other}, label=#{expenses-general-other})}"/>
+                  <th:block th:each="option : ${T(org.ladocuploader.app.data.enums.HomeExpensesType).values()}">
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses', value=${option.getValue()}, label=#{${option.getLabelSrc()}})}"/>
+                  </th:block>
                   <th:block
                       th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdHomeExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)}"/>
                 </th:block>

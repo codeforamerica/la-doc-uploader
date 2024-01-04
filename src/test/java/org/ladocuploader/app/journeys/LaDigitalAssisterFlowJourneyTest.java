@@ -291,7 +291,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
 
     assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
-    testPage.clickElementById("remindersMethod-By Email-label");
+    testPage.clickElementById("remindersMethod-By email-label");
     testPage.enter("emailAddress", "mail@mail.com");
 
 
@@ -571,19 +571,19 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));
 
-    testPage.clickElementById("householdHomeExpenses-Rent-label");
-    testPage.clickElementById("householdHomeExpenses-Other-label");
+    testPage.clickElementById("householdHomeExpenses-rent-label");
+    testPage.clickElementById("householdHomeExpenses-otherHomeExpenses-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("home-expenses-amount.title"));
 
-    testPage.enter("householdHomeExpenseAmount_wildcard_Rent", "500");
-    testPage.enter("householdHomeExpenseAmount_wildcard_Other", "100");
+    testPage.enter("householdHomeExpenseAmount_wildcard_rent", "500");
+    testPage.enter("householdHomeExpenseAmount_wildcard_otherHomeExpenses", "100");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
 
-    testPage.clickElementById("householdUtilitiesExpenses-Water-label");
+    testPage.clickElementById("householdUtilitiesExpenses-water-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("utilities-expenses-amount.title"));
@@ -606,11 +606,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses.title"));
 
-    testPage.clickElementById("householdMedicalExpenses-Dental bills-label");
+    testPage.clickElementById("householdMedicalExpenses-dentalBills-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses-amount.title"));
-    testPage.enter("householdMedicalExpenseAmount_wildcard_Dental bills", "200");
+    testPage.enter("householdMedicalExpenseAmount_wildcard_dentalBills", "200");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));

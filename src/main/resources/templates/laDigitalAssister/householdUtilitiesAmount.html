@@ -16,14 +16,17 @@
             <div class="form-card__content">
               <div th:each="expense, iter:${inputData.get('householdUtilitiesExpenses[]')}"
                    class="spacing-below-15">
+                <th:block
+                    th:with="inputName=${'householdUtilitiesExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
                   <th:block
-                      th:with="inputName=${'householdUtilitiesExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
+                      th:with="labelName=${T(org.ladocuploader.app.data.enums.UtilitiesExpenseType).getLabelSrcFromValue(expense)}">
                     <th:block
                         th:replace="~{fragments/inputs/money :: money(inputName=${inputName},
-                      label=${expense.equals(#messages.msg('expenses-general-other')) ? #messages.msg('utilities.other') : expense},
+                      label=${#messages.msg(labelName)},
                       helpText=#{expenses-estimate-ok})}"/>
                   </th:block>
-                  <hr/>
+                </th:block>
+                <hr/>
               </div>
             </div>
             <div class="form-card__footer">

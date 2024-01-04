@@ -8,7 +8,8 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{fragments/cardHeader :: cardHeader(header=#{utilities.header}, subtext=#{utilities.subheader})}" />
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{utilities.header}, subtext=#{utilities.subheader})}"/>
 
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::whichHouseholdUtilities})}">
@@ -19,23 +20,10 @@
                   content=~{::whichHomeExpenses})}">
               <th:block th:ref="whichHomeExpenses">
                 <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.heating}, label=#{utilities.heating})}"/>
-                <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.cooling}, label=#{utilities.cooling})}"/>
-                <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.electricity}, label=#{utilities.electricity})}"/>
-                <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.water}, label=#{utilities.water})}"/>
-                <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.phone}, label=#{utilities.phone})}"/>
-                <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.garbage}, label=#{utilities.garbage})}"/>
-                <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.sewer}, label=#{utilities.sewer})}"/>
-                <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{utilities.cooking-fuel}, label=#{utilities.cooking-fuel})}"/>
-                <th:block
-                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=#{expenses-general-other}, label=#{expenses-general-other})}"/>
+                    th:each="option : ${T(org.ladocuploader.app.data.enums.UtilitiesExpenseType).values()}">
+                  <th:block
+                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value=${option.getValue()}, label=#{${option.getLabelSrc()}})}"/>
+                </th:block>
                 <th:block
                     th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdUtilitiesExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)}"/>
               </th:block>
@@ -50,6 +38,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="~{fragments/footer :: footer}" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

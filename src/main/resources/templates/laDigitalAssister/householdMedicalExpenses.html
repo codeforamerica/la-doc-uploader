@@ -10,36 +10,26 @@
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{medical-expenses.header}, subtext=#{medical-expenses.subheader})}"/>
-          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::healthExpenses})}">
-            <th:block th:ref="healthExpenses">
-              <div class="form-card__content">
-                <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::healthExpenses})}">
+          <th:block th:ref="healthExpenses">
+            <div class="form-card__content">
+              <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
                   checkboxFieldset(inputName='householdMedicalExpenses',
                   ariaLabel=#{medical-expenses.header},
                   content=~{::whichHouseholdExpenses})}">
-                    <th:block th:ref="whichHouseholdExpenses">
-                      <th:block
-                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.dental-bills}, label=#{medical-expenses.dental-bills})}"/>
-                      <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.hospital-bills}, label=#{medical-expenses.hospital-bills})}"/>
-                      <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.prescription-medicine}, label=#{medical-expenses.prescription-medicine})}"/>
-                      <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.prescription-premium}, label=#{medical-expenses.prescription-premium})}"/>
-                      <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.medical-appliances}, label=#{medical-expenses.medical-appliances})}"/>
-                      <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.insurance-premiums}, label=#{medical-expenses.insurance-premiums})}"/>
-                      <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{medical-expenses.nursing-home}, label=#{medical-expenses.nursing-home})}"/>
-                      <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=#{expenses-general-other}, label=#{expenses-general-other})}"/>
-                      <th:block
-                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)}"/>
-                    </th:block>
+                <th:block th:ref="whichHouseholdExpenses">
+                  <th:block
+                      th:each="option : ${T(org.ladocuploader.app.data.enums.MedicalExpensesType).values()}">
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=${option.getValue()}, label=#{${option.getLabelSrc()}})}"/>
+                  </th:block>
+                  <th:block
+                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value='None', label=#{general.none-of-the-above}, noneOfTheAbove=true)}"/>
                 </th:block>
-                
-              </div>
+              </th:block>
+
+            </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{general.inputs.continue})}"/>
@@ -50,6 +40,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="~{fragments/footer :: footer}" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>
