@@ -2,17 +2,11 @@ package org.ladocuploader.app.submission.actions;
 
 import formflow.library.config.submission.Action;
 import formflow.library.data.Submission;
-<<<<<<< HEAD
-import org.joda.time.DateTime;
-=======
 import java.time.DayOfWeek;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
->>>>>>> 498d11b5 (Update Submission based date field calls to use OffsetDateTime)
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
