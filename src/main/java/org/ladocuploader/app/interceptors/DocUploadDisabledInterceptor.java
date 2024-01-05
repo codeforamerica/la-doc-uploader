@@ -67,20 +67,20 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                             var inputData = submission.getInputData();
                             if (inputData.containsKey("addDocuments")){
                                 if (inputData.get("addDocuments").equals("false")){
-                                    outputFlashMap.put("addDocumentsSkipped", messageSource.getMessage("doc-upload.not-selected", null, locale));
+                                    outputFlashMap.put("addDocumentsSkipped", messageSource.getMessage("general.locked-submission", null, locale));
                                     RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                     response.sendRedirect(redirectUrl);
                                 } else {
                                     // user indicated to add documents
                                     if(!SubmissionUtilities.isDocUploadActive(submission)){
-                                        outputFlashMap.put("docUploadExpired", messageSource.getMessage("doc-upload.expired", null, locale));
+                                        outputFlashMap.put("docUploadExpired", messageSource.getMessage("general.locked-submission", null, locale));
                                         RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                         response.sendRedirect(redirectUrl);
                                     }
 
                                     // check if documents already uploaded and confirmed here. (creation of user files?). we don't want clients to go back in this case.
                                     else if (inputData.containsKey("docUploadFinalized")){
-                                        outputFlashMap.put("docUploadFinalized", messageSource.getMessage("doc-upload.finalized", null, locale));
+                                        outputFlashMap.put("docUploadFinalized", messageSource.getMessage("general.locked-submission", null, locale));
                                         RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                         response.sendRedirect(redirectUrl);
 
@@ -98,8 +98,6 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                         return false;
                     }
                 }
-                // TODO: check if client already uploaded documents (How to confirm it is final?). If so, add note and don't allow going back.
-                // TODO: use same message for every case (maybe simplify the conditions)
             }
             return true;
         } catch (IllegalStateException e){
