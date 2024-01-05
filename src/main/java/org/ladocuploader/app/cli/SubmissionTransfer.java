@@ -55,8 +55,6 @@ public class SubmissionTransfer {
 
   private final SimpleDateFormat MMDDYYYY_HHMMSS = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 
-  private final SubmissionRepository submissionRepository;
-
   private final TransmissionRepository transmissionRepository;
   private final UserFileRepositoryService fileRepositoryService;
   private final CloudFileRepository fileRepository;
@@ -67,7 +65,6 @@ public class SubmissionTransfer {
   private final FtpsClient ftpsClient;
 
   public SubmissionTransfer(SubmissionRepository submissionRepository, TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
-    this.submissionRepository = submissionRepository;
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;

@@ -101,6 +101,11 @@ ftps:
   password: ${FTPS_PASSWORD:-""}
   upload-url: ${FTPS_UPLOAD_URL:-""}
   upload-dir: ${FTPS_UPLOAD_DIR:-""}
+pgp:
+  bucket-name: ${PGP_KEYS_DIR}
+  seckey-file-path: ${PGP_SECKEY_FILE_PATH}
+  pubkey-file-path: ${PGP_PUBKEY_FILE_PATH}
+  sigkey-password: ${PGP_SIGKEY_PASSWORD}
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6

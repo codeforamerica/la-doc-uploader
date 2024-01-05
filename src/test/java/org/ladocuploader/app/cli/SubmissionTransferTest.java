@@ -60,15 +60,11 @@ class SubmissionTransferTest {
   @MockBean
   FtpsClient ftpsClient;
 
-  @MockBean
-  PGPEncryptor encryptor;
-
   Submission submission;
 
   @BeforeEach
   void setup() throws IOException {
     when(pdfService.getFilledOutPDF(any())).thenReturn("some bytes".getBytes());
-    when(encryptor.signAndEncryptPayload(anyString())).thenReturn(new byte[]{});
     doAnswer(args -> {
       String zipfilename = (String) args.getArguments()[0];
       String transmitlocation = "mocktransmit_" + args.getArguments()[0];

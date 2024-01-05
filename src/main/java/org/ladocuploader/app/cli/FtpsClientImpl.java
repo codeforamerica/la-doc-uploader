@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 
 @Slf4j
 @Component
-@Profile("production")
+@Profile({"production", "staging"})
 public class FtpsClientImpl implements FtpsClient {
 
   private final String username;
