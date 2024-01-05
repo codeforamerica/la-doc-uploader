@@ -36,8 +36,8 @@ jobs:
           'SPRING_PROFILES_ACTIVE=staging' \
           'DEFAULT_LOCALE=en' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_STAGING }}' \
-          'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
-          'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
+          'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_STAGING }}' \
+          'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY_STAGING }}' \
           'AWS_BUCKET=${{ secrets.AWS_BUCKET_STAGING }}' \
           'AWS_CMK=${{ secrets.AWS_CMK_STAGING }}' \
           'SENTRY_DSN=${{ secrets.SENTRY_DSN }}' \
