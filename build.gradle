@@ -32,6 +32,7 @@ def formFlowLibraryVersion = '1.0.0'
 def useLocalLibrary = System.getenv('USE_LOCAL_LIBRARY')
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.1'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.jcraft:jsch:0.1.55'
