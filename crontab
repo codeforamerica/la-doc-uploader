@@ -2,5 +2,5 @@
 # 0 19 * * WED java -Dserver.port=9191 -jar /opt/la-doc-uploader/app.jar transmit
 
 # Run every hour
-# @hourly java -Dserver.port=9191 -jar /opt/la-doc-uploader/app.jar transferSubmissions
+@hourly java -Dserver.port=9191 -jar /opt/la-doc-uploader/app.jar transferSubmissions
 

@@ -9,7 +9,9 @@ import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
 import lombok.extern.slf4j.Slf4j;
+import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
+import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.data.domain.Sort;
@@ -20,10 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -80,21 +79,27 @@ public class SubmissionTransfer {
     // Get submissions to transfer
     String batchSeq = Long.toString(transmissionRepository.nextValueBatchSequence());
     String batchIndex = Strings.padStart(batchSeq, BATCH_INDEX_LEN, '0');
+    UUID uuid = UUID.randomUUID();
     String zipFileName = batchIndex + ".zip";
-    log.info(String.format("Beginning transfer of batch %s", batchIndex));
+    log.info(String.format("Beginning transfer of %s: batch %s", uuid, batchIndex));
+
+    // Stats on transfers
+    int successful = 0, failed = 0;
 
     // for each submission, add to zipfile
     List<Submission> submissionsBatch = transmissionRepository.submissionsToTransmit(Sort.unsorted(), TransmissionType.SNAP);
+    int subfolderidx = 1;
     try (FileOutputStream baos = new FileOutputStream(zipFileName);
          ZipOutputStream zos = new ZipOutputStream(baos)) {
       long now = new Date().getTime();
       StringBuilder docMeta = new StringBuilder();
-      int subfolderidx = 1;
       for (Submission submission : submissionsBatch) {
         if (submission.getSubmittedAt().getTime() + TWO_HOURS > now) {
           // Give a 2-hour wait for folks to upload documents
           continue;
         }
+
+        Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.SNAP);
 
         String subfolder = Integer.toString(subfolderidx++);
         try {
@@ -103,8 +108,17 @@ public class SubmissionTransfer {
 
           log.info("Adding uploaded docs");
           packageUploadedDocuments(batchIndex, zos, docMeta, submission, subfolder);
+
+          transmission.setStatus(TransmissionStatus.Complete);
+          updateTransmission(uuid, transmission);
+          successful++;
         } catch (Exception e) {
           log.error("Error generating file collection for submission ID {}", submission.getId(), e);
+
+          transmission.setDocumentationErrors(Map.of("error", e.getMessage()));
+          transmission.setStatus(TransmissionStatus.Failed);
+          updateTransmission(uuid, transmission);
+          failed++;
         }
       }
 
@@ -129,8 +143,13 @@ public class SubmissionTransfer {
       }
     }
 
-    // TODO - include some stats, how many transfered, failed, successful
-    log.info(String.format("Completed transfer of batch %s", batchIndex));
+    log.info(String.format("Completed transfer of batch %s, total %s, successful %s, failed %s", batchIndex, subfolderidx - 1, successful, failed));
+  }
+
+  private void updateTransmission(UUID uuid, Transmission transmission) {
+    transmission.setTimeSent(new Date());
+    transmission.setRunId(uuid);
+    transmissionRepository.save(transmission);
   }
 
   private void packageUploadedDocuments(String batchIndex, ZipOutputStream zos, StringBuilder docMeta, Submission submission, String subfolder) throws IOException {
@@ -142,7 +161,7 @@ public class SubmissionTransfer {
       filenameDuplicates.putIfAbsent(docUploadFilename, 0);
       filenameDuplicates.computeIfPresent(docUploadFilename, (s, i) -> i + 1);
       Integer filecount = filenameDuplicates.get(docUploadFilename);
-      if(filecount > 1) {
+      if (filecount > 1) {
         docUploadFilename = "%s_%s".formatted(filecount, docUploadFilename);
       }
 
@@ -204,9 +223,9 @@ public class SubmissionTransfer {
   }
 
   private static String formatBirthdate(Map<String, Object> inputData) {
-    String day = (String) inputData.get("birthDay");
-    String month = (String) inputData.get("birthMonth");
-    String year = (String) inputData.get("birthYear");
+    String day = (String) inputData.getOrDefault("birthDay", "");
+    String month = (String) inputData.getOrDefault("birthMonth", "");
+    String year = (String) inputData.getOrDefault("birthYear", "");
 
     return "%s/%s/%s".formatted(Strings.padStart(day, 2, '0'), Strings.padStart(month, 2, '0'), year);
   }
