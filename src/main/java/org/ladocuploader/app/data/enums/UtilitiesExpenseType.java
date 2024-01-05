@@ -14,7 +14,7 @@ public enum UtilitiesExpenseType {
   GARBAGE("garbage", "utilities.garbage"),
   SEWER("sewer", "utilities.sewer"),
   COOKING_FUEL("cookingFuel", "utilities.cooking-fuel"),
-  OTHER("otherUtilitiesExpenses", "expenses-general-other");
+  OTHER("otherUtilitiesExpenses", "utilities.other");
 
   private final String value;
   private final String labelSrc;
