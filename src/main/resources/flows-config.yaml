@@ -546,6 +546,7 @@ flow:
     nextScreens:
       - name: docUploadSubmit
   docUploadSubmit:
+    onPostAction: FinalizeDocuments
     nextScreens:
       - name: confirmation
   confirmation:

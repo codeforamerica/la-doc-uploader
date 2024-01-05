@@ -17,6 +17,9 @@
         <div th:if="${lockedSubmissionMessage}" class="notice--warning">
           <p th:text="${lockedSubmissionMessage}"></p>
         </div>
+        <div th:if="${docUploadFinalized}" class="notice--warning">
+          <p th:text="${docUploadFinalized}"></p>
+        </div>
         <div th:if="${addDocumentsSkipped}" class="notice--warning">
           <p th:text="${addDocumentsSkipped}"></p>
         </div>

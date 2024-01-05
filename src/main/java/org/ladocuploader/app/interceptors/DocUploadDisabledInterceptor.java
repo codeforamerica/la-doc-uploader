@@ -76,7 +76,13 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                                         RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                         response.sendRedirect(redirectUrl);
                                     }
-                                    // check if already uploaded here
+                                    // check if documents already uploaded and confirmed here. (creation of user files?). we don't want clients to go back in this case.
+                                }
+                                if (inputData.containsKey("docUploadFinalized")){
+                                    outputFlashMap.put("docUploadFinalized", messageSource.getMessage("doc-upload.expired", null, locale));
+                                    RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
+                                    response.sendRedirect(redirectUrl);
+
                                 }
                             }
 
@@ -90,6 +96,7 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                     }
                 }
                 // TODO: check if client already uploaded documents (How to confirm it is final?). If so, add note and don't allow going back.
+                // TODO: use same message for every case (maybe simplify the conditions)
             }
             return true;
         } catch (IllegalStateException e){
