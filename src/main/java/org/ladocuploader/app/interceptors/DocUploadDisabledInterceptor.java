@@ -67,7 +67,7 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                             var inputData = submission.getInputData();
                             if (inputData.containsKey("addDocuments")){
                                 if (inputData.get("addDocuments").equals("false")){
-                                    outputFlashMap.put("addDocumentsSkipped", messageSource.getMessage("doc-upload.not-selected", null, locale)); //TODO: get message from properties
+                                    outputFlashMap.put("addDocumentsSkipped", messageSource.getMessage("doc-upload.not-selected", null, locale));
                                     RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                     response.sendRedirect(redirectUrl);
                                 } else {
