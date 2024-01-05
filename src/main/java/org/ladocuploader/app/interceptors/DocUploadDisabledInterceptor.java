@@ -66,19 +66,20 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                             var submission = submissionMaybe.get();
                             var inputData = submission.getInputData();
                             if (inputData.containsKey("addDocuments")){
+                                // user tried to go back via browser after indicating they didn't want to add documents
                                 if (inputData.get("addDocuments").equals("false")){
                                     outputFlashMap.put("addDocumentsSkipped", messageSource.getMessage("general.locked-submission", null, locale));
                                     RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                     response.sendRedirect(redirectUrl);
                                 } else {
-                                    // user indicated to add documents
+                                    // user indicated to add documents and the time has expired (2 hours post submission)
                                     if(!SubmissionUtilities.isDocUploadActive(submission)){
                                         outputFlashMap.put("docUploadExpired", messageSource.getMessage("general.locked-submission", null, locale));
                                         RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                         response.sendRedirect(redirectUrl);
                                     }
 
-                                    // check if documents already uploaded and confirmed here. (creation of user files?). we don't want clients to go back in this case.
+                                    // the user already added documents and submitted them (cannot go back)
                                     else if (inputData.containsKey("docUploadFinalized")){
                                         outputFlashMap.put("docUploadFinalized", messageSource.getMessage("general.locked-submission", null, locale));
                                         RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
