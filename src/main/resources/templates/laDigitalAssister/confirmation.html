@@ -13,13 +13,15 @@
       </script>
       <main id="content" role="main" class="form-card spacing-above-35"
             th:with="inLinkGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('LINK', submission)},
-        inApplyGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('APPLY', submission)},
-        isDocUploadActive=${T(org.ladocuploader.app.utils.SubmissionUtilities).isDocUploadActive(submission)}">
+        inApplyGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('APPLY', submission)}">
         <div th:if="${lockedSubmissionMessage}" class="notice--warning">
           <p th:text="${lockedSubmissionMessage}"></p>
         </div>
-        <div th:if="${!isDocUploadActive}" class="notice--warning">
-          <p th:text="#{doc-upload.not-active}"></p>
+        <div th:if="${addDocumentsSkipped}" class="notice--warning">
+          <p th:text="${addDocumentsSkipped}"></p>
+        </div>
+        <div th:if="${docUploadExpired}" class="notice--warning">
+          <p th:text="${docUploadExpired}"></p>
         </div>
         <th:block th:replace="~{fragments/icons :: computerWithCheckmark}"></th:block>
         <th:block

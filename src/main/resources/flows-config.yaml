@@ -521,8 +521,6 @@ flow:
     afterSaveAction: HandleApplicationSigned
     nextScreens:
       - name: docUploadIntro
-        condition: IsDocUploadActive
-      - name: confirmation
   docUploadIntro:
     nextScreens:
       - name: docUploadSignpost
@@ -531,34 +529,22 @@ flow:
   docUploadSignpost:
     nextScreens:
       - name: docUploadInstructions
-        condition: IsDocUploadActive
-      - name: confirmation
   docUploadInstructions:
     nextScreens:
       - name: docUploadRecommendations
-        condition: IsDocUploadActive
-      - name: confirmation
   docUploadRecommendations:
     nextScreens:
       - name: docUpload
-        condition: IsDocUploadActive
-      - name: confirmation
   docUpload:
     nextScreens:
       - name: docUploadType
-        condition: IsDocUploadActive
-      - name: confirmation
   docUploadType:
     beforeSaveAction: AssociateDocTypeLabel
     nextScreens:
       - name: docUploadReview
-        condition: IsDocUploadActive
-      - name: confirmation
   docUploadReview:
     nextScreens:
       - name: docUploadSubmit
-        condition: IsDocUploadActive
-      - name: confirmation
   docUploadSubmit:
     nextScreens:
       - name: confirmation
