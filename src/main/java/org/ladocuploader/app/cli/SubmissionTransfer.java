@@ -14,6 +14,7 @@ import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -74,6 +75,7 @@ public class SubmissionTransfer {
     this.ftpsClient = ftpsClient;
   }
 
+  @ShellMethod(key = "transferSubmissions")
   public void transferSubmissions() {
     // Get submissions to transfer
     String batchSeq = Long.toString(transmissionRepository.nextValueBatchSequence());
