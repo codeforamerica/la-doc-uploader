@@ -65,6 +65,7 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                         if (submissionMaybe.isPresent()) {
                             var submission = submissionMaybe.get();
                             var inputData = submission.getInputData();
+                            // TODO: the output flash map could use the same key for all of them - would simplify the template and logic a bit. But would make it harder to isolate conditions in testing.
                             if (inputData.containsKey("addDocuments")){
                                 // user tried to go back via browser after indicating they didn't want to add documents
                                 if (inputData.get("addDocuments").equals("false")){
