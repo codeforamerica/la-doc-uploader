@@ -1,6 +1,7 @@
 package org.ladocuploader.app.submission.actions;
 
 import formflow.library.config.submission.Action;
+import formflow.library.data.FormSubmission;
 import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 

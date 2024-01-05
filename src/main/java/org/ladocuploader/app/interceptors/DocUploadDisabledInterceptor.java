@@ -71,19 +71,22 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                                     RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                     response.sendRedirect(redirectUrl);
                                 } else {
+                                    // user indicated to add documents
                                     if(!SubmissionUtilities.isDocUploadActive(submission)){
                                         outputFlashMap.put("docUploadExpired", messageSource.getMessage("doc-upload.expired", null, locale));
                                         RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                         response.sendRedirect(redirectUrl);
                                     }
-                                    // check if documents already uploaded and confirmed here. (creation of user files?). we don't want clients to go back in this case.
-                                }
-                                if (inputData.containsKey("docUploadFinalized")){
-                                    outputFlashMap.put("docUploadFinalized", messageSource.getMessage("doc-upload.expired", null, locale));
-                                    RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
-                                    response.sendRedirect(redirectUrl);
 
+                                    // check if documents already uploaded and confirmed here. (creation of user files?). we don't want clients to go back in this case.
+                                    else if (inputData.containsKey("docUploadFinalized")){
+                                        outputFlashMap.put("docUploadFinalized", messageSource.getMessage("doc-upload.finalized", null, locale));
+                                        RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
+                                        response.sendRedirect(redirectUrl);
+
+                                    }
                                 }
+
                             }
 
                         } else {
