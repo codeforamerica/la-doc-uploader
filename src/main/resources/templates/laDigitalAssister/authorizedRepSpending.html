@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{authorized-rep-spending.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{authorized-rep-spending.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{'fragments/icons' :: authorizedRep}"></th:block>
+        <th:block th:replace="~{fragments/icons :: authorizedRep}"></th:block>
         <th:block
-            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{authorized-rep-spending.header})}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{authorized-rep-spending.header})}"/>
         <th:block
-            th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::authorizedRepSpending})}">
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::authorizedRepSpending})}">
           <th:block th:ref="authorizedRepSpending">
             <div class="form-card__content">
               <p th:utext="#{authorized-rep-spending.subheader}"></p>
@@ -22,9 +22,9 @@
               </ul>
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="fragments/inputs/yesOrNo :: yesOrNo(
+              <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
                 inputName='authorizedRepSpendingAuthorization',
-                ariaDescribe='header')"/>
+                ariaDescribe='header')}"/>
             </div>
           </th:block>
         </th:block>
@@ -32,6 +32,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer"/>
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

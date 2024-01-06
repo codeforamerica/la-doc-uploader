@@ -3,7 +3,7 @@
 ">
   <!DOCTYPE html>
   <html th:lang="${#locale.language}">
-  <head th:replace="~{fragments/head :: head(title=${title})}"></head>
+  <head th:replace="~{fragments/head :: head(title=#{income-delete-confirmation.title})}"></head>
   <body>
   <div class="page-wrapper">
     <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -13,7 +13,7 @@
         <main id="content" role="main" class="form-card spacing-above-35">
           <th:block th:if="${noEntryToDelete != null}">
             <th:block
-                th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{delete-confirmation-back-redirect.header})}"/>
+                th:replace="~{fragments/cardHeader :: cardHeader(header=#{delete-confirmation-back-redirect.header})}"/>
             <b>hello</b>
             <div class="form-card__footer" th:with="subflowIsEmpty=${subflowIsEmpty != null}">
               <a class="button button--primary"
@@ -23,7 +23,7 @@
           </th:block>
           <th:block th:if="${noEntryToDelete == null}">
             <div class="form-card__content">
-              <th:block th:replace="~{'fragments/icons' :: 'deleteDocument'}"></th:block>
+              <th:block th:replace="~{fragments/icons :: 'deleteDocument'}"></th:block>
               <h1 class="h2"
                   th:text="${title}"></h1>
             </div>

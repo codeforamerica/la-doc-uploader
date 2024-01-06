@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{moneyonhand-details.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{moneyonhand-details.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: assetsCashAccounts}"></th:block>
         <th:block
-            th:replace="'fragments/cardHeader' :: cardHeader(header=#{moneyonhand-details.header})"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{moneyonhand-details.header})}"/>
         <th:block
-            th:replace="'fragments/form' :: form(action=${formAction}, content=~{::formContent})">
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
             <div class="form-card__content">
               <div th:each="income, iter:${inputData.get('moneyOnHandTypes[]')}"
@@ -28,9 +28,10 @@
                       <th:block
                           th:replace="~{fragments/inputs/radio :: radio(inputName=${whoInputName},value='you', label=${inputData.firstName + ' ' + inputData.lastName + ' (you) '})}"/>
                       <th:block th:if="${inputData.containsKey('household')}">
-                        <th:block th:each="householdMember, iter: ${inputData.household}" class="spacing-below-15">
+                        <th:block th:each="householdMember, iter: ${inputData.household}"
+                                  class="spacing-below-15">
                           <th:block
-                              th:replace="~{'fragments/inputs/radio' :: radio(inputName=${whoInputName},value=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName}, label=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName})}"/>
+                              th:replace="~{fragments/inputs/radio :: radio(inputName=${whoInputName},value=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName}, label=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName})}"/>
                         </th:block>
                       </th:block>
                     </th:block>
@@ -48,8 +49,8 @@
 
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="'fragments/inputs/submitButton' :: submitButton(
-                text=#{general.inputs.continue})"/>
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>
@@ -57,6 +58,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer"/>
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

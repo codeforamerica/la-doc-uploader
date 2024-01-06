@@ -9,21 +9,21 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
           <th:block
-              th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{whos-applying.header})}"/>
+              th:replace="~{fragments/cardHeader :: cardHeader(header=#{whos-applying.header})}"/>
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::whosApplyingForm})}">
           <th:block th:ref="whosApplyingForm">
         <div class="form-card__content">
-          <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
+          <th:block th:replace="~{fragments/inputs/radioFieldset ::
                         radioFieldset(inputName='whosApplying',
                         ariaLabel='whosApplying',
                         content=~{::whosApplyingOptions})}">
                         <th:block th:ref="whosApplyingOptions">
                           <!-- Copy the below input if you want to add more -->
                           <th:block
-                              th:replace="~{'fragments/inputs/radio' :: radio(inputName='whosApplying',value='Self', label=#{whos-applying.radio1})}"/>
+                              th:replace="~{fragments/inputs/radio :: radio(inputName='whosApplying',value='Self', label=#{whos-applying.radio1})}"/>
                           <th:block
-                              th:replace="~{'fragments/inputs/radio' :: radio(inputName='whosApplying',value='CommunityPartner', label=#{whos-applying.radio2})}"/>
+                              th:replace="~{fragments/inputs/radio :: radio(inputName='whosApplying',value='CommunityPartner', label=#{whos-applying.radio2})}"/>
                         </th:block>
                       </th:block>
         </div>

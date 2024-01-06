@@ -9,7 +9,7 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
                 <th:block
-                    th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{criminal-justice-warning.header}, subtext=#{criminal-justice-warning.subheader})}"/>
+                    th:replace="~{fragments/cardHeader :: cardHeader(header=#{criminal-justice-warning.header}, subtext=#{criminal-justice-warning.subheader})}"/>
         <div class="form-card__footer spacing-below-35">
           <th:block th:replace="~{fragments/continueButton :: continue}"/>
         </div>

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{legal-title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{legal-title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{'fragments/icons' :: uploadDocuments}"></th:block>
+        <th:block th:replace="~{fragments/icons :: uploadDocuments}"></th:block>
         <th:block
-            th:replace="'fragments/cardHeader' :: cardHeader(header=#{legal-header1})"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{legal-header1})}"/>
         <h3 class="spacing-above-0" th:utext="#{legal-subheader}"></h3>
         <p th:utext="#{legal-main-body}"></p>
-        <th:block th:replace="'fragments/form' :: form(action=${formAction}, content=~{::legalExpand1})">
+        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::legalExpand1})}">
           <th:block th:ref="legalExpand1">
             <div class="form-card__content">
-              <th:block th:replace="'fragments/honeycrisp/reveal' :: reveal(
+              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
-                forceShowContent='true')">
+                forceShowContent='true')}">
                 <th:block th:ref="revealLabel1">
                   <i class="icon-">&#xE862;</i>
                   <span th:text="#{legal-expanded.header1}"></span>
@@ -29,18 +29,18 @@
                   <th:block th:utext="#{legal-expanded.body1}"></th:block>
                 </th:block>
               </th:block>
-              <th:block th:replace="'fragments/inputs/checkbox' ::
+              <th:block th:replace="~{fragments/inputs/checkbox ::
                 checkbox(inputName='rightsAndResponsibilitiesAgree',
                 label=#{legal-agree},
                 value=true
-               )"/>
+               )}"/>
             </div>
             <div class="form-card__content">
-              <th:block th:replace="'fragments/honeycrisp/reveal' :: reveal(
+              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
                 controlId='r2',
                 linkLabel=~{::revealLabel2},
                 content=~{::revealContent2},
-                forceShowContent='true')">
+                forceShowContent='true')}">
                 <th:block th:ref="revealLabel2">
                   <i class="icon-">&#xE862;</i>
                   <span th:text="#{legal-expanded.header2}"></span>
@@ -49,19 +49,19 @@
                   <th:block th:utext="#{legal-expanded.body2}"></th:block>
                 </th:block>
               </th:block>
-              <th:block th:replace="'fragments/inputs/checkbox' ::
+              <th:block th:replace="~{fragments/inputs/checkbox ::
                 checkbox(inputName='noIncorrectInformationAgree',
                 label=#{legal-agree},
                 value=true
-               )"/>
+               )}"/>
             </div>
 
             <div class="form-card__content">
-              <th:block th:replace="'fragments/honeycrisp/reveal' :: reveal(
+              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
                 controlId='r3',
                 linkLabel=~{::revealLabel3},
                 content=~{::revealContent3},
-                forceShowContent='true')">
+                forceShowContent='true')}">
                 <th:block th:ref="revealLabel3">
                   <i class="icon-">&#xE862;</i>
                   <span th:text="#{legal-expanded.header3}"></span>
@@ -70,19 +70,19 @@
                   <th:block th:utext="#{legal-expanded.body3}"></th:block>
                 </th:block>
               </th:block>
-              <th:block th:replace="'fragments/inputs/checkbox' ::
+              <th:block th:replace="~{fragments/inputs/checkbox ::
                 checkbox(inputName='programsSharingDataAccessAgree',
                 label=#{legal-agree},
                 value=true
-               )"/>
+               )}"/>
             </div>
 
             <div class="form-card__content">
-              <th:block th:replace="'fragments/honeycrisp/reveal' :: reveal(
+              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
                 controlId='r4',
                 linkLabel=~{::revealLabel4},
                 content=~{::revealContent4},
-                forceShowContent='true')">
+                forceShowContent='true')}">
                 <th:block th:ref="revealLabel4">
                   <i class="icon-">&#xE862;</i>
                   <span th:text="#{legal-expanded.header4}"></span>
@@ -91,11 +91,11 @@
                   <th:block th:utext="#{legal-expanded.body4}"></th:block>
                 </th:block>
               </th:block>
-              <th:block th:replace="'fragments/inputs/checkbox' ::
+              <th:block th:replace="~{fragments/inputs/checkbox ::
                 checkbox(inputName='nonDiscriminationStatementAgree',
                 label=#{legal-agree},
                 value=true
-               )"/>
+               )}"/>
             </div>
 
             <div class="form-card__footer">
@@ -108,6 +108,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

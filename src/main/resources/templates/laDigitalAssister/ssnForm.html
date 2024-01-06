@@ -14,7 +14,7 @@
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContents})}">
           <th:block th:ref="formContents">
             <div class="form-card__content">
-              <th:block th:replace="~{'fragments/inputs/text' ::
+              <th:block th:replace="~{fragments/inputs/text ::
                 text(inputName=${'ssn'},
                 helpText=#{general.optional},
                 label=#{ssn-form.ssn-question(${inputData.firstName})})}"/>

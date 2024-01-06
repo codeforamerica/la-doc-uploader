@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{voter-registration.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{voter-registration.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{'fragments/icons' :: medicalInOtherState}"></th:block>
+        <th:block th:replace="~{fragments/icons :: medicalInOtherState}"></th:block>
         <th:block
-            th:replace="'fragments/cardHeader' :: cardHeader(header=#{voter-registration.header}, subtext=#{voter-registration.subheader})"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{voter-registration.header}, subtext=#{voter-registration.subheader})}"/>
         <th:block
-            th:replace="'fragments/form' :: form(action=${formAction}, content=~{::voterRegistration})">
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::voterRegistration})}">
           <th:block th:ref="voterRegistration">
             <div class="form-card__content">
-              <th:block th:replace="~{'fragments/inputs/radioFieldset' ::
+              <th:block th:replace="~{fragments/inputs/radioFieldset ::
                         radioFieldset(inputName='votingRegistrationRequested',
                         ariaLabel=#{voter-registration.header},
                         content=~{::votingRegistrationRequested})}">
                 <th:block th:ref="votingRegistrationRequested">
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='votingRegistrationRequested',value='Yes', label=#{voter-registration.yes})}"/>
+                      th:replace="~{fragments/inputs/radio :: radio(inputName='votingRegistrationRequested',value='Yes', label=#{voter-registration.yes})}"/>
                   <th:block
-                      th:replace="~{'fragments/inputs/radio' :: radio(inputName='votingRegistrationRequested',value='No', label=#{voter-registration.no})}"/>
+                      th:replace="~{fragments/inputs/radio :: radio(inputName='votingRegistrationRequested',value='No', label=#{voter-registration.no})}"/>
                 </th:block>
               </th:block>
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="'fragments/inputs/submitButton' :: submitButton(
-                text=#{general.inputs.continue})"/>
-              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                text=#{general.inputs.continue})}"/>
+              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
@@ -44,7 +44,7 @@
                 </th:block>
               </th:block>
 
-              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
+              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
                 controlId='r2',
                 linkLabel=~{::revealLabel2},
                 content=~{::revealContent2},
@@ -64,6 +64,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer"/>
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

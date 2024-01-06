@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
-<th:block th:with="messageVariant=${fieldData.getOrDefault('householdMemberJobAdd', '') == 'you' ? 'self' : 'householdMember'}">
-<head th:replace="~{fragments/head :: head(title=#{self-employment.title})}"></head>
-<body>
-<div class="page-wrapper">
-  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
-  <section class="slab">
-    <div class="grid">
-      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
-      <main id="content" role="main" class="form-card spacing-above-35">
-        <p class="grey-text" th:text="${fieldData.get('employerName')}"></p>
-        <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'self' ? #messages.msgWithParams('self-employment.header', 'your') : #messages.msgWithParams('self-employment.header', fieldData.get('householdMemberJobAdd') + '''s')})}"/>
-          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
+<th:block
+    th:with="messageVariant=${fieldData.getOrDefault('householdMemberJobAdd', '') == 'you' ? 'self' : 'householdMember'}">
+  <head th:replace="~{fragments/head :: head(title=#{self-employment.title})}"></head>
+  <body>
+  <div class="page-wrapper">
+    <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+    <section class="slab">
+      <div class="grid">
+        <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+        <main id="content" role="main" class="form-card spacing-above-35">
+          <p class="grey-text" th:text="${fieldData.get('employerName')}"></p>
+          <th:block
+              th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'self' ? #messages.msgWithParams('self-employment.header', 'your') : #messages.msgWithParams('self-employment.header', fieldData.get('householdMemberJobAdd') + '''s')})}"/>
+          <th:block
+              th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
             <th:block th:ref="formContent">
               <p th:text="#{self-employment.p1}"></p>
               <ul class="list--bulleted">
@@ -22,7 +24,7 @@
                 <li th:text="#{self-employment.li4}"></li>
                 <li th:text="#{self-employment.li5}"></li>
               </ul>
-              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
+              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
@@ -43,18 +45,18 @@
                 </th:block>
               </th:block>
 
-            <div class="form-card__footer">
-              <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
+              <div class="form-card__footer">
+                <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
                 inputName='selfEmployed',
                 ariaDescribe='header')}"/>
-            </div>
+              </div>
+            </th:block>
           </th:block>
-        </th:block>
-      </main>
-    </div>
-  </section>
-</div>
-<th:block th:replace="~{fragments/footer :: footer}" />
-</body>
+        </main>
+      </div>
+    </section>
+  </div>
+  <th:block th:replace="~{fragments/footer :: footer}"/>
+  </body>
 </th:block>
 </html>

@@ -7,9 +7,9 @@
   <section class="slab">
     <div class="grid">
       <script th:inline="javascript">
-          $(function () {
-              $('.reveal:not(.force-show-content)').removeClass('is-hiding-content');
-          });
+        $(function () {
+          $('.reveal:not(.force-show-content)').removeClass('is-hiding-content');
+        });
       </script>
       <main id="content" role="main" class="form-card spacing-above-35"
             th:with="inLinkGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('LINK', submission)},
@@ -33,8 +33,9 @@
                        th:utext="#{confirmation.p1_html(${inputData.get('interviewDate')})}"></p>
                   </div>
                 </div>
-                <div th:if="${inputData.getOrDefault('householdSearchingForJob', 'false').equals('true')}"
-                     class="vertical-steps__step">
+                <div
+                    th:if="${inputData.getOrDefault('householdSearchingForJob', 'false').equals('true')}"
+                    class="vertical-steps__step">
                   <div class="notice--warning steps-box spacing-below-0">
                     <i class="icon-large icon-">&#xE8f9;</i>
                     <p class="spacing-below-15" th:utext="#{confirmation.looking_for_job_html}"></p>
@@ -54,8 +55,7 @@
                 </div>
               </div>
             </th:block>
-
-            <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
+            <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
