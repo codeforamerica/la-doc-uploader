@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -52,16 +53,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
 
       var session = request.getSession(false);
       if (session == null) {
-        log.error("Unexpected state: session is null on request.");
-        if (recoverySubmissionId != null) {
-          log.error("Recovering session with submissionID: " + recoverySubmissionId);
-          session = request.getSession();
-          setSubmissionInSession(session, recoverySubmissionId, flow);
-          return true;
-        }
-        log.info("No session or recovery ID present, redirecting to parish page");
-        response.sendRedirect(redirect_url);
-        return false;
+        return handleSessionMissing(request, response, flow, redirect_url, recoverySubmissionId);
       }
 
       Map<String, UUID> submissionMap = (Map) session.getAttribute(FormFlowController.SUBMISSION_MAP_NAME);
@@ -73,6 +65,7 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       if (submissionId != null && !submissionId.equals(recoverySubmissionId)) {
         // Reconcile
         if (recoverySubmissionId == null) {
+          log.info("Setting recoverySubmissionId to " + submissionId);
           recoveryRecoverySubmissionIDs.setFlowSubmissionId(flow, submissionId);
         } else {
           log.warn("submissionId from session and recovery submissionId do not match " + submissionId + " " + recoverySubmissionId);
@@ -97,21 +90,42 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
             return false;
           }
         } else {
-          log.error("Submission %s not found in database (required field %s), redirecting to parish page".formatted(submissionId, requiredData));
-          response.sendRedirect(redirect_url);
-          return false;
+          return handleMissingSubmissionObject(response, requiredData, redirect_url, submissionId);
         }
       } else {
-        log.error("No submission ID in session (required field %s), redirecting to parish page".formatted(requiredData));
-        response.sendRedirect(redirect_url);
-        return false;
+        return handleUnrecoverableSubmissionId(response, requiredData, redirect_url);
       }
 
       return true;
     } catch (IllegalStateException e) {
-      log.error(e.getMessage());
+      log.error("Unexpected error", e);
       return true;
     }
+  }
+
+  private static boolean handleUnrecoverableSubmissionId(HttpServletResponse response, String requiredData, String redirect_url) throws IOException {
+    log.error("No submission ID in session (required field %s), redirecting to parish page".formatted(requiredData));
+    response.sendRedirect(redirect_url);
+    return false;
+  }
+
+  private static boolean handleMissingSubmissionObject(HttpServletResponse response, String requiredData, String redirect_url, UUID submissionId) throws IOException {
+    log.error("Submission %s not found in database (required field %s), redirecting to parish page".formatted(submissionId, requiredData));
+    response.sendRedirect(redirect_url);
+    return false;
+  }
+
+  private boolean handleSessionMissing(HttpServletRequest request, HttpServletResponse response, String flow, String redirect_url, UUID recoverySubmissionId) throws IOException {
+    log.error("Unexpected state: session is null on request.");
+    if (recoverySubmissionId != null) {
+      log.error("Recovering session with submissionID: " + recoverySubmissionId);
+      HttpSession session = request.getSession();
+      setSubmissionInSession(session, recoverySubmissionId, flow);
+      return true;
+    }
+    log.info("No session or recovery ID present, redirecting to parish page");
+    response.sendRedirect(redirect_url);
+    return false;
   }
 
   private void setSubmissionInSession(HttpSession session, UUID id, String flow) {

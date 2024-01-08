@@ -16,7 +16,7 @@ public class SessionConfiguration {
       value = SCOPE_SESSION,
       proxyMode = TARGET_CLASS
   )
-  public RecoverySubmissionIDs recoveryRecoverySubmissionIDs() {
+  public RecoverySubmissionIDs recoverySubmissionIDs() {
     return new RecoverySubmissionIDs();
   }
 }
