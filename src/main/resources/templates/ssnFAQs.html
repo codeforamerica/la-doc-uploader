@@ -24,7 +24,7 @@
             <p th:text="#{ssn-faqs.accordion1.expanded}"></p>
           </th:block>
         </th:block>
-        <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
+        <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel2},
                 content=~{::revealContent2},
@@ -37,7 +37,7 @@
             <p th:text="#{ssn-faqs.accordion2.expanded}"></p>
           </th:block>
         </th:block>
-        <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
+        <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel3},
                 content=~{::revealContent3},

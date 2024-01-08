@@ -16,7 +16,7 @@
         <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::legalExpand1})}">
           <th:block th:ref="legalExpand1">
             <div class="form-card__content">
-              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
+              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
@@ -36,7 +36,7 @@
                )}"/>
             </div>
             <div class="form-card__content">
-              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
+              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r2',
                 linkLabel=~{::revealLabel2},
                 content=~{::revealContent2},
@@ -57,7 +57,7 @@
             </div>
 
             <div class="form-card__content">
-              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
+              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r3',
                 linkLabel=~{::revealLabel3},
                 content=~{::revealContent3},
@@ -78,7 +78,7 @@
             </div>
 
             <div class="form-card__content">
-              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
+              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r4',
                 linkLabel=~{::revealLabel4},
                 content=~{::revealContent4},

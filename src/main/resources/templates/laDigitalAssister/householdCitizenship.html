@@ -17,7 +17,7 @@
             <div class="form-card__content">
               <div class="notice--warning" th:utext="#{citizenship.note}"></div>
               <p th:text="#{citizenship.content}"></p>
-              <th:block th:replace="~{fragments/honeycrisp/reveal :: reveal(
+              <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
                 content=~{::revealContent1},
