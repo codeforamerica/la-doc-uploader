@@ -20,21 +20,19 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
   private static final Map<String, String> EXPENSES = new HashMap<>();
 
   static {
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_rent", "rent");
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_mortgage", "mortgage");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_rent", "Rent");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_mortgage", "Mortgage");
     EXPENSES.put("householdHomeExpenseAmount_wildcard_homeownerInsurance", "Homeowner's Insurance");
     EXPENSES.put("householdHomeExpenseAmount_wildcard_propertyTax", "Property Tax");
     EXPENSES.put("householdHomeExpenseAmount_wildcard_condominiumFees", "Condo Fees");
     EXPENSES.put("householdHomeExpenseAmount_wildcard_lotRent", "Lot Rental");
     EXPENSES.put("householdHomeExpenseAmount_wildcard_floodInsurance", "Flood Insurance");
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_otherHomeExpenses", "otherHomeExpenses");
     EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_electricity", "Electricity");
     EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_water", "Water");
     EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_phone", "Phone/Cell Phone");
     EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_garbage", "Garbage");
     EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_sewer", "Sewer");
     EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_cookingFuel", "Gas");
-    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_otherUtilitiesExpenses", "otherUtilitiesExpenses");
   }
 
   @Override
@@ -62,11 +60,11 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
       // Check for "Other" - theres only one spot for this in the PDF so just combine them
       var totalOtherAmount = 0.0;
       try {
-        var expensesOther = submission.getInputData().get("householdHomeExpenseAmount_wildcard_Other home expenses");
+        var expensesOther = submission.getInputData().get("householdHomeExpenseAmount_wildcard_otherHomeExpenses");
         if (expensesOther != null) {
           totalOtherAmount += Double.parseDouble((String) expensesOther);
         }
-        var expensesUtilitiesOther = submission.getInputData().get("householdUtilitiesExpenseAmount_wildcard_Other utilities expenses");
+        var expensesUtilitiesOther = submission.getInputData().get("householdUtilitiesExpenseAmount_wildcard_otherUtilitiesExpenses");
         if (expensesUtilitiesOther != null) {
           totalOtherAmount += Double.parseDouble((String) expensesUtilitiesOther);
         }

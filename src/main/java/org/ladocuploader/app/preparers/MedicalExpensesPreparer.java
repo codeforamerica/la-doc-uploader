@@ -19,17 +19,17 @@ import static java.util.Collections.emptyList;
 @Slf4j
 public class MedicalExpensesPreparer implements SubmissionFieldPreparer {
   private static final String AMOUNT_PREFIX = "householdMedicalExpenseAmount_wildcard_";
-  private static final List<String> EXPENSES = new ArrayList<>();
+  private static final Map<String, String> EXPENSES = new HashMap<>();
 
   static {
-    EXPENSES.add("dentalBills");
-    EXPENSES.add("hospitalBills");
-    EXPENSES.add("prescriptionMedicine");
-    EXPENSES.add("prescriptionPremium");
-    EXPENSES.add("medicalAppliances");
-    EXPENSES.add("insurancePremiums");
-    EXPENSES.add("nursingHome");
-    EXPENSES.add("otherMedicalExpenses");
+    EXPENSES.put("dentalBills", "Dental bills");
+    EXPENSES.put("hospitalBills", "Hospital bills");
+    EXPENSES.put("prescriptionMedicine", "Prescribed medicine");
+    EXPENSES.put("prescriptionPremium", "Prescription drug plan premium");
+    EXPENSES.put("medicalAppliances", "Medical appliances");
+    EXPENSES.put("insurancePremiums", "Health insurance or Medicare premiums");
+    EXPENSES.put("nursingHome", "Nursing home");
+    EXPENSES.put("otherMedicalExpenses", "Other medical expenses");
   }
 
   @Override
@@ -38,11 +38,12 @@ public class MedicalExpensesPreparer implements SubmissionFieldPreparer {
 
     var expenses = (List) submission.getInputData().getOrDefault("householdMedicalExpenses[]", emptyList());
     if (!expenses.isEmpty()) {
+      List<String> sortedExpenses = EXPENSES.keySet().stream().sorted().toList();
       int i = 1;
-      for (String expense : EXPENSES) {
+      for (String expense : sortedExpenses) {
         var expenseInput = submission.getInputData().get(AMOUNT_PREFIX + expense);
         if (expenseInput != null) {
-          results.put("medicalExpensesType" + i, new SingleField("medicalExpensesType", expense, i));
+          results.put("medicalExpensesType" + i, new SingleField("medicalExpensesType", EXPENSES.get(expense), i));
           results.put("medicalExpensesAmount" + i, new SingleField("medicalExpensesAmount", (String) expenseInput, i));
           results.put("medicalExpensesFreq" + i, new SingleField("medicalExpensesFreq", "Monthly", i));
           i++;

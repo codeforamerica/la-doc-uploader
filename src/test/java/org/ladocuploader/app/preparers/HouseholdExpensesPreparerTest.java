@@ -25,11 +25,11 @@ class HouseholdExpensesPreparerTest {
   @Test
   public void shouldAddFieldsForHouseholdExpenses() {
     Submission submission = new SubmissionTestBuilder()
-        .with("householdHomeExpenses[]", List.of("Mortgage", "Homeowner's Insurance"))
-        .with("householdUtilitiesExpenses[]", List.of("Phone", "Heating"))
-        .with("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "10")
-        .with("householdHomeExpenseAmount_wildcard_Mortgage", "20")
-        .with("householdHomeExpenseAmount_wildcard_Homeowner's Insurance", "30")
+        .with("householdHomeExpenses[]", List.of("mortgage", "homeOwnerInsurance"))
+        .with("householdUtilitiesExpenses[]", List.of("phone", "heating"))
+        .with("householdUtilitiesExpenseAmount_wildcard_phone", "10")
+        .with("householdHomeExpenseAmount_wildcard_mortgage", "20")
+        .with("householdHomeExpenseAmount_wildcard_homeownerInsurance", "30")
         .build();
 
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);

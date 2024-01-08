@@ -85,34 +85,34 @@ inputFields:
 
   heatingOrCoolingInd: heatingOrCoolingInd
   householdUtilitiesExpenses:
-    Electricity: Electricity
-    Water: Water
-    Phone/Cell Phone: Phone/Cell Phone
-    Garbage: Garbage
-    Sewer: Sewer
-    Cooking Fuel: Cooking Fuel
-    Other: otherUtilitiesExpenses
+    electricity: Electricity
+    water: Water
+    phone: Phone/Cell Phone
+    garbage: Garbage
+    sewer: Sewer
+    cookingFuel: Cooking Fuel
+    otherUtilitiesExpenses: Other
   householdHomeExpenses:
-    Rent: Rent
-    Mortgage: Mortgage
-    Homeowner's Insurance: Homeowner's Insurance
-    Property Tax: Property Tax
-    Condominium Fees: Condominium Fees
-    Lot Rent: Lot Rent
-    Flood Insurance: Flood Insurance
-    Other: otherHomeExpenses
+    rent: Rent
+    mortgage: Mortgage
+    homeownerInsurance: Homeowner's Insurance
+    propertyTax: Property Tax
+    condominiumFees: Condominium Fees
+    lotRent: Lot Rent
+    floodInsurance: Flood Insurance
+    otherHomeExpenses: Other
   receivesEnergyAssistance: receivesEnergyAssistance
   assistanceThroughLiheap: assistanceThroughLiheap
 
   householdMedicalExpenses:
-    Dental bills: dentalBills
-    Hospital bills: hospitalBills
-    Prescribed medicine: prescriptionMedicine
-    Prescription drug plan premium: prescriptionPremium
-    Medical appliances: medicalAppliances
-    Health insurance or Medicare premiums: insurancePremiums
-    Nursing home: nursingHome
-    Other medical expenses: otherMedicalExpenses
+    dentalBills: Dental Bills
+    hospitalBills: Hospital Bills
+    prescriptionMedicine: Prescribed medicine
+    prescriptionPremium: Prescription drug plan premium
+    medicalAppliances: Medical appliances
+    insurancePremiums: Health insurance or Medicare premiums
+    nursingHome: Nursing home
+    otherMedicalExpenses: Other medical expenses
 
   moneyOnHandTypes:
     Checking account: Checking account
