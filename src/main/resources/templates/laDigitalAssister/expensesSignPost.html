@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{expenses-signpost.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{expenses-signpost.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <div class="grid__item spacing-above-35 text--centered">
           <th:block th:replace="~{fragments/icons :: moneyTips}"></th:block>
           <p class="text--help spacing-below-10"
              th:text="#{expenses-signpost.step}"></p>
           <th:block
-              th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{expenses-signpost.header})}"/>
+              th:replace="~{fragments/cardHeader :: cardHeader(header=#{expenses-signpost.header})}"/>
         </div>
         <div class="form-card__content">
           <div class="grid__item intro-section boxed-content spacing-below-60">
             <h2 class="h3 text--centered intro-box__title" th:text="#{signpost.well-ask-about}"></h2>
             <ol class="list--numbered spacing-above-10">
-              <li th:text="#{expenses-signpost.expense}"></li>
-              <li th:text="#{expenses-signpost.addl-expense}"></li>
+              <li th:text="#{home-expenses-amount.title}"></li>
+              <li th:text="#{utilities.title}"></li>
+              <li th:text="#{medical-expenses-amount.title}"></li>
+              <li th:text="#{dependentcare.title}"></li>
             </ol>
           </div>
         </div>
         <div class="form-card__footer text--centered">
-          <th:block th:replace="~{'fragments/continueButton' :: continue}"/>
+          <th:block th:replace="~{fragments/continueButton :: continue}"/>
         </div>
       </main>
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>

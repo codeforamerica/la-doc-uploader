@@ -164,6 +164,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String monthPregnancyDueDate;
 
   @NotBlank(message="{error.missing-general}")
+  @Pattern(regexp = "^(2024|2025)$", message="{error.invalid-dob}")
   @DynamicField
   private String yearPregnancyDueDate;
 

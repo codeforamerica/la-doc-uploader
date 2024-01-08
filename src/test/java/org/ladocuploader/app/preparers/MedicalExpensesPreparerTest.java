@@ -25,11 +25,11 @@ class MedicalExpensesPreparerTest {
   @Test
   public void shouldAddFieldsForMedicalExpenses() {
     Submission submission = new SubmissionTestBuilder()
-        .with("householdMedicalExpenses[]", List.of("Dental bills"))
-        .with("householdMedicalExpenseAmount_wildcard_Dental bills", "10")
-        .with("householdMedicalExpenseAmount_wildcard_Hospital bills", "20")
-        .with("householdMedicalExpenseAmount_wildcard_Nursing home", "30")
-        .with("householdMedicalExpenseAmount_wildcard_Prescribed medicine", "40")
+        .with("householdMedicalExpenses[]", List.of("dentalBills"))
+        .with("householdMedicalExpenseAmount_wildcard_dentalBills", "10")
+        .with("householdMedicalExpenseAmount_wildcard_hospitalBills", "20")
+        .with("householdMedicalExpenseAmount_wildcard_nursingHome", "30")
+        .with("householdMedicalExpenseAmount_wildcard_prescriptionMedicine", "40")
         .build();
 
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
