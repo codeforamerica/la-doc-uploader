@@ -1,5 +1,7 @@
 package org.ladocuploader.app.journeys;
 
+import java.util.List;
+import java.util.Locale;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.utils.AbstractBasePageTest;
@@ -188,6 +190,90 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("special-situations.title"));
+  }
+
+  @Test
+  void raceEthnicityFlow() {
+    loadUserPersonalData();
+    loadHouseHoldData("Person", "One", "12", "12", "1995");
+    loadHouseHoldData("Person", "Two", "12", "12", "2016");
+    loadHouseHoldData("Person", "Three", "12", "12", "2017");
+
+    testPage.clickElementById("translate-button");
+    testPage.clickLink("Tiếng Việt");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/ethnicitySelection");
+    // the titles don't seem to render correctly in test
+    // assertThat(testPage.getTitle()).isEqualTo("L\u1ef1a ch\u1ecdn dân t\u1ed9c");
+
+    // set for the applicant
+    testPage.clickElementById("ethnicitySelected-Hispanic or Latino");
+
+    List<WebElement> ethnicityInputs = driver.findElements(By.cssSelector("input[id*='householdMemberEthnicity_wildcard_']"));
+
+    ethnicityInputs.stream()
+        .filter(ei ->  ei.getAttribute("value").equals("Hispanic or Latino"))
+        .forEach(ei -> {
+          ei.click();
+          // make sure found them, even with the site language being in Vietnamese
+          assertThat(ei.isSelected()).isTrue();
+        });
+
+    testPage.clickContinue(Locale.forLanguageTag("vi"));
+    testPage.goBack();
+
+    //assertThat(testPage.getTitle()).isEqualTo("L\u1ef1a ch\u1ecdn dân t\u1ed9c");
+    assertThat(testPage.findElementById("ethnicitySelected-Hispanic or Latino").isSelected()).isTrue();
+
+    List<WebElement> selectedElements = driver.findElements(By.cssSelector("input[checked='checked']"));
+    selectedElements.forEach(element -> {
+      assertThat(element.getAttribute("value")).isEqualTo("Hispanic or Latino");
+    });
+
+    testPage.clickContinue(Locale.forLanguageTag("vi"));
+    //assertThat(testPage.getTitle()).isEqualTo("L\u1ef1a ch\u1ecdn ch\u1ee7ng t\u1ed9c");
+
+    // set for the applicant
+    testPage.clickElementById("raceSelected-Alaskan Native");
+    testPage.clickElementById("raceSelected-Black or African American");
+
+    // now set for household members
+    List<WebElement> raceInputs = driver.findElements(By.cssSelector("input[id*='householdMemberRace_wildcard_'"));
+
+    // choose a few for each
+    raceInputs.stream()
+        .filter(ri ->  {
+          String value = ri.getAttribute("value");
+          return value.equals("Alaskan Native") ||  value.equals("Black or African American");
+        })
+        .forEach(ri -> {
+          ri.click();
+          // make sure found them, even with the site language being in Vietnamese
+          assertThat(ri.isSelected()).isTrue();
+        });
+
+    testPage.clickContinue(Locale.forLanguageTag("vi"));
+    testPage.goBack();
+
+    //assertThat(testPage.getTitle()).isEqualTo("L\u1ef1a ch\u1ecdn ch\u1ee7ng t\u1ed9c");
+    assertThat(testPage.findElementById("raceSelected-Alaskan Native").isSelected()).isTrue();
+    assertThat(testPage.findElementById("raceSelected-Black or African American").isSelected()).isTrue();
+    assertThat(testPage.findElementById("raceSelected-Asian").isSelected()).isFalse();
+
+    List<WebElement> selectedRaceElements = driver.findElements(By.cssSelector("input[checked='checked']"));
+    selectedRaceElements.forEach(element -> {
+      String value = element.getAttribute("value");
+      assertThat(value.equals("Alaskan Native") || value.equals("Black or African American")).isTrue();
+      assertThat(value).isNotEqualTo("White");
+      assertThat(value).isNotEqualTo("Asian");
+      assertThat(value).isNotEqualTo("Native Hawaiian or Other Pacific Islander");
+      assertThat(value).isNotEqualTo("American Indian");
+    });
+
+    // change the language back
+    testPage.clickElementById("translate-button");
+    testPage.clickLink("English");
+    assertThat(testPage.getTitle()).isEqualTo("Race Selection");
   }
 
   @Test
@@ -786,8 +872,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Confirmation page
     assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
-
-
   }
 
   void loadUserPersonalData() {

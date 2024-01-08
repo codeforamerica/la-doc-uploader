@@ -25,7 +25,7 @@ public class AccessibilityJourneyPageTest extends AbstractBasePageTest {
     @BeforeEach
     public void setUp() throws IOException, URISyntaxException {
         super.setUp();
-        testPage = new AccessibilityTestPage(driver, localServerPort);
+        testPage = new AccessibilityTestPage(driver, localServerPort, messageSource);
     }
     @AfterEach
     void afterEach() {
