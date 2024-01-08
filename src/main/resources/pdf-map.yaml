@@ -91,7 +91,7 @@ inputFields:
     Garbage: Garbage
     Sewer: Sewer
     Cooking Fuel: Cooking Fuel
-    Other: Other
+    Other: otherUtilitiesExpenses
   householdHomeExpenses:
     Rent: Rent
     Mortgage: Mortgage
@@ -100,19 +100,19 @@ inputFields:
     Condominium Fees: Condominium Fees
     Lot Rent: Lot Rent
     Flood Insurance: Flood Insurance
-    Other: Other
+    Other: otherHomeExpenses
   receivesEnergyAssistance: receivesEnergyAssistance
   assistanceThroughLiheap: assistanceThroughLiheap
 
   householdMedicalExpenses:
-    Dental bills: Dental bills
-    Hospital bills: Hospital bills
-    Prescribed medicine: Prescribed medicine
-    Prescription drug plan premium: Prescription drug plan premium
-    Medical appliances: Medical appliances
-    Health insurance or Medicare premiums: Health insurance or Medicare premiums
-    Nursing home: Nursing home
-    Other medical expenses: Other medical expenses
+    Dental bills: dentalBills
+    Hospital bills: hospitalBills
+    Prescribed medicine: prescriptionMedicine
+    Prescription drug plan premium: prescriptionPremium
+    Medical appliances: medicalAppliances
+    Health insurance or Medicare premiums: insurancePremiums
+    Nursing home: nursingHome
+    Other medical expenses: otherMedicalExpenses
 
   moneyOnHandTypes:
     Checking account: Checking account

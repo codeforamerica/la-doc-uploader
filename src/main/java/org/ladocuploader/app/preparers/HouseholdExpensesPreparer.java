@@ -20,19 +20,21 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
   private static final Map<String, String> EXPENSES = new HashMap<>();
 
   static {
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_Rent", "Rent");
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_Mortgage", "Mortgage");
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_Homeowner's Insurance", "Homeowner's Insurance");
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_Property Tax", "Property Tax");
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_Condominium Fees", "Condo Fees");
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_Lot Rental", "Lot Rental");
-    EXPENSES.put("householdHomeExpenseAmount_wildcard_Flood Insurance", "Flood Insurance");
-    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_Electricity", "Electricity");
-    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_Water", "Water");
-    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "Phone/Cell Phone");
-    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_Garbage", "Garbage");
-    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_Sewer", "Sewer");
-    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_Cooking Fuel", "Gas");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_rent", "rent");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_mortgage", "mortgage");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_homeownerInsurance", "Homeowner's Insurance");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_propertyTax", "Property Tax");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_condominiumFees", "Condo Fees");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_lotRent", "Lot Rental");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_floodInsurance", "Flood Insurance");
+    EXPENSES.put("householdHomeExpenseAmount_wildcard_otherHomeExpenses", "otherHomeExpenses");
+    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_electricity", "Electricity");
+    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_water", "Water");
+    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_phone", "Phone/Cell Phone");
+    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_garbage", "Garbage");
+    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_sewer", "Sewer");
+    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_cookingFuel", "Gas");
+    EXPENSES.put("householdUtilitiesExpenseAmount_wildcard_otherUtilitiesExpenses", "otherUtilitiesExpenses");
   }
 
   @Override
@@ -55,7 +57,7 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
       }
 
       // Heating or A/C
-      results.put("heatingOrCoolingInd", new SingleField("heatingOrCoolingInd", Boolean.toString(householdUtilities.contains("Heating") || householdUtilities.contains("Cooling")), null));
+      results.put("heatingOrCoolingInd", new SingleField("heatingOrCoolingInd", Boolean.toString(householdUtilities.contains("heating") || householdUtilities.contains("cooling")), null));
 
       // Check for "Other" - theres only one spot for this in the PDF so just combine them
       var totalOtherAmount = 0.0;

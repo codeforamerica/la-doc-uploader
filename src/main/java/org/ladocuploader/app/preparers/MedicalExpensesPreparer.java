@@ -22,14 +22,14 @@ public class MedicalExpensesPreparer implements SubmissionFieldPreparer {
   private static final List<String> EXPENSES = new ArrayList<>();
 
   static {
-    EXPENSES.add("Dental bills");
-    EXPENSES.add("Hospital bills");
-    EXPENSES.add("Prescribed medicine");
-    EXPENSES.add("Prescription drug plan premium");
-    EXPENSES.add("Medical appliances");
-    EXPENSES.add("Health insurance or Medicare premiums");
-    EXPENSES.add("Nursing home");
-    EXPENSES.add("Other medical expenses");
+    EXPENSES.add("dentalBills");
+    EXPENSES.add("hospitalBills");
+    EXPENSES.add("prescriptionMedicine");
+    EXPENSES.add("prescriptionPremium");
+    EXPENSES.add("medicalAppliances");
+    EXPENSES.add("insurancePremiums");
+    EXPENSES.add("nursingHome");
+    EXPENSES.add("otherMedicalExpenses");
   }
 
   @Override
