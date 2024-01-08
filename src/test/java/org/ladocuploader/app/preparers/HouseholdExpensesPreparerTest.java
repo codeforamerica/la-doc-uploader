@@ -63,8 +63,8 @@ class HouseholdExpensesPreparerTest {
   public void shouldCombineOtherExpenses() {
     Submission submission = new SubmissionTestBuilder()
         .with("householdHomeExpenses[]", List.of("Other"))
-        .with("householdUtilitiesExpenseAmount_wildcard_Other utilities expenses", "10")
-        .with("householdHomeExpenseAmount_wildcard_Other home expenses", "22")
+        .with("householdUtilitiesExpenseAmount_wildcard_otherUtilitiesExpenses", "10")
+        .with("householdHomeExpenseAmount_wildcard_otherHomeExpenses", "22")
         .build();
 
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);

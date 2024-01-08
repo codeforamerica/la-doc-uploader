@@ -38,9 +38,9 @@ public class MedicalExpensesPreparer implements SubmissionFieldPreparer {
 
     var expenses = (List) submission.getInputData().getOrDefault("householdMedicalExpenses[]", emptyList());
     if (!expenses.isEmpty()) {
-      List<String> sortedExpenses = EXPENSES.keySet().stream().sorted().toList();
+      List<String> expensesList = EXPENSES.keySet().stream().toList();
       int i = 1;
-      for (String expense : sortedExpenses) {
+      for (String expense : expensesList) {
         var expenseInput = submission.getInputData().get(AMOUNT_PREFIX + expense);
         if (expenseInput != null) {
           results.put("medicalExpensesType" + i, new SingleField("medicalExpensesType", EXPENSES.get(expense), i));
