@@ -1,6 +1,7 @@
 package org.ladocuploader.app.preparers;
 
 import formflow.library.data.Submission;
+import formflow.library.pdf.CheckboxField;
 import formflow.library.pdf.PdfMap;
 import formflow.library.pdf.SingleField;
 import formflow.library.pdf.SubmissionField;
@@ -43,6 +44,14 @@ public class ApplicantDetailsPreparer implements SubmissionFieldPreparer {
 
     var educationStatus = inputData.get("highestEducation");
     results.put("highestEducation", new SingleField("highestEducationFormatted", PDF_EDUCATION_MAP.get(educationStatus), null));
+
+    // If they said they don't want us to collect this info, don't pass it on, even if they had previously set it.
+    // This check helps if they went back and forward in the pages changing values. The data that prepares these fields is
+    // the default OneToManyPreparer in the ffl. This code just overwrites the fields to _unset_ them.
+    if (submission.getInputData().getOrDefault("permissionToAskAboutRace", "false").equals("false")) {
+      results.put("raceSelected", new CheckboxField("raceSelected", List.of(), null));
+      results.put("ethnicitySelected", new SingleField("ethnicitySelected", "", null));
+    }
 
     return results;
   }

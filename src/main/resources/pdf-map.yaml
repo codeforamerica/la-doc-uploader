@@ -168,7 +168,7 @@ subflowInfo:
       householdHighestEducationFormatted: householdHighestEducation
       householdBirthdayFormatted: householdBirthday
       householdUSCitizenDerived: householdUSCitizen
-      householdRaceEthnicCode: householdRaceEthnicCode
+      householdRaceEthnicityCode: householdRaceEthnicCode
       ssns: ssns
   income:
     totalIterations: 7
