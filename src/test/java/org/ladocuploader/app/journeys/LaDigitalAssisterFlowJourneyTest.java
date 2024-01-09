@@ -772,11 +772,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("elderlycare-amount.title"));
-
-    testPage.goBack();
-    log.info("test page title is " + testPage.getTitle());
-    testPage.clickButton("No");
-    log.info("now it is " + testPage.getTitle());
+    testPage.enter("expensesElderlyCare", "123");
+    testPage.clickContinue();;
 
     var title = testPage.getTitle();
     if ("ECE link".equals(title)) {
