@@ -21,8 +21,8 @@ import org.springframework.shell.standard.ShellMethod;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -54,7 +54,7 @@ public class SubmissionTransfer {
 
   private final long TWO_HOURS = 2L;
 
-  private final SimpleDateFormat MMDDYYYY_HHMMSS = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+  public static final DateTimeFormatter MMDDYYYY_HHMMSS = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss");
 
   private final TransmissionRepository transmissionRepository;
   private final UserFileRepositoryService fileRepositoryService;
@@ -199,7 +199,7 @@ public class SubmissionTransfer {
     String formattedSSN = encryptor.decrypt((String) inputData.getOrDefault("encryptedSSN", ""));
     String formattedFilename = removeFileExtension(filename);
     String formattedBirthdate = formatBirthdate(submission.getInputData());
-    String formattedSubmissionDate = MMDDYYYY_HHMMSS.format(submission.getSubmittedAt());
+    String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
     String filelocation = String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename);
 
     return "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n"
