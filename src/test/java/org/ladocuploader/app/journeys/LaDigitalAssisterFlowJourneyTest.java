@@ -317,6 +317,14 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
+  void docUploadSkipTest() {
+    testPage.navigateToFlowScreen("laDigitalAssister/docUploadIntro");
+    assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-intro.title"));
+    testPage.clickButton(message("doc-upload-intro.skip"));
+    assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
+  }
+
+  @Test
   void fullDigitalAssisterFlow() {
     // Landing screen (language toggled)
     assertThat(testPage.getTitle()).isEqualTo("Louisiana Digital Assister");
@@ -855,11 +863,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton(message("signature-submit"));
 
     assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-intro.title"));
-    testPage.clickButton(message("doc-upload-intro.skip"));
-    assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
-
-    testPage.navigateToFlowScreen("laDigitalAssister/docUploadIntro");
     testPage.clickButton(message("doc-upload-intro.continue"));
+
     assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-signpost.title"));
     testPage.clickContinue();
 
@@ -912,6 +917,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     // Confirmation page
     assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
   }
+
 
   void loadUserPersonalData() {
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");

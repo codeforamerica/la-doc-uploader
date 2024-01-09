@@ -8,6 +8,7 @@ import formflow.library.data.UserFileRepositoryService;
 import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
+import java.time.format.DateTimeFormatter;
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
@@ -204,8 +205,9 @@ public class SubmissionTransfer {
     String formattedSSN = encryptor.decrypt((String) inputData.getOrDefault("encryptedSSN", ""));
     String formattedFilename = removeFileExtension(filename);
     String formattedBirthdate = formatBirthdate(submission.getInputData());
-    String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
-    String filelocation = String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename);
+    String formattedSubmissionDate = submission.getSubmittedAt().format(DateTimeFormatter.ofPattern(MMDDYYYY_HHMMSS));
+    //String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
+    String fileLocation = String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename);
 
     return "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n"
         .formatted(
@@ -217,7 +219,7 @@ public class SubmissionTransfer {
             formattedSSN,
             formattedBirthdate,
             formattedSubmissionDate,
-            filelocation);
+            fileLocation);
   }
 
   private static String removeFileExtension(String filename) {

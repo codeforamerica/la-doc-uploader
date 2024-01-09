@@ -85,12 +85,9 @@ public class DocUploadDisabledInterceptor implements HandlerInterceptor {
                                         outputFlashMap.put("docUploadFinalized", messageSource.getMessage("general.locked-submission", null, locale));
                                         RequestContextUtils.saveOutputFlashMap(redirectUrl, request, response);
                                         response.sendRedirect(redirectUrl);
-
                                     }
                                 }
-
                             }
-
                         } else {
                             log.error("Submission %s not found in database".formatted(submissionId));
                             return false;
