@@ -92,11 +92,10 @@ public class SubmissionTransfer {
     int subfolderidx = 1;
     try (FileOutputStream baos = new FileOutputStream(zipFileName);
          ZipOutputStream zos = new ZipOutputStream(baos)) {
-      OffsetDateTime now = OffsetDateTime.now();
+      OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
       StringBuilder docMeta = new StringBuilder();
       for (Submission submission : submissionsBatch) {
-
-        if (submission.getSubmittedAt().plusHours(TWO_HOURS).isAfter(now)) {
+        if (submission.getSubmittedAt().isAfter(submittedAtCutoff)) {
           // Give a 2-hour wait for folks to upload documents
           continue;
         }

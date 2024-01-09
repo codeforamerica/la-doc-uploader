@@ -2,10 +2,11 @@ package org.ladocuploader.app.submission.actions;
 
 import formflow.library.config.submission.Action;
 import formflow.library.data.Submission;
+import org.springframework.stereotype.Component;
+
 import java.time.DayOfWeek;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import org.springframework.stereotype.Component;
 
 
 /**
@@ -26,15 +27,14 @@ public class FormatSubmittedAtDate implements Action {
     if (submittedAt != null) {
       String formattedSubmittedAt = submittedAt.format(DATE_FORMAT);
       submission.getInputData().put("formattedSubmittedAt", formattedSubmittedAt);
-      OffsetDateTime tenDaysLater = submittedAt.plusDays(TEN_BUSINESS_DAYS);
-      if (submittedAt.getDayOfWeek() == DayOfWeek.SATURDAY){
-          tenDaysLater = tenDaysLater.minusDays(ONE_DAY);
-      } else if (submittedAt.getDayOfWeek() == DayOfWeek.SUNDAY){
-          tenDaysLater = tenDaysLater.minusDays(ONE_DAY * 2);
+      OffsetDateTime interviewDate = submittedAt.plusDays(TEN_BUSINESS_DAYS);
+      if (submittedAt.getDayOfWeek() == DayOfWeek.SATURDAY) {
+        interviewDate = interviewDate.minusDays(ONE_DAY);
+      } else if (submittedAt.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        interviewDate = interviewDate.minusDays(ONE_DAY * 2);
       }
-      String interviewDate = tenDaysLater.format(DATE_FORMAT);
 
-      submission.getInputData().put("interviewDate", interviewDate);
+      submission.getInputData().put("interviewDate", interviewDate.format(DATE_FORMAT));
     }
   }
 }
