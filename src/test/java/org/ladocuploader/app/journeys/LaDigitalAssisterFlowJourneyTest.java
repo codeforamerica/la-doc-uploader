@@ -202,7 +202,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickLink(message("review-contact-info.submit-incomplete"));
     // Expedited Snap Start
     assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap-start.title"));
-    testPage.clickButton(message("expedited-snap-start.yes"));
+    testPage.clickButton("Yes, I want to see if I qualify");
     // Multiple Person Household
     assertThat(testPage.getTitle()).isEqualTo(message("multiple-person-household.title"));
     testPage.clickButton("Yes");
@@ -952,7 +952,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
     testPage.enter("emailAddress", "test@gmail.com");
     testPage.enter("phoneNumber", "555-456-7891");
-    testPage.clickElementById("remindersMethod-By Email-label");
+    testPage.clickElementById("remindersMethod-By email-label");
     testPage.clickContinue();
   }
 

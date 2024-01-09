@@ -5,11 +5,10 @@ import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IsNotApplyingForExpeditedSnap implements Condition {
+public class IsMinimumApplication implements Condition {
 
   @Override
   public Boolean run(Submission submission) {
-      // They never saw the expedited snap question and didn't answer it
-      return submission.getInputData().get("isApplyingForExpeditedSnap") == null;
+    return "false".equals(submission.getInputData().get("isApplyingForExpeditedSnap"));
   }
 }

@@ -91,12 +91,12 @@ flow:
   expeditedSnapStart:
     nextScreens:
       - name: finalSignPost
+        condition: IsMinimumApplication
+      - name: multiplePersonHousehold
   multiplePersonHousehold:
     nextScreens:
       - name: householdIncomeLast30Days
         condition: IsApplyingForExpeditedSnap
-      - name: householdSignPost
-        condition: IsMultiplePersonNonExpeditedHousehold
       - name: ssnForm
   householdIncomeLast30Days:
     nextScreens:
