@@ -97,6 +97,8 @@ flow:
     nextScreens:
       - name: householdIncomeLast30Days
         condition: IsApplyingForExpeditedSnap
+      - name: householdSignPost
+        condition: IsMultiplePersonHousehold
       - name: ssnForm
   householdIncomeLast30Days:
     nextScreens:
