@@ -8,19 +8,20 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{'fragments/icons' :: choosePrograms}"></th:block>
+        <th:block th:replace="~{fragments/icons :: choosePrograms}"></th:block>
         <th:block
-            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{choose-programs.header})}"/>
-        <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContent})}">
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{choose-programs.header})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
             <div class="form-card__content">
-              <th:block th:replace="~{'fragments/inputs/checkboxFieldset' ::
+              <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
                   checkboxFieldset(inputName='programs',
                   label=#{general.check-all-that-apply},
                   content=~{::content})}">
                 <th:block th:ref="content">
                   <th:block
-                      th:replace="~{'fragments/inputs/checkboxInSet' :: checkboxInSet(inputName='programs',value='SNAP', label=#{choose-programs.snap}, checkboxHelpText=#{choose-programs.snap-help})}"/>
+                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='programs',value='SNAP', label=#{choose-programs.snap}, checkboxHelpText=#{choose-programs.snap-help})}"/>
                 </th:block>
               </th:block>
             </div>
@@ -29,8 +30,6 @@
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{general.inputs.continue})}"/>
             </div>
-
-
           </th:block>
         </th:block>
       </main>

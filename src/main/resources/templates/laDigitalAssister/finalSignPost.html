@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{final-signpost.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{final-signpost.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <div class="grid__item spacing-above-35 text--centered">
-          <th:block th:replace="~{'fragments/icons' :: documentsSuccess}"></th:block>
+          <th:block th:replace="~{fragments/icons :: documentsSuccess}"></th:block>
           <p class="text--help spacing-below-10"
              th:text="#{final-signpost.step}"></p>
           <th:block
-              th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{final-signpost.header})}"/>
+              th:replace="~{fragments/cardHeader :: cardHeader(header=#{final-signpost.header})}"/>
         </div>
         <div class="form-card__content">
           <div class="grid__item intro-section boxed-content spacing-below-60">
-            <h2 class="h3 text--centered intro-box__title" th:text="#{final-signpost.boxedcontent}"></h2>
+            <h2 class="h3 text--centered intro-box__title"
+                th:text="#{final-signpost.boxedcontent}"></h2>
             <ol class="list--numbered spacing-above-10">
               <li th:text="#{final-signpost.content-1}"></li>
               <li th:text="#{final-signpost.content-2}"></li>
@@ -28,12 +29,12 @@
           </div>
         </div>
         <div class="form-card__footer text--centered">
-          <th:block th:replace="~{'fragments/continueButton' :: continue}"/>
+          <th:block th:replace="~{fragments/continueButton :: continue}"/>
         </div>
       </main>
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

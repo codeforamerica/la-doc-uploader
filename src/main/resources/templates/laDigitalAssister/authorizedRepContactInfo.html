@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="fragments/head :: head(title=#{authorized-rep-contact-info.title})"></head>
+<head th:replace="~{fragments/head :: head(title=#{authorized-rep-contact-info.title})}"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{'fragments/icons' :: authorizedRep}"></th:block>
+        <th:block th:replace="~{fragments/icons :: authorizedRep}"></th:block>
         <th:block
-            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{authorized-rep-contact-info.header}, subtext=#{authorized-rep-contact-info.subheader})}"/>
-        <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::authorizedRepContact})}">
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{authorized-rep-contact-info.header}, subtext=#{authorized-rep-contact-info.subheader})}"/>
+        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::authorizedRepContact})}">
           <th:block th:ref="authorizedRepContact">
             <div class="form-card__content">
               <th:block th:replace="~{fragments/inputs/text ::
@@ -38,7 +38,7 @@
                                     streetAddress2HelpText=#{general.optional}
                                   )}" />
               <th:block
-                  th:replace="~{'fragments/inputs/phone' :: phone(
+                  th:replace="~{fragments/inputs/phone :: phone(
                   inputName='authorizedRepPhoneNumber',
                   label=#{authorized-rep-contact-info.phone-number},
                   helpText=#{authorized-rep-contact-info.phone-number.help})}"/>
@@ -54,6 +54,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

@@ -10,37 +10,39 @@
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: passport}"></th:block>
         <th:block
-            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{citizenship-number.header}, subtext=#{citizenship-number.subheader})}"/>
-        <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContent})}">
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{citizenship-number.header}, subtext=#{citizenship-number.subheader})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
           <th:block th:ref="formContent">
             <div class="form-card__content">
-                <ul class="list--bulleted spacing-above-0 spacing-below-60">
-                  <li th:utext="#{citizenship-number.status1}"></li>
-                  <li th:utext="#{citizenship-number.status2}"></li>
-                  <li th:utext="#{citizenship-number.status3}"></li>
-                  <li th:utext="#{citizenship-number.status4}"></li>
-                  <li th:utext="#{citizenship-number.status5}"></li>
-                  <li th:utext="#{citizenship-number.status6}"></li>
-                  <li th:utext="#{citizenship-number.status7}"></li>
-                  <li th:utext="#{citizenship-number.status8}"></li>
-                  <li th:utext="#{citizenship-number.status9}"></li>
-                </ul>
-                <th:block th:replace="~{'fragments/inputs/select' ::
+              <ul class="list--bulleted spacing-above-0 spacing-below-60">
+                <li th:utext="#{citizenship-number.status1}"></li>
+                <li th:utext="#{citizenship-number.status2}"></li>
+                <li th:utext="#{citizenship-number.status3}"></li>
+                <li th:utext="#{citizenship-number.status4}"></li>
+                <li th:utext="#{citizenship-number.status5}"></li>
+                <li th:utext="#{citizenship-number.status6}"></li>
+                <li th:utext="#{citizenship-number.status7}"></li>
+                <li th:utext="#{citizenship-number.status8}"></li>
+                <li th:utext="#{citizenship-number.status9}"></li>
+              </ul>
+              <th:block th:replace="~{fragments/inputs/select ::
                     select(
                       inputName='citizenshipNumber',
                       ariaLabel='header',
                       content=~{::selectContent})}">
-                  <th:block th:ref="selectContent" th:with="numPeople=${inputData.containsKey('household') ? inputData.household.size()+1 : 1}">
-                    <th:block th:each="i : ${#numbers.sequence(0, numPeople)}"
-                              class="spacing-below-15">
-                      <th:block
-                          th:replace="~{fragments/inputs/selectOption :: selectOption(value=${i}, optionText=#{citizenship-number.people(${i})})}"/>
-                    </th:block>
+                <th:block th:ref="selectContent"
+                          th:with="numPeople=${inputData.containsKey('household') ? inputData.household.size()+1 : 1}">
+                  <th:block th:each="i : ${#numbers.sequence(0, numPeople)}"
+                            class="spacing-below-15">
+                    <th:block
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value=${i}, optionText=#{citizenship-number.people(${i})})}"/>
                   </th:block>
                 </th:block>
+              </th:block>
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="'fragments/continueButton' :: continue"/>
+              <th:block th:replace="~{fragments/continueButton :: continue}"/>
             </div>
           </th:block>
         </th:block>

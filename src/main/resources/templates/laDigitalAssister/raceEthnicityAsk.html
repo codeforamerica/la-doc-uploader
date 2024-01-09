@@ -3,10 +3,10 @@
 <head th:replace="fragments/head :: head(title=#{race-ethnicity.title})"></head>
 <body>
 <div class="page-wrapper">
-  <div th:replace="fragments/toolbar :: toolbar"></div>
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
   <section class="slab">
     <div class="grid">
-      <div th:replace="fragments/goBack :: goBackLink"></div>
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{'fragments/icons' :: raceAndEthnicity}"></th:block>
         <th:block
@@ -28,6 +28,6 @@
     </div>
   </section>
 </div>
-<th:block th:replace="fragments/footer :: footer" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

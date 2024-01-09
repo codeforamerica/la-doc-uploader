@@ -11,7 +11,7 @@
                 <th:block th:replace="~{fragments/icons :: county}"></th:block>
                 <th:block
                         th:replace="~{fragments/cardHeader :: cardHeader(header=#{parish.header})}"/>
-                <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::formContents})}">
+                <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContents})}">
                     <th:block th:ref="formContents">
                         <th:block
                                 th:replace="~{fragments/inputs/select :: select(helpText=#{parish.subheader}, ariaLabel=#{parish.select}, inputName='parish', content=~{::selectContent})}">

@@ -9,11 +9,11 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <div class="grid__item spacing-above-35 text--centered">
-          <th:block th:replace="~{'fragments/icons' :: personMilestone}"></th:block>
+          <th:block th:replace="~{fragments/icons :: personMilestone}"></th:block>
           <p class="text--help spacing-below-10"
              th:text="#{signpost.step}"></p>
           <th:block
-              th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{signpost.header})}"/>
+              th:replace="~{fragments/cardHeader :: cardHeader(header=#{signpost.header})}"/>
         </div>
         <div class="form-card__content">
           <div class="grid__item intro-section boxed-content spacing-below-60">
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="form-card__footer text--centered">
-          <th:block th:replace="~{'fragments/continueButton' :: continue}"/>
+          <th:block th:replace="~{fragments/continueButton :: continue}"/>
         </div>
       </main>
     </div>
