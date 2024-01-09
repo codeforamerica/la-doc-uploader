@@ -90,7 +90,7 @@ flow:
       - name: multiplePersonHousehold
   expeditedSnapStart:
     nextScreens:
-      - name: multiplePersonHousehold
+      - name: finalSignPost
   multiplePersonHousehold:
     nextScreens:
       - name: householdIncomeLast30Days
