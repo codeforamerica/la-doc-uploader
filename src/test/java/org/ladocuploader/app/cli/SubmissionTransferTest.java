@@ -105,6 +105,7 @@ class SubmissionTransferTest {
     Transmission invalidTransmission = transmissionRepository.findBySubmissionAndTransmissionType(invalidSubmission, TransmissionType.SNAP);
     assertThat(invalidTransmission.getStatus(), equalTo(TransmissionStatus.Failed));
     assertThat(invalidTransmission.getDocumentationErrors().get("error"), equalTo("There was an error generating the PDF"));
+    assertThat(invalidTransmission.getDocumentationErrors().get("subfolder"), equalTo("3"));
 
     String destDir = "output";
     List<String> fileNames = unzip(zipFile.getPath(), destDir);
