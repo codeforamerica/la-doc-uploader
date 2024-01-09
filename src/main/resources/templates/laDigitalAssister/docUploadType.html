@@ -34,7 +34,7 @@
                         helpText='',
                         content=~{::docTypes},
                         label='',
-                        ariaLabel=${userFile.get('originalFilename')})}">
+                        ariaLabel='header')}">
                       <th:block th:ref="docTypes">
                         <th:block
                             th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{add-document-types.doc-type-label.placeholder})}"/>

@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
@@ -47,18 +48,19 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   }
 
   @Test
-  void hourlyIncomeFlow() {
+  void incomeFlows() {
     loadUserPersonalData();
     loadHouseHoldData("First", "User", "12", "22", "1991");
     loadHouseHoldData("Second", "User", "01", "23", "1997");
     preloadIncomeScreen();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
+    // Hourly
+    assertThat(testPage.getTitle()).isEqualTo("Income by job");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
+    assertThat(testPage.getTitle()).isEqualTo("Income who");
     testPage.clickContinue();
-    assert (testPage.hasErrorText(message("error.missing-general")));
+    assertTrue(testPage.hasErrorText(message("error.missing-general")));
 
     testPage.clickElementById("householdMemberJobAdd-you");
     testPage.clickContinue();
@@ -66,7 +68,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("employer-name.title"));
     testPage.clickContinue();
 
-    assert (testPage.hasErrorText(message("error.missing-general")));
+    assertTrue(testPage.hasErrorText(message("error.missing-general")));
     testPage.enter("employerName", "job1");
 
     testPage.clickContinue();
@@ -80,11 +82,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("job-hourly-wage.title"));
     testPage.clickContinue();
 
-    assert (testPage.hasErrorText(message("error.missing-dollar-amount")));
+    assertTrue(testPage.hasErrorText(message("error.missing-dollar-amount")));
     testPage.enter("hourlyWage", "a");
     testPage.clickContinue();
 
-    assert (testPage.hasErrorText(message("error.invalid-money")));
+    assertTrue(testPage.hasErrorText(message("error.invalid-money")));
     testPage.enter("hourlyWage", ".99");
 
     testPage.clickContinue();
@@ -92,33 +94,23 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("job-hours-per-week.title"));
     testPage.clickContinue();
 
-    assert (testPage.hasErrorText(RANGE_ERROR_MESSAGE));
-    assert (testPage.hasErrorText(message("error.missing-general")));
+    assertTrue(testPage.hasErrorText(RANGE_ERROR_MESSAGE));
+    assertTrue(testPage.hasErrorText(message("error.missing-general")));
 
     testPage.enter("hoursPerWeek", "100000");
     testPage.clickContinue();
 
-    assert (testPage.hasErrorText(RANGE_ERROR_MESSAGE));
+    assertTrue(testPage.hasErrorText(RANGE_ERROR_MESSAGE));
 
     testPage.enter("hoursPerWeek", "10");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("income-confirmation.title"));
-  }
+    assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
+    testPage.clickButton("Yes");
 
-  @Test
-  void otherIncomeFlow() {
-    loadUserPersonalData();
-    loadHouseHoldData("Third", "User", "12", "22", "1991");
-    loadHouseHoldData("Fourth", "User", "01", "23", "1997");
-    preloadIncomeScreen();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
+    // Non-hourly
+    assertThat(testPage.getTitle()).isEqualTo("Income who");
     testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
-    testPage.clickContinue();
-    assert (testPage.hasErrorText(message("error.missing-general")));
 
     testPage.clickElementById("householdMemberJobAdd-you");
     testPage.clickContinue();
@@ -126,7 +118,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("employer-name.title"));
     testPage.clickContinue();
 
-    assert (testPage.hasErrorText(message("error.missing-general")));
+    assertTrue(testPage.hasErrorText(message("error.missing-general")));
     testPage.enter("employerName", "job1");
 
     testPage.clickContinue();
@@ -138,7 +130,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("No");
 
     testPage.clickContinue();
-    assert (testPage.hasErrorText(message("error.missing-pay-period")));
+    assertTrue(testPage.hasErrorText(message("error.missing-pay-period")));
 
     testPage.selectRadio("payPeriod", "Every month");
     testPage.clickContinue();
@@ -148,7 +140,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("payPeriodAmount", "a");
     testPage.clickContinue();
 
-    assert (testPage.hasErrorText(message("error.invalid-money")));
+    assertTrue(testPage.hasErrorText(message("error.invalid-money")));
     testPage.enter("payPeriodAmount", "282.99");
 
     testPage.clickContinue();
@@ -636,10 +628,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("employment-status.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
+    assertThat(testPage.getTitle()).isEqualTo("Income by job");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
+    assertThat(testPage.getTitle()).isEqualTo("Income who");
     testPage.clickElementById("householdMemberJobAdd-you");
     testPage.clickContinue();
 

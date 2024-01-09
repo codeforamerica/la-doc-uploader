@@ -47,6 +47,7 @@ public class AccessibilityJourneyPageTest extends LaDigitalAssisterFlowJourneyTe
         log.info("Found " + violations.size() + " accessibility related issues.");
         if (results.getViolations().size() > 0) {
             violations.forEach(violation -> {
+                log.info("-----------------------");
                 log.info("Rule at issue: " + violation.getId());
                 log.info("Rule description: " + violation.getDescription());
                 log.info("Rule help text: " + violation.getHelp());
