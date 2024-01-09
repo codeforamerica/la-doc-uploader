@@ -115,7 +115,7 @@ public class SubmissionTransfer {
         } catch (Exception e) {
           log.error("Error generating file collection for submission ID {}", submission.getId(), e);
 
-          transmission.setDocumentationErrors(Map.of("error", e.getMessage()));
+          transmission.setDocumentationErrors(Map.of("error", e.getMessage(),"subfolder", subfolder));
           transmission.setStatus(TransmissionStatus.Failed);
           updateTransmission(uuid, transmission);
           failed++;
