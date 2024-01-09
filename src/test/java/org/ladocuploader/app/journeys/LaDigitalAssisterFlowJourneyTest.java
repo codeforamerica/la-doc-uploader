@@ -774,7 +774,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("elderlycare-amount.title"));
 
     testPage.goBack();
+    log.info("test page title is " + testPage.getTitle());
     testPage.clickButton("No");
+    log.info("now it is " + testPage.getTitle());
 
     var title = testPage.getTitle();
     if ("ECE link".equals(title)) {
@@ -790,8 +792,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
       assertThat(testPage.getTitle()).isEqualTo("WIC apply");
       testPage.clickButton("Yes, start my WIC app");
       testPage.clickContinue();
+      assertThat(testPage.getTitle()).isEqualTo("Confirmation");
+      testPage.clickContinue();
     }
 
+    log.info("before check: " + testPage.getTitle());
     // Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.clickContinue();
