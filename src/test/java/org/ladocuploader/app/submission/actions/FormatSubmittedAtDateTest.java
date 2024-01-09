@@ -7,6 +7,8 @@ import org.ladocuploader.app.utils.TestUtils;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class FormatSubmittedAtDateTest {
 
   private final FormatSubmittedAtDate action = new FormatSubmittedAtDate();
