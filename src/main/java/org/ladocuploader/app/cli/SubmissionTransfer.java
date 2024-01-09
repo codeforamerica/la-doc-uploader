@@ -8,7 +8,6 @@ import formflow.library.data.UserFileRepositoryService;
 import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
-import java.time.format.DateTimeFormatter;
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
@@ -24,12 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.OffsetDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -205,8 +199,7 @@ public class SubmissionTransfer {
     String formattedSSN = encryptor.decrypt((String) inputData.getOrDefault("encryptedSSN", ""));
     String formattedFilename = removeFileExtension(filename);
     String formattedBirthdate = formatBirthdate(submission.getInputData());
-    String formattedSubmissionDate = submission.getSubmittedAt().format(DateTimeFormatter.ofPattern(MMDDYYYY_HHMMSS));
-    //String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
+    String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
     String fileLocation = String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename);
 
     return "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n"
