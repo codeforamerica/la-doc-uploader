@@ -7,6 +7,7 @@ import formflow.library.data.UserFileRepository;
 import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
+import static java.time.OffsetDateTime.now;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.data.Transmission;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -125,7 +127,7 @@ class SubmissionTransferTest {
   }
 
   private Submission queueInvalidSubmission() {
-    Date submittedDate = new Date(new Date().getTime() - (1000 * 60 * 60) * 2);
+    OffsetDateTime submittedDate = OffsetDateTime.now().minusHours(2L);
     Submission submission = Submission.builder()
         .submittedAt(submittedDate)
         .flow("laDigitalAssister")
@@ -137,7 +139,7 @@ class SubmissionTransferTest {
   }
 
   private Submission queueSubmissionWithDocs() {
-    Date submittedDate = new Date(new Date().getTime() - (1000 * 60 * 60) * 2);
+    OffsetDateTime submittedDate = OffsetDateTime.now().minusHours(2L);
     var submission = Submission.builder()
         .submittedAt(submittedDate)
         .flow("laDigitalAssister")
@@ -174,7 +176,7 @@ class SubmissionTransferTest {
   }
 
   private Submission queueSubmissionWithoutDocs() {
-    Date submittedDate = new Date(new Date().getTime() - (1000 * 60 * 60) * 2);
+    OffsetDateTime submittedDate = OffsetDateTime.now().minusHours(2L);
     Submission submission = Submission.builder()
         .submittedAt(submittedDate)
         .flow("laDigitalAssister")
