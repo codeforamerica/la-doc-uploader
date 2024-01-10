@@ -29,10 +29,6 @@ public class LaDigitalAssister extends FlowInputs {
   private String languageSpeak;
   private String needInterpreter;
 
-  // Choose programs
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> programs;
-
   // Who is Applying
   @NotBlank(message="{error.missing-general}")
   private String whosApplying;

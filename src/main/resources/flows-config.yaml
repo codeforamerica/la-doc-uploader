@@ -33,12 +33,7 @@ flow:
       - name: languagePreference
   languagePreference:
     nextScreens:
-      - name: choosePrograms
-  choosePrograms:
-    nextScreens:
       - name: expeditedSnapNotice
-        condition: ProgramsIncludeSnap
-      - name: signPost
   expeditedSnapNotice:
     nextScreens:
       - name: signPost
@@ -125,8 +120,6 @@ flow:
   householdList:
     nextScreens:
       - name: ssnForm
-        condition: ProgramsIncludeSnap
-      - name: householdSpecialSituations
   householdMemberDeleteConfirmation:
     nextScreens: null
   ssnForm:
@@ -170,13 +163,9 @@ flow:
       - name: householdBenefitsWho
         condition: OutOfStateBenefits
       - name: householdPrepareFood
-        condition: ProgramsIncludeSnap
-      - name: sensitiveQuestions
   householdBenefitsWho:
     nextScreens:
       - name: householdPrepareFood
-        condition: ProgramsIncludeSnap
-      - name: sensitiveQuestions
   householdPrepareFood:
     nextScreens:
       - name: householdSeasonalFarmWorker
@@ -347,8 +336,6 @@ flow:
   householdAdditionalIncome:
     nextScreens:
       - name: householdMoneyOnHand
-        condition: ProgramsIncludeSnap
-      - name: expensesSignPost
   householdMoneyOnHand:
     nextScreens:
       - name: householdMoneyOnHandDetails

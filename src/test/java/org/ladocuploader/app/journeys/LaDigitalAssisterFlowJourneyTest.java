@@ -19,18 +19,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   protected static final String RANGE_ERROR_MESSAGE = "Make sure to provide a value between 1 and 100.";
 
   @Test
-  void chooseProgramsFlow() {
-    testPage.navigateToFlowScreen("laDigitalAssister/choosePrograms");
-    testPage.clickContinue();
-
-    assert (testPage.hasErrorText(message("error.missing-general")));
-    testPage.clickElementById("programs-SNAP");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap.title"));
-  }
-
-  @Test
   void whosApplyingFlow() {
     testPage.navigateToFlowScreen("laDigitalAssister/whosApplying");
     testPage.clickContinue();
@@ -358,13 +346,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("language-preference.title"));
     testPage.selectFromDropdown("languageRead", "Spanish");
     testPage.selectRadio("needInterpreter", "Yes");
-    testPage.clickContinue();
-
-    // Choose programs
-    assertThat(testPage.getTitle()).isEqualTo(message("choose-programs.title"));
-
-    // Choose SNAP program
-    testPage.clickElementById("programs-SNAP");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap.title"));
