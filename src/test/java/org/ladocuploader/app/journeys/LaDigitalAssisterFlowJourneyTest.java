@@ -655,6 +655,12 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("employment-status.title"));
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("additional-income.title"));
+    testPage.goBack();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("employment-status.title"));
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
@@ -979,6 +985,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("work-disqualifications.title"));
     testPage.clickButton("No");
 
-    testPage.clickButton("No");
+    testPage.clickButton("Yes");
   }
 }
