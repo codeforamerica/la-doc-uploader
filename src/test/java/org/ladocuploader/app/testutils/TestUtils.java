@@ -1,4 +1,4 @@
-package org.ladocuploader.app.utils;
+package org.ladocuploader.app.testutils;
 
 import formflow.library.data.Submission;
 import java.io.File;

@@ -32,13 +32,26 @@ public class CsvGenerator {
     // TODO: keep in mind for subflow unpacking etc.
 //    https://stackoverflow.com/questions/77230117/custom-converter-for-opencsv
 
+
+    private static final String ECE_ELIGIBLE = "interestedInEceInd";
+
+    private boolean isEceEligibleAndInterested(Submission submission) {
+        if (submission == null) {
+            return false;
+        }
+        String eceInterest = (String) submission.getInputData().getOrDefault("interestedInEceInd", "false");
+        return "true".equals(eceInterest);
+    }
+
     public CsvDocument generateRelationshipCsvData(List<Submission> submissionList)
             throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
 
         List<BaseCsvModel> relationships = new ArrayList<>();
 
         for(Submission submission : submissionList) {
-            relationships.addAll(RelationshipCsvModel.generateModel(submission));
+            if(isEceEligibleAndInterested(submission)) {
+                relationships.addAll(RelationshipCsvModel.generateModel(submission));
+            }
         }
 
         return generateCsv(CsvType.RELATIONSHIP, RelationshipCsvModel.class, relationships);
@@ -51,8 +64,10 @@ public class CsvGenerator {
         List<BaseCsvModel> pgList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            BaseCsvModel pg = ParentGuardianCsvModel.generateModel(submission);
-            pgList.add(pg);
+            if(isEceEligibleAndInterested(submission)) {
+                BaseCsvModel pg = ParentGuardianCsvModel.generateModel(submission);
+                pgList.add(pg);
+            }
         }
 
         return generateCsv(CsvType.PARENT_GUARDIAN,ParentGuardianCsvModel.class, pgList);
@@ -64,8 +79,10 @@ public class CsvGenerator {
         List<BaseCsvModel> studentList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            List<BaseCsvModel> students = StudentCsvModel.generateModel(submission);
-            studentList.addAll(students);
+            if(isEceEligibleAndInterested(submission)) {
+                List<BaseCsvModel> students = StudentCsvModel.generateModel(submission);
+                studentList.addAll(students);
+            }
         }
         return generateCsv(CsvType.STUDENT, StudentCsvModel.class, studentList);
     }
@@ -76,8 +93,10 @@ public class CsvGenerator {
         List<BaseCsvModel> applicationList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            BaseCsvModel application = ECEApplicationCsvModel.generateModel(submission);
-            applicationList.add(application);
+            if(isEceEligibleAndInterested(submission)) {
+                BaseCsvModel application = ECEApplicationCsvModel.generateModel(submission);
+                applicationList.add(application);
+            }
         }
         return generateCsv(CsvType.ECE_APPLICATION, ECEApplicationCsvModel.class, applicationList);
     }
@@ -88,8 +107,10 @@ public class CsvGenerator {
         List<BaseCsvModel> applicationList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            BaseCsvModel application = WICApplicationCsvModel.generateModel(submission);
-            applicationList.add(application);
+            if(isEceEligibleAndInterested(submission)) {
+                BaseCsvModel application = WICApplicationCsvModel.generateModel(submission);
+                applicationList.add(application);
+            }
         }
         return generateCsv(CsvType.WIC_APPLICATION, WICApplicationCsvModel.class, applicationList);
     }
