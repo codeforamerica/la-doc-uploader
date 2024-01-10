@@ -57,7 +57,7 @@ jobs:
           'SFTP_PASSWORD=${{ secrets.SFTP_PASSWORD_STAGING }}' \
           'SFTP_UPLOAD_URL=${{ secrets.SFTP_UPLOAD_URL }}' \
           'demo=true' \
-          'RELEASE_HEALTHCHECK_TIMEOUT=900'
+          'RELEASE_HEALTHCHECK_TIMEOUT=1200'
   draft-release:
     name: Draft a new release
     needs: deploy
