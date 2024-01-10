@@ -4,6 +4,9 @@ sftp:
   upload-url: ${SFTP_UPLOAD_URL:}
   environment-path: 'prod'
 form-flow:
+  lock-after-submitted:
+    - flow: laDigitalAssister
+      redirect: confirmation
   disabled-flows:
     - flow: laDigitalAssister
       staticRedirectPage: /

@@ -546,12 +546,24 @@ flow:
     nextScreens:
       - name: docUploadSubmit
   docUploadSubmit:
+    beforeSaveAction: FinalizeDocuments
     nextScreens:
       - name: confirmation
   confirmation:
     beforeDisplayAction: FormatSubmittedAtDate
     nextScreens:
       - name: confirmation
+landmarks:
+  afterSubmitPages:
+    - confirmation
+    - docUploadIntro
+    - docUploadSignpost
+    - docUploadInstructions
+    - docUploadRecommendations
+    - docUpload
+    - docUploadType
+    - docUploadReview
+    - docUploadSubmit
 subflows:
   household:
     entryScreen: multiplePersonHousehold

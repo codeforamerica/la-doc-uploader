@@ -200,7 +200,7 @@ public class SubmissionTransfer {
     String formattedFilename = removeFileExtension(filename);
     String formattedBirthdate = formatBirthdate(submission.getInputData());
     String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
-    String filelocation = String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename);
+    String fileLocation = String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename);
 
     return "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n"
         .formatted(
@@ -212,7 +212,7 @@ public class SubmissionTransfer {
             formattedSSN,
             formattedBirthdate,
             formattedSubmissionDate,
-            filelocation);
+            fileLocation);
   }
 
   private static String removeFileExtension(String filename) {

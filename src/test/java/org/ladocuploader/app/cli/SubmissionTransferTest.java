@@ -7,7 +7,6 @@ import formflow.library.data.UserFileRepository;
 import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
-import static java.time.OffsetDateTime.now;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.data.Transmission;
