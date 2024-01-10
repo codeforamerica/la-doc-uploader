@@ -407,6 +407,30 @@ public class LaDigitalAssister extends FlowInputs {
   private String digitalAssisterFeedback;
 
   private String digitalAssisterFeedbackDetail;
+  
+  // Expedited Snap Start
+  private String isApplyingForExpeditedSnap;
+  
+  // Household 30 Day Income
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String householdIncomeLast30Days;
+  
+  // Household Money on Hand
+  private String householdMoneyOnHand;
+  
+  // Expedited Money on Hand Amount
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expeditedMoneyOnHandAmount;
+  
+  // Household Rent
+  private String householdPaysRent;
+  
+  // Household Rent Amount
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String householdRentAmount;
 
   private String addDocuments;
 
