@@ -1,12 +1,13 @@
 package org.ladocuploader.app.submission.actions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import formflow.library.data.Submission;
+import org.junit.jupiter.api.Test;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
@@ -22,10 +23,10 @@ class CheckExpeditedSnapEligibilityTest {
     inputData.put("expeditedMoneyOnHandAmount", "304.45");
     inputData.put("householdRentAmount", "1500");
     inputData.put("migrantOrSeasonalFarmWorkerInd", "false");
-    inputData.put("householdUtilitiesExpenses[]", List.of("Heating", "Phone/Cell Phone", "Garbage"));
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Heating", "100");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "45.50");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Garbage", "80.99");
+    inputData.put("householdUtilitiesExpenses[]", List.of("heating", "phone", "garbage"));
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_heating", "100");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_phone", "45.50");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_garbage", "80.99");
 
     Submission submission = Submission.builder()
         .inputData(inputData)
@@ -43,10 +44,10 @@ class CheckExpeditedSnapEligibilityTest {
     inputData.put("expeditedMoneyOnHandAmount", "400.45");
     inputData.put("householdRentAmount", "1399.99");
     inputData.put("migrantOrSeasonalFarmWorkerInd", "false");
-    inputData.put("householdUtilitiesExpenses[]", List.of("Heating", "Phone/Cell Phone", "Garbage"));
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Heating", "50");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "45.50");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Garbage", "80.99");
+    inputData.put("householdUtilitiesExpenses[]", List.of("heating", "phone", "garbage"));
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_heating", "50");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_phone", "45.50");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_garbage", "80.99");
 
     Submission submission = Submission.builder()
         .inputData(inputData)
@@ -64,10 +65,10 @@ class CheckExpeditedSnapEligibilityTest {
     inputData.put("expeditedMoneyOnHandAmount", "300.00");
     inputData.put("householdRentAmount", "1500");
     inputData.put("migrantOrSeasonalFarmWorkerInd", "false");
-    inputData.put("householdUtilitiesExpenses[]", List.of("Heating", "Phone/Cell Phone", "Garbage"));
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Heating", "100");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "100");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Garbage", "100");
+    inputData.put("householdUtilitiesExpenses[]", List.of("heating", "phone", "garbage"));
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_heating", "100");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_phone", "100");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_garbage", "100");
 
     Submission submission = Submission.builder()
         .inputData(inputData)
@@ -85,10 +86,10 @@ class CheckExpeditedSnapEligibilityTest {
     inputData.put("expeditedMoneyOnHandAmount", "99.99");
     inputData.put("householdRentAmount", "0");
     inputData.put("migrantOrSeasonalFarmWorkerInd", "false");
-    inputData.put("householdUtilitiesExpenses[]", List.of("Heating", "Phone/Cell Phone", "Garbage"));
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Heating", "1");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "1");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Garbage", "1");
+    inputData.put("householdUtilitiesExpenses[]", List.of("heating", "phone", "garbage"));
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_heating", "1");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_phone", "1");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_garbage", "1");
 
     Submission submission = Submission.builder()
         .inputData(inputData)
@@ -106,10 +107,10 @@ class CheckExpeditedSnapEligibilityTest {
     inputData.put("expeditedMoneyOnHandAmount", "100.01");
     inputData.put("householdRentAmount", "0");
     inputData.put("migrantOrSeasonalFarmWorkerInd", "false");
-    inputData.put("householdUtilitiesExpenses[]", List.of("Heating", "Phone/Cell Phone", "Garbage"));
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Heating", "1");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "1");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Garbage", "1");
+    inputData.put("householdUtilitiesExpenses[]", List.of("heating", "phone", "garbage"));
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_heating", "1");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_phone", "1");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_garbage", "1");
 
     Submission submission = Submission.builder()
         .inputData(inputData)
@@ -127,10 +128,10 @@ class CheckExpeditedSnapEligibilityTest {
     inputData.put("expeditedMoneyOnHandAmount", "99.99");
     inputData.put("householdRentAmount", "0");
     inputData.put("migrantOrSeasonalFarmWorkerInd", "false");
-    inputData.put("householdUtilitiesExpenses[]", List.of("Heating", "Phone/Cell Phone", "Garbage"));
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Heating", "1");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "1");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Garbage", "1");
+    inputData.put("householdUtilitiesExpenses[]", List.of("heating", "phone", "garbage"));
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_heating", "1");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_phone", "1");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_garbage", "1");
 
     Submission submission = Submission.builder()
         .inputData(inputData)
@@ -148,10 +149,10 @@ class CheckExpeditedSnapEligibilityTest {
     inputData.put("expeditedMoneyOnHandAmount", "99.99");
     inputData.put("householdRentAmount", "0");
     inputData.put("migrantOrSeasonalFarmWorkerInd", "true");
-    inputData.put("householdUtilitiesExpenses[]", List.of("Heating", "Phone/Cell Phone", "Garbage"));
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Heating", "1");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Phone/Cell Phone", "1");
-    inputData.put("householdUtilitiesExpenseAmount_wildcard_Garbage", "1");
+    inputData.put("householdUtilitiesExpenses[]", List.of("heating", "phone", "garbage"));
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_heating", "1");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_phone", "1");
+    inputData.put("householdUtilitiesExpenseAmount_wildcard_garbage", "1");
 
     Submission submission = Submission.builder()
         .inputData(inputData)

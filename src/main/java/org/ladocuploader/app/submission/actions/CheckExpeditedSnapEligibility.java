@@ -2,17 +2,13 @@ package org.ladocuploader.app.submission.actions;
 
 import formflow.library.config.submission.Action;
 import formflow.library.data.Submission;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
-import org.ladocuploader.app.data.TransmissionRepositoryService;
-import org.ladocuploader.app.data.enums.TransmissionType;
-import org.ladocuploader.app.submission.conditions.IsApplyingForExpeditedSnap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 
 @Slf4j
