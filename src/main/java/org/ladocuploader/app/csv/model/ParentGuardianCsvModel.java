@@ -68,7 +68,7 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());
-
+        // TODO: check if they have a child who is eligible (or family member is pregnant)
         ParentGuardianCsvModel pgpModel = mapper.convertValue(inputData, ParentGuardianCsvModel.class);
         pgpModel.setSubmissionId(submission.getId());
         return pgpModel;

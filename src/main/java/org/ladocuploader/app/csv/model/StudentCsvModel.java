@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.CsvBindByNameOrder;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 import org.ladocuploader.app.csv.converters.HouseholdBirthDateConverter;
+import org.ladocuploader.app.utils.HouseholdUtilities;
 
 @Getter
 @Setter
@@ -28,10 +29,13 @@ public class StudentCsvModel extends BaseCsvModel {
     private Boolean active = true;
 
     @CsvBindByName(column="reference_id")
-    private String id; // uuid of student
+    private String id; // uuid of student from household information
 
     @CsvBindByName(column="first_name")
     private String firstName; // student's first name
+
+    @CsvBindByName(column="middle_name")
+    private String middleName; // unset in system
 
     @CsvBindByName(column="last_name")
     private String lastName; // student's last name
@@ -105,13 +109,18 @@ public class StudentCsvModel extends BaseCsvModel {
 
         if (household != null && !household.isEmpty()) {
             for (Map<String, Object> member : household) {
-                String relationship = (String) member.get("householdMemberRelationship");
-                if (relationship == null || !relationship.equalsIgnoreCase("child")) {
+                //String relationship = (String) member.get("householdMemberRelationship");
+                //if (relationship == null || !relationship.equalsIgnoreCase("child")) {
+                //    continue;
+               // }
+
+                // are they even eligible?  if not, skip them
+                if (!HouseholdUtilities.isMemberEceEligible(member, inputData)){
                     continue;
                 }
 
                 Map<String, Object> studentData = new HashMap<>();
-                studentData.put("id", submission.getId());
+                studentData.put("id", member.get("uuid"));
                 studentData.put("firstName", member.get("householdMemberFirstName"));
                 studentData.put("lastName", member.get("householdMemberLastName"));
                 studentData.put("memberBirthDay", member.get("householdMemberBirthDay"));

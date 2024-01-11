@@ -8,7 +8,6 @@ import org.ladocuploader.app.testutils.AbstractBasePageTest;
 import org.ladocuploader.app.testutils.Page;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 
 @Tag("staticPagesJourney")
 public class StaticPagesJourneyTest extends AbstractBasePageTest {

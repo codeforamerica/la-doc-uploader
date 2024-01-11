@@ -94,8 +94,9 @@ public class CsvGenerator {
 
         for (Submission submission : submissionList) {
             if(isEceEligibleAndInterested(submission)) {
-                BaseCsvModel application = ECEApplicationCsvModel.generateModel(submission);
-                applicationList.add(application);
+                // if a family has more than one child, then they could have more than one app?
+                List<BaseCsvModel> applications = ECEApplicationCsvModel.generateModel(submission);
+                applicationList.addAll(applications);
             }
         }
         return generateCsv(CsvType.ECE_APPLICATION, ECEApplicationCsvModel.class, applicationList);

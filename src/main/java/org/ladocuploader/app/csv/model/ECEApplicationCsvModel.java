@@ -1,19 +1,19 @@
 package org.ladocuploader.app.csv.model;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvCustomBindByName;
 import formflow.library.data.Submission;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.ladocuploader.app.csv.converters.AddressStreetConverter;
-import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 import org.ladocuploader.app.utils.HouseholdUtilities;
+import org.ladocuploader.app.utils.IncomeCalculator;
+
+import static org.ladocuploader.app.utils.HouseholdUtilities.isMemberEceEligible;
 
 @Getter
 @Setter
@@ -43,146 +43,191 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Hide Form from Parent (Yes/No) {{hide}}", required=true)
     private String hideApplication = "No"; // required field, requested default
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Admin notes on application")
     private String adminNotesOnApplication;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Choose the grade your child is applying for")
     private String gradeChildApplyingFor;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Select the option that best describes where you live.")
     private String descriptionOfLivingEnv;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="This questionnaire is intended to address the McKinney-Vento Act. Your child may be eligible for additional educational services.   Did the student receive McKinney Vento (Homeless) Services in a previous school district?")
     private String hadHomelessServicesInPreviousSchool;
 
+    // Mapped to "noHomeAddress"
     @CsvBindByName(column="Is the student’s address a temporary living arrangement?")
     private String isStudentAddressTemporaryLiving;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Is the temporary living arrangement due to loss of housing or economic hardship?")
     private String isTempLivingDueToLossOfHousingOrEconomicHardship;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Does the student have a disability or receive any special education-related services?")
     private String doesStudentHaveDisabilityOrSpecEdServices;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Where is the student currently living?")
     private String whereDoesStudentCurrentlyLive;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Other specific information about where the student is currently living:")
     private String specificsAboutWhereStudentCurrentlyLiving;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Does the student exhibit any behaviors that may interfere with his or her academic performance?")
     private String doesStudentHaveBehaviorsThatAffectAcademics;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Would you like assistance with uniforms, student records, school supplies, transportation, other? (Describe):")
     private String needAssistanceWithSchoolRelatedThings;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Migrant – Have you moved at any time during the past three (3) years to seek temporary or seasonal work in agriculture (including Poultry processing, dairy, nursery, and timber) or fishing?")
     private String hasFamilyMovedForAgriWork;
 
+    // filled out
     @CsvBindByName(column="How many people, including children, are in your household?  Only include all children, parents, guardians, and/or additional adults who provide financial support to the family.")
-    private String howManyPeopleInHousehold;
+    private String howManyPeopleInHouseholdProvideFinancialSupport;
 
+    // filled out
     @CsvBindByName(column="What is your monthly household income? (If your child has an IEP and you make below the maximum allowable income limit for your household size, choose your income here instead of indicating the IEP status.)")
-    private String monthlyHouseholdIncome;
+    private String householdMonthlyIncome;
 
+    // *** no questions for this one; don't have mapping either *** //
     @CsvBindByName(column="Select the option below that best describes your household:")
     private String householdDescription;
 
+    // TODO not sure we have this
     @CsvBindByName(column="Provide 1 of 4 forms of verification documents listed below:")
     private String verificationDocumentOneType;
 
+    // TODO not sure we have this
     @CsvBindByName(column="Verification document upload:")
     private String verificationDocumentOne;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Is the child you are applying for a twin and/or triplet?")
     private String isApplicantChildTwin;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Please list the name(s) of the child’s twin/triplets.")
     private String applicantsTwinTripletSiblingNames;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Are you interested in taking a seat now (2023-24 school year)? The list of available programs is linked below. We’ll make offers as seats become available. There is limited availability.")
     private String takeASeatCurrentSchoolYear;
 
     @CsvBindByName(column="Upload your child's birth certificate. (For unborn children, provide a doctor’s note with the anticipated birth date. After birth, upload Official Birth certificate before enrollment.)")
     private String studentsBirthCertificateDocument;
 
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Is your name on the birth certificate?")
     private String isParentNameOnBirthCertificate;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="If your name is not on the birth certificate, then you will also need to provide proof of custody. If you are unable to provide one of these documents right now, you will need to provide proof of custody before your child receives a center/school placement.   Please select the document you are uploading.")
     private String custodyProofDocumentType;
 
+    // not clear if we have this
     @CsvBindByName(column="Please upload documentation of proof of custody.")
     private String custodyProofDocument;
 
+    // we probably collect this, but how to tell if we grab the right document?
     @CsvBindByName(column="Upload the ID of the parent/guardian completing the application.")
     private String applicantsID;
 
+    // CONVERTER NEEDED HERE  ?
     @CsvBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.  (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS)")
     private String householdFamilyAndAge;
 
     @CsvBindByName(column="What is the number of minors (below 18 years old) living in the household, INCLUDING THE CHILD APPLICANT?")
     private String numberOfMinorsInHousehold;
 
+    // skipping - don't have relationship data
     @CsvBindByName(column="List below each minor living in the household, their age, and their relationship to the child applicant.  (Example: Child Applicant - 3 YEARS, Brother - 10 YEARS, Sister - 7 YEARS, Cousin - 7 YEARS)")
     private String minorsInHousehold;
 
+    // we may have birth cert's but we won't know who they are for
     @CsvBindByName(column="Upload the birth certificate (state issued or foreign) or passport or visa or hospital record or state-issued ID for each minor listed as a sibling of the applicant child.  Upload one of these required documents for ALL dependent children listed in the household.")
     private String siblingProofDocuments;
 
     @CsvBindByName(column="Upload additional sibling birth certificates, if needed.")
     private String siblingAdditionalProofDocuments;
 
+    // not asked about
     @CsvBindByName(column="Does your child have a sibling attending any of the centers/schools you ranked?")
     private String siblingAtSchoolCenterRanked;
 
+    // not asked about
     @CsvBindByName(column="You can list up to 3 siblings. Sibling name #1:")
     private String siblingOneName;
 
+    // not asked about
     @CsvBindByName(column="Which center/school does sibling #1 attend?")
     private String siblingOneSchoolCenter;
 
+    // not asked about
     @CsvBindByName(column="Sibling name #2:")
     private String siblingTwoName;
 
+    // not asked about
     @CsvBindByName(column="Which center/school does sibling #2 attend?")
     private String siblingTwoSchoolCenter;
 
+    // not asked about
     @CsvBindByName(column="Sibling name #3:")
     private String siblingThreeName;
 
+    // not asked about
     @CsvBindByName(column="Which center/school does sibling #3 attend?")
     private String siblingThreeSchoolCenter;
 
+    // not asked about
     @CsvBindByName(column="Do you work at one of the centers/schools you ranked?")
     private String doesApplicantWorksAtSchoolCenterTheyRanked;
 
+    // not asked about
     @CsvBindByName(column="Which center/school do you work at?")
     private String applicantWorksAt;
 
+    // TODO start here
     @CsvBindByName(column="Is the parent applicant an unmarried minor (under age 18)?")
     private String isParentApplicantUnmarriedMinor;
 
+    // not asked about
     @CsvBindByName(column="Does your child have an Individualized Family Service Plans (IFSP), or are they being evaluated for special education services?")
     private String doesApplicantChildHaveIFSPOrEvaluationHappening;
 
+    // not asked about
     @CsvBindByName(column="Is your name listed on the residency documents that you will be providing?")
     private String isApplicantsNameOnResidencyDocuments;
 
+    // TODO: what goes here?  filename?
+    // maybe use converter
     @CsvBindByName(column="Proof of residency #1.")
     private String proofOfResidencyDocumentOne;
 
     @CsvBindByName(column="Verified residency document #1 type:")
     private String proofOfResidencyDocumentOneType;
+
     @CsvBindByName(column="Proof of residency #2.")
     private String proofOfResidencyDocumentTwo;
 
     @CsvBindByName(column="Verified residency document #2 type:")
     private String proofOfResidencyDocumentTwoType;
 
+    // not asked about
     @CsvBindByName(column="Either the parent/guardian name must be on the residency documents or if the parent/guardian lives with another adult who is named on the residency documents, the parent/guardian must upload a signed letter from the person named on the residency documents stating that the parent/guardian lives at that same address.   If uploading a letter, parent/guardian must also upload acceptable proofs of residency in resident’s name and a photo of the resident's ID.")
     private String residencyNoticeParentId;
 
+    // could we calculate this?
     @CsvBindByName(column="Is the applicant a child of a parent or guardian in active Military service?")
     private String isChildsParentGuardianInMilitaryService;
 
@@ -368,473 +413,88 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Transfer center:")
     private String transferCenter;
 
-
-    public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
+    /**
+     * This static method will translate a submission into ECEApplicationCsvModel objects, using a Jackson ObjectMapper.
+     * There could be multiple objects per one Submission if there are multiple household members under 5 or if a
+     * household member is pregnant.
+     *
+     * The next step after this is for the CsvGenerator to "write" this object to the CSV file.
+     * That will use the above mappings of method parameters to their column mapping.
+     *
+     * @param submission
+     * @return List of ECEApplicationCsvModel objects
+     * @throws JsonProcessingException
+     */
+    public static List<BaseCsvModel> generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
-        inputData.put("id", submission.getId());
+        List<BaseCsvModel> eceApps = new ArrayList<>();
+        List<Map<String, Object>> householdList = (List) inputData.getOrDefault("household", List.of());
+        List<Map<String, Object>> incomeList = (List) inputData.getOrDefault("income", List.of());
 
-        List<Map<String, Object>> householdList = (List)inputData.get("household");
+        // Note: we check for if the applicant indicated interest in applying in the CsvGenerator code.  If we got this far
+        // they are interested in ECE
 
-        // this is the data that jackson will map into the EceModel, not inputData
-        Map<String, Object> eceDataMap = new HashMap<>();
+        // Now fill out a row for each family member who qualifies (ie, was born after 9/30/2019)
 
-        int numberOfAdultsInHousehold = 0;
 
+        int householdMemberCountProvidingSupport = (int) incomeList.stream().map(map -> map.get("householdMemberJobAdd")).distinct().count();
+        IncomeCalculator incomeCalculator = new IncomeCalculator(submission);
+        double totalHouseholdMonthlyIncome = incomeCalculator.totalFutureEarnedIncome();
+
+        int totalMinorsInHousehold = (int) householdList.stream()
+            .filter(m -> {
+                return HouseholdUtilities.isMember18orOlder(
+                    Integer.parseInt((String)m.get("birthYear")),
+                    Integer.parseInt((String)m.get("birthMonth")),
+                    Integer.parseInt((String)m.get("birthDay"))
+               );
+            }).count();
+
+        // each pass here will create another object (row) for any eligible household member (pregnant or young enough)
         for (Map<String, Object> member : householdList) {
-            int birthDay = 0;
-            int birthMonth = 0;
-            int birthYear = 0;
-            boolean is18orOlder = false;
-            boolean is5orYounger = false;
-
             try {
-                birthDay = Integer.parseInt((String)member.get("householdMemberBirthDay"));
-                birthMonth = Integer.parseInt((String)member.get("householdMemberBirthMonth"));
-                birthYear = Integer.parseInt((String)member.get("householdMemberBirthYear"));
+                // skip family members who are not eligible
+                if (!isMemberEceEligible(member, inputData)) {
+                    continue;
+                }
 
-                is18orOlder = HouseholdUtilities.isMember18orOlder(birthDay, birthMonth, birthYear);
-                is5orYounger = HouseholdUtilities.isMember5orYounger(birthDay, birthMonth, birthYear);
+                // eligible, fill out an object for this person.A
+                // TODO - is there something different we should put for a pregnancy?
+
+                // this is the data that jackson will map into the EceModel, not inputData
+                // we are mapping data from the submission into the field names in the above ECEApplicationCsvModel object.
+                Map<String, Object> eceDataMap = new HashMap<>();
+
+                // this uses the household members uuid. It's somewhat arbitrary, but needs to map to the same one in the
+                // student csv and relationship csv.
+                eceDataMap.put("id", member.get("uuid"));
+                eceDataMap.put("howManyPeopleInHouseholdProvideFinancialSupport", householdMemberCountProvidingSupport);
+                eceDataMap.put("householdMonthlyIncome", totalHouseholdMonthlyIncome);
+
+                // TODO: we may or may not have this, how to tell?
+                //studentsBirthCertificateDocument
+
+                // TODO: not sure if good mapping.
+                eceDataMap.put("isStudentAddressTemporaryLiving", inputData.getOrDefault("noHomeAddress", "false"));
+                // doesStudentHaveDisabilityOrSpecEdServices <-- we don't directly ask about this but we do ask about why someone doesn't work. Probably not related
+
+                eceDataMap.put("numberOfMinorsInHousehold", totalMinorsInHousehold);
+
+                // TODO: keep adding relevant fields from the above object here
+                ECEApplicationCsvModel app = mapper.convertValue(eceDataMap, ECEApplicationCsvModel.class);
+                app.setSubmissionId(submission.getId());
+                eceApps.add(app);
             } catch (NumberFormatException e) {
                 // TODO what to do if this does fail?? ignore and keep going? probably
                 log.error("Unable to work with household member {}'s birthday ({}/{}/{}): {}",
                     member.get("householdMemberFirstName"),
-                    (String)member.get("householdMemberBirthDay"),
-                    (String)member.get("householdMemberBirthMonth"),
-                    (String)member.get("householdMemberBirthYear"),
+                    (String) member.get("householdMemberBirthDay"),
+                    (String) member.get("householdMemberBirthMonth"),
+                    (String) member.get("householdMemberBirthYear"),
                     e.getMessage()
                 );
             }
-
-            if (is18orOlder) {
-                numberOfAdultsInHousehold++;
-            }
         }
-        eceDataMap.put("numberOfAdultsInHousehold", numberOfAdultsInHousehold);
-
-
-
-        ECEApplicationCsvModel eceApp = mapper.convertValue(eceDataMap, ECEApplicationCsvModel.class);
-        eceApp.setSubmissionId(submission.getId());
-        return eceApp;
-
-/*
- // Parish (WIC/ECE)
-  @NotEmpty(message="{error.missing-general}")
-  private String parish;
-
-  // Language
-  private String languageRead;
-  private String languageSpeak;
-  private String needInterpreter;
-
-  // Choose programs
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> programs;
-
-  // Who is Applying
-  @NotBlank(message="{error.missing-general}")
-  private String whosApplying;
-
-  // Personal Information
-  @NotBlank(message="{error.missing-firstname}")
-  private String firstName;
-
-  @NotBlank(message="{error.missing-lastname}")
-  private String lastName;
-
-  private String otherNames;
-
-  private String birthDay;
-  private String birthMonth;
-  private String birthYear;
-
-  @NotBlank(message="{error.missing-general}")
-  private String sex;
-
-  private String maritalStatus;
-
-  private String highestEducation;
-
-  // home address
-  private String noHomeAddress;
-
-  private String homeAddressStreetAddress1;
-
-  private String homeAddressStreetAddress2;
-
-  private String homeAddressCity;
-
-  private String homeAddressState;
-
-  private String homeAddressZipCode;
-
-  //Mailing Address
-  private String sameAsHomeAddress;
-
-  private String mailingAddressStreetAddress1;
-
-  private String mailingAddressStreetAddress2;
-
-  private String mailingAddressCity;
-
-  private String mailingAddressState;
-
-  private String mailingAddressZipCode;
-
-  //Contact Info
-  private String phoneNumber;
-
-  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
-  private String cellPhoneNumber;
-
-  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
-  private String workPhoneNumber;
-
-  private String wantsReminders;
-
-  private String identifiesAsDeaf;
-
-  private String preferredCommsMethod;
-
-  private String emailAddress;
-
-  private List<String> remindersMethod;
-
-  // Household
-  private String multiplePersonHousehold;
-
-  @NotBlank(message="{error.missing-firstname}")
-  private String householdMemberFirstName;
-
-  @NotBlank(message="{error.missing-lastname}")
-  private String householdMemberLastName;
-
-  private String householdMemberOtherNames;
-
-  private String householdMemberBirthDay;
-
-  private String householdMemberBirthMonth;
-
-  private String householdMemberBirthYear;
-
-  @NotBlank(message="{error.missing-general}")
-  private String householdMemberRelationship;
-
-  @NotBlank(message="{error.missing-general}")
-  private String householdMemberSex;
-
-  private String householdMemberMaritalStatus;
-
-  private String householdMemberHighestEducation;
-
-  @Size(min=11, max=11, message="{error.invalid-ssn}")
-  private String ssn;
-
-  @Size(min=11, max=11, message="{error.invalid-ssn}")
-  @DynamicField
-  private String householdMemberSsn;
-
-  private String schoolInd;
-
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> students;
-
-  @NotBlank(message="{error.missing-general}")
-  @DynamicField
-  private String schoolName;
-
-  @NotBlank(message="{error.missing-general}")
-  @DynamicField
-  private String schoolEnrollmentLevel;
-
-  private String pregnancyInd;
-
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> pregnancies;
-
-//  With dynamic fields and the date template, the data is stored as pregnancyDueDate<wildcard><uuid>Day so changed the ordering to start with the date piece
-  @NotBlank(message="{error.missing-general}")
-  @DynamicField
-  private String dayPregnancyDueDate;
-
-  @NotBlank(message="{error.missing-general}")
-  @DynamicField
-  private String monthPregnancyDueDate;
-
-  @NotBlank(message="{error.missing-general}")
-  @Pattern(regexp = "^(2024|2025)$", message="{error.invalid-dob}")
-  @DynamicField
-  private String yearPregnancyDueDate;
-
-  private String outOfStateBenefitsInd;
-
-  private String outOfStateBenefitsRecipients;
-
-  // SNAP
-  private String buyPrepareMealsSeparateIndicator;
-
-  private String preparesFood;
-
-  private String migrantOrSeasonalFarmWorkerInd;
-
-  private String citizenshipInd;
-
-  private String nonCitizens;
-
-  private String citizenshipNumber;
-
-  private String veteranInd;
-
-  private String veterans;
-
-  private String fosterInd;
-
-  private String fosters;
-
-  private String fosterAgedOutInd;
-
-  private String fostersAgedOut;
-
-  private String homelessInd;
-
-  private String homeless;
-
-  private String roomRentalInd;
-
-  private String roomRentals;
-
-  private String mealInd;
-
-  private String meals;
-
-
-  //  Sensitive Questions
-  private String householdHasPersonalSituations;
-
-  private String personalSituationsHouseholdUUID;
-
-  private List<String> personalSituationsListed;
-
-  private String householdHasDomesticViolenceSituation;
-
-  private String householdHasCriminalJusticeSituation;
-
-  @NotEmpty(message="{error.missing-general}")
-  @DynamicField
-  private List<String> personalSituations;
-
-  // Income
-  private String householdSearchingForJob;
-
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> jobSearch;
-
-  private String workDisqualificationInd;
-
-  private String selfEmploymentIncome;
-
-  @NotBlank(message="{error.missing-general}")
-  private String householdMemberJobAdd;
-
-  @NotBlank(message="{error.missing-general}")
-  private String employerName;
-
-  private String selfEmployed;
-
-  private String jobPaidByHour;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String hourlyWage;
-
-  @Range(message="{error.invalid-range}", min=1, max=100)
-  @NotBlank(message="{error.missing-general}")
-  private String hoursPerWeek;
-
-  @NotBlank(message="{error.missing-pay-period}")
-  private String payPeriod;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String payPeriodAmount;
-
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> additionalIncome;
-
-  @NotEmpty
-  private List<String> moneyOnHandTypes;
-
-  @DynamicField
-  private String moneyOnHandOwner;
-
-  @Money
-  @DynamicField
-  private String moneyOnHandValue;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String monthlyHouseholdIncome;
-
-  private String switchToIncomeByJob;
-
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> householdHomeExpenses;
-
-  @NotBlank(message="{error.missing-dollar-amount}")
-  @Money(message="{error.invalid-money}")
-  @DynamicField
-  private String householdHomeExpenseAmount;
-
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> householdUtilitiesExpenses;
-
-  @NotBlank(message="{error.missing-dollar-amount}")
-  @Money(message="{error.invalid-money}")
-  @DynamicField
-  private String householdUtilitiesExpenseAmount;
-
-  private String receivesEnergyAssistance;
-
-  private String assistanceThroughLiheap;
-
-  private String hasDependentCareExpenses;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesDependentCare;
-
-  private String hasChildSupportExpenses;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesChildSupport;
-
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> householdMedicalExpenses;
-
-  @NotBlank(message="{error.missing-dollar-amount}")
-  @Money(message="{error.invalid-money}")
-  @DynamicField
-  private String householdMedicalExpenseAmount;
-
-  private String hasElderlyCareExpenses;
-
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expensesElderlyCare;
-
-  // WIC / ECE
-  private String interestedInEceInd;
-  private String interestedInWicInd;
-  private String adultsWorking;
-  private String guardiansHaveDisabilityInd;
-
-  // Final Screen
-  private String needsNewEbtCard;
-
-  private String authorizedRepresentative;
-
-  private String authorizedRepCommsAuthorization;
-
-  private String authorizedRepMailAuthorization;
-
-  private String authorizedRepSpendingAuthorization;
-
-  @NotBlank(message="{error.missing-firstname}")
-  private String authorizedRepFirstName;
-
-  @NotBlank(message="{error.missing-lastname}")
-  private String authorizedRepLastName;
-
-  private String authorizedRepOtherNames;
-
-  @NotBlank(message="{error.missing-general}")
-  private String authorizedRepStreetAddress1;
-
-  private String authorizedRepStreetAddress2;
-
-  @NotBlank(message="{error.missing-general}")
-  private String authorizedRepCity;
-
-  @NotBlank(message="{error.missing-general}")
-  private String authorizedRepState;
-
-  @NotBlank(message="{error.missing-general}")
-  @Pattern(regexp = "\\d{5}", message = "{error.format-zip}")
-  private String authorizedRepZipCode;
-
-  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
-  private String authorizedRepPhoneNumber;
-
-  private String needsMedicaid;
-
-  @NotBlank(message="{error.missing-general}")
-  private String votingRegistrationRequested;
-
-  @NotBlank(message="{error.missing-general}")
-  private String votingRegistrationHelpRequested;
-
-  private String permissionToAskAboutRace;
-
-  private String ethnicitySelected;
-
-  @DynamicField
-  private String householdMemberEthnicity;
-
-  private List<String> raceSelected;
-
-  @DynamicField
-  private List<String> householdMemberRace;
-
-  @NotEmpty(message="{error.missing-checkbox}")
-  private List<String> rightsAndResponsibilitiesAgree;
-
-  @NotEmpty(message="{error.missing-checkbox}")
-  private List<String> noIncorrectInformationAgree;
-
-  @NotEmpty(message="{error.missing-checkbox}")
-  private List<String> programsSharingDataAccessAgree;
-
-  @NotEmpty(message="{error.missing-checkbox}")
-  private List<String> nonDiscriminationStatementAgree;
-
-  @NotBlank(message="{error.missing-general}")
-  private String signature;
-
-  @NotBlank(message = "{final-confirmation.answer-feedback-question}")
-  private String digitalAssisterFeedback;
-
-  private String digitalAssisterFeedbackDetail;
-
-  // Expedited Snap Start
-  private String isApplyingForExpeditedSnap;
-
-  // Household 30 Day Income
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String householdIncomeLast30Days;
-
-  // Household Money on Hand
-  private String householdMoneyOnHand;
-
-  // Expedited Money on Hand Amount
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String expeditedMoneyOnHandAmount;
-
-  // Household Rent
-  private String householdPaysRent;
-
-  // Household Rent Amount
-  @Money(message="{error.invalid-money}")
-  @NotBlank(message="{error.missing-dollar-amount}")
-  private String householdRentAmount;
-
-  private String addDocuments;
-
-  @NotBlank(message = "{doc-type.select-a-type}")
-  @DynamicField
-  private String docType;
- */
+        return eceApps;
     }
 }

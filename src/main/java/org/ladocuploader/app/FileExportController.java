@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.text.StringEscapeUtils;
 import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvService;
 import org.ladocuploader.app.csv.enums.CsvType;
