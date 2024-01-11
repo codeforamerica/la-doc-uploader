@@ -288,6 +288,8 @@ flow:
   householdEmploymentStatus:
     nextScreens:
       - name: householdIncomeByJob
+        condition: HouseholdHasJob
+      - name: householdAdditionalIncome
   householdIncomeByJob:
     nextScreens:
       - name: householdIncomeWho
