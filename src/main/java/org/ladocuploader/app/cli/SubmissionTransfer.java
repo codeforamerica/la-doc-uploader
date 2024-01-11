@@ -1,8 +1,8 @@
 package org.ladocuploader.app.cli;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import formflow.library.data.Submission;
-import formflow.library.data.SubmissionRepository;
 import formflow.library.data.UserFile;
 import formflow.library.data.UserFileRepositoryService;
 import formflow.library.file.CloudFile;
@@ -51,9 +51,8 @@ public class SubmissionTransfer {
   }
 
   private final int BATCH_INDEX_LEN = "00050000000".length();
-
+  private final int BATCH_SIZE_LIMIT = 25;
   private final long TWO_HOURS = 2L;
-
   public static final DateTimeFormatter MMDDYYYY_HHMMSS = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss");
 
   private final TransmissionRepository transmissionRepository;
@@ -65,7 +64,7 @@ public class SubmissionTransfer {
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
 
-  public SubmissionTransfer(SubmissionRepository submissionRepository, TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
+  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;
@@ -77,6 +76,33 @@ public class SubmissionTransfer {
 
   @ShellMethod(key = "transferSubmissions")
   public void transferSubmissions() {
+    // Give a 2-hour wait for folks to upload documents
+    OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
+    List<Submission> queuedSubmissions = transmissionRepository.submissionsToTransmit(Sort.unsorted(), TransmissionType.SNAP);
+    if (queuedSubmissions.isEmpty()) {
+      log.info("Nothing to transmit");
+      return;
+    }
+    log.info("Found %s queued transmissions".formatted(queuedSubmissions.size()));
+
+    queuedSubmissions = queuedSubmissions.stream()
+        .filter(submission -> (submission.getSubmittedAt().isBefore(submittedAtCutoff))).toList();
+    log.info("Excluding %s submitted within last 2 hours".formatted(queuedSubmissions.size()));
+    if (queuedSubmissions.isEmpty()) {
+      log.info("Nothing to transmit");
+      return;
+    }
+    log.info("Found %s transmissions to transmit".formatted(queuedSubmissions.size()));
+    var submissionBatches = Lists.partition(queuedSubmissions, BATCH_SIZE_LIMIT);
+    int transmittedCount = 0;
+    for (var submissionBatch : submissionBatches) {
+      transmittedCount += submissionBatch.size();
+      log.info("Transmitting %s/%s".formatted(transmittedCount, queuedSubmissions.size()));
+      transferSubmissionBatch(submissionBatch);
+    }
+  }
+
+  private void transferSubmissionBatch(List<Submission> submissionsBatch) {
     // Get submissions to transfer
     String batchSeq = Long.toString(transmissionRepository.nextValueBatchSequence());
     String batchIndex = Strings.padStart(batchSeq, BATCH_INDEX_LEN, '0');
@@ -85,21 +111,13 @@ public class SubmissionTransfer {
     log.info(String.format("Beginning transfer of %s: batch %s", uuid, batchIndex));
 
     // Stats on transfers
-    int successful = 0, failed = 0;
-
-    // for each submission, add to zipfile
-    List<Submission> submissionsBatch = transmissionRepository.submissionsToTransmit(Sort.unsorted(), TransmissionType.SNAP);
+    int failed = 0;
+    List<Transmission> successfulTransmissions = new ArrayList<>();
     int subfolderidx = 1;
     try (FileOutputStream baos = new FileOutputStream(zipFileName);
          ZipOutputStream zos = new ZipOutputStream(baos)) {
-      OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
       StringBuilder docMeta = new StringBuilder();
       for (Submission submission : submissionsBatch) {
-        if (submission.getSubmittedAt().isAfter(submittedAtCutoff)) {
-          // Give a 2-hour wait for folks to upload documents
-          continue;
-        }
-
         Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.SNAP);
 
         String subfolder = Integer.toString(subfolderidx++);
@@ -110,13 +128,11 @@ public class SubmissionTransfer {
           log.info("Adding uploaded docs");
           packageUploadedDocuments(batchIndex, zos, docMeta, submission, subfolder);
 
-          transmission.setStatus(TransmissionStatus.Complete);
-          updateTransmission(uuid, transmission);
-          successful++;
+          successfulTransmissions.add(transmission);
         } catch (Exception e) {
           log.error("Error generating file collection for submission ID {}", submission.getId(), e);
 
-          transmission.setDocumentationErrors(Map.of("error", e.getMessage(),"subfolder", subfolder));
+          transmission.setDocumentationErrors(Map.of("error", e.getMessage(), "subfolder", subfolder));
           transmission.setStatus(TransmissionStatus.Failed);
           updateTransmission(uuid, transmission);
           failed++;
@@ -144,7 +160,13 @@ public class SubmissionTransfer {
       }
     }
 
-    log.info(String.format("Completed transfer of batch %s, total %s, successful %s, failed %s", batchIndex, subfolderidx - 1, successful, failed));
+    // Wait until these have successfully transmitted before marking as complete
+    for (var transmission : successfulTransmissions) {
+      transmission.setStatus(TransmissionStatus.Complete);
+      updateTransmission(uuid, transmission);
+    }
+
+    log.info(String.format("Completed transfer of batch %s, total %s, successful %s, failed %s", batchIndex, subfolderidx - 1, successfulTransmissions.size(), failed));
   }
 
   private void updateTransmission(UUID uuid, Transmission transmission) {
