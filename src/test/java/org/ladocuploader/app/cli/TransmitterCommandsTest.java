@@ -11,10 +11,8 @@ import formflow.library.data.SubmissionRepository;
 import formflow.library.data.UserFileRepository;
 import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
-import io.sentry.util.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvPackage;
@@ -43,12 +41,14 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static org.assertj.core.util.DateUtil.now;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
+import static java.time.OffsetDateTime.now;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -188,11 +188,4 @@ public class TransmitterCommandsTest {
         assertNotNull(transmission.getRunId());
 
     }
-
-
-
-
-
-
-
 }

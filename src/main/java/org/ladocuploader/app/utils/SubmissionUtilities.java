@@ -4,6 +4,7 @@ import formflow.library.data.Submission;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -13,6 +14,8 @@ import static org.ladocuploader.app.utils.Parish.ORLEANS;
 
 public class SubmissionUtilities {
     public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
+
+    public static Long expiryHours = 2L;
 
     public static final DateTimeFormatter MM_DD_YYYY = DateTimeFormatter.ofPattern("M/d/uuuu");
 
@@ -113,6 +116,18 @@ public class SubmissionUtilities {
             }
         }
 
+        return false;
+    }
+
+    public static boolean isDocUploadActive(Submission submission){
+        OffsetDateTime submittedAt = submission.getSubmittedAt();
+        OffsetDateTime now = OffsetDateTime.now();
+
+        if (submittedAt != null){
+            OffsetDateTime expiryTime = submittedAt.plusHours(expiryHours);
+
+            return expiryTime.isAfter(now);
+        }
         return false;
     }
 

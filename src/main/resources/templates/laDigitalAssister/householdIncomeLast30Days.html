@@ -1,0 +1,16 @@
+<th:block
+  th:replace="~{fragments/screens/screenWithOneInput ::
+  screenWithOneInput(
+    title=#{household-income-last-30-days.title},
+    header=#{household-income-last-30-days.header},
+    subtext=#{household-income-last-30-days.subheader},
+    iconName='moneyTips',
+    buttonLabel=#{general.inputs.continue},
+    formAction=${formAction},
+    inputContent=~{::inputContent})}">
+  <th:block th:ref="inputContent">
+    <th:block th:replace="~{fragments/inputs/money ::
+      money(inputName='householdIncomeLast30Days',
+      ariaLabel='header')}"/>
+  </th:block>
+</th:block>

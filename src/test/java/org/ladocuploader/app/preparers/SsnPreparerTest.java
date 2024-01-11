@@ -53,11 +53,11 @@ class SsnPreparerTest {
             .withPersonalInfo("applicant","test","","","", "","","","",
                 "")
             .withHouseholdMember("member1", "test", "", "", "", "", "", "", "",
-                "somethingencrypted")
+                "somethingencrypted", null, null)
             .withHouseholdMember("member2", "test", "", "", "", "", "", "", "",
-                "")
+                "", null, null)
             .withHouseholdMember("member3", "test", "", "", "", "", "", "", "",
-                "somethingelseencrypted")
+                "somethingelseencrypted", null, null)
             .build();
         when(encryptor.decrypt(eq("somethingencrypted"))).thenReturn("111223333");
         when(encryptor.decrypt(eq("somethingelseencrypted"))).thenReturn("444556666");

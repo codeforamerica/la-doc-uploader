@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HasUtilitiesExpenses extends BasicArrayCondition {
+public class HasUtilitiesExpenses implements Condition {
 
     @Override
     public Boolean run(Submission submission) {
-        return run(submission, "householdUtilitiesExpenses[]");
+        var inputData = submission.getInputData();
+        if (inputData.containsKey("householdUtilitiesExpenses[]")) {
+            var utilitiesArray = (ArrayList) submission.getInputData().get("householdUtilitiesExpenses[]");
+          return !utilitiesArray.isEmpty() && !utilitiesArray.contains("None");
+        }
+        return false;
     }
 }

@@ -16,7 +16,7 @@
                 <div class="notice-info">
                     <span class="spacing-below-25" th:text="#{nola-ece-links.at-the-end-of-this-app}"></span>
                 </div>
-                <th:block th:replace="~{'fragments/form' :: form(action=${formAction}, content=~{::content})}">
+                <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
                     <th:block th:ref="content">
                         <div class="form-card__footer spacing-below-60">
                             <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(

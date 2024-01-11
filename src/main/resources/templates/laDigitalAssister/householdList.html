@@ -8,9 +8,9 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{'fragments/icons' :: 'householdBlue'}"></th:block>
+        <th:block th:replace="~{fragments/icons :: 'householdBlue'}"></th:block>
         <th:block
-            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{household-list.header},
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{household-list.header},
             subtext=#{household-list.subheader})}"/>
         <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r1',
@@ -45,7 +45,8 @@
                     <span th:text="#{household-list.thats-you}"></span>
                   </span>
                 </li>
-                <li th:each="householdMember, iter: ${inputData.household}" class="spacing-below-15">
+                <li th:each="householdMember, iter: ${inputData.household}"
+                    class="spacing-below-15">
                   <span class="space-between">
                     <span>
                       <span th:text="${householdMember.householdMemberFirstName}"></span>
@@ -68,7 +69,8 @@
           </div>
         </div>
         <div class="form-card__footer">
-          <a th:href="'/flow/' + ${flow} + '/householdInfo'" class="button button--primary spacing-above-15"
+          <a th:href="'/flow/' + ${flow} + '/householdInfo'"
+             class="button button--primary spacing-above-15"
              th:text="#{household-list.add}"></a>
           <a th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
              th:text="#{household-list.continue}"

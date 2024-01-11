@@ -33,12 +33,7 @@ flow:
       - name: languagePreference
   languagePreference:
     nextScreens:
-      - name: choosePrograms
-  choosePrograms:
-    nextScreens:
       - name: expeditedSnapNotice
-        condition: ProgramsIncludeSnap
-      - name: signPost
   expeditedSnapNotice:
     nextScreens:
       - name: signPost
@@ -88,11 +83,32 @@ flow:
   reviewContactInfo:
     nextScreens:
       - name: multiplePersonHousehold
+  expeditedSnapStart:
+    nextScreens:
+      - name: finalSignPost
+        condition: IsMinimumApplication
+      - name: multiplePersonHousehold
   multiplePersonHousehold:
     nextScreens:
+      - name: householdIncomeLast30Days
+        condition: IsApplyingForExpeditedSnap
       - name: householdSignPost
         condition: IsMultiplePersonHousehold
       - name: ssnForm
+  householdIncomeLast30Days:
+    nextScreens:
+      - name: expeditedMoneyOnHandAmount
+  expeditedMoneyOnHandAmount:
+    nextScreens:
+      - name: householdRent
+  householdRent:
+    nextScreens:
+      - name: householdRentAmount
+        condition: HouseholdPaysRent
+      - name: householdUtilities
+  householdRentAmount:
+    nextScreens:
+      - name: householdUtilities
   householdSignPost:
     nextScreens:
       - name: householdInfo
@@ -104,8 +120,6 @@ flow:
   householdList:
     nextScreens:
       - name: ssnForm
-        condition: ProgramsIncludeSnap
-      - name: householdSpecialSituations
   householdMemberDeleteConfirmation:
     nextScreens: null
   ssnForm:
@@ -149,13 +163,9 @@ flow:
       - name: householdBenefitsWho
         condition: OutOfStateBenefits
       - name: householdPrepareFood
-        condition: ProgramsIncludeSnap
-      - name: sensitiveQuestions
   householdBenefitsWho:
     nextScreens:
       - name: householdPrepareFood
-        condition: ProgramsIncludeSnap
-      - name: sensitiveQuestions
   householdPrepareFood:
     nextScreens:
       - name: householdSeasonalFarmWorker
@@ -165,8 +175,19 @@ flow:
     nextScreens:
       - name: householdSeasonalFarmWorker
   householdSeasonalFarmWorker:
+    beforeSaveAction: CheckExpeditedSnapEligibility
     nextScreens:
       - name: householdCitizenship
+        condition: IsNotApplyingForExpeditedSnap
+      - name: expeditedSnapQualificationNotice
+        condition: IsEligibleForExpeditedSnap
+      - name: expeditedSnapDeferredNotice
+  expeditedSnapQualificationNotice:
+    nextScreens:
+      - name: finalSignPost
+  expeditedSnapDeferredNotice:
+    nextScreens:
+      - name: finalSignPost
   householdCitizenship:
     nextScreens:
       - name: householdVeteran
@@ -267,6 +288,8 @@ flow:
   householdEmploymentStatus:
     nextScreens:
       - name: householdIncomeByJob
+        condition: HouseholdHasJob
+      - name: householdAdditionalIncome
   householdIncomeByJob:
     nextScreens:
       - name: householdIncomeWho
@@ -315,8 +338,6 @@ flow:
   householdAdditionalIncome:
     nextScreens:
       - name: householdMoneyOnHand
-        condition: ProgramsIncludeSnap
-      - name: expensesSignPost
   householdMoneyOnHand:
     nextScreens:
       - name: householdMoneyOnHandDetails
@@ -324,6 +345,8 @@ flow:
       - name: expensesSignPost
   householdMoneyOnHandDetails:
     nextScreens:
+      - name: householdRent
+        condition: IsApplyingForExpeditedSnap
       - name: expensesSignPost
   expensesSignPost:
     nextScreens:
@@ -338,11 +361,15 @@ flow:
       - name: householdUtilities
   householdUtilities:
     nextScreens:
+      - name: householdSeasonalFarmWorker
+        condition: IsApplyingForExpeditedSnapAndHasNoUtilityExpenses
       - name: householdUtilitiesAmount
         condition: HasUtilitiesExpenses
       - name: energyAssistance
   householdUtilitiesAmount:
     nextScreens:
+      - name: householdSeasonalFarmWorker
+        condition: IsApplyingForExpeditedSnap
       - name: energyAssistance
   energyAssistance:
     nextScreens:
@@ -508,12 +535,24 @@ flow:
     nextScreens:
       - name: docUploadSubmit
   docUploadSubmit:
+    beforeSaveAction: FinalizeDocuments
     nextScreens:
       - name: confirmation
   confirmation:
     beforeDisplayAction: FormatSubmittedAtDate
     nextScreens:
       - name: confirmation
+landmarks:
+  afterSubmitPages:
+    - confirmation
+    - docUploadIntro
+    - docUploadSignpost
+    - docUploadInstructions
+    - docUploadRecommendations
+    - docUpload
+    - docUploadType
+    - docUploadReview
+    - docUploadSubmit
 subflows:
   household:
     entryScreen: multiplePersonHousehold

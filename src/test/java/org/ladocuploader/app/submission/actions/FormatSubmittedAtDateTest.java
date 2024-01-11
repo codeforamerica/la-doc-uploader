@@ -1,13 +1,13 @@
 package org.ladocuploader.app.submission.actions;
 
 import formflow.library.data.Submission;
-import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Test;
+import org.ladocuploader.app.utils.TestUtils;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FormatSubmittedAtDateTest {
 
@@ -15,7 +15,7 @@ class FormatSubmittedAtDateTest {
 
   @Test
   public void testWeekday() {
-    Date friday = new LocalDate("2023-12-22").toDate();
+    OffsetDateTime friday = TestUtils.makeOffsetDateTime("2023-12-22");
     Submission submission = Submission.builder()
         .urlParams(new HashMap<>())
         .inputData(new HashMap<>())
@@ -32,11 +32,11 @@ class FormatSubmittedAtDateTest {
 
   @Test
   public void testSaturday() {
-    Date friday = new LocalDate("2023-12-23").toDate();
+    OffsetDateTime saturday = TestUtils.makeOffsetDateTime("2023-12-23");
     Submission submission = Submission.builder()
         .urlParams(new HashMap<>())
         .inputData(new HashMap<>())
-        .submittedAt(friday)
+        .submittedAt(saturday)
         .build();
 
     action.run(submission);
@@ -49,11 +49,11 @@ class FormatSubmittedAtDateTest {
 
   @Test
   public void testSunday() {
-    Date friday = new LocalDate("2023-12-24").toDate();
+    OffsetDateTime sunday = TestUtils.makeOffsetDateTime("2023-12-24");
     Submission submission = Submission.builder()
         .urlParams(new HashMap<>())
         .inputData(new HashMap<>())
-        .submittedAt(friday)
+        .submittedAt(sunday)
         .build();
 
     action.run(submission);

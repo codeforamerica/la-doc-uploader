@@ -6,6 +6,8 @@ import org.ladocuploader.app.utils.AbstractBasePageTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,18 +17,6 @@ import static org.awaitility.Awaitility.await;
 public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
   protected static final String RANGE_ERROR_MESSAGE = "Make sure to provide a value between 1 and 100.";
-
-  @Test
-  void chooseProgramsFlow() {
-    testPage.navigateToFlowScreen("laDigitalAssister/choosePrograms");
-    testPage.clickContinue();
-
-    assert (testPage.hasErrorText(message("error.missing-general")));
-    testPage.clickElementById("programs-SNAP");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap.title"));
-  }
 
   @Test
   void whosApplyingFlow() {
@@ -189,6 +179,138 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("special-situations.title"));
   }
+  
+  @Test
+  void expeditedSnapFlow() {
+    loadUserPersonalData();
+    loadAddressData();
+    loadContactData();
+    testPage.navigateToFlowScreen("laDigitalAssister/reviewContactInfo");
+    assertThat(testPage.getTitle()).isEqualTo(message("review-contact-info.title"));
+    testPage.clickLink(message("review-contact-info.submit-incomplete"));
+    // Expedited Snap Start
+    assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap-start.title"));
+    testPage.clickButton("Yes, I want to see if I qualify");
+    // Multiple Person Household
+    assertThat(testPage.getTitle()).isEqualTo(message("multiple-person-household.title"));
+    testPage.clickButton("Yes");
+    // Household Income Last 30 Days
+    assertThat(testPage.getTitle()).isEqualTo(message("household-income-last-30-days.title"));
+    testPage.enter("householdIncomeLast30Days", "0");
+    testPage.clickContinue();
+    // Expedited Money on Hand Amount
+    assertThat(testPage.getTitle()).isEqualTo(message("expedited-money-on-hand-amount.title"));
+    testPage.enter("expeditedMoneyOnHandAmount", "0");
+    testPage.clickContinue();
+    // Household Rent
+    assertThat(testPage.getTitle()).isEqualTo(message("household-rent.title"));
+    testPage.clickButton("Yes");
+    // Household Rent Amount
+    assertThat(testPage.getTitle()).isEqualTo(message("household-rent-amount.title"));
+    testPage.enter("householdRentAmount", "1200");
+    testPage.clickContinue();
+    // Utilities
+    assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
+    testPage.clickElementById("none__checkbox");
+    testPage.clickContinue();
+    // Seasonal Farm Worker
+    assertThat(testPage.getTitle()).isEqualTo(message("seasonal-farmworker.title"));
+    testPage.clickButton("No");
+    // Expedited Snap Qualification Notice
+    assertThat(testPage.getTitle()).isEqualTo(message("expedited-qualification-notice.title"));
+  }
+
+  @Test
+  void raceEthnicityFlow() {
+    loadUserPersonalData();
+    loadHouseHoldData("Person", "One", "12", "12", "1995");
+    loadHouseHoldData("Person", "Two", "12", "12", "2016");
+    loadHouseHoldData("Person", "Three", "12", "12", "2017");
+
+    testPage.clickElementById("translate-button");
+    testPage.clickLink("Tiếng Việt");
+
+    testPage.navigateToFlowScreen("laDigitalAssister/ethnicitySelection");
+    // the titles don't seem to render correctly in test
+    // assertThat(testPage.getTitle()).isEqualTo("L\u1ef1a ch\u1ecdn dân t\u1ed9c");
+
+    // set for the applicant
+    testPage.clickElementById("ethnicitySelected-Hispanic or Latino");
+
+    List<WebElement> ethnicityInputs = driver.findElements(By.cssSelector("input[id*='householdMemberEthnicity_wildcard_']"));
+
+    ethnicityInputs.stream()
+        .filter(ei ->  ei.getAttribute("value").equals("Hispanic or Latino"))
+        .forEach(ei -> {
+          ei.click();
+          // make sure found them, even with the site language being in Vietnamese
+          assertThat(ei.isSelected()).isTrue();
+        });
+
+    testPage.clickContinue(Locale.forLanguageTag("vi"));
+    testPage.goBack();
+
+    //assertThat(testPage.getTitle()).isEqualTo("L\u1ef1a ch\u1ecdn dân t\u1ed9c");
+    assertThat(testPage.findElementById("ethnicitySelected-Hispanic or Latino").isSelected()).isTrue();
+
+    List<WebElement> selectedElements = driver.findElements(By.cssSelector("input[checked='checked']"));
+    selectedElements.forEach(element -> {
+      assertThat(element.getAttribute("value")).isEqualTo("Hispanic or Latino");
+    });
+
+    testPage.clickContinue(Locale.forLanguageTag("vi"));
+    //assertThat(testPage.getTitle()).isEqualTo("L\u1ef1a ch\u1ecdn ch\u1ee7ng t\u1ed9c");
+
+    // set for the applicant
+    testPage.clickElementById("raceSelected-Alaskan Native");
+    testPage.clickElementById("raceSelected-Black or African American");
+
+    // now set for household members
+    List<WebElement> raceInputs = driver.findElements(By.cssSelector("input[id*='householdMemberRace_wildcard_'"));
+
+    // choose a few for each
+    raceInputs.stream()
+        .filter(ri ->  {
+          String value = ri.getAttribute("value");
+          return value.equals("Alaskan Native") ||  value.equals("Black or African American");
+        })
+        .forEach(ri -> {
+          ri.click();
+          // make sure found them, even with the site language being in Vietnamese
+          assertThat(ri.isSelected()).isTrue();
+        });
+
+    testPage.clickContinue(Locale.forLanguageTag("vi"));
+    testPage.goBack();
+
+    //assertThat(testPage.getTitle()).isEqualTo("L\u1ef1a ch\u1ecdn ch\u1ee7ng t\u1ed9c");
+    assertThat(testPage.findElementById("raceSelected-Alaskan Native").isSelected()).isTrue();
+    assertThat(testPage.findElementById("raceSelected-Black or African American").isSelected()).isTrue();
+    assertThat(testPage.findElementById("raceSelected-Asian").isSelected()).isFalse();
+
+    List<WebElement> selectedRaceElements = driver.findElements(By.cssSelector("input[checked='checked']"));
+    selectedRaceElements.forEach(element -> {
+      String value = element.getAttribute("value");
+      assertThat(value.equals("Alaskan Native") || value.equals("Black or African American")).isTrue();
+      assertThat(value).isNotEqualTo("White");
+      assertThat(value).isNotEqualTo("Asian");
+      assertThat(value).isNotEqualTo("Native Hawaiian or Other Pacific Islander");
+      assertThat(value).isNotEqualTo("American Indian");
+    });
+
+    // change the language back
+    testPage.clickElementById("translate-button");
+    testPage.clickLink("English");
+    assertThat(testPage.getTitle()).isEqualTo("Race Selection");
+  }
+
+  @Test
+  void docUploadSkipTest() {
+    testPage.navigateToFlowScreen("laDigitalAssister/docUploadIntro");
+    assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-intro.title"));
+    testPage.clickButton(message("doc-upload-intro.skip"));
+    assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
+  }
 
   @Test
   void fullDigitalAssisterFlow() {
@@ -224,13 +346,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("language-preference.title"));
     testPage.selectFromDropdown("languageRead", "Spanish");
     testPage.selectRadio("needInterpreter", "Yes");
-    testPage.clickContinue();
-
-    // Choose programs
-    assertThat(testPage.getTitle()).isEqualTo(message("choose-programs.title"));
-
-    // Choose SNAP program
-    testPage.clickElementById("programs-SNAP");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("expedited-snap.title"));
@@ -521,6 +636,12 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("employment-status.title"));
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("additional-income.title"));
+    testPage.goBack();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("employment-status.title"));
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
@@ -570,7 +691,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("home-expenses.title"));
-
     testPage.clickElementById("householdHomeExpenses-rent-label");
     testPage.clickElementById("householdHomeExpenses-otherHomeExpenses-label");
     testPage.clickContinue();
@@ -639,9 +759,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("elderlycare-amount.title"));
-
-    testPage.goBack();
-    testPage.clickButton("No");
+    testPage.enter("expensesElderlyCare", "123");
+    testPage.clickContinue();;
 
     var title = testPage.getTitle();
     if ("ECE link".equals(title)) {
@@ -730,11 +849,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton(message("signature-submit"));
 
     assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-intro.title"));
-    testPage.clickButton(message("doc-upload-intro.skip"));
-    assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
-
-    testPage.navigateToFlowScreen("laDigitalAssister/docUploadIntro");
     testPage.clickButton(message("doc-upload-intro.continue"));
+
     assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-signpost.title"));
     testPage.clickContinue();
 
@@ -786,9 +902,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Confirmation page
     assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
-
-
   }
+
 
   void loadUserPersonalData() {
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
@@ -813,6 +928,25 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.selectRadio("householdMemberSex", "F");
     testPage.clickContinue();
   }
+  
+  void loadAddressData() {
+    testPage.navigateToFlowScreen("laDigitalAssister/homeAddress");
+    testPage.enter("homeAddressStreetAddress1", "123 Test St");
+    testPage.enter("homeAddressCity", "Testland");
+    testPage.enter("homeAddressZipCode", "12345");
+    testPage.selectFromDropdown("homeAddressState", "LA - Louisiana");
+    testPage.clickContinue();
+    testPage.clickElementById("sameAsHomeAddress-true");
+    testPage.clickContinue();
+  }
+  
+  void loadContactData() {
+    testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
+    testPage.enter("emailAddress", "test@gmail.com");
+    testPage.enter("phoneNumber", "555-456-7891");
+    testPage.clickElementById("remindersMethod-By email-label");
+    testPage.clickContinue();
+  }
 
   void preloadIncomeScreen() {
     testPage.navigateToFlowScreen("laDigitalAssister/incomeSignPost");
@@ -831,6 +965,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("work-disqualifications.title"));
     testPage.clickButton("No");
 
-    testPage.clickButton("No");
+    testPage.clickButton("Yes");
   }
 }

@@ -2,6 +2,7 @@ package org.ladocuploader.app.data;
 
 import formflow.library.data.Submission;
 
+import formflow.library.inputs.FieldNameMarkers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +36,8 @@ public class SubmissionTestBuilder {
     public SubmissionTestBuilder withHouseholdMember(
             String firstName, String lastName,
             String birthDay, String birthMonth, String birthYear,
-            String relationship, String sex, String maritalStatus, String education, String ssn) {
+            String relationship, String sex, String maritalStatus,
+            String education, String ssn, List<String> raceInfo, String ethnicity) {
         List<Map<String, Object>> household = (List<Map<String, Object>>) submission.getInputData().get("household");
         if (household == null) {
             household = new ArrayList<>();
@@ -56,6 +58,15 @@ public class SubmissionTestBuilder {
         member.put("householdMemberEncryptedSSN", ssn);
 
         household.add(member);
+        if (raceInfo != null && !raceInfo.isEmpty()) {
+            submission.getInputData().put(
+                "householdMemberRace" + FieldNameMarkers.DYNAMIC_FIELD_MARKER + uuid + "[]", raceInfo);
+        }
+        if (ethnicity != null && !ethnicity.isBlank()) {
+            submission.getInputData().put(
+                "householdMemberEthnicity" + FieldNameMarkers.DYNAMIC_FIELD_MARKER + uuid, ethnicity);
+        }
+
         submission.getInputData().put("household", household);
         return this;
     }

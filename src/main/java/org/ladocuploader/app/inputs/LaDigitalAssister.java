@@ -29,10 +29,6 @@ public class LaDigitalAssister extends FlowInputs {
   private String languageSpeak;
   private String needInterpreter;
 
-  // Choose programs
-  @NotEmpty(message="{error.missing-general}")
-  private List<String> programs;
-
   // Who is Applying
   @NotBlank(message="{error.missing-general}")
   private String whosApplying;
@@ -129,10 +125,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String householdMemberHighestEducation;
 
-  @Size(min=9, max=9, message="{error.invalid-ssn}")
+  @Size(min=11, max=11, message="{error.invalid-ssn}")
   private String ssn;
 
-  @Size(min=9, max=9, message="{error.invalid-ssn}")
+  @Size(min=11, max=11, message="{error.invalid-ssn}")
   @DynamicField
   private String householdMemberSsn;
 
@@ -220,16 +216,10 @@ public class LaDigitalAssister extends FlowInputs {
   private String householdHasDomesticViolenceSituation;
   
   private String householdHasCriminalJusticeSituation;
-  
-  private String personalSituationHomelessSwitch;
-  
-  private String personalSituationOtherIssue;
-  
-  private String personalSituationStrugglingDrugsAlcohol;
-  
-  private String personalSituationDomesticViolenceFlag;
-  
-  private String personalSituationDisability;
+
+  @NotEmpty(message="{error.missing-general}")
+  @DynamicField
+  private List<String> personalSituations;
 
   // Income
   private String householdSearchingForJob;
@@ -413,6 +403,30 @@ public class LaDigitalAssister extends FlowInputs {
   private String digitalAssisterFeedback;
 
   private String digitalAssisterFeedbackDetail;
+  
+  // Expedited Snap Start
+  private String isApplyingForExpeditedSnap;
+  
+  // Household 30 Day Income
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String householdIncomeLast30Days;
+  
+  // Household Money on Hand
+  private String householdMoneyOnHand;
+  
+  // Expedited Money on Hand Amount
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String expeditedMoneyOnHandAmount;
+  
+  // Household Rent
+  private String householdPaysRent;
+  
+  // Household Rent Amount
+  @Money(message="{error.invalid-money}")
+  @NotBlank(message="{error.missing-dollar-amount}")
+  private String householdRentAmount;
 
   private String addDocuments;
 

@@ -1,10 +1,14 @@
 package org.ladocuploader.app.preparers;
 
 import formflow.library.data.Submission;
+import formflow.library.inputs.FieldNameMarkers;
 import formflow.library.pdf.PdfMap;
 import formflow.library.pdf.SingleField;
 import formflow.library.pdf.SubmissionField;
 import formflow.library.pdf.SubmissionFieldPreparer;
+import java.util.stream.Collectors;
+import org.ladocuploader.app.data.enums.EthnicityType;
+import org.ladocuploader.app.data.enums.RaceType;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,7 +21,8 @@ import static org.ladocuploader.app.utils.SubmissionUtilities.*;
 
 @Component
 public class HouseholdDetailsPreparer implements SubmissionFieldPreparer {
-
+  private static final String RACE_PREFIX = "householdMemberRace" + FieldNameMarkers.DYNAMIC_FIELD_MARKER;
+  private static final String ETHNICITY_PREFIX = "householdMemberEthnicity" + FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
@@ -43,10 +48,36 @@ public class HouseholdDetailsPreparer implements SubmissionFieldPreparer {
             .get();
         results.put("householdBirthday" + i, new SingleField("householdBirthdayFormatted", (String) birthday, i + 1));
 
-        var uuid = householdMember.get("uuid");
+        String uuid = (String)householdMember.get("uuid");
         results.put("householdUSCitizen" + i, new SingleField("householdUSCitizenDerived", nonCitizens != null && nonCitizens.contains(uuid) ? "No" : "Yes", i + 1));
+
+        if (submission.getInputData().getOrDefault("permissionToAskAboutRace", "false").equals("true")) {
+          results.put("householdRaceEthnicityCode" + i,
+              new SingleField("householdRaceEthnicityCode", getRaceEthnicityCode(submission, uuid), i + 1));
+        }
       }
     }
     return results;
+  }
+
+  private String getRaceEthnicityCode(Submission submission, String uuid) {
+    // Worth noting that household race / ethnicity information is at the top level and not in the
+    // "household" list.
+    List<String> raceInput = (List)submission.getInputData().get(RACE_PREFIX + uuid + "[]");
+    String ethnicityInput = (String)submission.getInputData().get(ETHNICITY_PREFIX + uuid);
+    String raceEthnicCode = "";
+
+    if (raceInput != null && !raceInput.isEmpty()) {
+      raceEthnicCode = raceInput.stream()
+          .map(t -> RaceType.getAbbreviationFromValue(t))
+          // 'AN' maps to both American Indian and Alaskan Native, if both are chosen, only keep one 'AN'
+          .distinct()
+          .collect(Collectors.joining(","));
+    }
+
+    if (ethnicityInput != null && !ethnicityInput.isEmpty()) {
+      raceEthnicCode += "/" + EthnicityType.getAbbreviationFromValue(ethnicityInput);
+    }
+    return raceEthnicCode;
   }
 }

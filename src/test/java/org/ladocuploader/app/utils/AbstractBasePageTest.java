@@ -58,7 +58,7 @@ public abstract class AbstractBasePageTest {
   }
 
   protected void initTestPage() {
-    testPage = new Page(driver, localServerPort);
+    testPage = new Page(driver, localServerPort, messageSource);
   }
 
   @SuppressWarnings("unused")

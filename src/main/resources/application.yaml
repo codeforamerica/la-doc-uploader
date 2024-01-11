@@ -4,6 +4,9 @@ sftp:
   upload-url: ${SFTP_UPLOAD_URL:}
   environment-path: 'prod'
 form-flow:
+  lock-after-submitted:
+    - flow: laDigitalAssister
+      redirect: confirmation
   disabled-flows:
     - flow: laDigitalAssister
       staticRedirectPage: /
@@ -75,6 +78,8 @@ spring:
     multipart:
       max-file-size: ${form-flow.uploads.max-file-size}MB
       max-request-size: ${form-flow.uploads.max-file-size}MB
+  session:
+    timeout: 2h
 logging:
   level:
     org:

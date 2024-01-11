@@ -8,9 +8,9 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{'fragments/icons' :: groceries}"></th:block>
+        <th:block th:replace="~{fragments/icons :: groceries}"></th:block>
         <th:block
-            th:replace="~{'fragments/cardHeader' :: cardHeader(header=#{expedited-snap.header})}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{expedited-snap.header})}"/>
         <th:block th:replace="~{'fragments/honeycrisp/reveal' :: reveal(
                 controlId='r1',
                 linkLabel=~{::revealLabel1},
@@ -46,12 +46,12 @@
         <div class="form-card__footer spacing-below-60">
           <th:block th:replace="~{fragments/continueButton :: continue}"/>
         </div>
-          </th:block>
+        </th:block>
         </th:block>
       </main>
     </div>
   </section>
 </div>
-<th:block th:replace="~{fragments/footer :: footer}" />
+<th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

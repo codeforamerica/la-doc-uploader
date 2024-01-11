@@ -11,18 +11,20 @@
         <th:block th:replace="~{fragments/icons :: authorizedRep}"></th:block>
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{ssn-form.header}, subtext=#{ssn-form.subheader})}"/>
-        <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContents})}">
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContents})}">
           <th:block th:ref="formContents">
             <div class="form-card__content">
-              <th:block th:replace="~{'fragments/inputs/text' ::
-                text(inputName=${'ssn'},
+              <th:block th:replace="~{fragments/inputs/ssn :: ssn(
+                inputName=${'ssn'},
                 helpText=#{general.optional},
                 label=#{ssn-form.ssn-question(${inputData.firstName})})}"/>
               <th:block th:if="${fieldData.containsKey('household')}">
-                <div th:each="householdMember, iter: ${fieldData.household}" class="spacing-below-15">
-                  <th:block th:with="ssnInputName=${'householdMemberSsn' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + householdMember.uuid}">
-                    <th:block th:replace="~{'fragments/inputs/text' ::
-                      text(inputName=${ssnInputName},
+                <div th:each="householdMember, iter: ${fieldData.household}"
+                     class="spacing-below-15">
+                  <th:block
+                      th:with="ssnInputName=${'householdMemberSsn' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + householdMember.uuid}">
+                    <th:block th:replace="~{fragments/inputs/ssn :: ssn(inputName=${ssnInputName},
                       helpText=#{general.optional},
                       label=#{ssn-form-household.ssn-question(${householdMember.householdMemberFirstName})})}"/>
                   </th:block>
@@ -30,7 +32,8 @@
               </th:block>
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(text=#{general.inputs.continue})}"/>
+              <th:block
+                  th:replace="~{fragments/inputs/submitButton :: submitButton(text=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>

@@ -24,7 +24,7 @@ class SetExperimentGroupsTest {
   @Test
   void shouldSetExperimentGroupForApplicantWithChildUnder5() {
     Submission submission = new SubmissionTestBuilder()
-        .withHouseholdMember("Butter", "Ball", "10", "03", "2022", "child", "", "", "", "")
+        .withHouseholdMember("Butter", "Ball", "10", "03", "2022", "child", "", "", "", "", null, null)
         .build();
     Action setExperimentGroups = new SetExperimentGroups();
     setExperimentGroups.run(submission);
@@ -35,7 +35,7 @@ class SetExperimentGroupsTest {
   @Test
   void shouldNotSetExperimentGroupForApplicantWithChildOver5() {
     Submission submission = new SubmissionTestBuilder()
-        .withHouseholdMember("Butter", "Ball", "10", "03", "2000", "child", "", "", "", "")
+        .withHouseholdMember("Butter", "Ball", "10", "03", "2000", "child", "", "", "", "", null, null)
         .build();
     Action setExperimentGroups = new SetExperimentGroups();
     setExperimentGroups.run(submission);
@@ -45,7 +45,7 @@ class SetExperimentGroupsTest {
   @Test
   void shouldSetExperimentGroupForHouseholdWithPregnancy() {
     Submission submission = new SubmissionTestBuilder()
-        .withHouseholdMember("Butter", "Ball", "", "", "", "", "", "", "", "")
+        .withHouseholdMember("Butter", "Ball", "", "", "", "", "", "", "", "", null, null)
         .withPregnancies(List.of("Butter-Ball"), List.of("12/12/1212"))
         .build();
     Action setExperimentGroups = new SetExperimentGroups();
