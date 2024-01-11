@@ -223,6 +223,14 @@ input[type="number"] {
   padding: 20px 15px;
 }
 
+.notice-yellow {
+  background-color: #FFF2D1;
+  border: 1px solid #FFC240;
+  border-radius: 3px;
+  position: relative;
+  padding: 20px 15px;
+}
+
 .steps-box {
   display: flex;
   align-items: flex-start;
