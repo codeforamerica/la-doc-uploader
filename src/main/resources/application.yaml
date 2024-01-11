@@ -78,6 +78,8 @@ spring:
     multipart:
       max-file-size: ${form-flow.uploads.max-file-size}MB
       max-request-size: ${form-flow.uploads.max-file-size}MB
+  session:
+    timeout: 2h
 logging:
   level:
     org:
