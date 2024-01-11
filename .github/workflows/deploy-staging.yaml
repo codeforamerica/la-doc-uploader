@@ -43,7 +43,7 @@ jobs:
           'PGP_KEYS_DIR=${{ secrets.PGP_KEYS_DIR }}' \
           'PGP_SECKEY_FILE_PATH=${{ secrets.PGP_SECKEY_FILE_PATH_STAGING }}' \
           'PGP_PUBKEY_FILE_PATH=${{ secrets.PGP_PUBKEY_FILE_PATH_STAGING }}' \
-          'PGP_SIGKEY_PASSWORD=${{ secrets.SIGKEY_PASSWORD_STAGING }}' \
+          'PGP_SIGKEY_PASSWORD=${{ secrets.PGP_SIGKEY_PASSWORD_STAGING }}' \
           'FTPS_USERNAME=${{ secrets.FTPS_USERNAME }}' \
           'FTPS_PASSWORD=${{ secrets.FTPS_PASSWORD }}' \
           'FTPS_UPLOAD_URL=${{ secrets.FTPS_UPLOAD_URL }}' \
