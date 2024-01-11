@@ -8,8 +8,7 @@ ARG APTIBLE_ENV=/opt/form-flow-starter-app/.aptible.env
 RUN set -a  && \
     if [ -e ${APTIBLE_ENV} ] ; then . ${APTIBLE_ENV} ; fi && \
     ./gradlew assemble && \
-    cp /opt/form-flow-starter-app/build/libs/app.jar app.jar
-
+    cp ./build/libs/app.jar app.jar
 
 # Latest releases available at https://github.com/aptible/supercronic/releases
 ENV SUPERCRONIC_VERSION=v0.2.25
@@ -25,5 +24,3 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "/opt/form-flow-starter-app/app.jar", "--spring.profiles.active=demo"]

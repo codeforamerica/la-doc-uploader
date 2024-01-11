@@ -772,7 +772,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
       testPage.clickContinue();
     }
 
-    log.info("before check: " + testPage.getTitle());
     // Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.clickContinue();
