@@ -44,10 +44,10 @@ jobs:
           'PGP_SECKEY_FILE_PATH=${{ secrets.PGP_SECKEY_FILE_PATH_STAGING }}' \
           'PGP_PUBKEY_FILE_PATH=${{ secrets.PGP_PUBKEY_FILE_PATH_STAGING }}' \
           'PGP_SIGKEY_PASSWORD=${{ secrets.SIGKEY_PASSWORD_STAGING }}' \
-          'FTPS_USERNAME=${{ secrets.FTPS_USERNAME }} \
-          'FTPS_PASSWORD=${{ secrets.FTPS_PASSWORD }} \
-          'FTPS_UPLOAD_URL=${{ secrets.FTPS_UPLOAD_URL }} \
-          'FTPS_UPLOAD_DIR=${{ secrets.FTPS_UPLOAD_DIR_STAGING }} \
+          'FTPS_USERNAME=${{ secrets.FTPS_USERNAME }}' \
+          'FTPS_PASSWORD=${{ secrets.FTPS_PASSWORD }}' \
+          'FTPS_UPLOAD_URL=${{ secrets.FTPS_UPLOAD_URL }}' \
+          'FTPS_UPLOAD_DIR=${{ secrets.FTPS_UPLOAD_DIR_STAGING }}' \
           'SENTRY_DSN=${{ secrets.SENTRY_DSN }}' \
           'SENTRY_ENVIRONMENT=staging' \
           'FORCE_SSL=true' \
