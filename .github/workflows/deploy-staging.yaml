@@ -40,14 +40,14 @@ jobs:
           'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY_STAGING }}' \
           'AWS_BUCKET=${{ secrets.AWS_BUCKET_STAGING }}' \
           'AWS_CMK=${{ secrets.AWS_CMK_STAGING }}' \
-          'PGP_KEYS_DIR'=${{ secrets.PGP_KEYS_DIR }}' \
-          'PGP_SECKEY_FILE_PATH'=${{ secrets.PGP_SECKEY_FILE_PATH_STAGING }}' \
-          'PGP_PUBKEY_FILE_PATH'=${{ secrets.PGP_PUBKEY_FILE_PATH_STAGING }}' \
-          'PGP_SIGKEY_PASSWORD'=${{ secrets.SIGKEY_PASSWORD_STAGING }}' \
-          'FTPS_USERNAME'=${{ secrets.FTPS_USERNAME }}
-          'FTPS_PASSWORD'=${{ secrets.FTPS_PASSWORD }}
-          'FTPS_UPLOAD_URL'=${{ secrets.FTPS_UPLOAD_URL }}
-          'FTPS_UPLOAD_DIR'=${{ secrets.FTPS_UPLOAD_DIR_STAGING }}
+          'PGP_KEYS_DIR=${{ secrets.PGP_KEYS_DIR }}' \
+          'PGP_SECKEY_FILE_PATH=${{ secrets.PGP_SECKEY_FILE_PATH_STAGING }}' \
+          'PGP_PUBKEY_FILE_PATH=${{ secrets.PGP_PUBKEY_FILE_PATH_STAGING }}' \
+          'PGP_SIGKEY_PASSWORD=${{ secrets.SIGKEY_PASSWORD_STAGING }}' \
+          'FTPS_USERNAME=${{ secrets.FTPS_USERNAME }} \
+          'FTPS_PASSWORD=${{ secrets.FTPS_PASSWORD }} \
+          'FTPS_UPLOAD_URL=${{ secrets.FTPS_UPLOAD_URL }} \
+          'FTPS_UPLOAD_DIR=${{ secrets.FTPS_UPLOAD_DIR_STAGING }} \
           'SENTRY_DSN=${{ secrets.SENTRY_DSN }}' \
           'SENTRY_ENVIRONMENT=staging' \
           'FORCE_SSL=true' \
@@ -57,7 +57,7 @@ jobs:
           'SFTP_PASSWORD=${{ secrets.SFTP_PASSWORD_STAGING }}' \
           'SFTP_UPLOAD_URL=${{ secrets.SFTP_UPLOAD_URL }}' \
           'demo=true' \
-          'RELEASE_HEALTHCHECK_TIMEOUT=1200'
+          'RELEASE_HEALTHCHECK_TIMEOUT=900'
   draft-release:
     name: Draft a new release
     needs: deploy
