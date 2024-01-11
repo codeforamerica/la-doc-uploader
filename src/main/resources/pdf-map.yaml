@@ -28,6 +28,9 @@ inputFields:
   signature: signature
   applicantBirthdayFormatted: applicantBirthday
   emailAddress: emailAddress
+  phoneNumber: phoneNumber
+  cellPhoneNumber: cellPhoneNumber
+  workPhoneNumber: workPhoneNumber
   sex: sex
   highestEducationFormatted: highestEducation
   ethnicitySelected: ethnicitySelected
