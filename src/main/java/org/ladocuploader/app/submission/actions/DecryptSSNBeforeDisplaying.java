@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static org.ladocuploader.app.utils.SubmissionUtilities.ENCRYPTED_SSNS_INPUT_NAME;
 import static org.ladocuploader.app.utils.SubmissionUtilities.getDecryptedSSNKeyName;
 
@@ -35,8 +37,7 @@ public class DecryptSSNBeforeDisplaying implements Action {
       submission.getInputData().put("ssn", decryptedSSN);
     }
 
-    ArrayList<LinkedHashMap> householdMembers = (ArrayList) submission.getInputData().get("household");
-
+    List<LinkedHashMap> householdMembers = (ArrayList) submission.getInputData().getOrDefault("household", emptyList());
     for (LinkedHashMap hhmember : householdMembers) {
       String ssnKey = getDecryptedSSNKeyName((String) hhmember.get("uuid"));
       encryptedSSN = (String) hhmember.remove(ENCRYPTED_SSNS_INPUT_NAME);
