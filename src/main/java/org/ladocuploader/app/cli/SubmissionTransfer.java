@@ -79,15 +79,16 @@ public class SubmissionTransfer {
     // Give a 2-hour wait for folks to upload documents
     OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
     List<Submission> queuedSubmissions = transmissionRepository.submissionsToTransmit(Sort.unsorted(), TransmissionType.SNAP);
+    int totalQueued = queuedSubmissions.size();
     if (queuedSubmissions.isEmpty()) {
       log.info("Nothing to transmit");
       return;
     }
-    log.info("Found %s queued transmissions".formatted(queuedSubmissions.size()));
+    log.info("Found %s queued transmissions".formatted(totalQueued));
 
     queuedSubmissions = queuedSubmissions.stream()
         .filter(submission -> (submission.getSubmittedAt().isBefore(submittedAtCutoff))).toList();
-    log.info("Excluding %s submitted within last 2 hours".formatted(queuedSubmissions.size()));
+    log.info("Excluding %s submitted within last 2 hours".formatted(totalQueued - queuedSubmissions.size()));
     if (queuedSubmissions.isEmpty()) {
       log.info("Nothing to transmit");
       return;
