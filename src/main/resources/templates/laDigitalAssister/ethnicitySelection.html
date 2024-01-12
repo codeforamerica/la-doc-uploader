@@ -38,10 +38,10 @@
                   <th:block th:with="householdInputName=${'householdMemberEthnicity' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + householdMember.uuid}">
                     <h2 th:text="#{ethnicity-selection.question(${householdMember.householdMemberFirstName})}"></h2>
                     <p class="text--help" th:text="#{ethnicity-selection.subheader}"></p>
-                    <th:block th:replace="'fragments/inputs/radioFieldset' ::
+                    <th:block th:replace="~{fragments/inputs/radioFieldset ::
                         radioFieldset(inputName=${householdInputName},
                         ariaLabel=#{ethnicity-selection.question(${householdMember.householdMemberFirstName})},
-                        content=~{::householdEthnicitySelectionFieldSet})">
+                        content=~{::householdEthnicitySelectionFieldSet})}">
                       <th:block th:ref="householdEthnicitySelectionFieldSet">
                         <th:block th:each="ethnicityType : ${T(org.ladocuploader.app.data.enums.EthnicityType).values()}">
                             <th:block
