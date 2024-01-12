@@ -219,7 +219,7 @@ public class SubmissionTransfer {
 
   private String generateMetaDataEntry(String batchIndex, String subfolder, String filename, String documentType, Submission submission) {
     Map<String, Object> inputData = submission.getInputData();
-    String formattedSSN = encryptor.decrypt((String) inputData.getOrDefault("encryptedSSN", ""));
+    String formattedSSN = formatSSN(inputData);
     String formattedFilename = removeFileExtension(filename);
     String formattedBirthdate = formatBirthdate(submission.getInputData());
     String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
@@ -236,6 +236,11 @@ public class SubmissionTransfer {
             formattedBirthdate,
             formattedSubmissionDate,
             fileLocation);
+  }
+
+  private String formatSSN(Map<String, Object> inputData) {
+    String encryptedSSN = encryptor.decrypt((String) inputData.getOrDefault("encryptedSSN", ""));
+    return encryptedSSN.replace("-", "");
   }
 
   private static String removeFileExtension(String filename) {
