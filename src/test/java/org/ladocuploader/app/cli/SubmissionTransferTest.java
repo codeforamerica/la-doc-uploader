@@ -64,6 +64,7 @@ class SubmissionTransferTest {
   private Submission submissionWithDocs;
   private Submission submissionWithoutDocs;
   private Submission invalidSubmission;
+  private Submission submittedBeforeDelayCutoff;
 
   @BeforeEach
   void setup() throws IOException {
@@ -80,6 +81,7 @@ class SubmissionTransferTest {
     submissionWithoutDocs = queueSubmissionWithoutDocs();
     submissionWithDocs = queueSubmissionWithDocs();
     invalidSubmission = queueInvalidSubmission();
+    submittedBeforeDelayCutoff = queueSubmittedNow();
 
     when(pdfService.getFilledOutPDF(eq(submissionWithoutDocs))).thenReturn("some bytes".getBytes());
     when(pdfService.getFilledOutPDF(eq(submissionWithDocs))).thenReturn("some other bytes".getBytes());
@@ -108,6 +110,9 @@ class SubmissionTransferTest {
     assertThat(invalidTransmission.getDocumentationErrors().get("error"), equalTo("There was an error generating the PDF"));
     assertThat(invalidTransmission.getDocumentationErrors().get("subfolder"), equalTo("3"));
 
+    Transmission notTransmittedYet = transmissionRepository.findBySubmissionAndTransmissionType(submittedBeforeDelayCutoff, TransmissionType.SNAP);
+    assertThat(notTransmittedYet.getStatus(), equalTo(TransmissionStatus.Queued));
+
     String destDir = "output";
     List<String> fileNames = unzip(zipFile.getPath(), destDir);
 
@@ -127,6 +132,18 @@ class SubmissionTransferTest {
 
   private Submission queueInvalidSubmission() {
     OffsetDateTime submittedDate = OffsetDateTime.now().minusHours(2L);
+    Submission submission = Submission.builder()
+        .submittedAt(submittedDate)
+        .flow("laDigitalAssister")
+        .urlParams(new HashMap<>())
+        .inputData(new HashMap<>()).build();
+    submissionRepository.save(submission);
+    saveTransmissionRecord(submission);
+    return submission;
+  }
+
+  private Submission queueSubmittedNow() {
+    OffsetDateTime submittedDate = OffsetDateTime.now();
     Submission submission = Submission.builder()
         .submittedAt(submittedDate)
         .flow("laDigitalAssister")
