@@ -8,7 +8,7 @@ form-flow:
     - flow: laDigitalAssister
       redirect: confirmation
   disabled-flows:
-    - flow: laDigitalAssister
+    - flow: laDocUploader
       staticRedirectPage: /
   pdf:
     path: 'src/main/resources/pdfs/'

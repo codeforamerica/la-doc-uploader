@@ -7,7 +7,9 @@ management:
   endpoints:
     enabled-by-default: false
 form-flow:
-  disabled-flows: ~
+  disabled-flows:
+    - flow: laDocUploader
+      staticRedirectPage: /
   uploads:
     max-file-size: '5'
     default-doc-type-label: "NotSet"
