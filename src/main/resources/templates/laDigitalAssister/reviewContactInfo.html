@@ -21,12 +21,13 @@
               </div>
               <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.mailing-address}"></b>
-              <div class="spacing-above-15">
-                <p class="spacing-below-5" th:text="${fieldData.homeAddressStreetAddress1}"></p>
-                <p class="spacing-below-5" th:text="${fieldData.homeAddressStreetAddress2}"></p>
+              <div class="spacing-above-15"
+                   th:if="${fieldData.containsKey('mailingAddressStreetAddress1')}">
+                <p class="spacing-below-5" th:text="${fieldData.mailingAddressStreetAddress1}"></p>
+                <p class="spacing-below-5" th:text="${fieldData.mailingAddressStreetAddress2}"></p>
                 <p class="spacing-below-5"
-                   th:text="${fieldData.homeAddressCity} + ', ' + ${fieldData.homeAddressState}"></p>
-                <p th:text="${fieldData.homeAddressZipCode}"></p>
+                   th:text="${fieldData.mailingAddressCity} + ', ' + ${fieldData.mailingAddressState}"></p>
+                <p th:text="${fieldData.mailingAddressZipCode}"></p>
               </div>
               <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.contact-information}"></b>
@@ -35,14 +36,14 @@
                 <p class="spacing-below-5" th:text="${fieldData.emailAddress}"></p>
               </div>
               <hr class="spacing-below-35 spacing-above-35">
-
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
                   text=#{review-contact-info.this-looks-correct})}"/>
               <a class="button button--secondary" th:text="#{review-contact-info.edit}"
                  th:href="'/flow/' + ${flow} + '/personalInfo'"></a>
-              <div><a th:text="#{review-contact-info.submit-incomplete}" th:href="'/flow/' + ${flow} + '/expeditedSnapStart'"></a></div>
+              <div><a th:text="#{review-contact-info.submit-incomplete}"
+                      th:href="'/flow/' + ${flow} + '/expeditedSnapStart'"></a></div>
             </div>
           </th:block>
         </th:block>
