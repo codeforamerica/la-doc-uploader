@@ -20,6 +20,15 @@
                 <p th:text="${fieldData.firstName} + ' ' + ${fieldData.lastName}"></p>
               </div>
               <hr class="spacing-below-35 spacing-above-35">
+              <b th:text="#{review-contact-info.home-address}"></b>
+              <div class="spacing-above-15"
+                   th:if="${fieldData.containsKey('homeAddressStreetAddress1')}">
+                <p class="spacing-below-5" th:text="${fieldData.homeAddressStreetAddress1}"></p>
+                <p class="spacing-below-5" th:text="${fieldData.homeAddressStreetAddress2}"></p>
+                <p class="spacing-below-5"
+                   th:text="${fieldData.homeAddressCity} + ', ' + ${fieldData.homeAddressState}"></p>
+                <p th:text="${fieldData.homeAddressZipCode}"></p>
+              <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.mailing-address}"></b>
               <div class="spacing-above-15"
                    th:if="${fieldData.containsKey('mailingAddressStreetAddress1')}">
@@ -32,7 +41,9 @@
               <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.contact-information}"></b>
               <div class="spacing-above-15">
-                <p class="spacing-below-5" th:text="${fieldData.phoneNumber}"></p>
+                <p class="spacing-below-5" th:text="#{review-contact-info.main-phone(${fieldData.containsKey('phoneNumber') ? fieldData.phoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
+                <p class="spacing-below-5" th:text="#{review-contact-info.cell-phone(${fieldData.containsKey('cellPhoneNumber') ? fieldData.cellPhoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
+                <p class="spacing-below-5" th:text="#{review-contact-info.work-phone(${fieldData.containsKey('workPhoneNumber') ? fieldData.workPhoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
                 <p class="spacing-below-5" th:text="${fieldData.emailAddress}"></p>
               </div>
               <hr class="spacing-below-35 spacing-above-35">
