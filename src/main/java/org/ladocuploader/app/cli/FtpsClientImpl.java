@@ -52,11 +52,16 @@ public class FtpsClientImpl implements FtpsClient {
     ftp.enterLocalPassiveMode();
     ftp.pasv();
     InputStream local = new ByteArrayInputStream(data);
-    ftp.storeFile(zipFilename, local);
+    boolean isComplete = ftp.storeFile(zipFilename, local);
     local.close();
-    ftp.completePendingCommand();
 
-    ftp.logout();
-    ftp.disconnect();
+    try {
+      if (isComplete || ftp.completePendingCommand()) {
+        ftp.logout();
+        ftp.disconnect();
+      }
+    } catch (IOException e) {
+      log.error("Failed to finalize transfer", e);
+    }
   }
 }

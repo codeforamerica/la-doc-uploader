@@ -84,7 +84,10 @@ spring:
   session:
     timeout: 2h
 logging:
+  pattern:
+    console:
   level:
+    root: INFO
     org:
       springframework:
         boot:

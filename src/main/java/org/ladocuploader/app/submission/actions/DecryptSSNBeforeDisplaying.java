@@ -5,9 +5,8 @@ import formflow.library.data.Submission;
 import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Collections.emptyList;
 import static org.ladocuploader.app.utils.SubmissionUtilities.ENCRYPTED_SSNS_INPUT_NAME;
@@ -37,8 +36,8 @@ public class DecryptSSNBeforeDisplaying implements Action {
       submission.getInputData().put("ssn", decryptedSSN);
     }
 
-    List<LinkedHashMap> householdMembers = (ArrayList) submission.getInputData().getOrDefault("household", emptyList());
-    for (LinkedHashMap hhmember : householdMembers) {
+    List<Map<String, Object>> householdMembers = (List) submission.getInputData().getOrDefault("household", emptyList());
+    for (var hhmember : householdMembers) {
       String ssnKey = getDecryptedSSNKeyName((String) hhmember.get("uuid"));
       encryptedSSN = (String) hhmember.remove(ENCRYPTED_SSNS_INPUT_NAME);
       String decryptedSSN = getEncryptor().decrypt(encryptedSSN);
