@@ -27,7 +27,7 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
         Map<String, Object> incomeDetails = income.get(i);
 
         boolean isSelfEmployed = Boolean.parseBoolean((String) incomeDetails.getOrDefault("selfEmployed", "false"));
-        var employeeName = incomeDetails.get("householdMemberJobAdd");
+        var employeeName = incomeDetails.get("householdMemberJobAdd").equals("you") ? submission.getInputData().get("firstName")+" "+submission.getInputData().get("lastName") : incomeDetails.get("householdMemberJobAdd");
         var employerName = incomeDetails.get("employerName");
         var hoursPerWeek = incomeDetails.get("hoursPerWeek");
 

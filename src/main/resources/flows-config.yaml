@@ -489,6 +489,8 @@ flow:
   registerToVote:
     nextScreens:
       - name: registerToVoteHelp
+        condition: InterestedInVoterRegistration
+      - name: raceEthnicityAsk
   registerToVoteHelp:
     nextScreens:
       - name: raceEthnicityAsk

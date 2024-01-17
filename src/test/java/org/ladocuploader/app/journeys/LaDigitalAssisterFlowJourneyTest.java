@@ -815,6 +815,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton(message("medicaid.yes"));
 
     assertThat(testPage.getTitle()).isEqualTo(message("voter-registration.title"));
+    testPage.selectRadio("votingRegistrationRequested", "No");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("race-ethnicity.title"));
+    testPage.goBack();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("voter-registration.title"));
     testPage.selectRadio("votingRegistrationRequested", "Yes");
     testPage.clickContinue();
 
@@ -906,6 +913,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
 
   void loadUserPersonalData() {
+    testPage.navigateToFlowScreen("laDigitalAssister/parish");
+    testPage.enter("parish", "Orleans");
+    testPage.clickContinue();
+
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
 
     testPage.enter("firstName", "test");

@@ -8,7 +8,7 @@ form-flow:
     - flow: laDigitalAssister
       redirect: confirmation
   disabled-flows:
-    - flow: laDigitalAssister
+    - flow: laDocUploader
       staticRedirectPage: /
   pdf:
     path: 'src/main/resources/pdfs/'
@@ -17,7 +17,7 @@ form-flow:
   path: 'flows-config.yaml'
   uploads:
     default-doc-type-label: "NotSet"
-    accepted-file-types: 'image/*,.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
+    accepted-file-types: 'image/*,.jpeg,.jpg,.png,.pdf,.bmp,.doc,.docx,.odt,.ods,.odp'
     thumbnail-width: '64'
     thumbnail-height: '60'
     # 20 files maximum
@@ -52,6 +52,9 @@ spring:
       demo:
         - demo
         - form-flow-library
+      staging:
+        - staging
+        - form-flow-library
   security:
     user:
       name: ${DEFAULT_USER}
@@ -81,7 +84,10 @@ spring:
   session:
     timeout: 2h
 logging:
+  pattern:
+    console:
   level:
+    root: INFO
     org:
       springframework:
         boot:

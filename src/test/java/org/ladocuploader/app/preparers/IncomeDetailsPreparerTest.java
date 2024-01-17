@@ -29,5 +29,24 @@ class IncomeDetailsPreparerTest {
     assertThat(results.size()).isEqualTo(18);
   }
 
+  @Test
+  public void testPreparerNameIsYou(){
+    Submission submission = new SubmissionTestBuilder()
+        .withPersonalInfo("testFirstName", "testLastName", "12", "12", "1991", "", "F", "", "", "")
+        .withJob("you", "CfA", "10", "11", "false", "true").build();
+
+    var results = preparer.prepareSubmissionFields(submission, null);
+    assertThat(results.get("employeeName0").toString().equals("testFirstName testLastName"));
+  }
+
+  @Test
+  public void testPreparerIsNotYou(){
+    Submission submission = new SubmissionTestBuilder()
+        .withPersonalInfo("testFirstName", "testLastName", "12", "12", "1991", "", "F", "", "", "")
+        .withJob("first last", "CfA", "10", "11", "false", "true").build();
+
+    var results = preparer.prepareSubmissionFields(submission, null);
+    assertThat(results.get("employeeName0").toString().equals("first last"));
+  }
 
 }
