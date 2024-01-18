@@ -8,10 +8,8 @@ import formflow.library.pdf.SingleField;
 import formflow.library.pdf.SubmissionField;
 import formflow.library.pdf.SubmissionFieldPreparer;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
-import software.amazon.awssdk.services.kms.endpoints.internal.Value.Int;
 
 @Component
 public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
@@ -20,8 +18,8 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> results = new HashMap<>();
 
-    boolean isEligibleForExpeditedSnap = (Boolean) submission.getInputData().get("isEligibleForExpeditedSnap");
-    if (isEligibleForExpeditedSnap) {
+    String isEligibleForExpeditedSnap = submission.getInputData().get("isEligibleForExpeditedSnap").toString();
+    if (isEligibleForExpeditedSnap.equals("true")) {
       String householdIncomeLast30Days=submission.getInputData().getOrDefault("householdIncomeLast30Days", "0").toString();
       results.put("expeditedSnapIncome",  new SingleField("expeditedSnapIncome", householdIncomeLast30Days, null));
 
@@ -29,19 +27,23 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
       results.put("expeditedSnapMoneyOnHand",  new SingleField("expeditedSnapMoneyOnHand", moneyOnHandString, null));
 
       String householdRentAmount = submission.getInputData().getOrDefault("householdRentAmount", "0").toString();
-      results.put("expeditedSnapHousingCostBool",  new SingleField("expeditedSnapHousingCostBool", householdRentAmount, null));
+      results.put("expeditedSnapHousingCost",  new SingleField("expeditedSnapHousingCost", householdRentAmount, null));
 
       var utilities = processUtilitiesExpenses(submission);
-      results.put("expeditedSnapHouseholdExpensesBool",  new SingleField("expeditedSnapHouseholdExpensesBool", utilities.get("expenses").toString(), null));
-      results.put("expeditedSnapHeatingBool",  new SingleField("expeditedSnapHeatingBool", utilities.get("acOrCooling").toString(), null));
+      boolean hasHouseholdExpenses = utilities.get("expenses");
+      boolean hasHeatingExpenses = utilities.get("acOrCooling");
 
-      String householdPhoneExpenses = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_phone", 0).toString();
-      Boolean hasPhoneExpenses = householdPhoneExpenses.equals("0");
-      results.put("expeditedSnapPhoneExpenses",  new SingleField("expeditedSnapPhoneExpenses", hasPhoneExpenses.toString(), null));
+      results.put("expeditedSnapHouseholdExpensesBool",  new SingleField("expeditedSnapHouseholdExpensesBool", hasHouseholdExpenses ? "Yes" : "No", null));
+      results.put("expeditedSnapHeatingBool",  new SingleField("expeditedSnapHeatingBool",  hasHeatingExpenses ? "Yes" : "No", null));
+
+      String householdPhoneExpenses = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_phone", "0").toString();
+      Boolean hasPhoneExpenses = !householdPhoneExpenses.equals("0");
+      results.put("expeditedSnapPhoneExpensesBool",  new SingleField("expeditedSnapPhoneExpensesBool", hasPhoneExpenses ? "Yes" : "No", null));
 
       String isMigrantOrSeasonalFarmWorker = submission.getInputData().get("migrantOrSeasonalFarmWorkerInd").toString();
-      results.put("expeditedMigrantOrSeasonalWorkerBool",  new SingleField("expeditedMigrantOrSeasonalWorkerBool", isMigrantOrSeasonalFarmWorker, null));
+      results.put("expeditedMigrantOrSeasonalWorkerBool",  new SingleField("expeditedMigrantOrSeasonalWorkerBool", isMigrantOrSeasonalFarmWorker.equals("true") ? "Yes" : "No", null));
     }
+
     return results;
   }
 
@@ -50,19 +52,19 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
     boolean expenses;
     boolean acOrCooling;
 
-    Integer electricity = (Integer) submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_electricity", 0);
-    Integer water = (Integer) submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_water", 0);
-    Integer garbage = (Integer) submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_garbage", 0);
-    Integer sewer = (Integer) submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_sewer", 0);
-    Integer cookingFuel = (Integer) submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_cookingFuel", 0);
-    Integer otherUtilitiesExpenses = (Integer) submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_otherUtilitiesExpenses", 0);
+    String electricity = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_electricity", "0").toString();
+    String water = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_water", "0").toString();
+    String garbage = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_garbage", "0").toString();
+    String sewer = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_sewer", "0").toString();
+    String cookingFuel = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_cookingFuel", "0").toString();
+    String otherUtilitiesExpenses = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_otherUtilitiesExpenses", "0").toString();
 
-    expenses = (electricity + water + garbage + sewer + cookingFuel + otherUtilitiesExpenses > 0);
+    expenses = (Integer.parseInt(electricity) + Integer.parseInt(water) + Integer.parseInt(garbage) + Integer.parseInt(sewer) + Integer.parseInt(cookingFuel) + Integer.parseInt(otherUtilitiesExpenses) > 0);
 
-    var heating = (Integer) submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_heating", 0);
-    var cooling = (Integer) submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_cooling", 0);
+    var heating = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_heating", "0").toString();
+    var cooling = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_cooling", "0").toString();
 
-    acOrCooling = (heating + cooling > 0);
+    acOrCooling = (Integer.parseInt(heating) + Integer.parseInt(cooling) > 0);
 
     results.put("expenses", expenses);
     results.put("acOrCooling", acOrCooling);

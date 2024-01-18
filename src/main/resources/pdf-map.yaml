@@ -28,7 +28,7 @@ inputFields:
   signature: signature
   expeditedSnapIncome: expeditedSnapIncome
   expeditedSnapMoneyOnHand: expeditedSnapMoneyOnHand
-  expeditedSnapHousingCostBool: expeditedSnapHousingCostBool
+  expeditedSnapHousingCost: expeditedSnapHousingCost
   expeditedSnapHouseholdExpensesBool: expeditedSnapHouseholdExpensesBool
   expeditedSnapHeatingBool: expeditedSnapHeatingBool
   expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
