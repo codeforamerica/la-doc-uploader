@@ -20,7 +20,7 @@
                                         th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{parish.select})}"/>
                                 <th:block th:each="parishEnum : ${T(org.ladocuploader.app.utils.Parish).values()}">
                                     <th:block
-                                            th:replace="~{fragments/inputs/selectOption :: selectOption(value=${parishEnum}, optionText=${parishEnum.getDisplayName()})}"/>
+                                            th:replace="~{fragments/inputs/selectOption :: selectOption(value=${parishEnum.name()}, optionText=${parishEnum.getDisplayName()})}"/>
                                 </th:block>
                             </th:block>
                         </th:block>
