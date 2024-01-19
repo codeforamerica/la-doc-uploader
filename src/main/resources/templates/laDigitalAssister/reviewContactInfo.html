@@ -22,28 +22,40 @@
               <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.home-address}"></b>
               <div class="spacing-above-15"
-                   th:if="${fieldData.containsKey('homeAddressStreetAddress1')}">
+                   th:if="${fieldData.containsKey('homeAddressStreetAddress1') && !fieldData.homeAddressStreetAddress1.isEmpty()}">
                 <p class="spacing-below-5" th:text="${fieldData.homeAddressStreetAddress1}"></p>
                 <p class="spacing-below-5" th:text="${fieldData.homeAddressStreetAddress2}"></p>
                 <p class="spacing-below-5"
                    th:text="${fieldData.homeAddressCity} + ', ' + ${fieldData.homeAddressState}"></p>
                 <p th:text="${fieldData.homeAddressZipCode}"></p>
+              </div>
+              <div class="spacing-above-15"
+                   th:if="${!fieldData.containsKey('homeAddressStreetAddress1') || fieldData.homeAddressStreetAddress1.isEmpty()}">
+                <p class="spacing-below-5" th:text="#{'review-contact-info.none'}"></p>
+              </div>
               <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.mailing-address}"></b>
               <div class="spacing-above-15"
-                   th:if="${fieldData.containsKey('mailingAddressStreetAddress1')}">
+                   th:if="${fieldData.containsKey('mailingAddressStreetAddress1') && !fieldData.mailingAddressStreetAddress1.isEmpty()}">
                 <p class="spacing-below-5" th:text="${fieldData.mailingAddressStreetAddress1}"></p>
                 <p class="spacing-below-5" th:text="${fieldData.mailingAddressStreetAddress2}"></p>
                 <p class="spacing-below-5"
                    th:text="${fieldData.mailingAddressCity} + ', ' + ${fieldData.mailingAddressState}"></p>
                 <p th:text="${fieldData.mailingAddressZipCode}"></p>
               </div>
+              <div class="spacing-above-15"
+                   th:if="${!fieldData.containsKey('mailingAddressStreetAddress1') || fieldData.mailingAddressStreetAddress1.isEmpty()}">
+                <p class="spacing-below-5" th:text="#{'review-contact-info.none'}"></p>
+              </div>
               <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.contact-information}"></b>
               <div class="spacing-above-15">
-                <p class="spacing-below-5" th:text="#{review-contact-info.main-phone(${fieldData.containsKey('phoneNumber') && !fieldData.phoneNumber.isEmpty() ? fieldData.phoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
-                <p class="spacing-below-5" th:text="#{review-contact-info.cell-phone(${fieldData.containsKey('cellPhoneNumber') && !fieldData.cellPhoneNumber.isEmpty() ? fieldData.cellPhoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
-                <p class="spacing-below-5" th:text="#{review-contact-info.work-phone(${fieldData.containsKey('workPhoneNumber') && !fieldData.workPhoneNumber.isEmpty() ? fieldData.workPhoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
+                <p class="spacing-below-5"
+                   th:text="#{review-contact-info.main-phone(${fieldData.containsKey('phoneNumber') && !fieldData.phoneNumber.isEmpty() ? fieldData.phoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
+                <p class="spacing-below-5"
+                   th:text="#{review-contact-info.cell-phone(${fieldData.containsKey('cellPhoneNumber') && !fieldData.cellPhoneNumber.isEmpty() ? fieldData.cellPhoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
+                <p class="spacing-below-5"
+                   th:text="#{review-contact-info.work-phone(${fieldData.containsKey('workPhoneNumber') && !fieldData.workPhoneNumber.isEmpty() ? fieldData.workPhoneNumber : #messages.msg('review-contact-info.not-applicable')})}"></p>
                 <p class="spacing-below-5" th:text="${fieldData.emailAddress}"></p>
               </div>
               <hr class="spacing-below-35 spacing-above-35">
