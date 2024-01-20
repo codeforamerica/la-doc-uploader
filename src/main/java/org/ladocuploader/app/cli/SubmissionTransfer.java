@@ -163,6 +163,7 @@ public class SubmissionTransfer {
 
     // Wait until these have successfully transmitted before marking as complete
     for (var transmission : successfulTransmissions) {
+      log.info("Updating transmission statuses to Complete");
       transmission.setStatus(TransmissionStatus.Complete);
       updateTransmission(uuid, transmission);
     }
