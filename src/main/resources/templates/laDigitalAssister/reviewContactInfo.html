@@ -31,7 +31,7 @@
               </div>
               <div class="spacing-above-15"
                    th:if="${!fieldData.containsKey('homeAddressStreetAddress1') || fieldData.homeAddressStreetAddress1.isEmpty()}">
-                <p class="spacing-below-5" th:text="#{'review-contact-info.none'}"></p>
+                <p class="spacing-below-5" th:text="#{'review-contact-info.not-applicable'}"></p>
               </div>
               <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.mailing-address}"></b>
@@ -45,7 +45,7 @@
               </div>
               <div class="spacing-above-15"
                    th:if="${!fieldData.containsKey('mailingAddressStreetAddress1') || fieldData.mailingAddressStreetAddress1.isEmpty()}">
-                <p class="spacing-below-5" th:text="#{'review-contact-info.none'}"></p>
+                <p class="spacing-below-5" th:text="#{'review-contact-info.not-applicable'}"></p>
               </div>
               <hr class="spacing-below-35 spacing-above-35">
               <b th:text="#{review-contact-info.contact-information}"></b>
