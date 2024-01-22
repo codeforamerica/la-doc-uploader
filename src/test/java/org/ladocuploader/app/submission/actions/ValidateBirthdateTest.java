@@ -20,7 +20,7 @@ class ValidateBirthdateTest {
     private ValidateBirthdate validator;
 
     @Test
-    public void testBirthDateBlankRaisesAnError() {
+    public void testBirthDateBlankDoesNotRaiseAnError() {
         FormSubmission form = new FormSubmission(Map.of(
             "birthMonth", BLANK_VALUE,
             "birthDay", BLANK_VALUE,
@@ -28,7 +28,7 @@ class ValidateBirthdateTest {
         ));
 
         Map<String, List<String>> result = validator.runValidation(form, null);
-        assertThat(result.get(BIRTHDATE_INPUT_NAME)).containsAll(List.of("Make sure to provide a date in MM/DD/YYYY OR M/D/YYYY."));
+        assertThat(result.get(BIRTHDATE_INPUT_NAME)).isNullOrEmpty();
     }
 
     @Test

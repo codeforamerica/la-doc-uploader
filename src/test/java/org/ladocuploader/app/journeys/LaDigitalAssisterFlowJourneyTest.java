@@ -35,17 +35,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
     testPage.clickContinue();
 
-    testPage.enter("birthMonth", "01");
-    testPage.enter("birthDay", "25");
-    testPage.enter("birthYear", "1985");
-
     assert (testPage.hasErrorText(message("error.missing-firstname")));
     assert (testPage.hasErrorText(message("error.missing-lastname")));
-    assert (testPage.hasErrorText(message("error.missing-general")));
 
     testPage.enter("firstName", "test");
     testPage.enter("lastName", "test2");
-    testPage.selectRadio("sex", "F");
 
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo(message("home-address.title"));

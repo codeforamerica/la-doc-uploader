@@ -101,6 +101,7 @@ public class SubmissionTransfer {
       log.info("Transmitting %s/%s".formatted(transmittedCount, queuedSubmissions.size()));
       transferSubmissionBatch(submissionBatch);
     }
+    log.info("Done transmitting batches. Transmitted %s of %s batches.".formatted(transmittedCount, submissionBatches.size()));
   }
 
   private void transferSubmissionBatch(List<Submission> submissionsBatch) {
