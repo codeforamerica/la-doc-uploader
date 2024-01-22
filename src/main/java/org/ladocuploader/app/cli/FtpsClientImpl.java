@@ -58,7 +58,8 @@ public class FtpsClientImpl implements FtpsClient {
     try {
       if (isComplete || ftp.completePendingCommand()) {
         ftp.logout();
-        ftp.disconnect();
+          ftp.disconnect();
+        log.info("Upload completed with isComplete: %s. Disconnected.".formatted(isComplete));
       }
     } catch (IOException e) {
       log.error("Failed to finalize transfer", e);
