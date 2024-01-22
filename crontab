@@ -1,7 +1,7 @@
 # Run weekly on Wednesday at Noon PDT
 # 0 19 * * WED java -Dserver.port=9191 -jar /opt/form-flow-starter-app/app.jar transmit
 
-# Run every hour
+# Run every 5 minutes
 */5 * * * * java -Dspring.main.web-application-type=NONE -Dserver.port=9191 -jar /opt/form-flow-starter-app/app.jar transferSubmissions
 
 
