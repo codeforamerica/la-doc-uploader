@@ -23,7 +23,9 @@ public class ValidateBirthdate extends VerifyDate {
     String year = (String) inputData.get("birthYear");
 
 //    valid range does not enforce year so added an additional validation here
-    if (!Pattern.matches("\\d{4}",year)) {
+    if((day + month + year).isBlank()){
+      return errorMessages;
+    } else if (!Pattern.matches("\\d{4}",year)) {
       errorMessages.put(INPUT_NAME, List.of(translateMessage("error.format-dob")));
     } else if(!this.validRange(month+"/"+day+"/"+year)){
       errorMessages.put(INPUT_NAME, List.of(translateMessage("error.invalid-dob")));
