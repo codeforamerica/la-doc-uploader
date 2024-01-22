@@ -46,7 +46,6 @@ public class LaDigitalAssister extends FlowInputs {
   private String birthMonth;
   private String birthYear;
 
-  @NotBlank(message="{error.missing-general}")
   private String sex;
 
   private String maritalStatus;
