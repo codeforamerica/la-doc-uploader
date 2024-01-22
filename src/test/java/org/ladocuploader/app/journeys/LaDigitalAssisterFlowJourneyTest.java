@@ -400,8 +400,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
 
     assertThat(testPage.getTitle()).isEqualTo(message("contact-info.title"));
-    testPage.clickElementById("remindersMethod-By email-label");
-    testPage.enter("emailAddress", "mail@mail.com");
 
 
     testPage.clickContinue();
@@ -949,7 +947,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
     testPage.enter("emailAddress", "test@gmail.com");
     testPage.enter("phoneNumber", "555-456-7891");
-    testPage.clickElementById("remindersMethod-By email-label");
     testPage.clickContinue();
   }
 

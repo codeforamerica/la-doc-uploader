@@ -79,6 +79,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String mailingAddressZipCode;
 
   //Contact Info
+  @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
   private String phoneNumber;
 
   @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
