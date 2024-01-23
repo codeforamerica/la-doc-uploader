@@ -787,15 +787,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-communication.title"));
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-mail.title"));
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-spending.title"));
-    testPage.clickButton("Yes");
-
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-contact-info.title"));
     testPage.enter("authorizedRepFirstName", "test");
     testPage.enter("authorizedRepLastName", "test");
