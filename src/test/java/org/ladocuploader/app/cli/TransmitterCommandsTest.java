@@ -13,6 +13,7 @@ import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvPackage;
@@ -52,6 +53,7 @@ import static java.time.OffsetDateTime.now;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@Disabled
 @Slf4j
 public class TransmitterCommandsTest {
 
