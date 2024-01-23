@@ -27,6 +27,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.zip.ZipEntry;
@@ -52,6 +53,8 @@ public class TransmitterCommands {
 
     private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE, TransmissionType.WIC);
 
+    private final long TWO_HOURS = 2L;
+
     @Autowired
     private ConfigurableApplicationContext context;
 
@@ -66,12 +69,24 @@ public class TransmitterCommands {
     @ShellMethod(key = "transmit")
     public void transmit() throws IOException, JSchException, SftpException {
         log.info("Finding submissions to transmit...");
+        OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
         for (TransmissionType transmissionType : transmissionTypes) {
-            var submissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted(), transmissionType);
-            log.info("Total submissions to transmit for {} is {}", transmissionType.name(), submissions.size());
-            if (submissions.size() > 0) {
+
+            List<Submission> queuedSubmissions = transmissionRepository.submissionsToTransmit(Sort.unsorted(), transmissionType);
+            int totalQueued = queuedSubmissions.size();
+            if (queuedSubmissions.isEmpty()) {
+                log.info("Nothing to transmit. Exiting.");
+                context.close();
+                return;
+            }
+            log.info("Found %s queued transmissions".formatted(totalQueued));
+
+            queuedSubmissions = queuedSubmissions.stream()
+                    .filter(submission -> (submission.getSubmittedAt().isBefore(submittedAtCutoff))).toList();
+            log.info("Total submissions to transmit for {} is {}", transmissionType.name(), queuedSubmissions.size());
+            if (queuedSubmissions.size() > 0) {
                 log.info("Transmitting submissions for {}", transmissionType.name());
-                transmitBatch(submissions, transmissionType);
+                transmitBatch(queuedSubmissions, transmissionType);
             } else {
                 log.info("Skipping transmission for {}", transmissionType.name());
             }
