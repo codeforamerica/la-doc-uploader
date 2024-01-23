@@ -18,9 +18,11 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.context.ConfigurableApplicationContext;
 
 
 import java.io.*;
@@ -50,6 +52,9 @@ public class TransmitterCommands {
 
     private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE, TransmissionType.WIC);
 
+    @Autowired
+    private ConfigurableApplicationContext context;
+
     public TransmitterCommands(TransmissionRepository transmissionRepository,
                                SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository) {
         this.transmissionRepository = transmissionRepository;
@@ -72,6 +77,7 @@ public class TransmitterCommands {
             }
 
         }
+        context.close();
 
     }
 
