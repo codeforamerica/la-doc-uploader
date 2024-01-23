@@ -118,7 +118,7 @@ public class SubmissionTransfer {
     String batchSeq = Long.toString(transmissionRepository.nextValueBatchSequence());
     String batchIndex = Strings.padStart(batchSeq, BATCH_INDEX_LEN, '0');
     UUID uuid = UUID.randomUUID();
-    String zipFileName = batchIndex + ".zip";
+    String zipFileName = batchIndex + ".zip.gpg";
     log.info(String.format("Beginning transfer of %s: batch %s", uuid, batchIndex));
 
     // Stats on transfers
