@@ -17,7 +17,7 @@
               <p th:text="#{signature.p1}"></p>
               <p th:text="#{signature.p2}"></p>
               <th:block th:replace="~{fragments/inputs/text ::
-                text(inputName='signature', ariaLabel=#{signature.p1})}" />
+                text(inputName='signature', label=#{signature-title})}" />
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
