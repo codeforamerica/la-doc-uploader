@@ -94,9 +94,8 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String preferredCommsMethod;
 
+  @Pattern(regexp = "^[\\w-\\.]+@[\\w-\\.]+\\.[\\w-]{2,4}$", message = "{client-info.provide-correct-email}")
   private String emailAddress;
-
-  private List<String> remindersMethod;
 
   // Household
   private String multiplePersonHousehold;
