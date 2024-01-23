@@ -14,8 +14,6 @@ import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -66,12 +64,12 @@ public class SubmissionTransfer {
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
   
-  private final ConfigurableApplicationContext context;
+  private final CronUtility cronUtility;
 
   public SubmissionTransfer(TransmissionRepository transmissionRepository, 
       UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, 
       PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor,
-      FtpsClient ftpsClient, ConfigurableApplicationContext context) {
+      FtpsClient ftpsClient, CronUtility cronUtility) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;
@@ -79,7 +77,7 @@ public class SubmissionTransfer {
     this.pgpEncryptor = pgpEncryptor;
     this.encryptor = encryptor;
     this.ftpsClient = ftpsClient;
-    this.context = context;
+    this.cronUtility = cronUtility;
   }
 
   @ShellMethod(key = "transferSubmissions")
@@ -90,7 +88,7 @@ public class SubmissionTransfer {
     int totalQueued = queuedSubmissions.size();
     if (queuedSubmissions.isEmpty()) {
       log.info("Nothing to transmit. Exiting.");
-      closeApplicationContext();
+      cronUtility.closeApplicationContext();
       return;
     }
     log.info("Found %s queued transmissions".formatted(totalQueued));
@@ -100,7 +98,7 @@ public class SubmissionTransfer {
     log.info("Excluding %s submitted within last 2 hours".formatted(totalQueued - queuedSubmissions.size()));
     if (queuedSubmissions.isEmpty()) {
       log.info("No submissions older than 2 hour to transmit. Exiting.");
-      closeApplicationContext();
+      cronUtility.closeApplicationContext();
       return;
     }
     log.info("Found %s transmissions to transmit".formatted(queuedSubmissions.size()));
@@ -112,7 +110,7 @@ public class SubmissionTransfer {
       transferSubmissionBatch(submissionBatch);
     }
     log.info("Done transmitting batches. Transmitted %s of %s batches. Exiting.".formatted(transmittedCount, submissionBatches.size()));
-    closeApplicationContext();
+    cronUtility.closeApplicationContext();
   }
 
   private void transferSubmissionBatch(List<Submission> submissionsBatch) {
@@ -270,12 +268,5 @@ public class SubmissionTransfer {
     String year = (String) inputData.getOrDefault("birthYear", "");
 
     return "%s/%s/%s".formatted(Strings.padStart(day, 2, '0'), Strings.padStart(month, 2, '0'), year);
-  }
-  
-  private void closeApplicationContext() {
-    String[] profiles = context.getEnvironment().getActiveProfiles();
-    if (!Arrays.asList(profiles).contains("test")) {
-      context.close();
-    }
   }
 }
