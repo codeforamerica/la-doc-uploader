@@ -464,7 +464,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("schooldetails.title"));
     testPage.enter("schoolName_wildcard_you", "School Name");
-    testPage.clickElementById("schoolEnrollmentLevel_wildcard_you-Half-time");
+    testPage.clickElementById("schoolEnrollmentLevel_wildcard_you-Part-time");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("pregnancy.title"));
