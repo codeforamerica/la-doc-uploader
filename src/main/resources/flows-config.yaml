@@ -468,18 +468,9 @@ flow:
       - name: authorizedRepAuthorization
   authorizedRepAuthorization:
     nextScreens:
-      - name: authorizedRepCommunication
+      - name: authorizedRepContactInfo
         condition: AddingAuthorizedRepresentative
       - name: medicaid
-  authorizedRepCommunication:
-    nextScreens:
-      - name: authorizedRepMail
-  authorizedRepMail:
-    nextScreens:
-      - name: authorizedRepSpending
-  authorizedRepSpending:
-    nextScreens:
-      - name: authorizedRepContactInfo
   authorizedRepContactInfo:
     nextScreens:
       - name: medicaid
