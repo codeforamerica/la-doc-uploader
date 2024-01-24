@@ -462,7 +462,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("schooldetails.title"));
     testPage.enter("schoolName_wildcard_you", "School Name");
-    testPage.clickElementById("schoolEnrollmentLevel_wildcard_you-Half-time");
+    testPage.clickElementById("schoolEnrollmentLevel_wildcard_you-Part-time");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("pregnancy.title"));
@@ -783,15 +783,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     testPage.goBack();
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep.title"));
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-communication.title"));
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-mail.title"));
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-spending.title"));
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("authorized-rep-contact-info.title"));

@@ -14,6 +14,8 @@ import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -64,6 +66,9 @@ public class SubmissionTransfer {
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
 
+  @Autowired
+  private ConfigurableApplicationContext context;
+
   public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
@@ -81,7 +86,8 @@ public class SubmissionTransfer {
     List<Submission> queuedSubmissions = transmissionRepository.submissionsToTransmit(Sort.unsorted(), TransmissionType.SNAP);
     int totalQueued = queuedSubmissions.size();
     if (queuedSubmissions.isEmpty()) {
-      log.info("Nothing to transmit");
+      log.info("Nothing to transmit. Exiting.");
+      context.close();
       return;
     }
     log.info("Found %s queued transmissions".formatted(totalQueued));
@@ -90,7 +96,8 @@ public class SubmissionTransfer {
         .filter(submission -> (submission.getSubmittedAt().isBefore(submittedAtCutoff))).toList();
     log.info("Excluding %s submitted within last 2 hours".formatted(totalQueued - queuedSubmissions.size()));
     if (queuedSubmissions.isEmpty()) {
-      log.info("Nothing to transmit");
+      log.info("No submissions older than 2 hour to transmit. Exiting.");
+      context.close();
       return;
     }
     log.info("Found %s transmissions to transmit".formatted(queuedSubmissions.size()));
@@ -101,7 +108,8 @@ public class SubmissionTransfer {
       log.info("Transmitting %s/%s".formatted(transmittedCount, queuedSubmissions.size()));
       transferSubmissionBatch(submissionBatch);
     }
-    log.info("Done transmitting batches. Transmitted %s of %s batches.".formatted(transmittedCount, submissionBatches.size()));
+    log.info("Done transmitting batches. Transmitted %s of %s batches. Exiting.".formatted(transmittedCount, submissionBatches.size()));
+    context.close();
   }
 
   private void transferSubmissionBatch(List<Submission> submissionsBatch) {
@@ -109,7 +117,7 @@ public class SubmissionTransfer {
     String batchSeq = Long.toString(transmissionRepository.nextValueBatchSequence());
     String batchIndex = Strings.padStart(batchSeq, BATCH_INDEX_LEN, '0');
     UUID uuid = UUID.randomUUID();
-    String zipFileName = batchIndex + ".zip";
+    String zipFileName = batchIndex + ".zip.gpg";
     log.info(String.format("Beginning transfer of %s: batch %s", uuid, batchIndex));
 
     // Stats on transfers

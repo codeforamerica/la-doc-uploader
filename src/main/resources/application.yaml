@@ -83,6 +83,10 @@ spring:
       max-request-size: ${form-flow.uploads.max-file-size}MB
   session:
     timeout: 2h
+  shell:
+    interactive.enabled: false
+    history:
+      enabled: false
 logging:
   pattern:
     console:

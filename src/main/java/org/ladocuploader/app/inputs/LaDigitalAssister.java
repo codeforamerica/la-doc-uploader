@@ -330,12 +330,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String authorizedRepresentative;
 
-  private String authorizedRepCommsAuthorization;
-
-  private String authorizedRepMailAuthorization;
-
-  private String authorizedRepSpendingAuthorization;
-
   @NotBlank(message="{error.missing-firstname}")
   private String authorizedRepFirstName;
 
