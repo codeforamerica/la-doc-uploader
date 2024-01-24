@@ -17,34 +17,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ValidateContactMethodTest {
 
     private final String VALID_PHONE="(123) 459-0392";
-    private final String VALID_EMAIL="test@mail.com";
-    private final String EMAIL_REMINDER="By Email";
-    private final String PHONE_REMINDER="By Text";
+    private final String WANTS_REMINDER_INPUT_NAME="wantsReminders[]";
     private final String BLANK_VALUE="";
     private final String PHONE_NUMBER_INPUT_NAME = "phoneNumber";
-    private final String EMAIL_ADDRESS_INPUT_NAME = "emailAddress";
+    private final String CELL_NUMBER_INPUT_NAME = "cellPhoneNumber";
+    private final String WORK_NUMBER_INPUT_NAME = "workPhoneNumber";
 
     @Autowired
     private ValidateContactMethod validator;
 
     @Test
-    public void testPhoneInvalidRaisesAnError() {
+    public void testMainPhoneHappyPath() {
         FormSubmission form = new FormSubmission(Map.of(
-                "phoneNumber", "1234561234",
-                "emailAddress", BLANK_VALUE,
-                "remindersMethod[]", new ArrayList<>(List.of(PHONE_REMINDER))
-        ));
-
-        Map<String, List<String>> result = validator.runValidation(form, null);
-        assertThat(result.get(PHONE_NUMBER_INPUT_NAME)).containsAll(List.of("Make sure to provide a 9 digit phone number."));
-    }
-
-    @Test
-    public void testPhoneMissingDoesNotRaiseErrorWhenPhoneNotExpected() {
-        FormSubmission form = new FormSubmission(Map.of(
-            "phoneNumber", BLANK_VALUE,
-            "emailAddress", VALID_EMAIL,
-            "remindersMethod[]", new ArrayList<>(List.of(EMAIL_REMINDER))
+            PHONE_NUMBER_INPUT_NAME, VALID_PHONE,
+            CELL_NUMBER_INPUT_NAME, BLANK_VALUE,
+            WORK_NUMBER_INPUT_NAME, BLANK_VALUE,
+            WANTS_REMINDER_INPUT_NAME, new ArrayList<>(List.of(true))
         ));
 
         Map<String, List<String>> result = validator.runValidation(form, null);
@@ -52,75 +40,59 @@ class ValidateContactMethodTest {
     }
 
     @Test
-    public void testPhoneMissingRaisesErrorWhenPhoneExpected() {
+    public void testCellPhoneHappyPath() {
         FormSubmission form = new FormSubmission(Map.of(
-            "phoneNumber", BLANK_VALUE,
-            "emailAddress", VALID_EMAIL,
-            "remindersMethod[]", new ArrayList<>(List.of(PHONE_REMINDER))
+            PHONE_NUMBER_INPUT_NAME, BLANK_VALUE,
+            CELL_NUMBER_INPUT_NAME, VALID_PHONE,
+            WORK_NUMBER_INPUT_NAME, BLANK_VALUE,
+            WANTS_REMINDER_INPUT_NAME, new ArrayList<>(List.of(true))
         ));
 
         Map<String, List<String>> result = validator.runValidation(form, null);
-        assertThat(result.get(PHONE_NUMBER_INPUT_NAME)).containsAll(List.of("Make sure to provide a 9 digit phone number."));
+        assertThat(result.get(CELL_NUMBER_INPUT_NAME)).isNullOrEmpty();
     }
 
     @Test
-    public void testPhoneHappyPath() {
+    public void testWorkPhoneHappyPath() {
         FormSubmission form = new FormSubmission(Map.of(
-            "phoneNumber", VALID_PHONE,
-            "emailAddress", VALID_EMAIL,
-            "remindersMethod[]", new ArrayList<>(List.of(PHONE_REMINDER))
+            PHONE_NUMBER_INPUT_NAME, BLANK_VALUE,
+            CELL_NUMBER_INPUT_NAME, BLANK_VALUE,
+            WORK_NUMBER_INPUT_NAME, VALID_PHONE,
+            WANTS_REMINDER_INPUT_NAME, new ArrayList<>(List.of(true))
+        ));
+
+        Map<String, List<String>> result = validator.runValidation(form, null);
+        assertThat(result.get(WORK_NUMBER_INPUT_NAME)).isNullOrEmpty();
+    }
+
+    @Test
+    public void doesNotRaiseErrorIfDoesNotWantReminder() {
+        FormSubmission form = new FormSubmission(Map.of(
+            PHONE_NUMBER_INPUT_NAME, BLANK_VALUE,
+            CELL_NUMBER_INPUT_NAME, BLANK_VALUE,
+            WORK_NUMBER_INPUT_NAME, BLANK_VALUE,
+            WANTS_REMINDER_INPUT_NAME, new ArrayList<>(List.of(false))
         ));
 
         Map<String, List<String>> result = validator.runValidation(form, null);
         assertThat(result.get(PHONE_NUMBER_INPUT_NAME)).isNullOrEmpty();
+        assertThat(result.get(CELL_NUMBER_INPUT_NAME)).isNullOrEmpty();
+        assertThat(result.get(WORK_NUMBER_INPUT_NAME)).isNullOrEmpty();
     }
 
     @Test
-    public void testEmailInvalidRaisesAnError() {
+    public void raisesErrorIfWantsReminderButNoInputs() {
         FormSubmission form = new FormSubmission(Map.of(
-            "phoneNumber", BLANK_VALUE,
-            "emailAddress", "mail.com",
-            "remindersMethod[]", new ArrayList<>(List.of(EMAIL_REMINDER))
+            PHONE_NUMBER_INPUT_NAME, BLANK_VALUE,
+            CELL_NUMBER_INPUT_NAME, BLANK_VALUE,
+            WORK_NUMBER_INPUT_NAME, BLANK_VALUE,
+            WANTS_REMINDER_INPUT_NAME, new ArrayList<>(List.of(true))
         ));
 
         Map<String, List<String>> result = validator.runValidation(form, null);
-        assertThat(result.get(EMAIL_ADDRESS_INPUT_NAME)).containsAll(List.of("Make sure to provide a valid email address."));
-    }
-
-    @Test
-    public void testEmailMissingDoesNotRaiseErrorWhenEmailNotExpected() {
-        FormSubmission form = new FormSubmission(Map.of(
-            "phoneNumber", VALID_PHONE,
-            "emailAddress", BLANK_VALUE,
-            "remindersMethod[]", new ArrayList<>(List.of(PHONE_REMINDER))
-        ));
-
-        Map<String, List<String>> result = validator.runValidation(form, null);
-        assertThat(result.get(EMAIL_ADDRESS_INPUT_NAME)).isNullOrEmpty();
-    }
-
-    @Test
-    public void testEmailMissingRaisesErrorWhenEmailExpected() {
-        FormSubmission form = new FormSubmission(Map.of(
-            "phoneNumber", VALID_PHONE,
-            "emailAddress", BLANK_VALUE,
-            "remindersMethod[]", new ArrayList<>(List.of(EMAIL_REMINDER))
-        ));
-
-        Map<String, List<String>> result = validator.runValidation(form, null);
-        assertThat(result.get(EMAIL_ADDRESS_INPUT_NAME)).containsAll(List.of("Make sure to provide a valid email address."));
-    }
-
-    @Test
-    public void testEmailHappyPath() {
-        FormSubmission form = new FormSubmission(Map.of(
-            "phoneNumber", VALID_PHONE,
-            "emailAddress", VALID_EMAIL,
-            "remindersMethod[]", new ArrayList<>(List.of(EMAIL_REMINDER))
-        ));
-
-        Map<String, List<String>> result = validator.runValidation(form, null);
-        assertThat(result.get(EMAIL_ADDRESS_INPUT_NAME)).isNullOrEmpty();
+        assertThat(result.get(PHONE_NUMBER_INPUT_NAME)).containsAll(List.of("Make sure to provide a 9 digit phone number."));
+        assertThat(result.get(CELL_NUMBER_INPUT_NAME)).isNullOrEmpty();
+        assertThat(result.get(WORK_NUMBER_INPUT_NAME)).isNullOrEmpty();
     }
 
 }

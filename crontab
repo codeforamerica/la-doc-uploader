@@ -2,6 +2,6 @@
 # 0 19 * * WED java -Dserver.port=9191 -jar /opt/form-flow-starter-app/app.jar transmit
 
 # Run every 5 minutes
-@hourly java -Dserver.port=9191 -jar /opt/form-flow-starter-app/app.jar transferSubmissions
+*/5 * * * * java -Dserver.port=9191 -jar /opt/form-flow-starter-app/app.jar transferSubmissions
 
 

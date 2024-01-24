@@ -292,7 +292,7 @@
           var fileNameComponents = getFilenameComponents(fileNameSpan);
           var removeLink = file.previewElement.getElementsByClassName("dz-remove")[0];
           var thumbnail = file.previewElement.getElementsByClassName("dz-thumb")[0];
-          fileNameSpan.setAttribute('aria-label', fileNameSpan.innerText);
+          fileNameSpan.setAttribute('aria-description', fileNameSpan.innerText);
           fileNameSpan.innerHTML = "<span class='filename-text-name' aria-hidden='true'>"
               + fileNameComponents[0] + "</span>" +
               "<span class='filename-text-ext' aria-hidden='true'>" + fileNameComponents[1]
