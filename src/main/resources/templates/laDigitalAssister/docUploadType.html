@@ -29,10 +29,11 @@
                               docTypeInputName=${'docType' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + fileId}">
                     <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile}, showDocType=false)}"></th:block>
 
-                    <th:block th:replace="~{fragments/inputs/select :: select(
+                    <th:block th:replace="~{fragments/inputs/selectCustom :: select(
                         inputName=${docTypeInputName},
                         helpText='',
                         content=~{::docTypes},
+                        ariaDescribedBy=${fileId},
                         label='',
                         ariaLabel='header')}">
                       <th:block th:ref="docTypes">
