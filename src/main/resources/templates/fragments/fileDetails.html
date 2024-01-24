@@ -12,7 +12,7 @@
       <div class="file">
         <div class="dz-filename">
 
-          <div class="filename-text">
+          <div class="filename-text" th:id="${fileId}">
             <span class="filename-text-name" th:text="${userFile.get('originalFilename').substring(0, extIndex)}"></span>
             <span class="filename-text-ext" th:text="${userFile.get('originalFilename').substring(extIndex)}"></span>
 
