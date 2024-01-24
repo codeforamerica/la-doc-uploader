@@ -10,21 +10,21 @@ import com.opencsv.bean.CsvCustomBindByName;
 import formflow.library.data.Submission;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
-import org.ladocuploader.app.csv.converters.SubmittedAtConverter;
 
 @Getter
 @Setter
 public class WICApplicationCsvModel extends BaseCsvModel {
 
 
-    @CsvCustomBindByName(column="Date", converter = SubmittedAtConverter.class)
-    private OffsetDateTime submittedAt;
+    @CsvBindByName(column="Date")
+    private String submittedAt;
 
     @CsvBindByName(column="First name")
     private String firstName;
@@ -62,7 +62,10 @@ public class WICApplicationCsvModel extends BaseCsvModel {
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
         Map<String, Object> objectData = new HashMap<>();
-        objectData.put("submittedAt", submission.getSubmittedAt());
+
+        OffsetDateTime date = submission.getSubmittedAt();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        objectData.put("submittedAt", date.format(formatter));
         objectData.put("firstName", inputData.get("firstName"));
         objectData.put("lastName", inputData.get("lastName"));
         objectData.put("phoneNumber", inputData.get("phoneNumber"));
