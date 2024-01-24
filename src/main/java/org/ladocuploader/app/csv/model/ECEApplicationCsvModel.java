@@ -22,35 +22,40 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="cfa_reference_id", required=true)
     private String id;
-
-    // they will populate this field, we put it in for convenience
+    //  *** no questions for this one *** //
     @CsvBindByName(column="Student Id {{student-id}}")
     private String studentId;
-
+    //  *** no questions for this one *** //
     @CsvBindByName(column="School Id {{school-id}}")
     private String schoolId;
 
     @CsvBindByName(column="School Rank {{school-rank}}")
     private String schoolRank;
 
-    // **********  BEGIN Avela required fields ************* //
     @CsvBindByName(column="Status (InProgress/Submitted) {{status}}", required=true)
     private String status = "InProgress";  // requested default
 
+    //  *** no questions for this one *** //
     @CsvBindByName(column="Hide Form from Parent (Yes/No) {{hide}}", required=true)
     private String hideApplication = "No"; // required field, requested default
 
+    //  *** no questions for this one *** //
     @CsvBindByName(column="Admin Notes on application")
     private String adminNotes;
 
+    //  *** no questions for this one *** //
     @CsvBindByName(column="Choose the grade your child is applying for")
     private String chooseStudentGrade;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Select the option that best describes where you live.")
     private String descriptionOfLivingEnv;
-    @CsvBindByName(column="This questionnaire is intended to address the McKinney-Vento Act. Your child may be eligible for additional educational services.   Did the student receive McKinney Vento (Homeless) Services in a previous school district?", required=true)
+
+    // *** no questions for this one *** //
+    @CsvBindByName(column="This questionnaire is intended to address the McKinney-Vento Act. Your child may be eligible for additional educational services.   Did the student receive McKinney Vento (Homeless) Services in a previous school district?")
     private String hadHomelessServicesInPreviousSchool;
 
+    // Mapped to "noHomeAddress"
     @CsvBindByName(column="Is the student’s address a temporary living arrangement?")
     private String isStudentAddressTemporaryLiving;
 
@@ -58,10 +63,11 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Is the temporary living arrangement due to loss of housing or economic hardship?")
     private String isTempLivingDueToLossOfHousingOrEconomicHardship;
 
+    // TODO: check if there is a question for this one
     @CsvBindByName(column="Does the student have a disability or receive any special education-related services?")
     private String doesStudentHaveDisabilityOrSpecEdServices;
 
-    // TODO - what format? Address or description?
+    // *** no questions for this one *** //
     @CsvBindByName(column="Where is the student currently living?")
     private String whereDoesStudentCurrentlyLive;
 
@@ -81,12 +87,15 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Migrant – Have you moved at any time during the past three (3) years to seek temporary or seasonal work in agriculture (including Poultry processing, dairy, nursery, and timber) or fishing?")
     private String hasFamilyMovedForAgriWork;
 
+    // filled out
     @CsvBindByName(column="How many people, including children, are in your household?  Only include all children, parents, guardians, and/or additional adults who provide financial support to the family.")
     private String howManyPeopleInHousehold;
 
+    // filled out
     @CsvBindByName(column="What is your monthly household income? (If your child has an IEP and you make below the maximum allowable income limit for your household size, choose your income here instead of indicating the IEP status.)")
     private String monthlyHouseholdIncome;
 
+    // *** no questions for this one; don't have mapping either *** //
     @CsvBindByName(column="Select the option below that best describes your household:")
     private String householdDescription;
 
@@ -96,9 +105,11 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Verification document upload:")
     private String verificationDocumentOne;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Is the child you are applying for a twin and/or triplet?")
     private String twinOrTriplet;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Please list the name(s) of the child’s twin/triplets.")
     private String twinOrTripletName;
 
@@ -121,9 +132,11 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Upload the ID of the parent/guardian completing the application.")
     private String parentIdDocumentation;
 
+    // TODO: build converter
     @CsvBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.  (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS)")
     List<String> adultsProvidingFinancialSupport;
 
+    // TODO: see if we can calculate this
     @CsvBindByName(column="List below each minor living in the household, their age, and their relationship to the child applicant.  (Example: Child Applicant - 3 YEARS, Brother - 10 YEARS, Sister - 7 YEARS, Cousin - 7 YEARS)")
     List<String> minorsInHousehold;
 
@@ -153,6 +166,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Which center/school do you work at?")
     String applicantWorksAt;
 
+    // TODO: see if we can calculate this
     @CsvBindByName(column="Is the parent applicant an unmarried minor (under age 18)?")
     String isParentApplicantUnmarriedMinor;
 
