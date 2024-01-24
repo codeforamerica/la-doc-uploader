@@ -20,28 +20,30 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
 
     String isEligibleForExpeditedSnap = submission.getInputData().get("isEligibleForExpeditedSnap").toString();
     if (isEligibleForExpeditedSnap.equals("true")) {
-      String householdIncomeLast30Days=submission.getInputData().getOrDefault("householdIncomeLast30Days", "0").toString();
-      results.put("expeditedSnapIncome",  new SingleField("expeditedSnapIncome", householdIncomeLast30Days, null));
+      String householdIncomeLast30Days = submission.getInputData().getOrDefault("householdIncomeLast30Days", "0").toString();
+      results.put("expeditedSnapIncome", new SingleField("expeditedSnapIncome", householdIncomeLast30Days, null));
 
       String moneyOnHandString = submission.getInputData().getOrDefault("expeditedMoneyOnHandAmount", "0").toString();
-      results.put("expeditedSnapMoneyOnHand",  new SingleField("expeditedSnapMoneyOnHand", moneyOnHandString, null));
+      results.put("expeditedSnapMoneyOnHand", new SingleField("expeditedSnapMoneyOnHand", moneyOnHandString, null));
 
       String householdRentAmount = submission.getInputData().getOrDefault("householdRentAmount", "0").toString();
-      results.put("expeditedSnapHousingCost",  new SingleField("expeditedSnapHousingCost", householdRentAmount, null));
+      results.put("expeditedSnapHousingCost", new SingleField("expeditedSnapHousingCost", householdRentAmount, null));
 
-      var utilities = processUtilitiesExpenses(submission);
-      boolean hasHouseholdExpenses = utilities.get("expenses");
-      boolean hasHeatingExpenses = utilities.get("acOrCooling");
+      results.put("expeditedSnapHouseholdExpensesBool",
+          new SingleField("expeditedSnapHouseholdExpensesBool", hasHouseholdExpenses(submission) ? "Yes" : "No", null));
+      results.put("expeditedSnapHeatingBool",
+          new SingleField("expeditedSnapHeatingBool", hasHeatingExpenses(submission) ? "Yes" : "No", null));
 
-      results.put("expeditedSnapHouseholdExpensesBool",  new SingleField("expeditedSnapHouseholdExpensesBool", hasHouseholdExpenses ? "Yes" : "No", null));
-      results.put("expeditedSnapHeatingBool",  new SingleField("expeditedSnapHeatingBool",  hasHeatingExpenses ? "Yes" : "No", null));
-
-      String householdPhoneExpenses = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_phone", "0").toString();
+      String householdPhoneExpenses = submission.getInputData()
+          .getOrDefault("householdUtilitiesExpenseAmount_wildcard_phone", "0").toString();
       boolean hasPhoneExpenses = !householdPhoneExpenses.equals("0");
-      results.put("expeditedSnapPhoneExpensesBool",  new SingleField("expeditedSnapPhoneExpensesBool", hasPhoneExpenses ? "Yes" : "No", null));
+      results.put("expeditedSnapPhoneExpensesBool",
+          new SingleField("expeditedSnapPhoneExpensesBool", hasPhoneExpenses ? "Yes" : "No", null));
 
       String isMigrantOrSeasonalFarmWorker = submission.getInputData().get("migrantOrSeasonalFarmWorkerInd").toString();
-      results.put("expeditedMigrantOrSeasonalWorkerBool",  new SingleField("expeditedMigrantOrSeasonalWorkerBool", isMigrantOrSeasonalFarmWorker.equals("true") ? "Yes" : "No", null));
+      results.put("expeditedMigrantOrSeasonalWorkerBool",
+          new SingleField("expeditedMigrantOrSeasonalWorkerBool", isMigrantOrSeasonalFarmWorker.equals("true") ? "Yes" : "No",
+              null));
     }
 
     return results;
@@ -55,29 +57,26 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
     }
   }
 
-  private Map<String, Boolean> processUtilitiesExpenses(Submission submission) {
-    Map<String, Boolean> results = new HashMap<>();
-    boolean expenses;
-    boolean acOrCooling;
-
-    String electricity = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_electricity", "0").toString();
+  private boolean hasHouseholdExpenses(Submission submission) {
+    String electricity = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_electricity", "0")
+        .toString();
     String water = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_water", "0").toString();
     String garbage = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_garbage", "0").toString();
     String sewer = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_sewer", "0").toString();
-    String cookingFuel = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_cookingFuel", "0").toString();
-    String otherUtilitiesExpenses = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_otherUtilitiesExpenses", "0").toString();
+    String cookingFuel = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_cookingFuel", "0")
+        .toString();
+    String otherUtilitiesExpenses = submission.getInputData()
+        .getOrDefault("householdUtilitiesExpenseAmount_wildcard_otherUtilitiesExpenses", "0").toString();
 
-    expenses = (parseInt(electricity) + parseInt(water) + parseInt(garbage) + parseInt(sewer) + parseInt(cookingFuel) + parseInt(otherUtilitiesExpenses) > 0);
+    return (parseInt(electricity) + parseInt(water) + parseInt(garbage) + parseInt(sewer) + parseInt(cookingFuel) + parseInt(
+        otherUtilitiesExpenses) > 0);
+  }
 
-    var heating = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_heating", "0").toString();
-    var cooling = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_cooling", "0").toString();
+  private boolean hasHeatingExpenses(Submission submission) {
+    String heating = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_heating", "0").toString();
+    String cooling = submission.getInputData().getOrDefault("householdUtilitiesExpenseAmount_wildcard_cooling", "0").toString();
 
-    acOrCooling = (parseInt(heating) + parseInt(cooling) > 0);
-
-    results.put("expenses", expenses);
-    results.put("acOrCooling", acOrCooling);
-
-    return results;
+    return (parseInt(heating) + parseInt(cooling) > 0);
   }
 }
 
