@@ -31,12 +31,16 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Status (InProgress/Submitted) {{status}}", required=true)
     private String status = "InProgress";  // requested default
 
-    @CsvBindByName(column="Hide Application from Parent (Yes/No) {{hide}}", required=true)
+    @CsvBindByName(column="Hide Form from Parent (Yes/No) {{hide}}", required=true)
     private String hideApplication = "No"; // required field, requested default
 
     // **********  END Avela required fields ************* //
 
     // *** no questions for this one *** //
+
+    @CsvBindByName(column="Choose the grade your child is applying for")
+    private String chooseStudentGrade;
+
     @CsvBindByName(column="School Id {{school-id}}")
     private String schoolId;
 
@@ -70,87 +74,90 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     private String childBirthDate;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Select the option that best describes where you live. {{cbbe71ea-8564-4980-8550-09be1be6775a}}")
+    @CsvBindByName(column="Select the option that best describes where you live.")
     private String descriptionOfLivingEnv;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="This questionnaire is intended to address the McKinney-Vento Act. Your child may be eligible for additional educational services. Did the student receive McKinney Vento (Homeless) Services in a previous school district? {{2137fc3b-97a6-495c-983e-b7ffd706d5cb}}", required=true)
+    @CsvBindByName(column="This questionnaire is intended to address the McKinney-Vento Act. Your child may be eligible for additional educational services.   Did the student receive McKinney Vento (Homeless) Services in a previous school district?", required=true)
     private String hadHomelessServicesInPreviousSchool;
 
-    @CsvBindByName(column="Is the student’s address a temporary living arrangement? {{d38f1b8e-0243-48aa-945b-16028a0ef711}}")
+    @CsvBindByName(column="Is the student’s address a temporary living arrangement?")
     private String isStudentAddressTemporaryLiving;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Is the temporary living arrangement due to loss of housing or economic hardship? {{e48d3080-50af-40b3-9f56-bfa07ba0b4d5}}")
+    @CsvBindByName(column="Is the temporary living arrangement due to loss of housing or economic hardship?")
     private String isTempLivingDueToLossOfHousingOrEconomicHardship;
 
-    @CsvBindByName(column="Does the student have a disability or receive any special education-related services?  {{a9a378c6-3a9c-4d02-8175-e08b53b5a6b6}}")
+    @CsvBindByName(column="Does the student have a disability or receive any special education-related services?")
     private String doesStudentHaveDisabilityOrSpecEdServices;
 
     // TODO - what format? Address or description?
-    @CsvBindByName(column="Where is the student currently living? {{89471b56-80c6-42f1-9306-52558993613a}}")
+    @CsvBindByName(column="Where is the student currently living?")
     private String whereDoesStudentCurrentlyLive;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Other specific information about where the student is currently living: {{1611f4e9-51c5-4b98-b341-5b6c7d7fd2da}}")
+    @CsvBindByName(column="Other specific information about where the student is currently living:")
     private String specificsAboutWhereStudentCurrentlyLiving;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Does the student exhibit any behaviors that may interfere with his or her academic performance? {{553eb30e-9b7a-4d70-b57f-67a57b2b3124}}")
+    @CsvBindByName(column="Does the student exhibit any behaviors that may interfere with his or her academic performance?")
     private String doesStudentHaveBehaviorsThatAffectAcademics;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Would you like assistance with uniforms, student records, school supplies, transportation, other? (Describe): {{2f4ec55e-b38a-41c3-b5df-b4f4c1f7397f}}")
+    @CsvBindByName(column="Would you like assistance with uniforms, student records, school supplies, transportation, other? (Describe):")
     private String needAssistanceWithSchoolRelatedThings;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Migrant – Have you moved at any time during the past three (3) years to seek temporary or seasonal work in agriculture (including Poultry processing, dairy, nursery, and timber) or fishing? {{f15cc4fa-f374-4e11-915e-bf8080bdabe9}}")
+    @CsvBindByName(column="Migrant – Have you moved at any time during the past three (3) years to seek temporary or seasonal work in agriculture (including Poultry processing, dairy, nursery, and timber) or fishing?")
     private String hasFamilyMovedForAgriWork;
 
-    @CsvBindByName(column="How many people, including children, are in your household? Only include all children, parents, guardians, and/or additional adults who provide financial support to the family. {{2c9aa7c8-4d13-42ad-971d-c67b12b11f3c}}")
+    @CsvBindByName(column="How many people, including children, are in your household?  Only include all children, parents, guardians, and/or additional adults who provide financial support to the family.")
     private String howManyPeopleInHousehold;
 
     // *** no questions for this one *** //
     @CsvBindByName(column="Upload a current Foster Care Placement Agreement from DCFS. {{ec3173bd-76e0-4612-a619-1837bf38d8b0}}")
     private String placementAgreementDCFS;
 
-    @CsvBindByName(column="Select the gender that best matches your child's SNAP application choice: {{ba83974f-bef9-41b0-9f6a-5616ffdbbd92}}")
-    private String childGender;
+    @CsvBindByName(column="Please select the gender that best matches your SNAP application choice:")
+    private String applicantGender;
 
-    @CsvBindByName(column="Select the ethnicity that best matches your child's SNAP application choice: {{621a6556-63dd-48a2-9f84-38669389d683}}")
-    private String childEthnicity;
+    @CsvBindByName(column="Please select the ethnicity that best matches your SNAP application choice:")
+    private String applicantEthnicity;
 
     // TODO: what does this mean
-    @CsvBindByName(column="Select the race that best matches your child's SNAP application choice: {{9e26600f-fe56-4b9d-9b50-2a9a2ee879a8}}")
+    @CsvBindByName(column="Please select the race that best matches your SNAP application choice:")
     private String snapApplicationChoice;
 
     // TODO: probably don't need this field
     @CsvBindByName(column="Upload proof of SNAP benefits, upload must include: Child’s name, Parent’s name, and certification thru date. {{2b0fb1d7-960c-4539-bcc9-a937b57512cb}}")
     private String snapDocumentationProof;
 
-    @CsvBindByName(column="(2 people) What is your monthly household income? {{0f5a6893-9984-43f5-bc2b-7d42961d82e8}}")
-    private String monthlyHouseholdIncomeTwoPeople;
+    @CsvBindByName(column="What is your monthly household income? (If your child has an IEP and you make below the maximum allowable income limit for your household size, choose your income here instead of indicating the IEP status.)")
+    private String monthlyHouseholdIncome;
 
-    @CsvBindByName(column="(3 people) What is your monthly household income? {{e6ed2d15-8a27-48d7-ae04-a6ea6a9cc69a}}")
-    private String monthlyHouseholdIncomeThreePeople;
-
-    @CsvBindByName(column="(4 people) What is your monthly household income? {{117f3de3-1965-40f9-95d6-e5f7ea26985d}}")
-    private String monthlyHouseholdIncomeFourPeople;
-
-    @CsvBindByName(column="(5 people) What is your monthly household income? {{62545824-4f48-4b2b-b27a-38ed11b1904e}}")
-    private String monthlyHouseholdIncomeFivePeople;
-
-    @CsvBindByName(column="(6 people) What is your monthly household income? {{cb48064f-34eb-43cb-9fb6-d0c9d642bb8f}}")
-    private String monthlyHouseholdIncomeSixPeople;
-
-    @CsvBindByName(column="(7 people) What is your monthly household income? {{f741dbf8-f125-45bd-8617-93a723a96abd}}")
-    private String monthlyHouseholdIncomeSevenPeople;
-
-    @CsvBindByName(column="(8 people) What is your monthly household income? {{414ba9f8-4820-4780-8ba9-5e4b5aaa7fd2}}")
-    private String monthlyHouseholdIncomeEightPeople;
-
-    @CsvBindByName(column="(9 people) What is your monthly household income? {{8d65d784-dd8a-46e9-9699-f5a52906417e}}")
-    private String monthlyHouseholdIncomeNinePeople;
+//    @CsvBindByName(column="(2 people) What is your monthly household income? {{0f5a6893-9984-43f5-bc2b-7d42961d82e8}}")
+//    private String monthlyHouseholdIncomeTwoPeople;
+//
+//    @CsvBindByName(column="(3 people) What is your monthly household income? {{e6ed2d15-8a27-48d7-ae04-a6ea6a9cc69a}}")
+//    private String monthlyHouseholdIncomeThreePeople;
+//
+//    @CsvBindByName(column="(4 people) What is your monthly household income? {{117f3de3-1965-40f9-95d6-e5f7ea26985d}}")
+//    private String monthlyHouseholdIncomeFourPeople;
+//
+//    @CsvBindByName(column="(5 people) What is your monthly household income? {{62545824-4f48-4b2b-b27a-38ed11b1904e}}")
+//    private String monthlyHouseholdIncomeFivePeople;
+//
+//    @CsvBindByName(column="(6 people) What is your monthly household income? {{cb48064f-34eb-43cb-9fb6-d0c9d642bb8f}}")
+//    private String monthlyHouseholdIncomeSixPeople;
+//
+//    @CsvBindByName(column="(7 people) What is your monthly household income? {{f741dbf8-f125-45bd-8617-93a723a96abd}}")
+//    private String monthlyHouseholdIncomeSevenPeople;
+//
+//    @CsvBindByName(column="(8 people) What is your monthly household income? {{414ba9f8-4820-4780-8ba9-5e4b5aaa7fd2}}")
+//    private String monthlyHouseholdIncomeEightPeople;
+//
+//    @CsvBindByName(column="(9 people) What is your monthly household income? {{8d65d784-dd8a-46e9-9699-f5a52906417e}}")
+//    private String monthlyHouseholdIncomeNinePeople;
 
     // *** no questions for this one *** //
     @CsvBindByName(column="Upload your child's current Individualized Education Program (IEP) {{cad80fcd-51d3-4c59-b720-2d6a79a89ea6}}")
@@ -176,14 +183,20 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="ECS Only: IEP verification notes {{be56686a-d1d8-4f90-8bff-fab1b1c66d33}}")
     private String verificationNotesIEP;
 
-    @CsvBindByName(column="Select the option below that best describes your household: {{cecc3450-685a-4e5f-9530-61653eaac98d}}", required=true)
+    @CsvBindByName(column="Select the option below that best describes your household:", required=true)
     private String householdDescription;
 
-    @CsvBindByName(column="Provide 1 of 4 forms of verification documents listed below: {{bb6e7a83-f22e-48f0-8135-8b12594970b5}}", required=true)
+    @CsvBindByName(column="Provide 1 of 4 forms of verification documents listed below:", required=true)
     private String verificationDocumentOneType;
 
-    @CsvBindByName(column="Verification document upload: {{5aa666e9-b955-4936-a2c3-d260b9278d10}}")
+    @CsvBindByName(column="Verification document upload:")
     private String verificationDocumentOne;
+
+    @CsvBindByName(column="Is the child you are applying for a twin and/or triplet?")
+    private String twinOrTriplet;
+
+    @CsvBindByName(column="Please list the name(s) of the child’s twin/triplets.")
+    private String twinOrTripletName;
 
     @CsvBindByName(column="Provide 1 of 4 forms of verification documents listed below: {{81f31312-ec04-4612-93e2-971be134cd0f}}")
     private String verificationDocumentTwoType;
@@ -198,30 +211,33 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     private String anyAdultsInHouseholdHaveDisability;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Admin notes on application {{8df5f004-4e22-4fad-9dc0-3028ff30fdac}}")
+    @CsvBindByName(column="Admin notes on application")
     private String adminNotesOnApplication;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="[DOES NOT APPEAR ON APPLICATION] Are you interested in taking a seat now (2022-23 school year)? The list of available programs is linked below. We’ll make offers as seats become available. There is limited availability. {{ced46aa6-2de0-42de-ba17-01bf356b2437}}")
+    @CsvBindByName(column="Are you interested in taking a seat now (2023-24 school year)? The list of available programs is linked below. We’ll make offers as seats become available. There is limited availability.")
     private String takeASeatCurrentSchoolYear;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Upload your child's birth certificate. (If your child is not yet born, you will need to provide this before enrollment). {{dbecb765-3f4c-4763-82f7-0862c59308fa}}")
+    @CsvBindByName(column="Upload your child's birth certificate. (For unborn children, provide a doctor’s note with the anticipated birth date. After birth, upload Official Birth certificate before enrollment.)")
     private String studentsBirthCertificateDocument;
 
     @CsvBindByName(column="Child's birthdate (format: MM-DD-YYYY). Birthdate on birth certificate should match DOB entered on application. (If not, edit student record to match) {{4d057d18-dcd3-4905-aa1e-298d92509101}}")
     private String studentsBirthDate;
 
-    @CsvBindByName(column="Is your name on the birth certificate? {{04b3a5f1-ff0d-43a8-8a6a-e8627bf61cd2}}")
+    @CsvBindByName(column="Is your name on the birth certificate?")
     private String isParentNameOnBirthCertificate;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="If your name is not on the birth certificate, then you will also need to provide proof of custody. If you are unable to provide one of these documents right now, you will need to provide proof of custody before enrollment. Select the document you are uploading. {{89a8a5e5-b60c-4e83-896c-318c64d5d475}}")
-    private String custodyProofDocumentType;
+//    @CsvBindByName(column="If your name is not on the birth certificate, then you will also need to provide proof of custody. If you are unable to provide one of these documents right now, you will need to provide proof of custody before your child receives a center/school placement.   Please select the document you are uploading.")
+//    private String custodyProofDocumentType;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Upload documentation of proof of custody. {{23baee5b-8f8e-4dc4-87f3-9a017f855859}}")
+    @CsvBindByName(column="Please upload documentation of proof of custody.")
     private String custodyProofDocument;
+
+    @CsvBindByName(column="Upload the ID of the parent/guardian completing the application.")
+    private String parentIdDocumentation;
 
     // *** no questions for this one *** //
     @CsvBindByName(column="Does the adult on this application have the authority to complete this application for this child? Describe relationship to student (optional) {{ebafed1e-b16b-46ab-80f3-ee56b1516a64}}")
@@ -232,23 +248,23 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     private String governmentIssuedIDDocument;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Is your name or your spouse's name listed on the residency documents that you will be providing? {{30603d5d-3dee-45fa-b897-893cb5f1829f}}")
+    @CsvBindByName(column="Is your name listed on the residency documents that you will be providing?")
     private String isYourNameOrSpouseNameOnResidencyDocuments;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Proof of residency #1. {{3e0e2b61-d9bb-48b7-bf3a-9420e0d0ac75}}")
+    @CsvBindByName(column="Proof of residency #1.")
     private String proofOfResidencyDocumentOne;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Verified residency document #1 type: {{154963c2-8a53-4cf3-add2-330a84a0eaad}}")
+    @CsvBindByName(column="Verified residency document #1 type:")
     private String proofOfResidencyDocumentOneType;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Proof of residency #2. {{640e2fc0-552f-486e-b24e-ce715e551c2a}}")
+    @CsvBindByName(column="Proof of residency #2.")
     private String proofOfResidencyDocumentTwo;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="Verified residency document #2 type: {{952bf770-a7a7-4060-9e85-0731f8ba553c}}")
+    @CsvBindByName(column="Verified residency document #2 type:")
     private String proofOfResidencyDocumentTwoType;
 
 
@@ -256,7 +272,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
 
 
     // *** START VALIDATING HERE
-    @CsvBindByName(column="Either the parent/guardian name must be on the residency documents or if the parent/guardian lives with another adult who is named on the residency documents, the parent/guardian must upload two proofs of residency in the resident's name and a photo ID from the person named on the documents. {{79aae8cf-13f0-4787-8c23-4f0a87e319e0}}")
+    @CsvBindByName(column="Either the parent/guardian name must be on the residency documents or if the parent/guardian lives with another adult who is named on the residency documents, the parent/guardian must upload a signed letter from the person named on the residency documents stating that the parent/guardian lives at that same address.   If uploading a letter, parent/guardian must also upload acceptable proofs of residency in resident’s name and a photo of the resident's ID.")
     String residencyNotice;
 
     @CsvBindByName(column="What is the name of the person on the residency documents? (ID matching that name must be uploaded) {{bce6f956-52b7-40a2-b042-886051e9f5cd}}")
@@ -391,8 +407,6 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     String UNUSED_adultTwoHoursAttendingTrainingCoursesDocument;
     @CsvBindByName(column="Upload documentation of your Unemployment Benefits: a Monetary Determination letter from the Workforce Commission (Adult 2) {{7894fdd2-51e1-45f6-bd70-73cc4ed19662}}")
     String UNUSED_adultTwoUnemploymentBenefitsDocumentation;
-    @CsvBindByName(column="Enter the number of months you have been without income (Adult 2): {{30b42ec0-59a4-454a-95cb-c87fd3c9e710}}")
-    String UNUSED_adultTwoNumberMonthsWithoutIncome;
     @CsvBindByName(column="I am (check all that apply, Adult 2) {{a22abf87-4808-4d2b-b2d7-3f85a95d1a1a}}")
     String UNUSED_adultTwoIAmOptions;
     @CsvBindByName(column="If 'Other', describe your employment status (Adult 2) {{590669f1-02df-47c5-a8a7-f47cfbd1ad09}}")
@@ -459,198 +473,169 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     String UNUSED_adultThreeHouseholdThingsPaidForByRegularIncome;
 
     //  *** START Adult One Fields -- these are the fields that are actually used.
-    @CsvBindByName(column="For each adult in the household (18+ years old, up to 3 adults), provide the following information. Is Adult 1 (yourself) working? {{aa31382c-6c30-4111-8272-43a58b3deb79}}")
+    @CsvBindByName(column="Is Adult 1 (yourself) working?")
     String isAdultOneWorking;
-    @CsvBindByName(column="Pay statement upload #1 and #2 (dated within 45-60 days of filling out this application) {{8cd83ffa-b61a-4056-ac58-bdc24e725b91}}")
+    @CsvBindByName(column="Pay statement upload #1 and #2 (dated within 45-60 days of filling out this application)")
     String adultOnePayStatementOneAndTwo;
-    @CsvBindByName(column="Pay statement upload #3 and #4, if needed (dated within 45-60 days of filling out this application) {{51a394be-1aa8-4b3f-9310-444f31c0bc8e}}")
+    @CsvBindByName(column="Pay statement upload #3 and #4, if needed (dated within 45-60 days of filling out this application)")
     String adultOnePayStatementThreeAndFour;
-    @CsvBindByName(column="Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed) {{af09a137-ad2c-417e-84e2-84a324583073}}")
+    @CsvBindByName(column="Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed)")
     String adultOneEmployerLetter;
-    @CsvBindByName(column="I state that my income or support comes from: {{edfaabe6-e830-41cb-811d-effb73095203}}")
+    @CsvBindByName(column="I state that my income or support comes from:")
     String adultOneIncomeSupportComesFrom;
-    @CsvBindByName(column="Upload your most recent IRS Form 1099 {{211ed2d3-ccc8-472d-a916-5940c685c83a}}")
+    @CsvBindByName(column="Upload your most recent IRS Form 1099")
     String adultOneSelfEmployment1099;
-    @CsvBindByName(column="If choosing 'Parents/family', attach a statement from person providing support {{d696c985-182a-4681-9ef8-9e6ae2674fde}}")
+    @CsvBindByName(column="If choosing 'Parents/family', attach a statement from person providing support")
     String adultOneSupportFromParentFamilyStatementDocument;
-    @CsvBindByName(column="Describe your source of income {{444443f9-db05-47f6-a312-5b77c4ddcb27}}")
+    @CsvBindByName(column="Describe your source of income")
     String adultOneDescribeSourceOfIncome;
-    @CsvBindByName(column="Gross Income January: {{a54ffabb-4a61-4bf7-a4a7-0402d1fdfc9a}}")
+    @CsvBindByName(column="Gross Income January:")
     String adultOneGrossIncomeJanuary;
-    @CsvBindByName(column="Gross Income February: {{2ba00291-6b93-44e5-9aa5-f2fb18e116b0}}")
+    @CsvBindByName(column="Gross Income February:")
     String adultOneGrossIncomeFebruary;
-    @CsvBindByName(column="Gross Income March: {{8552f63d-422e-403c-b2da-94094f886f4e}}")
+    @CsvBindByName(column="Gross Income March:")
     String adultOneGrossIncomeMarch;
-    @CsvBindByName(column="Gross Income April: {{3e352744-e7ab-41ea-8435-b52d5a33b216}}")
+    @CsvBindByName(column="Gross Income April:")
     String adultOneGrossIncomeApril;
-    @CsvBindByName(column="Gross Income May: {{67c042b0-1ba8-44c9-87bc-486b8147e3c1}}")
+    @CsvBindByName(column="Gross Income May:")
     String adultOneGrossIncomeMay;
-    @CsvBindByName(column="Gross Income June: {{82ebed26-af78-4f9c-8dc0-53dee9d36675}}")
+    @CsvBindByName(column="Gross Income June:")
     String adultOneGrossIncomeJune;
-    @CsvBindByName(column="Gross Income July: {{af1a39dd-16ba-49f1-bb1f-b8ec4f8a90d8}}")
+    @CsvBindByName(column="Gross Income July:")
     String adultOneGrossIncomeJuly;
-    @CsvBindByName(column="Gross Income August: {{2b2d310d-901d-459a-9571-51daf5769da4}}")
+    @CsvBindByName(column="Gross Income August:")
     String adultOneGrossIncomeAugust;
-    @CsvBindByName(column="Gross Income September: {{652e0162-1b50-4b67-bf40-51c7353743aa}}")
+    @CsvBindByName(column="Gross Income September:")
     String adultOneGrossIncomeSeptember;
-    @CsvBindByName(column="Gross Income October: {{9f603f2f-7ecd-42bb-ba8e-3060837651bf}}")
+    @CsvBindByName(column="Gross Income October:")
     String adultOneGrossIncomeOctober;
-    @CsvBindByName(column="Gross Income November: {{bbe1289d-4066-4fc0-9fd6-166220106dde}}")
+    @CsvBindByName(column="Gross Income November:")
     String adultOneGrossIncomeNovember;
-    @CsvBindByName(column="Gross Income December: {{81abe417-2e3e-48ac-9ba1-81aceb6abb79}}")
+    @CsvBindByName(column="Gross Income December:")
     String adultOneGrossIncomeDecember;
-    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{dc46611b-3bd1-4be8-8da1-3f3e29f3d279}}")
+    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by:")
     String adultOneHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
-    @CsvBindByName(column="Upload documentation of your Unemployment Benefits: a Monetary Determination letter from the Workforce Commission {{9d1e4a12-5361-40a6-99fc-13d652e93f57}}")
+    @CsvBindByName(column="Upload documentation of your Unemployment Benefits: a Monetary Determination letter from the Workforce Commission")
     String adultOneUnemploymentBenefitsDocumentation;
-    @CsvBindByName(column="Enter the number of months you have been without income: {{84145ec0-aaf5-4f6d-b938-173e86541dcd}}")
+    @CsvBindByName(column="Enter the number of months you have been without income:")
     String adultOneNumberMonthsWithoutIncome;
-    @CsvBindByName(column="I am (check all that apply) {{d599b70b-0342-46a3-aa3d-99dac369becd}}")
+    @CsvBindByName(column="I am (check all that apply)")
     String adultOneIAmOptions;
-    @CsvBindByName(column="If 'Other', describe your employment status {{1f58cdcc-186b-4b4b-bc6b-4291aa8e1be7}}")
+    @CsvBindByName(column="If 'Other' please describe your employment status")
     String adultOneIAmOtherEmploymentStatusDescription;
-    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{1fa3e7e4-6787-414d-8db3-eca31220888a}}")
-    String adultOneHouseholdThingsPaidForByRegularIncome;
-    @CsvBindByName(column="Is Adult 1 (yourself) in school, in a training program, or seeking work? {{90dc1348-6db3-436f-937f-306aa812ded1}}")
+//    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{1fa3e7e4-6787-414d-8db3-eca31220888a}}")
+//    String adultOneHouseholdThingsPaidForByRegularIncome;
+    @CsvBindByName(column="Is Adult 1 (yourself) in school, in a training program, or seeking work?")
     String isAdultOneSchoolTrainingSeekingWork;
-    @CsvBindByName(column="Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement {{ccd82836-4b21-4463-91a9-414c034cff40}}")
+    @CsvBindByName(column="Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement")
     String adultOneHIRERegistrationProof;
-    @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar {{5a8a72f5-cec8-47db-941a-fe953cd2652e}}")
+    @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar")
     String adultOneProofOfSchoolEnrollment;
-    @CsvBindByName(column="Provide hours attending and training courses on organization’s letterhead {{86148dbc-21c1-4f42-b775-e729cd90366d}}")
+    @CsvBindByName(column="Provide hours attending and training courses on organization’s letterhead")
     String adultOneHoursAttendingTrainingCoursesDocument;
-    @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar  {{da1a75fa-fffc-4c0e-8e44-6f7cc8589153}}")
-    String adultOneProofOfSchoolEnrollment2;
-    @CsvBindByName(column="Provide hours attending and training courses (or hours worked) on organization’s letterhead {{6be5d690-5b1b-419b-999b-5efe6949d636}}")
-    String adultOneHoursAttendingTrainingCoursesDocument2;
-    @CsvBindByName(column="(Adult 1) Verified hours in school, training, or work {{18ccb11c-15a2-4346-ada3-4788adea4a60}}")
-    String adultOneVerifiedHoursInSchoolTrainingWork;
+//    @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar  {{da1a75fa-fffc-4c0e-8e44-6f7cc8589153}}")
+//    String adultOneProofOfSchoolEnrollment2;
+//    @CsvBindByName(column="Provide hours attending and training courses (or hours worked) on organization’s letterhead")
+//    String adultOneHoursAttendingTrainingCoursesDocument2;
+//    @CsvBindByName(column="(Adult 1) Verified hours in school, training, or work {{18ccb11c-15a2-4346-ada3-4788adea4a60}}")
+//    String adultOneVerifiedHoursInSchoolTrainingWork;
     // *** END Adult One ***
 
     // *** START Adult Two ***
-    @CsvBindByName(column="Is Adult 2 working? {{c9f80dca-6623-4435-8b8e-3fb237a295db}}")
+    @CsvBindByName(column="Is Adult 2 working?")
     String isAdultTwoWorking;
-    @CsvBindByName(column="Pay statement upload #1 and #2 (Adult 2) (dated within 45-60 days of filling out this application) {{41bed2d6-af77-4e53-b894-253bfd1440bd}}")
+    @CsvBindByName(column="Pay statement upload #1 and #2 (Adult 2) (dated within 45-60 days of filling out this application)")
     String adultTwoPayStatementOneAndTwo;
-    @CsvBindByName(column="Pay statement upload #3 and #4 (dated within 45-60 days of filling out this application) {{5ae83513-a34a-4a0f-9b17-ee4c306912bc}}")
-    String adultTwoPayStatementThreeAndFour;
-    @CsvBindByName(column="Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed) {{09c63241-d537-41e0-b8b8-34699c785366}}")
-    String adultTwoEmployerLetter;
-    @CsvBindByName(column="I state that Adult 2's income or support comes from: {{838d43dc-79b0-4401-adc0-941d320a63d7}}")
+//    @CsvBindByName(column="Pay statement upload #3 and #4 (dated within 45-60 days of filling out this application) {{5ae83513-a34a-4a0f-9b17-ee4c306912bc}}")
+//    String adultTwoPayStatementThreeAndFour;
+//    @CsvBindByName(column="Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed) {{09c63241-d537-41e0-b8b8-34699c785366}}")
+//    String adultTwoEmployerLetter;
+    @CsvBindByName(column="I state that Adult 2's income or support comes from:")
     String adultTwoIncomeSupportComesFrom;
-    @CsvBindByName(column="Upload your most recent IRS Form 1099 {{9f8f1ff0-df9b-458f-8d87-51fed6f58aad}}")
+    @CsvBindByName(column="Upload Adult 2's most recent IRS Form 1099")
     String adultTwoSelfEmployment1099;
-    @CsvBindByName(column="If choosing 'Parents/family', attach a statement from person providing support {{fcc69085-0f0f-44d8-805d-f5ebd3ab2437}}")
-    String adultTwoSupportFromParentFamilyStatementDocument;
-    @CsvBindByName(column="Describe the source of income {{42034c33-a5a1-4851-975b-09c58341906c}}")
+//    @CsvBindByName(column="If choosing 'Parents/family', attach a statement from person providing support {{fcc69085-0f0f-44d8-805d-f5ebd3ab2437}}")
+//    String adultTwoSupportFromParentFamilyStatementDocument;
+    @CsvBindByName(column="Describe Adult 2's source of income")
     String adultTwoDescribeSourceOfIncome;
-    @CsvBindByName(column="Gross Income January: {{79bc70ec-0213-4d06-8ada-b198d933683e}}")
-    String adultTwoGrossIncomeJanuary;
-    @CsvBindByName(column="Gross Income February: {{d0ce4a12-7320-436a-a6b0-46a7dc4a0ad9}}")
-    String adultTwoGrossIncomeFebruary;
-    @CsvBindByName(column="Gross Income March: {{5e1aa8ee-6494-4b25-81c0-ab7d31b7cfba}}")
-    String adultTwoGrossIncomeMarch;
-    @CsvBindByName(column="Gross Income April: {{05afd738-659a-4827-a4ec-64d896234a4f}}")
-    String adultTwoGrossIncomeApril;
-    @CsvBindByName(column="Gross Income May: {{3eeb9667-4aa2-4a84-866c-b948baa152c3}}")
-    String adultTwoGrossIncomeMay;
-    @CsvBindByName(column="Gross Income June: {{af489912-626c-4263-967f-e7f101893708}}")
-    String adultTwoGrossIncomeJune;
-    @CsvBindByName(column="Gross Income July: {{1afc22c0-b8ac-4265-bb32-2082063141b1}}")
-    String adultTwoGrossIncomeJuly;
-    @CsvBindByName(column="Gross Income August: {{c9992775-6d62-481b-bddb-6bfafbd85dd9}}")
-    String adultTwoGrossIncomeAugust;
-    @CsvBindByName(column="Gross Income September: {{7d9de7e9-827a-4d1b-8a19-c6ae375ecffe}}")
-    String adultTwoGrossIncomeSeptember;
-    @CsvBindByName(column="Gross Income October: {{7a0b0328-d9c4-4b23-86c3-fb6553cf3422}}")
-    String adultTwoGrossIncomeOctober;
-    @CsvBindByName(column="Gross Income November: {{5a700f3d-c2b4-43b8-80db-3731014f0b57}}")
-    String adultTwoGrossIncomeNovember;
-    @CsvBindByName(column="Gross Income December: {{80886262-a90a-4205-9b37-cfe6a7422d81}}")
-    String adultTwoGrossIncomeDecember;
-    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{10ac360a-b4d2-4172-ae28-d0f30d9c52ed}}")
-    String adultTwoHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
-    @CsvBindByName(column="Upload documentation of Unemployment Benefits: a Monetary Determination letter from the Workforce Commission {{9780155c-c1c5-4363-b5e0-66c694beb173}}")
-    String adultTwoUnemploymentBenefitsDocumentation;
-    @CsvBindByName(column="Enter the number of months without income {{9c1327e6-6574-4ea9-8d7b-14b48b07f47d}}")
-    String adultTwoNumberMonthsWithoutIncome;
-    @CsvBindByName(column="Adult 2 is (check all that apply) {{2e780838-1ef2-4fc9-bf07-b68a628b84ce}}")
-    String adultTwoIAmOptions;
-    @CsvBindByName(column="If “Other” please describe the employment status {{1eb95835-4a01-4101-87df-882fd4a5f2d3}}")
-    String adultTwoIAmOtherEmploymentStatusDescription;
-    @CsvBindByName(column="Adult 2's rent/house payments, utilities, food, and transportation expenses are being paid for by: {{d819295a-f0be-49f3-853e-a4f6b378308b}}")
+
+    @CsvBindByName(column="Adult 2's rent/house payments, utilities, food, and transportation expenses are being paid for by:")
     String adultTwoHouseholdThingsPaidForByRegularIncome;
-    @CsvBindByName(column="Is Adult 2 in school, in a training program, or seeking work? {{85befbbc-d3f6-43d9-a2ca-a12b20f5e933}}")
+
+    @CsvBindByName(column="Enter the number of months Adult 2 has been without income:")
+    String adultTwoNumberMonthsWithoutIncome;
+
+    @CsvBindByName(column="Adult 2 is (check all that apply)")
+    String adultTwoIAmOptions;
+
+    @CsvBindByName(column="If 'Other' please describe Adult 2's employment status")
+    String adultTwoIAmOtherEmploymentStatusDescription;
+
+    @CsvBindByName(column="Is Adult 2 in school, in a training program, or seeking work?")
     String isAdultTwoSchoolTrainingSeekingWork;
-    @CsvBindByName(column="Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement {{d2c636e7-205c-45f3-8974-af09a66010c9}}")
-    String adultTwoHIRERegistrationProof;
-    @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar  {{b617abd4-eab8-4cde-a0c2-ef97f080c09c}}")
-    String adultTwoProofOfSchoolEnrollment;
-    @CsvBindByName(column="Provide hours attending and training courses (or hours worked) on organization’s letterhead {{14798ca8-c9b5-4488-a9e6-2efd30152e85}}")
-    String adultTwoHoursAttendingTrainingCoursesDocument;
-    @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar {{80ebe9d6-bd51-432b-863e-599b7a24a453}}")
-    String adultTwoProofOfSchoolEnrollment2;
-    @CsvBindByName(column="Provide hours attending and training courses (or hours worked) on organization’s letterhead {{e3d391fc-11d9-4e02-aeab-9104139acb21}}")
-    String adultTwoHoursAttendingTrainingCoursesDocument2;
-    @CsvBindByName(column="(Adult 2) Verified hours in school, training, or work {{c5329d96-e0d5-4b96-a367-ad85bb7342fb}}")
-    String adultTwoVerifiedHoursInSchoolTrainingWork;
+
+
+//    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{10ac360a-b4d2-4172-ae28-d0f30d9c52ed}}")
+//    String adultTwoHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
+//    @CsvBindByName(column="Upload documentation of Unemployment Benefits: a Monetary Determination letter from the Workforce Commission {{9780155c-c1c5-4363-b5e0-66c694beb173}}")
+//    String adultTwoUnemploymentBenefitsDocumentation;
+//    @CsvBindByName(column="Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement {{d2c636e7-205c-45f3-8974-af09a66010c9}}")
+//    String adultTwoHIRERegistrationProof;
+//    @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar  {{b617abd4-eab8-4cde-a0c2-ef97f080c09c}}")
+//    String adultTwoProofOfSchoolEnrollment;
+//    @CsvBindByName(column="Provide hours attending and training courses (or hours worked) on organization’s letterhead {{14798ca8-c9b5-4488-a9e6-2efd30152e85}}")
+//    String adultTwoHoursAttendingTrainingCoursesDocument;
+//    @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar {{80ebe9d6-bd51-432b-863e-599b7a24a453}}")
+//    String adultTwoProofOfSchoolEnrollment2;
+//    @CsvBindByName(column="Provide hours attending and training courses (or hours worked) on organization’s letterhead {{e3d391fc-11d9-4e02-aeab-9104139acb21}}")
+//    String adultTwoHoursAttendingTrainingCoursesDocument2;
+//    @CsvBindByName(column="(Adult 2) Verified hours in school, training, or work {{c5329d96-e0d5-4b96-a367-ad85bb7342fb}}")
+//    String adultTwoVerifiedHoursInSchoolTrainingWork;
     // *** END Adult Two ***
 
     // *** START Adult Three ***
-    @CsvBindByName(column="Is Adult 3 working? {{8d1b43ff-3291-496d-ad1f-53cf57361f44}}")
+    @CsvBindByName(column="Is Adult 3 working?")
     String isAdultThreeWorking;
-    @CsvBindByName(column="Pay statement upload #1 and #2 (Adult 3) (dated within 45-60 days of filling out this application) {{430530c8-6c23-4ca4-aa8d-8ce2186abd7c}}")
-    String adultThreePayStatementOneAndTwo;
-    @CsvBindByName(column="Pay statement upload #3 and #4 (dated within 45-60 days of filling out this application) {{abad5402-b4b5-4f35-92f4-6513763d483c}}")
-    String adultThreePayStatementThreeAndFour;
-    @CsvBindByName(column="Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed) {{07bea291-422b-41fd-b645-e6c8d2a4b0ed}}")
-    String adultThreeEmployerLetter;
-    @CsvBindByName(column="I state that Adult 3's income or support comes from: {{83de622a-0cff-460b-a10c-d814d019d46a}}")
+//    @CsvBindByName(column="Pay statement upload #1 and #2 (Adult 3) (dated within 45-60 days of filling out this application)")
+//    String adultThreePayStatementOneAndTwo;
+//    @CsvBindByName(column="Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed) {{07bea291-422b-41fd-b645-e6c8d2a4b0ed}}")
+//    String adultThreeEmployerLetter;
+    @CsvBindByName(column="I state that Adult 3's income or support comes from:")
     String adultThreeIncomeSupportComesFrom;
-    @CsvBindByName(column="Upload your most recent IRS Form 1099 {{fa615f5d-5389-46d3-b275-f0199519278b}}")
+    @CsvBindByName(column="Upload Adult 3's most recent IRS Form 1099")
     String adultThreeSelfEmployment1099;
-    @CsvBindByName(column="If choosing 'Parents/family', attach a statement from person providing support {{b239f740-6d21-4f7e-adcc-9a9ffa19ee39}}")
-    String adultThreeSupportFromParentFamilyStatementDocument;
-    @CsvBindByName(column="Describe the source of income {{0bd9b7f0-406c-472b-971c-11a20c6bd202}}")
+
+    @CsvBindByName(column="Describe Adult 3's source of income")
     String adultThreeDescribeSourceOfIncome;
-    @CsvBindByName(column="Gross Income January: {{5280e420-a6f8-4e93-8cb6-b7b3795b7f7f}}")
-    String adultThreeGrossIncomeJanuary;
-    @CsvBindByName(column="Gross Income February: {{4a5b5898-a8fb-476d-a789-e748baa8c35e}}")
-    String adultThreeGrossIncomeFebruary;
-    @CsvBindByName(column="Gross Income March: {{405f3e19-dacb-4982-991b-b60542c0b2a1}}")
-    String adultThreeGrossIncomeMarch;
-    @CsvBindByName(column="Gross Income April: {{fbc13dd5-b63a-4e26-804e-4de01c0c49ef}}")
-    String adultThreeGrossIncomeApril;
-    @CsvBindByName(column="Gross Income May: {{dd8a5293-43fe-4a34-9e58-df9a6db4d67d}}")
-    String adultThreeGrossIncomeMay;
-    @CsvBindByName(column="Gross Income June: {{72e22bab-1d40-4b17-8390-7f4ebe0a72c1}}")
-    String adultThreeGrossIncomeJune;
-    @CsvBindByName(column="Gross Income July: {{2763b0b9-8b31-42fe-9b96-4e2e797680d2}}")
-    String adultThreeGrossIncomeJuly;
-    @CsvBindByName(column="Gross Income August: {{1cf5e233-313f-4311-8c30-b60e9d59c938}}")
-    String adultThreeGrossIncomeAugust;
-    @CsvBindByName(column="Gross Income September: {{94d27987-80eb-433b-b79e-fc5916ff2bd3}}")
-    String adultThreeGrossIncomeSeptember;
-    @CsvBindByName(column="Gross Income October: {{9fb62419-f6f7-4988-9853-e2a7b0f1a81d}}")
-    String adultThreeGrossIncomeOctober;
-    @CsvBindByName(column="Gross Income November: {{3e898622-62d7-4756-87c5-aefed38ef73f}}")
-    String adultThreeGrossIncomeNovember;
-    @CsvBindByName(column="Gross Income December: {{5b93dd60-97d9-47bb-b7e5-66360313ecc4}}")
-    String adultThreeGrossIncomeDecember;
-    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{31ef8a1b-71d4-42ca-91b4-dd9dd7a720b0}}")
+
+    @CsvBindByName(column="Adult 3's rent/house payments, utilities, food, and transportation expenses are being paid for by:")
     String adultThreeHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
+
+    @CsvBindByName(column="Enter the number of months Adult 3 has been without income:")
+    String adultThreeNumberMonthsWithoutIncome;
+
+    @CsvBindByName(column="Adult 3 is (check all that apply)")
+    String adultThreeIAmOptions;
+
+    @CsvBindByName(column="If 'Other' please describe Adult 3's employment status")
+    String adultThreeIAmOtherEmploymentStatusDescription;
+
+    @CsvBindByName(column="Is Adult 3 in school, in a training program, or seeking work?")
+    String isAdultThreeSchoolTrainingSeekingWork;
+
+    @CsvBindByName(column="Does your child receive SSI Benefits?")
+    String doesChildReceiveSSI;
+
+    @CsvBindByName(column="Upload a statement from the Social Security Administration verifying that the child listed on the application is a recipient of SSI benefits.")
+    String ssiVerificationDocument;
+
+
     @CsvBindByName(column="Upload documentation of Unemployment Benefits: a Monetary Determination letter from the Workforce Commission {{a8c60a99-740e-4ca6-a83a-5a1d76107468}}")
     String adultThreeUnemploymentBenefitsDocumentation;
-    @CsvBindByName(column="Enter the number of months without income {{d14b0311-b208-4d5f-899f-54d58ac4c4e4}}")
-    String adultThreeNumberMonthsWithoutIncome;
-    @CsvBindByName(column="Adult 3 is (check all that apply) {{d08972bb-87f3-487e-bc3c-40f6d6b6df16}}")
-    String adultThreeIAmOptions;
-    @CsvBindByName(column="If “Other” please describe the employment status {{55b20c20-7a41-489a-8014-aaf370191f1b}}")
-    String adultThreeIAmOtherEmploymentStatusDescription;
-    @CsvBindByName(column="Adult 3's rent/house payments, utilities, food, and transportation expenses are being paid for by: {{9002f394-486c-4d88-b2a4-4fcd3ca9e723}}")
-    String adultThreeHouseholdThingsPaidForByRegularIncome;
-    @CsvBindByName(column="Is Adult 3 in school, in a training program, or seeking work? {{0a568f4c-8fad-48f3-9ebb-719ba50c0f07}}")
-    String isAdultThreeSchoolTrainingSeekingWork;
+
+//    @CsvBindByName(column="Adult 3's rent/house payments, utilities, food, and transportation expenses are being paid for by: {{9002f394-486c-4d88-b2a4-4fcd3ca9e723}}")
+//    String adultThreeHouseholdThingsPaidForByRegularIncome;
+
     @CsvBindByName(column="Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement {{2521146e-fa00-4c7d-b0bd-cf01ba62c6ad}}")
     String adultThreeHIRERegistrationProof;
     @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar {{88789dbc-2e0f-4247-a771-daba641cf9be}}")
@@ -674,47 +659,44 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Upload Unearned Income Documentation (child support, alimony, disability benefits, retirement benefits, etc.) {{014968a8-dd24-466d-aa0a-2d8c863702e4}}")
     String unearnedIncomeDocuments;
     // next one probably needs a converter? not even sure we collect this so maybe not.
-    @CsvBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant. (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS) {{fc409a35-8dbc-4c63-a0cf-e766d7b01070}}")
+    @CsvBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.  (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS)")
     List<String> adultsProvidingFinancialSupport;
-    @CsvBindByName(column="What is the number of minors (below 18 years old) living in the household, INCLUDING THE CHILD APPLICANT? {{19143fe1-fb50-438e-ad1e-bcc468cd3d29}}")
+    @CsvBindByName(column="What is the number of minors (below 18 years old) living in the household, INCLUDING THE CHILD APPLICANT?")
     String numberOfMinorsInHousehold;
-    @CsvBindByName(column="List below each minor living in the household, their age, and their relationship to the child applicant. (Example: Child Applicant - 3 YEARS, Brother - 10 YEARS, Sister - 7 YEARS, Cousin - 7 YEARS) {{8c0269c4-eaa8-4b06-9feb-2b11a6ff0044}}")
+    @CsvBindByName(column="List below each minor living in the household, their age, and their relationship to the child applicant.  (Example: Child Applicant - 3 YEARS, Brother - 10 YEARS, Sister - 7 YEARS, Cousin - 7 YEARS)")
     List<String> minorsInHousehold;
-    @CsvBindByName(column="Upload the birth certificate (state issued or foreign) or passport or visa or hospital record or state-issued ID for each minor listed as a sibling of the applicant child. Upload one of these required documents for ALL dependent children listed in the household. {{8376a3aa-2eee-4107-85ed-9873da18bc28}}")
+    @CsvBindByName(column="Upload the birth certificate (state issued or foreign) or passport or visa or hospital record or state-issued ID for each minor listed as a sibling of the applicant child.  Upload one of these required documents for ALL dependent children listed in the household.")
     String siblingProofData;
-    @CsvBindByName(column="Upload additional sibling birth certificates, if needed. {{7c600e76-583f-4436-b8c8-89a7ca1705be}}")
+    @CsvBindByName(column="Upload additional sibling birth certificates, if needed.")
     String siblingAdditionalProofData;
     @CsvBindByName(column="Are any adults included in your household count caring for any children with disabilities in the household? {{baca161c-a8da-4408-bb02-6c028c7d203c}}")
     String areAnyAdultsInHouseholdCaregiversForChildWithDisabilitiesInHousehold;
     @CsvBindByName(column="If Yes, adult only needs to be working 15 hours. Notes on caring for SWD: {{eb230bf2-67dc-4781-b6bd-6c6af80c2323}}")
     String adultCaregiversForChildWithDisabilitiesNotes;
-    @CsvBindByName(column="Do you work at one of the centers/schools you ranked? {{1b346f97-ad79-4250-a08a-4a24a945253e}}")
+    @CsvBindByName(column="Do you work at one of the centers/schools you ranked?")
     String doesApplicantWorksAtSchoolCenterTheyRanked;
-    @CsvBindByName(column="Which center/school do you work at? {{e4bed81e-4db9-4966-9732-22198e91ed5b}}")
+    @CsvBindByName(column="Which center/school do you work at?")
     String applicantWorksAt;
-    @CsvBindByName(column="Does your child have a sibling attending any of the centers/schools you ranked? {{f8b7d2ef-565d-4998-939b-e61cc89a166a}}")
+    @CsvBindByName(column="Does your child have a sibling attending any of the centers/schools you ranked?")
     String siblingAtSchoolCenterRanked;
-    @CsvBindByName(column="You can list up to 3 siblings. Sibling name #1: {{e6160d12-6624-4fec-ab57-391d50df2534}}")
+    @CsvBindByName(column="You can list up to 3 siblings. Sibling name #1:")
     String siblingOneName;
-    @CsvBindByName(column="Which center/school does sibling #1 attend? {{62a15dcb-906e-4acd-8b58-7fe87a1f26e5}}")
+    @CsvBindByName(column="Which center/school does sibling #1 attend?")
     String siblingOneSchoolCenter;
-    @CsvBindByName(column="Sibling name #2: {{ccb95c5c-bb89-4f84-b070-bd24797f32cd}}")
+    @CsvBindByName(column="Sibling name #2:")
     String siblingTwoName;
-    @CsvBindByName(column="Which center/school does sibling #2 attend? {{f7d308b3-6fd1-458d-826c-9d6e7f7581d8}}")
+    @CsvBindByName(column="Which center/school does sibling #2 attend?")
     String siblingTwoSchoolCenter;
-    @CsvBindByName(column="Sibling name #3: {{b29398d3-b800-43f2-a1ee-87a5cd746507}}")
+    @CsvBindByName(column="Sibling name #3:")
     String siblingThreeName;
-    @CsvBindByName(column="Which center/school does sibling #3 attend? {{a21bb34f-796d-45a2-9c4d-4c71d83b5d3c}}")
+    @CsvBindByName(column="Which center/school does sibling #3 attend?")
     String siblingThreeSchoolCenter;
-    @CsvBindByName(column="Is the parent applicant an unmarried minor (under age 18)? {{972f39f4-f3aa-45c5-b7a8-d298f7e7a232}}")
+    @CsvBindByName(column="Is the parent applicant an unmarried minor (under age 18)?")
     String isParentApplicantUnmarriedMinor;
-    @CsvBindByName(column="Does your child receive SSI Benefits? {{f2c6684f-cb3d-4416-9fc0-dd86fc55ae53}}")
-    String doesChildReceiveSSI;
-    @CsvBindByName(column="Upload a statement from the Social Security Administration verifying that the child listed on the application is a recipient of SSI benefits. {{dc216f53-fe2a-48cb-856b-67c357f9f2c7}}")
-    String ssiVerificationDocument;
+
     @CsvBindByName(column="Does your child currently receive Child Care Assistance Program (CCAP) benefits? {{d70fc952-2934-4c0e-b746-ba8d9d1ec107}}")
     String doesChildReceiveCCAP;
-    @CsvBindByName(column="Does your child currently have an Individualized Family Service Plans (IFSP) or are they being evaluated for special education services? {{71f7253f-7a8e-48b6-bce4-fc28d5420838}}")
+    @CsvBindByName(column="Does your child have an Individualized Family Service Plans (IFSP), or are they being evaluated for special education services?")
     String doesChildHaveIFSPOrBeingEvaluated;
     @CsvBindByName(column="Does your child receive Family Independence Temporary Assistance (FITAP) or Temporary Assistance to Needy Families (TANF) benefits? {{34400559-5f00-4445-ac61-c5d1d04e1b58}}")
     String doesChildReceiveFITAPorTANF;
@@ -724,7 +706,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     String doesParentGuardianReceiveSSDorSupplementalSecurityIncomeOrVADisability;
     @CsvBindByName(column="Upload proof of benefits or doctor’s statement of disability with date of letter. All disability verification must include the name of the person, the dates of validity of those benefits, and the dollar value of those benefits, if applicable.  {{47cd324f-a446-4947-a864-9672bed7532b}}")
     String disbilityVerification;
-    @CsvBindByName(column="Is the applicant a child of a parent or guardian in active military service? {{e61b8c1c-bef4-417c-80ee-b49cc27cc03a}}")
+    @CsvBindByName(column="Is the applicant a child of a parent or guardian in active Military service?")
     String isChildsParentGuardianInMilitaryService;
     @CsvBindByName(column="Which language did your child learn first? {{6f9222c0-b4de-4427-a9c4-5699add06239}}")
     String childsFirstLanguage;
