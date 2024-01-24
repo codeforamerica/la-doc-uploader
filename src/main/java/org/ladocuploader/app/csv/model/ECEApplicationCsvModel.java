@@ -48,26 +48,6 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="Select the option that best describes where you live.")
     private String descriptionOfLivingEnv;
-
-    // *** no questions for this one *** //
-
-    // *** no questions for this one *** //
-
-    // *** no questions for this one *** //
-//    @CsvBindByName(column="Admin Last Reviewed Date {{7367c557-48b9-4bbc-af98-3dad61b6c80e}}")
-//    private String adminLastReviewedDate;
-//
-//    // *** no questions for this one *** //
-//    @CsvBindByName(column="Admin Reviewer Name {{e6ad498b-dc32-4b07-a85b-51d53698531f}}")
-//    private String adminReviewerName;
-//
-//    // TODO format?
-//    @CsvBindByName(column="When was your child born? {{60dacb29-5950-4231-8150-5d24c3f1c76a}}")
-//    private String childBirthDate;
-
-    // *** no questions for this one *** //
-
-    // *** no questions for this one *** //
     @CsvBindByName(column="This questionnaire is intended to address the McKinney-Vento Act. Your child may be eligible for additional educational services.   Did the student receive McKinney Vento (Homeless) Services in a previous school district?", required=true)
     private String hadHomelessServicesInPreviousSchool;
 
