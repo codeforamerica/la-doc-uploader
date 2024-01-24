@@ -55,10 +55,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     preloadIncomeScreen();
 
     // Hourly
-    assertThat(testPage.getTitle()).isEqualTo("Income by job");
+    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Income who");
+    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
     testPage.clickContinue();
     assertTrue(testPage.hasErrorText(message("error.missing-general")));
 
@@ -105,11 +105,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("hoursPerWeek", "10");
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Income confirmation");
+    assertThat(testPage.getTitle()).isEqualTo(message("income-confirmation.title"));
     testPage.clickButton("Yes");
 
     // Non-hourly
-    assertThat(testPage.getTitle()).isEqualTo("Income who");
+    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
     testPage.clickContinue();
 
     testPage.clickElementById("householdMemberJobAdd-you");
@@ -628,10 +628,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("employment-status.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo("Income by job");
+    assertThat(testPage.getTitle()).isEqualTo(message("income-by-job.title"));
     testPage.clickContinue();
 
-    assertThat(testPage.getTitle()).isEqualTo("Income who");
+    assertThat(testPage.getTitle()).isEqualTo(message("income-who.title"));
     testPage.clickElementById("householdMemberJobAdd-you");
     testPage.clickContinue();
 
