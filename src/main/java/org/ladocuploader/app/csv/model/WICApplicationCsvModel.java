@@ -2,6 +2,7 @@ package org.ladocuploader.app.csv.model;
 
 import static org.ladocuploader.app.utils.SubmissionUtilities.FIVE_YEARS_AGO;
 import static org.ladocuploader.app.utils.SubmissionUtilities.MM_DD_YYYY;
+import static org.ladocuploader.app.utils.SubmissionUtilities.ONE_YEAR_AGO;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.CsvBindByName;
@@ -80,7 +81,7 @@ public class WICApplicationCsvModel extends BaseCsvModel {
         String notPregnantNoInfantNoChild = !hasPregnancy && !hasInfant && !hasChildUnderFive ? "None of the above" : "";
         objectData.put("notPregnantNoInfantNoChild", notPregnantNoInfantNoChild);
         
-        objectData.put("preferredLanguage", inputData.getOrDefault("preferredLanguage", "en"));
+        objectData.put("preferredLanguage", inputData.getOrDefault("preferredLanguage", "English"));
 
         WICApplicationCsvModel wicModel = mapper.convertValue(objectData, WICApplicationCsvModel.class);
         wicModel.setSubmissionId(submission.getId());
@@ -91,12 +92,14 @@ public class WICApplicationCsvModel extends BaseCsvModel {
         var household = submission.getInputData().get("household");
         if (household != null) {
             for (Map<String, Object> member : ((List<Map<String, Object>>) household)) {
-                var day = member.get("householdMemberBirthDay");
-                var year = member.get("householdMemberBirthYear");
-                var month = member.get("householdMemberBirthMonth");
-                LocalDate birthdate = LocalDate.parse("%s/%s/%s".formatted(month, day, year), MM_DD_YYYY);
-                if (birthdate.isAfter(FIVE_YEARS_AGO)) {
-                    return true;
+                if ("child".equals(member.get("householdMemberRelationship"))) {
+                    var day = member.get("householdMemberBirthDay");
+                    var year = member.get("householdMemberBirthYear");
+                    var month = member.get("householdMemberBirthMonth");
+                    LocalDate birthdate = LocalDate.parse("%s/%s/%s".formatted(month, day, year), MM_DD_YYYY);
+                    if (birthdate.isAfter(FIVE_YEARS_AGO) && birthdate.isBefore(ONE_YEAR_AGO)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -108,12 +111,14 @@ public class WICApplicationCsvModel extends BaseCsvModel {
         var household = submission.getInputData().get("household");
         if (household != null) {
             for (Map<String, Object> member : ((List<Map<String, Object>>) household)) {
-                var day = member.get("householdMemberBirthDay");
-                var year = member.get("householdMemberBirthYear");
-                var month = member.get("householdMemberBirthMonth");
-                LocalDate birthdate = LocalDate.parse("%s/%s/%s".formatted(month, day, year), MM_DD_YYYY);
-                if (birthdate.isAfter(LocalDate.now().minusYears(1))) {
-                    return true;
+                if ("child".equals(member.get("householdMemberRelationship"))) {
+                    var day = member.get("householdMemberBirthDay");
+                    var year = member.get("householdMemberBirthYear");
+                    var month = member.get("householdMemberBirthMonth");
+                    LocalDate birthdate = LocalDate.parse("%s/%s/%s".formatted(month, day, year), MM_DD_YYYY);
+                    if (birthdate.isAfter(ONE_YEAR_AGO)) {
+                        return true;
+                    }
                 }
             }
         }
