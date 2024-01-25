@@ -1,8 +1,10 @@
 <th:block th:fragment="wicEceConfirmation">
   <th:block th:with="
-        inNola=${T(org.ladocuploader.app.utils.SubmissionUtilities).isOrleansParish(submission)},
+        inOrleans=${T(org.ladocuploader.app.utils.SubmissionUtilities).isOrleansParish(submission)},
         inLinkGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('LINK', submission)},
         inApplyGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('APPLY', submission)},
+        isEligibleForECE=${inputData.get('interestedInEceInd') != null},
+        isEligibleForWIC=${inputData.get('interestedInWicInd') != null},
         isInterestedInECE=${'true'.equals(inputData.get('interestedInEceInd'))},
         isInterestedInWIC=${'true'.equals(inputData.get('interestedInWicInd'))}">
 
@@ -13,9 +15,17 @@
         <p class="spacing-below-15"
            th:utext="|<b>SNAP:</b> #{confirmation.p1_html(${inputData.get('interviewDate')})}|"></p>
       </div>
+      <div
+          th:if="${inputData.getOrDefault('householdSearchingForJob', 'false').equals('true')}"
+          class="vertical-steps__step">
+        <div class="notice--warning steps-box spacing-below-0">
+          <i class="icon-large icon-">&#xE8f9;</i>
+          <p class="spacing-below-15" th:utext="#{confirmation.looking_for_job_html}"></p>
+        </div>
+      </div>
     </th:block>
 
-    <div th:if="${inNola && inApplyGroup && isInterestedInECE}"
+    <div th:if="${inApplyGroup && isInterestedInECE}"
          class="notice--warning steps-box">
       <div class="large-icon"><i class="icon-">&#xE625;</i></div>
       <p class="spacing-below-15" th:utext="#{ece-notice-confirmation}"></p>
@@ -27,39 +37,43 @@
       <p class="spacing-below-15" th:utext="#{wic-notice-confirmation}"></p>
     </div>
 
-    <th:block th:if="${inNola}">
-      <th:block th:if="${!isInterestedInECE}">
-        <hr>
-        <h2 class="h2" th:utext="#{ece-no-confirmation.header}"></h2>
-      </th:block>
-      <th:block th:if="${inLinkGroup && isInterestedInECE}">
-        <hr>
-        <h2 class="h2" th:utext="#{ece-yes-confirmation.header}"></h2>
-      </th:block>
-      <th:block th:if="${!isInterestedInECE || inLinkGroup}">
-        <p th:utext="#{nola-ece.if-youre-approved}"></p>
-        <p th:utext="#{nola-ece.subheader}"></p>
-        <a class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
-           th:text="#{nola-ece-go-to-application}"></a>
-      </th:block>
+    <th:block th:if="${isEligibleForECE && !isInterestedInECE}">
+      <hr>
+      <h2 class="h2" th:utext="#{ece-no-confirmation.header}"></h2>
+      <p th:utext="#{nola-ece.if-youre-approved}"></p>
+      <p th:utext="#{nola-ece.subheader}"></p>
+      <a class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
+         th:text="#{nola-ece-go-to-application}"></a>
+    </th:block>
+
+    <th:block th:if="${inLinkGroup && isInterestedInECE}">
+      <hr>
+      <h2 class="h2" th:utext="#{ece-yes-confirmation.header}"></h2>
+      <p th:utext="#{nola-ece.if-youre-approved}"></p>
+      <p th:utext="#{nola-ece.subheader}"></p>
+      <a class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
+         th:text="#{nola-ece-go-to-application}"></a>
+    </th:block>
+
+    <th:block th:unless="${isEligibleForWIC && !isInterestedInWIC}">
+      <hr>
+      <h2 class="h2" th:text="#{wic-no-confirmation.header}"></h2>
+      <p th:text="#{wic.if-youre-approved}"></p>
+      <p th:utext="#{wic.subheader}"></p>
+      <a class="button button--primary" target="_blank" href="https://mywic.net/participantreferral"
+         th:text="#{wic-go-to-application}"></a>
+    </th:block>
+
+    <th:block th:if="${inLinkGroup && isInterestedInWIC}">
+      <hr>
+      <h2 class="h2" th:text="#{wic-yes-confirmation.header}"></h2>
+      <p th:text="#{wic.if-youre-approved}"></p>
+      <p th:utext="#{wic.subheader}"></p>
+      <a class="button button--primary" target="_blank" href="https://mywic.net/participantreferral"
+         th:text="#{wic-go-to-application}"></a>
     </th:block>
 
     <th:block th:if="${inApplyGroup || inLinkGroup}">
-      <th:block th:if="${inLinkGroup && isInterestedInWIC}">
-        <hr>
-        <h2 class="h2" th:text="#{wic-yes-confirmation.header}"></h2>
-      </th:block>
-      <th:block th:unless="${isInterestedInWIC}">
-        <hr>
-        <h2 class="h2" th:text="#{wic-no-confirmation.header}"></h2>
-      </th:block>
-      <th:block th:if="${!isInterestedInWIC || inLinkGroup}">
-        <p th:text="#{wic.if-youre-approved}"></p>
-        <p th:utext="#{wic.subheader}"></p>
-        <a class="button button--primary" target="_blank" href="https://mywic.net/participantreferral"
-           th:text="#{wic-go-to-application}"></a>
-      </th:block>
-
       <hr>
       <h2 class="h2" th:text="#{confirmation-what-to-expect-after}"></h2>
       <div class="notice-info steps-box spacing-below-15">
