@@ -2,6 +2,7 @@ package org.ladocuploader.app.cli;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +51,7 @@ public class FtpsClientImpl implements FtpsClient {
     ftp.execPBSZ(0);
     ftp.execPROT("P");
     ftp.enterLocalPassiveMode();
+    ftp.setFileType(FTP.BINARY_FILE_TYPE);
     ftp.pasv();
     InputStream local = new ByteArrayInputStream(data);
     boolean isComplete = ftp.storeFile(zipFilename, local);

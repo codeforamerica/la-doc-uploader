@@ -1,15 +1,14 @@
 package org.ladocuploader.app.preparers;
 
-import static java.util.Collections.emptyList;
-
 import formflow.library.data.Submission;
 import formflow.library.pdf.PdfMap;
 import formflow.library.pdf.SingleField;
 import formflow.library.pdf.SubmissionField;
 import formflow.library.pdf.SubmissionFieldPreparer;
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 
 @Component
 public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
@@ -18,7 +17,7 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> results = new HashMap<>();
 
-    String isEligibleForExpeditedSnap = submission.getInputData().get("isEligibleForExpeditedSnap").toString();
+    var isEligibleForExpeditedSnap = submission.getInputData().getOrDefault("isEligibleForExpeditedSnap", "false");
     if (isEligibleForExpeditedSnap.equals("true")) {
       String householdIncomeLast30Days = submission.getInputData().getOrDefault("householdIncomeLast30Days", "0").toString();
       results.put("expeditedSnapIncome", new SingleField("expeditedSnapIncome", householdIncomeLast30Days, null));
