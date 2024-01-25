@@ -25,6 +25,13 @@ inputFields:
   mailingAddressCity: mailingAddressCity
   mailingAddressStreetAddress2: mailingAddressStreetAddress2
   mailingAddressStreetAddress1: mailingAddressStreetAddress1
+  expeditedSnapIncome: expeditedSnapIncome
+  expeditedSnapMoneyOnHand: expeditedSnapMoneyOnHand
+  expeditedSnapHousingCost: expeditedSnapHousingCost
+  expeditedSnapHouseholdExpensesBool: expeditedSnapHouseholdExpensesBool
+  expeditedSnapHeatingBool: expeditedSnapHeatingBool
+  expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
+  expeditedMigrantOrSeasonalWorkerBool: expeditedMigrantOrSeasonalWorkerBool
   signature: signature
   applicantBirthdayFormatted: applicantBirthday
   emailAddress: emailAddress
