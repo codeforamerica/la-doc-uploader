@@ -2,6 +2,7 @@ package org.ladocuploader.app.csv.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 import formflow.library.data.Submission;
 import java.util.HashMap;
 import lombok.Getter;
@@ -18,9 +19,11 @@ import java.util.UUID;
 public class RelationshipCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column = "first_person", required=true)
+    @CsvBindByPosition(position=0)
     private String first_person_id; // use id of applicant
 
     @CsvBindByName(column="second_person", required=true)
+    @CsvBindByPosition(position=1)
     private String uuid; // id of subflow member
 
     public static List<BaseCsvModel> generateModel(Submission submission){
