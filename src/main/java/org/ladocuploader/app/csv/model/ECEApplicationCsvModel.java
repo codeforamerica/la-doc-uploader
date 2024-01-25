@@ -14,6 +14,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
+import org.ladocuploader.app.csv.converters.UnmarriedMinorConverter;
 import org.ladocuploader.app.utils.HouseholdUtilities;
 
 @Getter
@@ -213,9 +214,25 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     String applicantWorksAt;
 
     // TODO: see if we can calculate this
-    @CsvBindByName(column="Is the parent applicant an unmarried minor (under age 18)?")
+    @CsvCustomBindByName(column="Is the parent applicant an unmarried minor (under age 18)?", converter=UnmarriedMinorConverter.class)
     @CsvBindByPosition(position=43)
-    String isParentApplicantUnmarriedMinor;
+    private Map<String, Boolean> isParentApplicantUnmarriedMinor;
+
+
+    // TODO: might need to add another field
+    @JsonSetter(value="homeAddressStreetAddress1")
+    private void setApplicantIsMinor(final String birthDate) {
+        if (birthDate != null) {
+//            homeAddressStreet.put("address1", address);
+        }
+    }
+
+    @JsonSetter(value="maritalStatus")
+    private void setHomeAddress2(final String maritalStatus) {
+        if (maritalStatus != null) {
+            isParentApplicantUnmarriedMinor.put("isUnmarried", HouseholdUtilities.unmarriedStatuses.contains(maritalStatus));
+        }
+    }
 
     @CsvBindByName(column="Does your child have an Individualized Family Service Plans (IFSP), or are they being evaluated for special education services?")
     @CsvBindByPosition(position=44)
@@ -258,18 +275,19 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=52)
     String isAdultOneWorking;
 
+    // mapped
     @CsvBindByName(column="Please select the gender that best matches your SNAP application choice:")
     @CsvBindByPosition(position=53)
-    private String applicantGender;
+    private String sex;
 
     @CsvBindByName(column="Please select the ethnicity that best matches your SNAP application choice:")
     @CsvBindByPosition(position=54)
-    private String applicantEthnicity;
+    private String ethnicitySelected;
 
-    // TODO: map this to applicant answers?
+    // mapped
     @CsvBindByName(column="Please select the race that best matches your SNAP application choice:")
     @CsvBindByPosition(position=55)
-    private String snapApplicationChoice;
+    private String raceSelected;
 
     // *** no questions for this one *** //
     @CsvBindByName(column="Pay statement upload #1 and #2 (dated within 45-60 days of filling out this application)")

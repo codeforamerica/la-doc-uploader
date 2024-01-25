@@ -1,13 +1,14 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class HouseholdUtilities {
+
+  public static List<String> unmarriedStatuses = Arrays.asList("Never married", "Legally separated", "Divorced", "Widowed");
+
+
 
   public static boolean isMember18orOlder(int day, int month, int year) throws NumberFormatException {
 
