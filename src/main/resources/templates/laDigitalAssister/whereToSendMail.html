@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title=#{where-to-send-mail.title})}"></head>
+<head th:replace="~{fragments/head :: head(title=#{where-to-send-mail-pobox.title})}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -10,14 +10,10 @@
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: mail}"></th:block>
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{where-to-send-mail.header}, subtext=#{where-to-send-mail.subtext})}"/>
-        <a th:href="'/flow/' + ${flow} + '/mailingAddressNoAddress'"
-           th:text="#{where-to-send-mail.add-address}"
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{where-to-send-mail-pobox.header}, subtext=#{where-to-send-mail-pobox.subtext})}"/>
+        <a th:href="'https://sspweb.ie.dcfs.la.gov'" th:target="'_blank'" th:rel="'noreferrer noopener'"
+           th:text="#{where-to-send-mail-pobox.button}"
            class="button button--primary"></a>
-        <a th:href="'/flow/' + ${flow} + '/whereToSendMail'"
-           th:text="#{where-to-send-mail.no-mailing-address}"
-           class="button spacing-left-0"
-           id="continue-link"></a>
       </main>
     </div>
   </section>
