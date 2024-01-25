@@ -112,7 +112,7 @@ server:
     session:
       persistent: true
 transmissions:
-  snap-transmission-rate: ${SNAP_TRANSMISSION_RATE:-"PT5M"}
+  snap-transmission-rate: ${SNAP_TRANSMISSION_RATE:PT5M}
 ftps:
   username: ${FTPS_USERNAME:-""}
   password: ${FTPS_PASSWORD:-""}

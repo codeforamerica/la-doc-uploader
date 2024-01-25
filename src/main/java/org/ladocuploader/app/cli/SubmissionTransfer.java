@@ -14,8 +14,6 @@ import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -66,9 +64,6 @@ public class SubmissionTransfer {
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
 
-  @Autowired
-  private ConfigurableApplicationContext context;
-
   public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
@@ -87,7 +82,6 @@ public class SubmissionTransfer {
     int totalQueued = queuedSubmissions.size();
     if (queuedSubmissions.isEmpty()) {
       log.info("Nothing to transmit. Exiting.");
-      context.close();
       return;
     }
     log.info("Found %s queued transmissions".formatted(totalQueued));
@@ -97,7 +91,6 @@ public class SubmissionTransfer {
     log.info("Excluding %s submitted within last 2 hours".formatted(totalQueued - queuedSubmissions.size()));
     if (queuedSubmissions.isEmpty()) {
       log.info("No submissions older than 2 hour to transmit. Exiting.");
-      context.close();
       return;
     }
     log.info("Found %s transmissions to transmit".formatted(queuedSubmissions.size()));
@@ -109,7 +102,6 @@ public class SubmissionTransfer {
       transferSubmissionBatch(submissionBatch);
     }
     log.info("Done transmitting batches. Transmitted %s of %s batches. Exiting.".formatted(transmittedCount, submissionBatches.size()));
-    context.close();
   }
 
   private void transferSubmissionBatch(List<Submission> submissionsBatch) {
