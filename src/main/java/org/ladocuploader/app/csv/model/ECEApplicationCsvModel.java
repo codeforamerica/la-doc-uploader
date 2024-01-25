@@ -3,6 +3,7 @@ package org.ladocuploader.app.csv.model;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvCustomBindByName;
 import formflow.library.data.Submission;
 import java.util.HashMap;
@@ -21,12 +22,15 @@ import org.ladocuploader.app.utils.HouseholdUtilities;
 public class ECEApplicationCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="cfa_reference_id", required=true)
+    @CsvBindByPosition(position=0)
     private String id;
     //  *** no questions for this one *** //
     @CsvBindByName(column="Student Id {{student-id}}")
+    @CsvBindByPosition(position=1)
     private String studentId;
     //  *** no questions for this one *** //
     @CsvBindByName(column="School Id {{school-id}}")
+    @CsvBindByPosition(position=2)
     private String schoolId;
 
     @CsvBindByName(column="School Rank {{school-rank}}")
@@ -422,31 +426,34 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
 
         int numberOfAdultsInHousehold = 0;
 
-        for (Map<String, Object> member : householdList) {
-            int birthDay = 0;
-            int birthMonth = 0;
-            int birthYear = 0;
-            boolean is18orOlder = false;
+        if (householdList != null){
 
-            try {
-                birthDay = Integer.parseInt((String)member.get("householdMemberBirthDay"));
-                birthMonth = Integer.parseInt((String)member.get("householdMemberBirthMonth"));
-                birthYear = Integer.parseInt((String)member.get("householdMemberBirthYear"));
+            for (Map<String, Object> member : householdList) {
+                int birthDay = 0;
+                int birthMonth = 0;
+                int birthYear = 0;
+                boolean is18orOlder = false;
 
-                is18orOlder = HouseholdUtilities.isMember18orOlder(birthDay, birthMonth, birthYear);
-            } catch (NumberFormatException e) {
-                // TODO what to do if this does fail?? ignore and keep going? probably
-                log.error("Unable to work with household member {}'s birthday ({}/{}/{}): {}",
-                    member.get("householdMemberFirstName"),
-                    (String)member.get("householdMemberBirthDay"),
-                    (String)member.get("householdMemberBirthMonth"),
-                    (String)member.get("householdMemberBirthYear"),
-                    e.getMessage()
-                );
-            }
+                try {
+                    birthDay = Integer.parseInt((String)member.get("householdMemberBirthDay"));
+                    birthMonth = Integer.parseInt((String)member.get("householdMemberBirthMonth"));
+                    birthYear = Integer.parseInt((String)member.get("householdMemberBirthYear"));
 
-            if (is18orOlder) {
-                numberOfAdultsInHousehold++;
+                    is18orOlder = HouseholdUtilities.isMember18orOlder(birthDay, birthMonth, birthYear);
+                } catch (NumberFormatException e) {
+                    // TODO what to do if this does fail?? ignore and keep going? probably
+                    log.error("Unable to work with household member {}'s birthday ({}/{}/{}): {}",
+                        member.get("householdMemberFirstName"),
+                        (String)member.get("householdMemberBirthDay"),
+                        (String)member.get("householdMemberBirthMonth"),
+                        (String)member.get("householdMemberBirthYear"),
+                        e.getMessage()
+                    );
+                }
+
+                if (is18orOlder) {
+                    numberOfAdultsInHousehold++;
+                }
             }
         }
         eceDataMap.put("numberOfAdultsInHousehold", numberOfAdultsInHousehold);

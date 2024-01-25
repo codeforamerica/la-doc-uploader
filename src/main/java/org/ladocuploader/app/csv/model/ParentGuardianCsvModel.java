@@ -19,33 +19,43 @@ import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 public class ParentGuardianCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column = "active")
+    @CsvBindByPosition(position=0)
     private Boolean active = true;
 
     @CsvBindByName(column="reference_id")
+    @CsvBindByPosition(position=1)
     private String id;
 
     @CsvBindByName(column="first_name")
+    @CsvBindByPosition(position=2)
     private String firstName;
 
     @CsvBindByName(column="last_name")
+    @CsvBindByPosition(position=3)
     private String lastName;
 
     @CsvBindByName(column="email_address")
+    @CsvBindByPosition(position=4)
     private String emailAddress;
 
     @CsvCustomBindByName(column="phone_number", converter= PhoneNumberConverter.class)
+    @CsvBindByPosition(position=5)
     private String phoneNumber;
 
     @CsvCustomBindByName(column="street_address", converter=AddressStreetConverter.class)
+    @CsvBindByPosition(position=6)
     private Map<String, String> homeAddressStreet = new HashMap<>();
 
     @CsvBindByName(column="city")
+    @CsvBindByPosition(position=7)
     private String homeAddressCity;
 
     @CsvBindByName(column="state")
+    @CsvBindByPosition(position=8)
     private String homeAddressState;
 
     @CsvBindByName(column="zip_code")
+    @CsvBindByPosition(position=9)
     private String homeAddressZipCode;
 
     @JsonSetter(value="homeAddressStreetAddress1")
