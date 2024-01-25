@@ -21,7 +21,7 @@ import java.util.Iterator;
 
 @Slf4j
 @Component
-@Profile({"production", "staging"})
+@Profile({"production", "staging", "demo"})
 public class PGPEncryptorImpl implements PGPEncryptor {
 
   @Value("${pgp.sigkey-password}")
