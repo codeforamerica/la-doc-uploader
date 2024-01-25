@@ -66,6 +66,8 @@ flow:
     beforeSaveAction: MailingAddressSetToHomeAddress
     nextScreens:
       - name: contactInfo
+  whereToSendMail:
+    nextScreens: null
   mailingAddress:
     crossFieldValidationAction: ValidateMailingAddress
     beforeSaveAction: MailingAddressSetToHomeAddress
