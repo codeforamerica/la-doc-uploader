@@ -454,6 +454,8 @@ flow:
     nextScreens:
       - name: wicApply
         condition: EligibleForWicApply
+      - name: nolaApplyThankYou
+        condition: InterestedInWicEce
       - name: finalSignPost
   wicApply:
     nextScreens:
