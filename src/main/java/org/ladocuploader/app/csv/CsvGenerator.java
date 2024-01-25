@@ -97,7 +97,7 @@ public class CsvGenerator {
     private CsvDocument generateCsv(CsvType csvType, Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         CsvDocument csv = new CsvDocument(csvType);
 //        var mappingStrategy = new CustomBeanToCSVMappingStrategy<BaseCsvModel>();
-        CustomBeanToCSVMappingStrategy<BaseCsvModel> mappingStrategy = new CustomBeanToCSVMappingStrategy<>();
+        HeaderColumnMappingStrategy<BaseCsvModel> mappingStrategy = new HeaderColumnMappingStrategy<>();
         mappingStrategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
