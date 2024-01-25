@@ -23,7 +23,8 @@ public class SubmissionUtilities {
     public static final Map<String, String> PDF_MARITAL_STATUS_MAP = new HashMap<>();
     public static final Map<String, String> PDF_RELATIONSHIP_MAP = new HashMap<>();
 
-    private static final LocalDate FIVE_YEARS_AGO = LocalDate.now().minusYears(5);
+    public static final LocalDate ECE_CUTOFF_DATE = LocalDate.parse("09/30/2019");
+    public static final LocalDate WIC_CUTOFF_DATE = LocalDate.parse("02/29/2020");
 
     static {
         PDF_EDUCATION_MAP.put("firstGrade", "1st grade");
@@ -89,18 +90,20 @@ public class SubmissionUtilities {
         return "$" + decimalFormat.format(value);
     }
 
-    public static boolean isNolaParish(Submission submission) {
+    public static boolean isOrleansParish(Submission submission) {
         return ORLEANS.name().equals(submission.getInputData().get("parish"));
     }
 
     public static boolean isEligibleForExperiment(Submission submission) {
-        // Someone in household is pregnant
-        var pregnancyInHousehold = (String) submission.getInputData().getOrDefault("pregnancyInd", "false");
-        if ("true".equals(pregnancyInHousehold)) {
-            return true;
-        }
+        return hasHouseholdPregnancy(submission) || hasChildBornAfterCutoff(submission, ECE_CUTOFF_DATE);
+    }
 
-        // Has child under 5
+    public static boolean hasHouseholdPregnancy(Submission submission) {
+        var pregnancyInHousehold = submission.getInputData().getOrDefault("pregnancyInd", "false");
+        return "true".equals(pregnancyInHousehold);
+    }
+
+    public static boolean hasChildBornAfterCutoff(Submission submission, LocalDate cutoffDate) {
         var household = submission.getInputData().get("household");
         if (household != null) {
             for (Map<String, Object> member : ((List<Map<String, Object>>) household)) {
@@ -108,14 +111,13 @@ public class SubmissionUtilities {
                     var day = member.get("householdMemberBirthDay");
                     var year = member.get("householdMemberBirthYear");
                     var month = member.get("householdMemberBirthMonth");
-                    LocalDate birthdate =LocalDate.parse("%s/%s/%s".formatted(month, day, year), MM_DD_YYYY);
-                    if (birthdate.isAfter(FIVE_YEARS_AGO)) {
+                    LocalDate birthdate = LocalDate.parse("%s/%s/%s".formatted(month, day, year), MM_DD_YYYY);
+                    if (birthdate.isAfter(cutoffDate)) {
                         return true;
                     }
                 }
             }
         }
-
         return false;
     }
 

@@ -4,21 +4,21 @@ import formflow.library.config.submission.Condition;
 import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 
+import static org.ladocuploader.app.utils.SubmissionUtilities.isOrleansParish;
+
 @Component
 public class InterestedInWicEce implements Condition {
 
-  private final InNolaParish inNola;
   private final InterestedInECE interestedInECE;
   private final InterestedInWIC interestedInWIC;
 
-  public InterestedInWicEce(InNolaParish inNola, InterestedInECE interestedInECE, InterestedInWIC interestedInWIC) {
-    this.inNola = inNola;
+  public InterestedInWicEce(InterestedInECE interestedInECE, InterestedInWIC interestedInWIC) {
     this.interestedInECE = interestedInECE;
     this.interestedInWIC = interestedInWIC;
   }
 
   @Override
   public Boolean run(Submission submission) {
-    return inNola.run(submission) && (interestedInECE.run(submission) || interestedInWIC.run(submission));
+    return isOrleansParish(submission) && (interestedInECE.run(submission) || interestedInWIC.run(submission));
   }
 }

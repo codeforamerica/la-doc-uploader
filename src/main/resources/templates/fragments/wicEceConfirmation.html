@@ -1,6 +1,6 @@
 <th:block th:fragment="wicEceConfirmation">
   <th:block th:with="
-        inNola=${T(org.ladocuploader.app.utils.SubmissionUtilities).isNolaParish(submission)},
+        inNola=${T(org.ladocuploader.app.utils.SubmissionUtilities).isOrleansParish(submission)},
         inLinkGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('LINK', submission)},
         inApplyGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('APPLY', submission)},
         isInterestedInECE=${'true'.equals(inputData.get('interestedInEceInd'))},

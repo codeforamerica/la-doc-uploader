@@ -410,28 +410,30 @@ flow:
       - name: expensesElderlyCareAmount
         condition: HasElderlyCareExpenses
       - name: nolaEceLinks
-        condition: EligibleForNolaWicEceLinks
+        condition: EligibleForEceLinks
       - name: wicLinks
-        condition: EligibleForOutsideNolaWicLinks
+        condition: EligibleForWicLinks
       - name: nolaApplyStart
-        condition: EligibleForNolaWicEceApply
+        condition: EligibleForEceApply
       - name: wicApply
-        condition: EligibleForOutsideNolaWicApply
+        condition: EligibleForWicApply
       - name: finalSignPost
   expensesElderlyCareAmount:
     nextScreens:
       - name: nolaEceLinks
-        condition: EligibleForNolaWicEceLinks
+        condition: EligibleForEceLinks
       - name: wicLinks
-        condition: EligibleForOutsideNolaWicLinks
+        condition: EligibleForWicLinks
       - name: nolaApplyStart
-        condition: EligibleForNolaWicEceApply
+        condition: EligibleForEceApply
       - name: wicApply
-        condition: EligibleForOutsideNolaWicApply
+        condition: EligibleForWicApply
       - name: finalSignPost
   nolaEceLinks:
     nextScreens:
       - name: wicLinks
+        condition: EligibleForWicLinks
+      - name: finalSignPost
   wicLinks:
     nextScreens:
       - name: finalSignPost
@@ -440,6 +442,8 @@ flow:
       - name: nolaApplyQuestions
         condition: InterestedInECE
       - name: wicApply
+        condition: EligibleForWicApply
+      - name: finalSignPost
   nolaApplyQuestions:
     nextScreens:
       - name: nolaApplyIEP
@@ -449,6 +453,8 @@ flow:
   nolaApplyHouseholdAdultsWork:
     nextScreens:
       - name: wicApply
+        condition: EligibleForWicApply
+      - name: finalSignPost
   wicApply:
     nextScreens:
       - name: nolaApplyThankYou
