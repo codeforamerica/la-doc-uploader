@@ -23,8 +23,8 @@ public class SubmissionUtilities {
     public static final Map<String, String> PDF_MARITAL_STATUS_MAP = new HashMap<>();
     public static final Map<String, String> PDF_RELATIONSHIP_MAP = new HashMap<>();
 
-    public static final LocalDate ECE_CUTOFF_DATE = LocalDate.parse("09/30/2019");
-    public static final LocalDate WIC_CUTOFF_DATE = LocalDate.parse("02/29/2020");
+    public static final LocalDate ECE_CUTOFF_DATE = LocalDate.parse("2019-09-30");
+    public static final LocalDate WIC_CUTOFF_DATE = LocalDate.parse("2020-02-29");
 
     static {
         PDF_EDUCATION_MAP.put("firstGrade", "1st grade");
