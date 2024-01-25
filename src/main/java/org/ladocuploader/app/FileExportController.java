@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import static formflow.library.FormFlowController.getSubmissionIdForFlow;
 
@@ -70,13 +71,13 @@ public class FileExportController {
         Locale locale
     ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
-        String cleanedFlow = StringEscapeUtils.escapeHtml4(flow);
-        String cleanedSubmissionId = StringEscapeUtils.escapeHtml4(submissionId);
+        String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
+        String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
 
         log.info("GET downloadCSV ParentGuardian (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
-            cleanedFlow, cleanedSubmissionId);
+            encodedFlow, encodedSubmissionId);
 
-        return handleCsvGeneration(cleanedFlow, cleanedSubmissionId, httpSession, locale, CsvType.PARENT_GUARDIAN);
+        return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.PARENT_GUARDIAN);
     }
 
     @GetMapping("{flow}/student/{submissionId}")
@@ -88,13 +89,13 @@ public class FileExportController {
         Locale locale
     ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
-        String cleanedFlow = StringEscapeUtils.escapeHtml4(flow);
-        String cleanedSubmissionId = StringEscapeUtils.escapeHtml4(submissionId);
+        String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
+        String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
 
         log.info("GET downloadCSV Student (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
-            cleanedFlow, cleanedSubmissionId);
+            encodedFlow, encodedSubmissionId);
 
-        return handleCsvGeneration(cleanedFlow, cleanedSubmissionId, httpSession, locale, CsvType.STUDENT);
+        return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.STUDENT);
     }
 
     @GetMapping("{flow}/rel/{submissionId}")
@@ -106,14 +107,52 @@ public class FileExportController {
         Locale locale
     ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
-        String cleanedFlow = StringEscapeUtils.escapeHtml4(flow);
-        String cleanedSubmissionId = StringEscapeUtils.escapeHtml4(submissionId);
+        String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
+        String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
 
         log.info("GET downloadCSV Relationship (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
-            cleanedFlow, cleanedSubmissionId);
+            encodedFlow, encodedSubmissionId);
 
-        return handleCsvGeneration(cleanedFlow, cleanedSubmissionId, httpSession, locale, CsvType.RELATIONSHIP);
+        return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.RELATIONSHIP);
     }
+
+
+    @GetMapping("{flow}/ece/{submissionId}")
+    ResponseEntity<?> downloadEceCsv(
+            @PathVariable String flow,
+            @PathVariable String submissionId,
+            HttpSession httpSession,
+            HttpServletRequest request,
+            Locale locale
+        ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+
+        String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
+        String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
+
+        log.info("GET downloadCSV ECE Application (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
+            encodedFlow, encodedSubmissionId);
+
+        return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.ECE_APPLICATION);
+    }
+
+    @GetMapping("{flow}/wic/{submissionId}")
+    ResponseEntity<?> downloadWicCsv(
+        @PathVariable String flow,
+        @PathVariable String submissionId,
+        HttpSession httpSession,
+        HttpServletRequest request,
+        Locale locale
+    ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+
+        String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
+        String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
+
+        log.info("GET downloadCSV WIC Application (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
+            encodedFlow, encodedSubmissionId);
+
+        return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.WIC_APPLICATION);
+    }
+
 
     protected static void throwNotFoundError(String flow, String message) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
