@@ -96,14 +96,15 @@ public class CsvGenerator {
 
     private CsvDocument generateCsv(CsvType csvType, Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         CsvDocument csv = new CsvDocument(csvType);
-        CustomBeanToCSVMappingStrategy<BaseCsvModel> strategy = new CustomBeanToCSVMappingStrategy<>();
-        strategy.setType(classType);
+//        var mappingStrategy = new CustomBeanToCSVMappingStrategy<BaseCsvModel>();
+        CustomBeanToCSVMappingStrategy<BaseCsvModel> mappingStrategy = new CustomBeanToCSVMappingStrategy<>();
+        mappingStrategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
         CSVWriter writer = new CSVWriter(streamWriter);
         StatefulBeanToCsv<BaseCsvModel> beanToCsv = new StatefulBeanToCsvBuilder<BaseCsvModel>(writer)
                 .withSeparator(',')
-                .withMappingStrategy(strategy)
+                .withMappingStrategy(mappingStrategy)
                 .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                 .build();
         // write one line at a time to gather exceptions. Otherwise, we just have access to CsvExceptions and

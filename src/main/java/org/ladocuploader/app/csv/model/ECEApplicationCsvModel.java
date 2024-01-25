@@ -21,7 +21,7 @@ import org.ladocuploader.app.utils.HouseholdUtilities;
 @Slf4j
 public class ECEApplicationCsvModel extends BaseCsvModel {
 
-    @CsvBindByName(column="cfa_reference_id", required=true)
+    @CsvBindByName(column="cfa_reference_id")
     @CsvBindByPosition(position=0)
     private String id;
     //  *** no questions for this one *** //
@@ -245,6 +245,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=49)
     private String proofOfResidencyDocumentTwoType;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Either the parent/guardian name must be on the residency documents or if the parent/guardian lives with another adult who is named on the residency documents, the parent/guardian must upload a signed letter from the person named on the residency documents stating that the parent/guardian lives at that same address.   If uploading a letter, parent/guardian must also upload acceptable proofs of residency in resident’s name and a photo of the resident's ID.")
     @CsvBindByPosition(position=50)
     String residencyNotice;
@@ -270,12 +271,15 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=55)
     private String snapApplicationChoice;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Pay statement upload #1 and #2 (dated within 45-60 days of filling out this application)")
     @CsvBindByPosition(position=56)
     String adultOnePayStatementOneAndTwo;
+    // *** no questions for this one *** //
     @CsvBindByName(column="Pay statement upload #3 and #4, if needed (dated within 45-60 days of filling out this application)")
     @CsvBindByPosition(position=57)
     String adultOnePayStatementThreeAndFour;
+    // *** no questions for this one *** //
     @CsvBindByName(column="Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed)")
     @CsvBindByPosition(position=58)
     String adultOneEmployerLetter;
@@ -284,9 +288,12 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=59)
     String adultOneIncomeSupportComesFrom;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload your most recent IRS Form 1099")
     @CsvBindByPosition(position=60)
     String adultOneSelfEmployment1099;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="If choosing 'Parents/family', attach a statement from person providing support")
     @CsvBindByPosition(position=61)
     String adultOneSupportFromParentFamilyStatementDocument;
