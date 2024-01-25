@@ -25,14 +25,12 @@
       </div>
     </th:block>
 
-    <div th:if="${inApplyGroup && isInterestedInECE}"
-         class="notice--warning steps-box">
+    <div th:if="${inApplyGroup && isInterestedInECE}" class="notice--warning steps-box">
       <div class="large-icon"><i class="icon-">&#xE625;</i></div>
       <p class="spacing-below-15" th:utext="#{ece-notice-confirmation}"></p>
     </div>
 
-    <div th:if="${inApplyGroup && isInterestedInWIC}"
-         class="notice--warning steps-box spacing-below-0">
+    <div th:if="${inApplyGroup && isInterestedInWIC}" class="notice--warning steps-box spacing-below-0">
       <th:block th:replace="~{fragments/icons :: socialGroup}"></th:block>
       <p class="spacing-below-15" th:utext="#{wic-notice-confirmation}"></p>
     </div>
@@ -55,7 +53,7 @@
          th:text="#{nola-ece-go-to-application}"></a>
     </th:block>
 
-    <th:block th:unless="${isEligibleForWIC && !isInterestedInWIC}">
+    <th:block th:if="${isEligibleForWIC && !isInterestedInWIC}">
       <hr>
       <h2 class="h2" th:text="#{wic-no-confirmation.header}"></h2>
       <p th:text="#{wic.if-youre-approved}"></p>
