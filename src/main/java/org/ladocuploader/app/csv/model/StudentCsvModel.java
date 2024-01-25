@@ -3,6 +3,7 @@ package org.ladocuploader.app.csv.model;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvCustomBindByName;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,30 +23,39 @@ import org.ladocuploader.app.csv.converters.HouseholdBirthDateConverter;
 public class StudentCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="active", required=true)
+    @CsvBindByPosition(position=0)
     private Boolean active = true;
 
     @CsvBindByName(column="reference_id")
+    @CsvBindByPosition(position=1)
     private String id; // uuid of student
 
     @CsvBindByName(column="first_name")
+    @CsvBindByPosition(position=2)
     private String firstName; // student's first name
 
     @CsvBindByName(column="last_name")
+    @CsvBindByPosition(position=3)
     private String lastName; // student's last name
 
     @CsvCustomBindByName(column="street_address", converter=AddressStreetConverter.class)
+    @CsvBindByPosition(position=4)
     private Map<String, String> homeAddressStreet = new HashMap<>();
 
     @CsvBindByName(column="city")
+    @CsvBindByPosition(position=5)
     private String homeAddressCity;
 
     @CsvBindByName(column="state")
+    @CsvBindByPosition(position=6)
     private String homeAddressState;
 
     @CsvBindByName(column="zip_code")
+    @CsvBindByPosition(position=7)
     private String homeAddressZipCode;
 
     @CsvCustomBindByName(column="birth_date", converter= HouseholdBirthDateConverter.class)
+    @CsvBindByPosition(position=8)
     private Map<String, Integer> birthDate = new HashMap<>();
 
     @JsonSetter(value="memberBirthDay")

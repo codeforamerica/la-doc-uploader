@@ -3,6 +3,7 @@ package org.ladocuploader.app.csv.model;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvCustomBindByName;
 import formflow.library.data.Submission;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class WICApplicationCsvModel extends BaseCsvModel {
 
 
     @CsvBindByName(column="reference_id")
+    @CsvBindByPosition(position=0)
     private String id;
 
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
