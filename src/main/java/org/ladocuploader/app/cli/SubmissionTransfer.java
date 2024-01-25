@@ -17,8 +17,8 @@ import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Sort;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +32,7 @@ import java.util.zip.ZipOutputStream;
 import static org.ladocuploader.app.file.DocTypeEnum.*;
 
 @Slf4j
-@ShellComponent
+@Service
 public class SubmissionTransfer {
   private static final Map<String, String> DOCTYPE_FORMAT_MAP = new HashMap<>();
 
@@ -79,7 +79,7 @@ public class SubmissionTransfer {
     this.ftpsClient = ftpsClient;
   }
 
-  @ShellMethod(key = "transferSubmissions")
+  @Scheduled(fixedRateString ="${transmissions.snap-transmission-rate}")
   public void transferSubmissions() {
     // Give a 2-hour wait for folks to upload documents
     OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
