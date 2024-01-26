@@ -166,24 +166,27 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=29)
     private String parentIdDocumentation;
 
-    // TODO: build converter
+    // TODO: build converter if we have adults providing financial support?
     @CsvBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.  (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS)")
     @CsvBindByPosition(position=30)
     List<String> adultsProvidingFinancialSupport;
 
-    // TODO: build converter
+    // TODO: build converter for minor list
     @CsvBindByName(column="List below each minor living in the household, their age, and their relationship to the child applicant.  (Example: Child Applicant - 3 YEARS, Brother - 10 YEARS, Sister - 7 YEARS, Cousin - 7 YEARS)")
     @CsvBindByPosition(position=31)
     List<String> minorsInHousehold;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload the birth certificate (state issued or foreign) or passport or visa or hospital record or state-issued ID for each minor listed as a sibling of the applicant child.  Upload one of these required documents for ALL dependent children listed in the household.")
     @CsvBindByPosition(position=32)
     String siblingProofData;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload additional sibling birth certificates, if needed.")
     @CsvBindByPosition(position=33)
     String siblingAdditionalProofData;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Does your child have a sibling attending any of the centers/schools you ranked?")
     @CsvBindByPosition(position=34)
     String siblingAtSchoolCenterRanked;
@@ -213,7 +216,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=42)
     String applicantWorksAt;
 
-    // TODO: see if we can calculate this
+    // TODO: come back to this and figure out how to get the setters working
     @CsvCustomBindByName(column="Is the parent applicant an unmarried minor (under age 18)?", converter=UnmarriedMinorConverter.class)
     @CsvBindByPosition(position=43)
     private Map<String, String> isParentApplicantUnmarriedMinor = new HashMap<>();
@@ -258,10 +261,12 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
         }
     }
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Does your child have an Individualized Family Service Plans (IFSP), or are they being evaluated for special education services?")
     @CsvBindByPosition(position=44)
     String doesChildHaveIFSPOrBeingEvaluated;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Is your name listed on the residency documents that you will be providing?")
     @CsvBindByPosition(position=45)
     private String isYourNameOrSpouseNameOnResidencyDocuments;
@@ -291,6 +296,8 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=50)
     String residencyNotice;
 
+
+    // TODO: applicant is child or parent in this case?
     @CsvBindByName(column="Is the applicant a child of a parent or guardian in active Military service?")
     @CsvBindByPosition(position=51)
     String isChildsParentGuardianInMilitaryService;
@@ -304,6 +311,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=53)
     private String sex;
 
+    // mapped
     @CsvBindByName(column="Please select the ethnicity that best matches your SNAP application choice:")
     @CsvBindByPosition(position=54)
     private String ethnicitySelected;
@@ -317,15 +325,18 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Pay statement upload #1 and #2 (dated within 45-60 days of filling out this application)")
     @CsvBindByPosition(position=56)
     String adultOnePayStatementOneAndTwo;
+
     // *** no questions for this one *** //
     @CsvBindByName(column="Pay statement upload #3 and #4, if needed (dated within 45-60 days of filling out this application)")
     @CsvBindByPosition(position=57)
     String adultOnePayStatementThreeAndFour;
+
     // *** no questions for this one *** //
     @CsvBindByName(column="Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed)")
     @CsvBindByPosition(position=58)
     String adultOneEmployerLetter;
 
+    // TODO: come back to this one
     @CsvBindByName(column="I state that my income or support comes from:")
     @CsvBindByPosition(position=59)
     String adultOneIncomeSupportComesFrom;
@@ -383,6 +394,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=75)
     String adultOneHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload documentation of your Unemployment Benefits: a Monetary Determination letter from the Workforce Commission")
     @CsvBindByPosition(position=76)
     String adultOneUnemploymentBenefitsDocumentation;
@@ -390,6 +402,8 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Enter the number of months you have been without income:")
     @CsvBindByPosition(position=77)
     String adultOneNumberMonthsWithoutIncome;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="I am (check all that apply)")
     @CsvBindByPosition(position=78)
     String adultOneIAmOptions;
@@ -401,9 +415,12 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=80)
     String isAdultOneSchoolTrainingSeekingWork;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement")
     @CsvBindByPosition(position=81)
     String adultOneHIRERegistrationProof;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar")
     @CsvBindByPosition(position=82)
     String adultOneProofOfSchoolEnrollment;
@@ -414,12 +431,16 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Is Adult 2 working?")
     @CsvBindByPosition(position=84)
     String isAdultTwoWorking;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Pay statement upload #1 and #2 (Adult 2) (dated within 45-60 days of filling out this application)")
     @CsvBindByPosition(position=85)
     String adultTwoPayStatementOneAndTwo;
     @CsvBindByName(column="I state that Adult 2's income or support comes from:")
     @CsvBindByPosition(position=86)
     String adultTwoIncomeSupportComesFrom;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload Adult 2's most recent IRS Form 1099")
     @CsvBindByPosition(position=87)
     String adultTwoSelfEmployment1099;
@@ -435,163 +456,209 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=90)
     String adultTwoNumberMonthsWithoutIncome;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Adult 2 is (check all that apply)")
     @CsvBindByPosition(position=91)
     String adultTwoIAmOptions;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="If 'Other' please describe Adult 2's employment status")
     @CsvBindByPosition(position=92)
     String adultTwoIAmOtherEmploymentStatusDescription;
 
+    // TODO: compute schoolName || jobSearch
     @CsvBindByName(column="Is Adult 2 in school, in a training program, or seeking work?")
     @CsvBindByPosition(position=93)
     String isAdultTwoSchoolTrainingSeekingWork;
 
+
+
+    // TODO: check for a job added or self-employment and map to Yes/No?
     @CsvBindByName(column="Is Adult 3 working?")
     @CsvBindByPosition(position=94)
     String isAdultThreeWorking;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Pay statement upload #1 and #2 (Adult 3) (dated within 45-60 days of filling out this application)")
     @CsvBindByPosition(position=95)
     String adultThreePayStatementOneAndTwo;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="I state that Adult 3's income or support comes from:")
     @CsvBindByPosition(position=96)
     String adultThreeIncomeSupportComesFrom;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload Adult 3's most recent IRS Form 1099")
     @CsvBindByPosition(position=97)
     String adultThreeSelfEmployment1099;
 
+    // TODO: self employment or employer name?
     @CsvBindByName(column="Describe Adult 3's source of income")
     @CsvBindByPosition(position=98)
     String adultThreeDescribeSourceOfIncome;
 
+    // TODO: we have a question on
     @CsvBindByName(column="Adult 3's rent/house payments, utilities, food, and transportation expenses are being paid for by:")
     @CsvBindByPosition(position=99)
     String adultThreeHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Enter the number of months Adult 3 has been without income:")
     @CsvBindByPosition(position=100)
     String adultThreeNumberMonthsWithoutIncome;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Adult 3 is (check all that apply)")
     @CsvBindByPosition(position=101)
     String adultThreeIAmOptions;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="If 'Other' please describe Adult 3's employment status")
     @CsvBindByPosition(position=102)
     String adultThreeIAmOtherEmploymentStatusDescription;
 
+    // TODO: compute schoolName || jobSearch (same as Adult 2)
     @CsvBindByName(column="Is Adult 3 in school, in a training program, or seeking work?")
     @CsvBindByPosition(position=103)
     String isAdultThreeSchoolTrainingSeekingWork;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Does your child receive SSI Benefits?")
     @CsvBindByPosition(position=104)
     String doesChildReceiveSSI;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload a statement from the Social Security Administration verifying that the child listed on the application is a recipient of SSI benefits.")
     @CsvBindByPosition(position=105)
     String ssiVerificationDocument;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Does your child receive Family Independence Temporary Assistance (FITAP) or Temporary Assistance to Needy Families (TANF) benefits?")
     @CsvBindByPosition(position=106)
     String doesChildReceiveFITAPorTANF;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Upload proof of benefits.")
     @CsvBindByPosition(position=107)
     String benefitsDocumentation;
 
+    // TODO: we have guardiansHaveDisabilityInd but doesn't account for 70%. verify this
     @CsvBindByName(column="Does the parent/guardian receive Social Security Administration disability benefits, supplemental security income, or Veterans Administration disability benefits for a disability of at least 70 percent?")
     @CsvBindByPosition(position=108)
     String doesParentGuardianReceiveSSDorSupplementalSecurityIncomeOrVADisability;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Are any adults included in your household count caring for any children with disabilities in the household?")
     @CsvBindByPosition(position=109)
     String areAnyAdultsInHouseholdCaregiversForChildWithDisabilitiesInHousehold;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="(Adult 1) Verified hours in school, training, or work")
     @CsvBindByPosition(position=110)
     String adultOneVerifiedHoursInSchoolTrainingWork;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="(Adult 2) Verified hours in school, training, or work")
     @CsvBindByPosition(position=111)
     String adultTwoVerifiedHoursInSchoolTrainingWork;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="(Adult 3) Verified hours in school, training, or work")
     @CsvBindByPosition(position=112)
     String adultThreeVerifiedHoursInSchoolTrainingWork;
 
+    // TODO: we don't have any verification but do have monthly income?
     @CsvBindByName(column="Verified income (Use only numbers, no words)")
     @CsvBindByPosition(position=113)
     String verifiedIncome;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Which language did your child learn first?")
     @CsvBindByPosition(position=114)
     String childsFirstLanguage;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Which language does your child use most often at home?")
     @CsvBindByPosition(position=115)
     String childsPreferredLangAtHome;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="In what language do you most often speak to your child?")
     @CsvBindByPosition(position=116)
     String languageSpeakToChild;
 
+    // mapped
     @CsvBindByName(column="Current phone number:")
     @CsvBindByPosition(position=117)
     private String phoneNumber;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Do you want to receive text communication from NOLA Public Schools?")
     @CsvBindByPosition(position=118)
     private String allowTextCommunicationFromNolaPS;
 
+    // mapped
     @CsvBindByName(column="Current email address:")
     @CsvBindByPosition(position=119)
     private String emailAddress;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="A Gifted IEP is required for your child to attend Hynes Charter School. Do you have a Gifted and Talented evaluation or Gifted and Talented IEP approved by OPSB's Office of Child Search?")
     @CsvBindByPosition(position=120)
     String hasGiftedIEP;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="If yes, click the link below to request an administrative review")
     @CsvBindByPosition(position=121)
     String requestingAdministrativeReview;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="If no, click the link below to schedule an evaluation.")
     @CsvBindByPosition(position=122)
     String requestingScheduleOfEvaluation;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Please rate your application experience on a scale of 1-5.")
     @CsvBindByPosition(position=123)
     String applicationFeedbackExperienceRating;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Provide any additional feedback on your application experience below.")
     @CsvBindByPosition(position=124)
     String applicationFeedbackAdditionalInfo;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Do you want to be contacted about jobs in early childhood? (either for yourself or someone you know)")
     @CsvBindByPosition(position=125)
     String okayToContactAboutJobsInEarlyChildhood;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Does the child have social service needs?")
     @CsvBindByPosition(position=126)
     String doesChildHaveSocialServiceNeeds;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Have Headstart services been provided to this family in the past?")
     @CsvBindByPosition(position=127)
     String hasFamilyHadHeadStartServicesPreviously;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Does the parent participate in Parents As Educators Kingsley House program?")
     @CsvBindByPosition(position=128)
     String doesParentParticipateKingslyHouseProgram;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Is applicant a resident of Columbia Park in Gentilly?")
     @CsvBindByPosition(position=129)
     String isApplicantResidentOfColumbiaParkGentilly;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Please select if any of the following intra-agency transfer requests apply")
     @CsvBindByPosition(position=130)
     String interAgencyTransferRequests;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Transfer center:")
     @CsvBindByPosition(position=131)
     String transferCenter;
