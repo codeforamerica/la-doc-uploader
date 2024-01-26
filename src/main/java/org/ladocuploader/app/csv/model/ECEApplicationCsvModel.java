@@ -112,7 +112,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=18)
     private String howManyPeopleInHousehold;
 
-    // filled out
+    // mapped
     @CsvBindByName(column="What is your monthly household income? (If your child has an IEP and you make below the maximum allowable income limit for your household size, choose your income here instead of indicating the IEP status.)")
     @CsvBindByPosition(position=19)
     private String monthlyHouseholdIncome;
@@ -190,28 +190,43 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Does your child have a sibling attending any of the centers/schools you ranked?")
     @CsvBindByPosition(position=34)
     String siblingAtSchoolCenterRanked;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="You can list up to 3 siblings. Sibling name #1:")
     @CsvBindByPosition(position=35)
     String siblingOneName;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Which center/school does sibling #1 attend?")
     @CsvBindByPosition(position=36)
     String siblingOneSchoolCenter;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Sibling name #2:")
     @CsvBindByPosition(position=37)
     String siblingTwoName;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Which center/school does sibling #2 attend?")
     @CsvBindByPosition(position=38)
     String siblingTwoSchoolCenter;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Sibling name #3:")
     @CsvBindByPosition(position=39)
     String siblingThreeName;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Which center/school does sibling #3 attend?")
     @CsvBindByPosition(position=40)
     String siblingThreeSchoolCenter;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Do you work at one of the centers/schools you ranked?")
     @CsvBindByPosition(position=41)
     String doesApplicantWorksAtSchoolCenterTheyRanked;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Which center/school do you work at?")
     @CsvBindByPosition(position=42)
     String applicantWorksAt;
@@ -498,7 +513,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=98)
     String adultThreeDescribeSourceOfIncome;
 
-    // TODO: we have a question on
+    // TODO: we have a question asking who is sharing in payment - see if we can map that to this?
     @CsvBindByName(column="Adult 3's rent/house payments, utilities, food, and transportation expenses are being paid for by:")
     @CsvBindByPosition(position=99)
     String adultThreeHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
