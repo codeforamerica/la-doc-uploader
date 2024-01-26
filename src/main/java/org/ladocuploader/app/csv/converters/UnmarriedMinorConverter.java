@@ -5,7 +5,8 @@ import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.ladocuploader.app.utils.HouseholdUtilities;
+import java.time.LocalDate;
 import java.util.Map;
 
 /**
@@ -22,12 +23,27 @@ public class UnmarriedMinorConverter<T, I> extends AbstractBeanField<T, I> {
 
   @Override
   protected String convertToWrite(Object value) {
-    Map<String, Boolean> unmarriedMinorInfo = (Map) value;
+    Map<String, String> unmarriedMinorInfo = (Map) value;
     var result = "No";
-    if ((unmarriedMinorInfo.get("isMinor")) & (unmarriedMinorInfo.get("isUnmarried"))){
-      result = "Yes";
+    try {
+      log.info(unmarriedMinorInfo.get("day"));
+      log.info(unmarriedMinorInfo.get("month"));
+      log.info(unmarriedMinorInfo.get("year"));
+      LocalDate applicantBirthDate = LocalDate.of(
+              Integer.parseInt(unmarriedMinorInfo.get("year")),
+              Integer.parseInt(unmarriedMinorInfo.get("month")),
+              Integer.parseInt(unmarriedMinorInfo.get("day"))
+      );
+      LocalDate localDate = LocalDate.now();
+      if ((applicantBirthDate.isAfter(localDate.minusYears(18L))) & (HouseholdUtilities.unmarriedStatuses.contains(unmarriedMinorInfo.get("maritalStatus")))) {
+        result = "Yes";
+      }
+      return result;
+    } catch (Exception e){
+      log.error(e.getMessage());
+      return result;
     }
-    return result;
+
   }
 }
 
