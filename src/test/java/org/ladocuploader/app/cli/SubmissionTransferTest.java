@@ -103,13 +103,13 @@ class SubmissionTransferTest {
     String destDir = "output";
     List<String> fileNames = unzip(zipFile.getPath(), destDir);
 
-    assertThat(fileNames, hasItem("output/1/"));
-    assertThat(fileNames, hasItem("output/1/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/2/"));
-    assertThat(fileNames, hasItem("output/2/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/2/originalFilename.png"));
-    assertThat(fileNames, hasItem("output/2/2_originalFilename.png"));
-    assertThat(fileNames, hasItem("output/2/weird/:\\filename.jpg"));
+    assertThat(fileNames, hasItem("output/00050000000/1/"));
+    assertThat(fileNames, hasItem("output/00050000000/1/SNAP_application.pdf"));
+    assertThat(fileNames, hasItem("output/00050000000/2/"));
+    assertThat(fileNames, hasItem("output/00050000000/2/SNAP_application.pdf"));
+    assertThat(fileNames, hasItem("output/00050000000/2/originalFilename.png"));
+    assertThat(fileNames, hasItem("output/00050000000/2/2_originalFilename.png"));
+    assertThat(fileNames, hasItem("output/00050000000/2/weird/:\\filename.jpg"));
     assertThat(fileNames, hasItem("output/00050000000.txt"));
     assertEquals(8, fileNames.size());
 
