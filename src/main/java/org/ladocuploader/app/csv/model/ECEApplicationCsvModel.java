@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
+import org.ladocuploader.app.csv.converters.AdultsProvidingSupportConverter;
 import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 import org.ladocuploader.app.csv.converters.UnmarriedMinorConverter;
 import org.ladocuploader.app.utils.HouseholdUtilities;
@@ -34,10 +35,12 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=2)
     private String schoolId;
 
+    //  *** no questions for this one *** //
     @CsvBindByName(column="School Rank {{school-rank}}")
     @CsvBindByPosition(position=3)
     private String schoolRank;
 
+    //  *** no questions for this one *** //
     @CsvBindByName(column="Status (InProgress/Submitted) {{status}}", required=true)
     @CsvBindByPosition(position=4)
     private String status = "InProgress";  // requested default
@@ -107,7 +110,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=17)
     private String hasFamilyMovedForAgriWork;
 
-    // filled out
+    // filled out - however not sure if they all provide financial support? TODO: check if they have jobs?
     @CsvBindByName(column="How many people, including children, are in your household?  Only include all children, parents, guardians, and/or additional adults who provide financial support to the family.")
     @CsvBindByPosition(position=18)
     private String howManyPeopleInHousehold;
@@ -167,9 +170,9 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     private String parentIdDocumentation;
 
     // TODO: build converter if we have adults providing financial support?
-    @CsvBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.  (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS)")
+    @CsvCustomBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.  (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS)", converter= AdultsProvidingSupportConverter.class)
     @CsvBindByPosition(position=30)
-    List<String> adultsProvidingFinancialSupport;
+    private List<Map<String, Object>> household;
 
     // TODO: build converter for minor list
     @CsvBindByName(column="List below each minor living in the household, their age, and their relationship to the child applicant.  (Example: Child Applicant - 3 YEARS, Brother - 10 YEARS, Sister - 7 YEARS, Cousin - 7 YEARS)")
@@ -312,11 +315,12 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     String residencyNotice;
 
 
-    // TODO: applicant is child or parent in this case?
+    // TODO: applicant is child or parent in this case (Adult 1)?
     @CsvBindByName(column="Is the applicant a child of a parent or guardian in active Military service?")
     @CsvBindByPosition(position=51)
     String isChildsParentGuardianInMilitaryService;
 
+    // TODO: check for employer name or self employed
     @CsvBindByName(column="Is Adult 1 (yourself) working?")
     @CsvBindByPosition(position=52)
     String isAdultOneWorking;
@@ -414,6 +418,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=76)
     String adultOneUnemploymentBenefitsDocumentation;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Enter the number of months you have been without income:")
     @CsvBindByPosition(position=77)
     String adultOneNumberMonthsWithoutIncome;
@@ -423,9 +428,12 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=78)
     String adultOneIAmOptions;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="If 'Other' please describe your employment status")
     @CsvBindByPosition(position=79)
     String adultOneIAmOtherEmploymentStatusDescription;
+
+    // TODO: compute in generate model
     @CsvBindByName(column="Is Adult 1 (yourself) in school, in a training program, or seeking work?")
     @CsvBindByPosition(position=80)
     String isAdultOneSchoolTrainingSeekingWork;
@@ -443,6 +451,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=83)
     String adultOneHoursAttendingTrainingCoursesDocument;
 
+    // TODO: compute in generate model
     @CsvBindByName(column="Is Adult 2 working?")
     @CsvBindByPosition(position=84)
     String isAdultTwoWorking;
@@ -463,10 +472,12 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByPosition(position=88)
     String adultTwoDescribeSourceOfIncome;
 
+    // TODO: we have buy and prepare food but nothing around utilities and transportation
     @CsvBindByName(column="Adult 2's rent/house payments, utilities, food, and transportation expenses are being paid for by:")
     @CsvBindByPosition(position=89)
     String adultTwoHouseholdThingsPaidForByRegularIncome;
 
+    // *** no questions for this one *** //
     @CsvBindByName(column="Enter the number of months Adult 2 has been without income:")
     @CsvBindByPosition(position=90)
     String adultTwoNumberMonthsWithoutIncome;
@@ -682,7 +693,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());
         List<Map<String, Object>> householdList = (List)inputData.get("household");
-
+        // TODO: also compute household member adult things here?
         // this is the data that jackson will map into the EceModel, not inputData
         Map<String, Object> eceDataMap = new HashMap<>();
 
@@ -714,6 +725,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
                 }
 
                 if (is18orOlder) {
+                    // TODO: add/ compute adult 1, 2, and 3 questions here?
                     numberOfAdultsInHousehold++;
                 }
             }

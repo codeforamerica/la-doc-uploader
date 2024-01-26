@@ -9,6 +9,21 @@ public class HouseholdUtilities {
   public static List<String> unmarriedStatuses = Arrays.asList("Never married", "Legally separated", "Divorced", "Widowed");
 
 
+  public static boolean doesMemberProvideFinancialSupport(Map<String, Object> hhmember){
+    // check if member has a job
+    var providesSupport = false;
+    try {
+      var employerName = hhmember.get("employerName");
+      if (employerName != null){
+        providesSupport = true;
+      }
+    } catch (Exception e){
+      return false;
+    }
+    return providesSupport;
+
+  }
+
 
   public static boolean isMember18orOlder(int day, int month, int year) throws NumberFormatException {
 

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.*;
 import formflow.library.data.Submission;
 import java.util.HashMap;
+
+import org.ladocuploader.app.csv.CsvBindByNameOrder;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 
 @Getter
 @Setter
+@CsvBindByNameOrder({"first_name","last_name", "phone_number", "active", "reference_id", "email_address", "street_address", "zip_code"})
 public class ParentGuardianCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column = "active")
