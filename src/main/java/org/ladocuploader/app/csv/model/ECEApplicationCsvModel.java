@@ -19,6 +19,8 @@ import org.ladocuploader.app.csv.converters.UnmarriedMinorConverter;
 import org.ladocuploader.app.utils.HouseholdUtilities;
 import org.ladocuploader.app.utils.IncomeCalculator;
 
+import javax.print.DocFlavor;
+
 @Getter
 @Setter
 @Slf4j
@@ -402,7 +404,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Is the applicant a child of a parent or guardian in active Military service?")
     String isChildsParentGuardianInMilitaryService;
 
-    // TODO: check for employer name or self employed for SELF + up to 2 adults
+    // mapped
     @CsvBindByName(column="Is Adult 1 (yourself) working?")
     String isAdultOneWorking;
 
@@ -501,7 +503,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Provide hours attending and training courses on organization’s letterhead")
     String adultOneHoursAttendingTrainingCoursesDocument;
 
-    // TODO: compute in generate model
+    // mapped
     @CsvBindByName(column="Is Adult 2 working?")
     String isAdultTwoWorking;
 
@@ -533,13 +535,11 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="If 'Other' please describe Adult 2's employment status")
     String adultTwoIAmOtherEmploymentStatusDescription;
 
-    // TODO: compute schoolName || jobSearch
+    // mapped
     @CsvBindByName(column="Is Adult 2 in school, in a training program, or seeking work?")
     String isAdultTwoSchoolTrainingSeekingWork;
 
-
-
-    // TODO: check for a job added or self-employment and map to Yes/No?
+    // mapped
     @CsvBindByName(column="Is Adult 3 working?")
     String isAdultThreeWorking;
 
@@ -559,7 +559,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Describe Adult 3's source of income")
     String adultThreeDescribeSourceOfIncome;
 
-    // TODO: we have a question asking who is sharing in payment - see if we can map that to this?
+    // TODO: we have a question asking who is sharing in payment - see if we can map that to this? Most likely ignore
     @CsvBindByName(column="Adult 3's rent/house payments, utilities, food, and transportation expenses are being paid for by:")
     String adultThreeHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
 
@@ -575,7 +575,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="If 'Other' please describe Adult 3's employment status")
     String adultThreeIAmOtherEmploymentStatusDescription;
 
-    // TODO: compute schoolName || jobSearch (same as Adult 2)
+    // mapped
     @CsvBindByName(column="Is Adult 3 in school, in a training program, or seeking work?")
     String isAdultThreeSchoolTrainingSeekingWork;
 
@@ -708,6 +708,8 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
 
         List<Map<String, Object>> householdList = (List) inputData.getOrDefault("household", List.of());
         List<Map<String, Object>> incomeList = (List) inputData.getOrDefault("income", List.of());
+        List<String> students = (List) inputData.getOrDefault("students[]", List.of());
+        List<String> jobSeekers = (List) inputData.getOrDefault("jobSearch[]", List.of());
 
         Map<String, Object> eceDataMap = new HashMap<>();
 
@@ -731,11 +733,33 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
                         )
                 )
                 .toList();
+        if (adults.size() > 2){
+            adults = adults.subList(0, 2); // only consider top 2 items of list
+        }
+        var adultTwo = adults.size() >= 1 ?
+                String.format("%s %s",
+                        adults.get(0).get("householdMemberFirstName"),
+                        adults.get(0).get("householdMemberLastName")) :
+                "";
+        var adultThree = adults.size() == 2 ?
+                String.format("%s %s",
+                        adults.get(1).get("householdMemberFirstName"),
+                        adults.get(1).get("householdMemberLastName")) : "";
 
-//        incomeList.stream().map(map -> map.get("")
+
+         var workingMembers = incomeList.stream().map(map -> map.get("householdMemberJobAdd")).toList();
 //
-//        eceDataMap.put("isAdultOneWorking", ))
+        eceDataMap.put("isAdultOneWorking", workingMembers.contains("you"));
 
+        eceDataMap.put("isAdultTwoWorking", workingMembers.contains(adultTwo));
+        eceDataMap.put("isAdultThreeWorking", workingMembers.contains(adultThree));
+
+
+        // school info
+
+        eceDataMap.put("isAdultOneSchoolTrainingSeekingWork", students.contains("you") || jobSeekers.contains("you"));
+        eceDataMap.put("isAdultTwoSchoolTrainingSeekingWork", students.contains(adultTwo) || jobSeekers.contains(adultTwo));
+        eceDataMap.put("isAdultThreeSchoolTrainingSeekingWork", students.contains(adultThree) || jobSeekers.contains(adultThree));
 
         eceDataMap.put("birthDay", inputData.get("birthDay"));
         eceDataMap.put("birthYear", inputData.get("birthYear"));
