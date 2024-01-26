@@ -18,7 +18,7 @@ import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 
 @Getter
 @Setter
-@CsvBindByNameOrder({"first_name","last_name", "phone_number", "active", "reference_id", "email_address", "street_address", "zip_code"})
+@CsvBindByNameOrder({"active","city","email_address","first_name","last_name","phone_number","reference_id","state","street_address","zip_code"})
 public class ParentGuardianCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column = "active")

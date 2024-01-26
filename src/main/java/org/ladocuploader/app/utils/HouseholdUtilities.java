@@ -1,13 +1,12 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class HouseholdUtilities {
+
+  public static List<String> unmarriedStatuses = Arrays.asList("Never married", "Legally separated", "Divorced", "Widowed");
 
   public static Calendar ECE_CUTOFF_DATE = new Calendar.Builder().setDate(2019, 9, 30).build();
   /**

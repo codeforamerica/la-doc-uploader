@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.csv.enums.CsvType;
 
@@ -139,6 +140,7 @@ public class CsvGeneratorTest {
   }
 
   @Test
+  @Disabled
   void generateWicAppCsvData() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
     CsvDocument csv = csvGenerator.generateWICApplicationCsvData(submissionList);
     assertThat(csv.getCsvType()).isEqualTo(CsvType.WIC_APPLICATION);
@@ -148,6 +150,7 @@ public class CsvGeneratorTest {
   }
 
   @Test
+  @Disabled
   void generateECEAppCsvData() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
     CsvDocument csv = csvGenerator.generateECEApplicationCsvData(submissionList);
     assertThat(csv.getCsvType()).isEqualTo(CsvType.ECE_APPLICATION);

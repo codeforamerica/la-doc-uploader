@@ -22,7 +22,7 @@ import org.ladocuploader.app.utils.HouseholdUtilities;
 @Setter
 @JsonTypeName("student")
 @Slf4j
-@CsvBindByNameOrder({"active", "reference_id", "first_name", "last_name", "street_address", "city", "state", "zip_code", "birth_date"})
+@CsvBindByNameOrder({"active","birth_date","city","first_name","last_name","middle_name","reference_id","state","street_address","zip_code"})
 public class StudentCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="active", required=true)
