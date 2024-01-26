@@ -7,6 +7,7 @@ import formflow.library.data.Submission;
 import java.util.HashMap;
 import lombok.Getter;
 import lombok.Setter;
+import org.ladocuploader.app.csv.CsvBindByNameOrder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @JsonTypeName("relationship")
+@CsvBindByNameOrder({"first_person", "last_person"})
 public class RelationshipCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column = "first_person", required=true)
-    @CsvBindByPosition(position=0)
     private String first_person_id; // use id of applicant
 
     @CsvBindByName(column="second_person", required=true)
-    @CsvBindByPosition(position=1)
     private String uuid; // id of subflow member
 
     public static List<BaseCsvModel> generateModel(Submission submission){
