@@ -23,8 +23,8 @@ public class HeaderColumnNameAndOrderMappingStrategy<T> extends HeaderColumnName
         String[] header = super.generateHeader(bean);
 
         final int numColumns = getFieldMap().values().size();
-        if (numColumns == -1) {
-            return header;
+        if (!isAnnotationDriven() || numColumns == -1) {
+            return Arrays.stream(header).map(h -> h.toLowerCase()).toArray(String[]::new);
         }
 
         header = new String[numColumns + 1];
@@ -33,9 +33,9 @@ public class HeaderColumnNameAndOrderMappingStrategy<T> extends HeaderColumnName
         for (int i = 0; i <= numColumns; i++) {
             beanField = findField(i);
             String columnHeaderName = extractHeaderName(beanField);
-            header[i] = columnHeaderName.toLowerCase();
+            header[i] = columnHeaderName;
         }
-        return header;
+        return Arrays.stream(header).map(h -> h.toLowerCase()).toArray(String[]::new);
     }
 
 
