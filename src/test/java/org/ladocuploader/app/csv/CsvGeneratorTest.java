@@ -7,6 +7,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class CsvGeneratorTest {
   private final String EXPECTED_STUDENT_CSV_FILENAME = "csvfiles/expectedStudent.csv";
 
   private final String EXPECTED_ECE_APPLICATION_CSV_FILENAME = "csvfiles/expectedEceApplication.csv";
- 
+
   private CsvGenerator csvGenerator = new CsvGenerator();
 
   private List<Submission> submissionList = new ArrayList<>();
@@ -63,8 +64,11 @@ public class CsvGeneratorTest {
       inputData.put("homeAddressCity", "San Francisco");
       inputData.put("homeAddressState", "CA");
       inputData.put("homeAddressZipCode", String.format("123%02d", i));
+      inputData.put("interestedInEceInd", "true");
+      inputData.put("interestedInWicInd", "true");
 
       UUID submissionId = UUID.fromString(String.format("9b05db12-d53e-4be6-8d6a-aa8a3b94%04d", i));
+
 
       // mimic a 4 person household for each person.
       String fakePersonUUIDPrefix = String.format("2aeefa18-d866-4b45-abe8-f901%04d", i);
@@ -76,7 +80,7 @@ public class CsvGeneratorTest {
         entry.put("householdMemberLastName", lastNames.get(i));
         entry.put("householdMemberBirthDay", String.format("%d", h+1));
         entry.put("householdMemberBirthMonth", "11");
-        entry.put("householdMemberBirthYear", "2001");
+        entry.put("householdMemberBirthYear", "2022");
         entry.put("householdMemberRelationship", "child");
         householdList.add(entry);
       }
@@ -85,6 +89,7 @@ public class CsvGeneratorTest {
       inputData.put("household", householdList);
 
       Submission submission = Submission.builder()
+          .submittedAt(OffsetDateTime.now())
           .id(submissionId)
           .inputData(inputData)
           .flow("test-flow")
@@ -132,16 +137,22 @@ public class CsvGeneratorTest {
     String expectedData = getExpectedData(EXPECTED_STUDENT_CSV_FILENAME);
     assertThat(theData).isEqualTo(expectedData);
   }
+
   @Test
-  void generateWicAppCsvData() {}
+  void generateWicAppCsvData() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+    CsvDocument csv = csvGenerator.generateWICApplicationCsvData(submissionList);
+    assertThat(csv.getCsvType()).isEqualTo(CsvType.WIC_APPLICATION);
+    String theData = new String(csv.getCsvData());
+    String expectedData = getExpectedData(EXPECTED_STUDENT_CSV_FILENAME);
+    assertThat(theData).isEqualTo(expectedData);
+  }
+
   @Test
   void generateECEAppCsvData() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
     CsvDocument csv = csvGenerator.generateECEApplicationCsvData(submissionList);
     assertThat(csv.getCsvType()).isEqualTo(CsvType.ECE_APPLICATION);
     String theData = new String(csv.getCsvData());
     String expectedData = getExpectedData(EXPECTED_ECE_APPLICATION_CSV_FILENAME);
-
   }
-
 
 }

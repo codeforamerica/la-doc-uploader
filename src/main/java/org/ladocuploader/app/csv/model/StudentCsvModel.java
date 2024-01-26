@@ -109,16 +109,9 @@ public class StudentCsvModel extends BaseCsvModel {
 
         if (household != null && !household.isEmpty()) {
             for (Map<String, Object> member : household) {
-                //String relationship = (String) member.get("householdMemberRelationship");
-                //if (relationship == null || !relationship.equalsIgnoreCase("child")) {
-                //    continue;
-               // }
-
-                // are they even eligible?  if not, skip them
                 if (!HouseholdUtilities.isMemberEceEligible(member, inputData)){
                     continue;
                 }
-
                 Map<String, Object> studentData = new HashMap<>();
                 studentData.put("id", member.get("uuid"));
                 studentData.put("firstName", member.get("householdMemberFirstName"));
