@@ -216,21 +216,45 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     // TODO: see if we can calculate this
     @CsvCustomBindByName(column="Is the parent applicant an unmarried minor (under age 18)?", converter=UnmarriedMinorConverter.class)
     @CsvBindByPosition(position=43)
-    private Map<String, Boolean> isParentApplicantUnmarriedMinor;
+    private Map<String, String> isParentApplicantUnmarriedMinor = new HashMap<>();
 
+    @JsonSetter(value="birthDay")
+    private void setBirthDay(final String day) {
+        try {
+            if (day != null) {
+                isParentApplicantUnmarriedMinor.put("day", day);
+            }
+        } catch (NumberFormatException e) {
+            log.error("JSON Mapping: Unable to set member birth day, as value '{}' is bad.", day);
+        }
+    }
 
-    // TODO: might need to add another field
-    @JsonSetter(value="homeAddressStreetAddress1")
-    private void setApplicantIsMinor(final String birthDate) {
-        if (birthDate != null) {
-//            homeAddressStreet.put("address1", address);
+    @JsonSetter(value="birthMonth")
+    private void setBirthMonth(final String month) {
+        try {
+            if (month != null) {
+                isParentApplicantUnmarriedMinor.put("month", month);
+            }
+        } catch (NumberFormatException e) {
+            log.error("JSON Mapping: Unable to set member birth month, as value '{}' is bad.", month);
+        }
+    }
+
+    @JsonSetter(value="birthYear")
+    private void setBirthYear(final String year) {
+        try {
+            if (year != null) {
+                isParentApplicantUnmarriedMinor.put("year", year);
+            }
+        } catch (NumberFormatException e) {
+            log.error("JSON Mapping: Unable to set member birth year, as value '{}' is bad.", year);
         }
     }
 
     @JsonSetter(value="maritalStatus")
-    private void setHomeAddress2(final String maritalStatus) {
+    private void setMaritalStatus(final String maritalStatus) {
         if (maritalStatus != null) {
-            isParentApplicantUnmarriedMinor.put("isUnmarried", HouseholdUtilities.unmarriedStatuses.contains(maritalStatus));
+            isParentApplicantUnmarriedMinor.put("maritalStatus", maritalStatus);
         }
     }
 

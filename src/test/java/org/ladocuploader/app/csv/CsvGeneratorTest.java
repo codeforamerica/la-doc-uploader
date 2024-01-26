@@ -42,6 +42,8 @@ public class CsvGeneratorTest {
   private final String EXPECTED_RELATIONSHIP_CSV_FILENAME = "csvfiles/expectedRelationship.csv";
 
   private final String EXPECTED_STUDENT_CSV_FILENAME = "csvfiles/expectedStudent.csv";
+
+  private final String EXPECTED_ECE_APPLICATION_CSV_FILENAME = "csvfiles/expectedEceApplication.csv";
  
   private CsvGenerator csvGenerator = new CsvGenerator();
 
@@ -133,7 +135,13 @@ public class CsvGeneratorTest {
   @Test
   void generateWicAppCsvData() {}
   @Test
-  void generateECEAppCsvData() {}
+  void generateECEAppCsvData() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+    CsvDocument csv = csvGenerator.generateECEApplicationCsvData(submissionList);
+    assertThat(csv.getCsvType()).isEqualTo(CsvType.ECE_APPLICATION);
+    String theData = new String(csv.getCsvData());
+    String expectedData = getExpectedData(EXPECTED_ECE_APPLICATION_CSV_FILENAME);
+
+  }
 
 
 }
