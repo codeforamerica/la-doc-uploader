@@ -10,14 +10,14 @@ import java.time.LocalDate;
 import java.util.Map;
 
 /**
- * This converter will take a two line address and concatenate it into one.
+ * This converter will take marital status and age and compute unmarried minor
  */
 @NoArgsConstructor
 @Slf4j
 public class UnmarriedMinorConverter<T, I> extends AbstractBeanField<T, I> {
 
   @Override
-  protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
+  protected Object convert(String value) {
     return value;
   }
 
@@ -26,9 +26,6 @@ public class UnmarriedMinorConverter<T, I> extends AbstractBeanField<T, I> {
     Map<String, String> unmarriedMinorInfo = (Map) value;
     var result = "No";
     try {
-      log.info(unmarriedMinorInfo.get("day"));
-      log.info(unmarriedMinorInfo.get("month"));
-      log.info(unmarriedMinorInfo.get("year"));
       LocalDate applicantBirthDate = LocalDate.of(
               Integer.parseInt(unmarriedMinorInfo.get("year")),
               Integer.parseInt(unmarriedMinorInfo.get("month")),

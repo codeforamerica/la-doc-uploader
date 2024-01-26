@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 import formflow.library.data.Submission;
+
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,18 +14,149 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.ladocuploader.app.csv.converters.AddressStreetConverter;
-import org.ladocuploader.app.csv.converters.AdultsProvidingSupportConverter;
-import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
+import org.ladocuploader.app.csv.CsvBindByNameOrder;
 import org.ladocuploader.app.csv.converters.UnmarriedMinorConverter;
 import org.ladocuploader.app.utils.HouseholdUtilities;
 import org.ladocuploader.app.utils.IncomeCalculator;
 
-import static org.ladocuploader.app.utils.HouseholdUtilities.isMemberEceEligible;
-
 @Getter
 @Setter
 @Slf4j
+@CsvBindByNameOrder({
+        "cfa_reference_id",
+        "Student Id {{student-id}}",
+        "School Id {{school-id}}",
+        "School Rank {{school-rank}}",
+        "Status (InProgress/Submitted) {{status}}",
+        "Hide Form from Parent (Yes/No) {{hide}}",
+        "Admin Notes on application",
+        "Choose the grade your child is applying for",
+        "Select the option that best describes where you live.",
+        "This questionnaire is intended to address the McKinney-Vento Act. Your child may be eligible for additional educational services.   Did the student receive McKinney Vento (Homeless) Services in a previous school district?",
+        "Is the student's address a temporary living arrangement?",
+        "Is the temporary living arrangement due to loss of housing or economic hardship?",
+        "Does the student have a disability or receive any special education-related services?",
+        "Where is the student currently living?",
+        "Other specific information about where the student is currently living:",
+        "Does the student exhibit any behaviors that may interfere with his or her academic performance?",
+        "Would you like assistance with uniforms, student records, school supplies, transportation, other? (Describe):",
+        "Migrant – Have you moved at any time during the past three (3) years to seek temporary or seasonal work in agriculture (including Poultry processing, dairy, nursery, and timber) or fishing?",
+        "How many people, including children, are in your household?  Only include all children, parents, guardians, and/or additional adults who provide financial support to the family.",
+        "What is your monthly household income? (If your child has an IEP and you make below the maximum allowable income limit for your household size, choose your income here instead of indicating the IEP status.)",
+        "Select the option below that best describes your household:",
+        "Provide 1 of 4 forms of verification documents listed below:",
+        "Verification document upload:",
+        "Is the child you are applying for a twin and/or triplet?",
+        "Please list the name(s) of the child's twin/triplets.",
+        "Are you interested in taking a seat now (2023-24 school year)? The list of available programs is linked below. We'll make offers as seats become available. There is limited availability.",
+        "Upload your child's birth certificate. (For unborn children, provide a doctor's note with the anticipated birth date. After birth, upload Official Birth certificate before enrollment.)",
+        "Is your name on the birth certificate?",
+        "If your name is not on the birth certificate, then you will also need to provide proof of custody. If you are unable to provide one of these documents right now, you will need to provide proof of custody before your child receives a center/school placement.   Please select the document you are uploading.",
+        "Please upload documentation of proof of custody.",
+        "Upload the ID of the parent/guardian completing the application.",
+        "List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.",
+        "List below each minor living in the household, their age, and their relationship to the child applicant.",
+        "Upload the birth certificate (state issued or foreign) or passport or visa or hospital record or state-issued ID for each minor listed as a sibling of the applicant child.",
+        "Upload additional sibling birth certificates, if needed.",
+        "Does your child have a sibling attending any of the centers/schools you ranked?",
+        "You can list up to 3 siblings. Sibling name #1:",
+        "Which center/school does sibling #1 attend?",
+        "Sibling name #2:",
+        "Which center/school does sibling #2 attend?",
+        "Sibling name #3:",
+        "Which center/school does sibling #3 attend?",
+        "Do you work at one of the centers/schools you ranked?",
+        "Which center/school do you work at?",
+        "Is the parent applicant an unmarried minor (under age 18)?",
+        "Does your child have an Individualized Family Service Plans (IFSP), or are they being evaluated for special education services?",
+        "Is your name listed on the residency documents that you will be providing?",
+        "Proof of residency #1.",
+        "Verified residency document #1 type:",
+        "Proof of residency #2.",
+        "Verified residency document #2 type:",
+        "Either the parent/guardian name must be on the residency documents or if the parent/guardian lives with another adult who is named on the residency documents, the parent/guardian must upload a signed letter from the person named on the residency documents stating that the parent/guardian lives at that same address.",
+        "Is the applicant a child of a parent or guardian in active Military service?",
+        "Is Adult 1 (yourself) working?",
+        "Please select the gender that best matches your SNAP application choice:",
+        "Please select the ethnicity that best matches your SNAP application choice:",
+        "Please select the race that best matches your SNAP application choice:",
+        "Pay statement upload #1 and #2 (dated within 45-60 days of filling out this application)",
+        "Pay statement upload #3 and #4, if needed (dated within 45-60 days of filling out this application)",
+        "Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed)",
+        "I state that my income or support comes from:",
+        "Upload your most recent IRS Form 1099",
+        "If choosing 'Parents/family', attach a statement from person providing support",
+        "Describe your source of income",
+        "Gross Income January:",
+        "Gross Income February:",
+        "Gross Income March:",
+        "Gross Income April:",
+        "Gross Income May:",
+        "Gross Income June:",
+        "Gross Income July:",
+        "Gross Income August:",
+        "Gross Income September:",
+        "Gross Income October:",
+        "Gross Income November:",
+        "Gross Income December:",
+        "My rent/house payments, utilities, food, and transportation expenses are being paid for by:",
+        "Upload documentation of your Unemployment Benefits: a Monetary Determination letter from the Workforce Commission",
+        "Enter the number of months you have been without income:",
+        "I am (check all that apply)",
+        "If 'Other' please describe your employment status",
+        "Is Adult 1 (yourself) in school, in a training program, or seeking work?",
+        "Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement",
+        "Provide a school transcript, detailed school schedule, or letter from the registrar",
+        "Provide hours attending and training courses on organization's letterhead",
+        "Is Adult 2 working?",
+        "Pay statement upload #1 and #2 (Adult 2) (dated within 45-60 days of filling out this application)",
+        "I state that Adult 2's income or support comes from:",
+        "Upload Adult 2's most recent IRS Form 1099",
+        "Describe Adult 2's source of income",
+        "Adult 2's rent/house payments, utilities, food, and transportation expenses are being paid for by:",
+        "Enter the number of months Adult 2 has been without income:",
+        "Adult 2 is (check all that apply)",
+        "If 'Other' please describe Adult 2's employment status",
+        "Is Adult 2 in school, in a training program, or seeking work?",
+        "Is Adult 3 working?",
+        "Pay statement upload #1 and #2 (Adult 3) (dated within 45-60 days of filling out this application)",
+        "I state that Adult 3's income or support comes from:",
+        "Upload Adult 3's most recent IRS Form 1099",
+        "Describe Adult 3's source of income",
+        "Adult 3's rent/house payments, utilities, food, and transportation expenses are being paid for by:",
+        "Enter the number of months Adult 3 has been without income:",
+        "Adult 3 is (check all that apply)",
+        "If 'Other' please describe Adult 3's employment status",
+        "Is Adult 3 in school, in a training program, or seeking work?",
+        "Does your child receive SSI Benefits?",
+        "Upload a statement from the Social Security Administration verifying that the child listed on the application is a recipient of SSI benefits.",
+        "Does your child receive Family Independence Temporary Assistance (FITAP) or Temporary Assistance to Needy Families (TANF) benefits?",
+        "Upload proof of benefits.",
+        "Does the parent/guardian receive Social Security Administration disability benefits, supplemental security income, or Veterans Administration disability benefits for a disability of at least 70 percent?",
+        "Are any adults included in your household count caring for any children with disabilities in the household?",
+        "(Adult 1) Verified hours in school, training, or work",
+        "(Adult 2) Verified hours in school, training, or work",
+        "(Adult 3) Verified hours in school, training, or work",
+        "Verified income (Use only numbers, no words)",
+        "Which language did your child learn first?",
+        "Which language does your child use most often at home?",
+        "In what language do you most often speak to your child?",
+        "Current phone number:",
+        "Do you want to receive text communication from NOLA Public Schools?",
+        "Current email address:",
+        "A Gifted IEP is required for your child to attend Hynes Charter School. Do you have a Gifted and Talented evaluation or Gifted and Talented IEP approved by OPSB's Office of Child Search?",
+        "If yes, click the link below to request an administrative review",
+        "If no, click the link below to schedule an evaluation.",
+        "Please rate your application experience on a scale of 1-5.",
+        "Provide any additional feedback on your application experience below.",
+        "Do you want to be contacted about jobs in early childhood? (either for yourself or someone you know)",
+        "Does the child have social service needs?",
+        "Have Headstart services been provided to this family in the past?",
+        "Does the parent participate in Parents As Educators Kingsley House program?",
+        "Is applicant a resident of Columbia Park in Gentilly?",
+        "Please select if any of the following intra-agency transfer requests apply",
+        "Transfer center:"
+})
 public class ECEApplicationCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="cfa_reference_id")
@@ -141,11 +274,11 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Upload the ID of the parent/guardian completing the application.")
     private String parentIdDocumentation;
 
-    // TODO: build converter if we have adults providing financial support?
-    @CsvCustomBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.  (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS)", converter= AdultsProvidingSupportConverter.class)
-    private List<Map<String, Object>> household;
+    // *** cannot answer as we do not know relationship to child, only the applicant *** //
+    @CsvBindByName(column="List below each adult living in the household who provides financial support to the family, their age, and their relationship to the child applicant.  (Example: Mother - 35 YEARS, Father - 35 YEARS, Aunt - 24 YEARS, Grandmother - 68 YEARS)")
+    private String adultsWhoProvideSupport;
 
-    // TODO: build converter for minor list
+    // *** cannot answer as we do not know relationship to child, only the applicant *** //
     @CsvBindByName(column="List below each minor living in the household, their age, and their relationship to the child applicant.  (Example: Child Applicant - 3 YEARS, Brother - 10 YEARS, Sister - 7 YEARS, Cousin - 7 YEARS)")
     List<String> minorsInHousehold;
 
@@ -193,7 +326,6 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Which center/school do you work at?")
     String applicantWorksAt;
 
-    // TODO: come back to this and figure out how to get the setters working
     @CsvCustomBindByName(column="Is the parent applicant an unmarried minor (under age 18)?", converter=UnmarriedMinorConverter.class)
     private Map<String, String> isParentApplicantUnmarriedMinor = new HashMap<>();
 
@@ -266,11 +398,11 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     String residencyNotice;
 
 
-    // TODO: applicant is child or parent in this case (Adult 1)?
+    // *** cannot answer, only have veteran *** //
     @CsvBindByName(column="Is the applicant a child of a parent or guardian in active Military service?")
     String isChildsParentGuardianInMilitaryService;
 
-    // TODO: check for employer name or self employed
+    // TODO: check for employer name or self employed for SELF + up to 2 adults
     @CsvBindByName(column="Is Adult 1 (yourself) working?")
     String isAdultOneWorking;
 
@@ -423,7 +555,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Upload Adult 3's most recent IRS Form 1099")
     String adultThreeSelfEmployment1099;
 
-    // TODO: self employment or employer name?
+    // *** no questions for this one *** //
     @CsvBindByName(column="Describe Adult 3's source of income")
     String adultThreeDescribeSourceOfIncome;
 
@@ -463,7 +595,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="Upload proof of benefits.")
     String benefitsDocumentation;
 
-    // TODO: we have guardiansHaveDisabilityInd but doesn't account for 70%. verify this
+    // TODO: we have guardiansHaveDisabilityInd and SSI but not 70%. Likely ignore this.
     @CsvBindByName(column="Does the parent/guardian receive Social Security Administration disability benefits, supplemental security income, or Veterans Administration disability benefits for a disability of at least 70 percent?")
     String doesParentGuardianReceiveSSDorSupplementalSecurityIncomeOrVADisability;
 
@@ -483,7 +615,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     @CsvBindByName(column="(Adult 3) Verified hours in school, training, or work")
     String adultThreeVerifiedHoursInSchoolTrainingWork;
 
-    // TODO: we don't have any verification but do have monthly income?
+    // *** no questions for this one *** //
     @CsvBindByName(column="Verified income (Use only numbers, no words)")
     String verifiedIncome;
 
@@ -571,76 +703,49 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
      * @return List of ECEApplicationCsvModel objects
      * @throws JsonProcessingException
      */
-    public static List<BaseCsvModel> generateModel(Submission submission) throws JsonProcessingException {
+    public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
-        List<BaseCsvModel> eceApps = new ArrayList<>();
+
         List<Map<String, Object>> householdList = (List) inputData.getOrDefault("household", List.of());
         List<Map<String, Object>> incomeList = (List) inputData.getOrDefault("income", List.of());
 
-        // Note: we check for if the applicant indicated interest in applying in the CsvGenerator code.  If we got this far
-        // they are interested in ECE
+        Map<String, Object> eceDataMap = new HashMap<>();
 
-        // Now fill out a row for each family member who qualifies (ie, was born after 9/30/2019)
-
+        eceDataMap.put("household", householdList);
 
         int householdMemberCountProvidingSupport = (int) incomeList.stream().map(map -> map.get("householdMemberJobAdd")).distinct().count();
+        eceDataMap.put("howManyPeopleInHousehold", householdMemberCountProvidingSupport);
+
         IncomeCalculator incomeCalculator = new IncomeCalculator(submission);
         double totalHouseholdMonthlyIncome = incomeCalculator.totalFutureEarnedIncome();
+        eceDataMap.put("monthlyHouseholdIncome", totalHouseholdMonthlyIncome);
 
-        int totalMinorsInHousehold = (int) householdList.stream()
-            .filter(m -> {
-                return HouseholdUtilities.isMember18orOlder(
-                    Integer.parseInt((String)m.get("birthYear")),
-                    Integer.parseInt((String)m.get("birthMonth")),
-                    Integer.parseInt((String)m.get("birthDay"))
-               );
-            }).count();
+         // TODO: get adults in household, including the applicant
+        List<Map<String, Object>> adults = householdList
+                .stream()
+                .filter(
+                        member -> HouseholdUtilities.isMember18orOlder(
+                                Integer.parseInt((String) member.get("householdMemberBirthYear")),
+                                Integer.parseInt((String) member.get("householdMemberBirthMonth")),
+                                Integer.parseInt((String)member.get("householdMemberBirthDay"))
+                        )
+                )
+                .toList();
+
+//        incomeList.stream().map(map -> map.get("")
+//
+//        eceDataMap.put("isAdultOneWorking", ))
+
+
+        eceDataMap.put("birthDay", inputData.get("birthDay"));
+        eceDataMap.put("birthYear", inputData.get("birthYear"));
+        eceDataMap.put("birthMonth", inputData.get("birthMonth"));
+
+        eceDataMap.put("isStudentAddressTemporaryLiving", inputData.getOrDefault("noHomeAddress", "false"));
 
         // each pass here will create another object (row) for any eligible household member (pregnant or young enough)
-        for (Map<String, Object> member : householdList) {
-            try {
-                // skip family members who are not eligible
-                if (!isMemberEceEligible(member, inputData)) {
-                    continue;
-                }
+        ECEApplicationCsvModel app = mapper.convertValue(eceDataMap, ECEApplicationCsvModel.class);
 
-                // eligible, fill out an object for this person.A
-                // TODO - is there something different we should put for a pregnancy?
-
-                // this is the data that jackson will map into the EceModel, not inputData
-                // we are mapping data from the submission into the field names in the above ECEApplicationCsvModel object.
-                Map<String, Object> eceDataMap = new HashMap<>();
-
-                // this uses the household members uuid. It's somewhat arbitrary, but needs to map to the same one in the
-                // student csv and relationship csv.
-                eceDataMap.put("id", member.get("uuid"));
-                eceDataMap.put("howManyPeopleInHouseholdProvideFinancialSupport", householdMemberCountProvidingSupport);
-                eceDataMap.put("householdMonthlyIncome", totalHouseholdMonthlyIncome);
-
-                // TODO: we may or may not have this, how to tell?
-                //studentsBirthCertificateDocument
-
-                // TODO: not sure if good mapping.
-                eceDataMap.put("isStudentAddressTemporaryLiving", inputData.getOrDefault("noHomeAddress", "false"));
-                // doesStudentHaveDisabilityOrSpecEdServices <-- we don't directly ask about this but we do ask about why someone doesn't work. Probably not related
-
-                eceDataMap.put("numberOfMinorsInHousehold", totalMinorsInHousehold);
-
-                // TODO: keep adding relevant fields from the above object here
-                ECEApplicationCsvModel app = mapper.convertValue(eceDataMap, ECEApplicationCsvModel.class);
-                app.setSubmissionId(submission.getId());
-                eceApps.add(app);
-            } catch (NumberFormatException e) {
-                // TODO what to do if this does fail?? ignore and keep going? probably
-                log.error("Unable to work with household member {}'s birthday ({}/{}/{}): {}",
-                    member.get("householdMemberFirstName"),
-                    (String) member.get("householdMemberBirthDay"),
-                    (String) member.get("householdMemberBirthMonth"),
-                    (String) member.get("householdMemberBirthYear"),
-                    e.getMessage()
-                );
-            }
-        }
-        return eceApps;
+        return app;
     }
 }

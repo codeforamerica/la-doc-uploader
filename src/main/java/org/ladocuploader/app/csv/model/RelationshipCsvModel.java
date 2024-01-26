@@ -2,7 +2,6 @@ package org.ladocuploader.app.csv.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvBindByPosition;
 import formflow.library.data.Submission;
 import java.util.HashMap;
 import lombok.Getter;

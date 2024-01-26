@@ -8,8 +8,6 @@ import java.util.HashMap;
 
 import org.ladocuploader.app.csv.CsvBindByNameOrder;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 

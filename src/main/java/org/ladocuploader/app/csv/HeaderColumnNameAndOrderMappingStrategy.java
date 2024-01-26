@@ -12,10 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public class HeaderColumnNameAndOrderMappingStrategy<T> extends HeaderColumnNameMappingStrategy<T> {
 
-//    public HeaderColumnNameAndOrderMappingStrategy(Class<T> type) {
-//        setType(type);
-//    }
-
     @Override
     public String[] generateHeader(T bean) throws CsvRequiredFieldEmptyException {
         // overriding this method to allow us to preserve the header column name casing
