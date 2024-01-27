@@ -15,23 +15,9 @@ public class HeaderColumnNameAndOrderMappingStrategy<T> extends HeaderColumnName
     @Override
     public String[] generateHeader(T bean) throws CsvRequiredFieldEmptyException {
         // overriding this method to allow us to preserve the header column name casing
-
-        String[] header = super.generateHeader(bean);
-
-        final int numColumns = getFieldMap().values().size();
-        if (!isAnnotationDriven() || numColumns == -1) {
-            return Arrays.stream(header).map(h -> h.toLowerCase()).toArray(String[]::new);
-        }
-
-        header = new String[numColumns + 1];
-
-        BeanField beanField;
-        for (int i = 0; i <= numColumns; i++) {
-            beanField = findField(i);
-            String columnHeaderName = extractHeaderName(beanField);
-            header[i] = columnHeaderName;
-        }
-        return Arrays.stream(header).map(h -> h.toLowerCase()).toArray(String[]::new);
+        super.generateHeader(bean);
+        String[] orderedHeaders = type.getAnnotation(CsvBindByNameOrder.class).value();
+        return orderedHeaders;
     }
 
 

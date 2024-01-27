@@ -6,7 +6,6 @@ import static org.ladocuploader.app.utils.SubmissionUtilities.ONE_YEAR_AGO;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvCustomBindByName;
 import formflow.library.data.Submission;
 import java.time.LocalDate;
@@ -17,10 +16,24 @@ import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
+import org.ladocuploader.app.csv.CsvBindByNameOrder;
 import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 
 @Getter
 @Setter
+@CsvBindByNameOrder({
+    "Date",
+    "First name",
+    "Last name",
+    "Phone number",
+    "Email address",
+    "ZIP code",
+    "Do any of the following apply to you or anyone living in your home? None of the above",
+    "A pregnant or recently pregnant woman",
+    "An infant",
+    "A child from 1 to 5 years old",
+    "Has anyone in your home ever received WIC in Louisiana?",
+    "Preferred language"})
 public class WICApplicationCsvModel extends BaseCsvModel {
 
 
