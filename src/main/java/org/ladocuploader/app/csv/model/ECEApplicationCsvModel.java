@@ -734,7 +734,11 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
         eceDataMap.put("emailAddress", inputData.getOrDefault("emailAddress", ""));
         eceDataMap.put("id", submission.getId());
 
-        int householdMemberCountProvidingSupport = (int) incomeList.stream().map(map -> map.get("householdMemberJobAdd")).distinct().count();
+        int householdMemberCountProvidingSupport = (int) incomeList
+                .stream()
+                .map(map -> map.get("householdMemberJobAdd"))
+                .distinct()
+                .count();
         eceDataMap.put("howManyPeopleInHousehold", householdMemberCountProvidingSupport);
 
         IncomeCalculator incomeCalculator = new IncomeCalculator(submission);
@@ -742,16 +746,25 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
         eceDataMap.put("monthlyHouseholdIncome", totalHouseholdMonthlyIncome);
 
          // Get adults in household
-        List<Map<String, Object>> adults = householdList
-                .stream()
-                .filter(
-                        member -> HouseholdUtilities.isMember18orOlder(
-                                Integer.parseInt((String) member.get("householdMemberBirthYear")),
-                                Integer.parseInt((String) member.get("householdMemberBirthMonth")),
-                                Integer.parseInt((String)member.get("householdMemberBirthDay"))
-                        )
-                )
-                .toList();
+        List<Map<String, Object>> adults = new ArrayList<>();
+        for (Map<String, Object> householdMember : householdList){
+            try {
+                if (HouseholdUtilities.isMember18orOlder(
+                                    Integer.parseInt((String) householdMember.get("householdMemberBirthYear")),
+                                    Integer.parseInt((String) householdMember.get("householdMemberBirthMonth")),
+                                    Integer.parseInt((String) householdMember.get("householdMemberBirthDay")))){
+                    adults.add(householdMember);
+                }
+            } catch (NumberFormatException e){
+                log.error("Unable to work with household member {}'s birthday ({}/{}/{}): {}",
+                        householdMember.get("householdMemberFirstName"),
+                        (String)householdMember.get("householdMemberBirthDay"),
+                        (String)householdMember.get("householdMemberBirthMonth"),
+                        (String)householdMember.get("householdMemberBirthYear"),
+                        e.getMessage());
+            }
+        }
+
         List<Map<String, Object>> finalAdults = adults;
         var numMinors = householdList
                 .stream().filter(

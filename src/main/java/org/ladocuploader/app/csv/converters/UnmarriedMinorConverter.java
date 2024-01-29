@@ -34,7 +34,7 @@ public class UnmarriedMinorConverter<T, I> extends AbstractBeanField<T, I> {
         result = true;
       }
       return String.valueOf(result);
-    } catch (Exception e){
+    } catch (NumberFormatException e){
       log.error(e.getMessage());
       return String.valueOf(result);
     }
