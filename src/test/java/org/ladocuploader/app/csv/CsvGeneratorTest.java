@@ -7,7 +7,9 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import formflow.library.data.Submission;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.csv.enums.CsvType;
+import org.ladocuploader.app.testutils.TestUtils;
 
 @Slf4j
 public class CsvGeneratorTest {
@@ -91,10 +94,13 @@ public class CsvGeneratorTest {
       // relationship model
       inputData.put("household", householdList);
 
+      OffsetDateTime submittedAt = TestUtils.makeOffsetDateTime("2024-01-26");
+
       Submission submission = Submission.builder()
           .submittedAt(OffsetDateTime.now())
           .id(submissionId)
           .inputData(inputData)
+          .submittedAt(submittedAt)
           .flow("test-flow")
           .build();
 

@@ -22,18 +22,19 @@ import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 @Getter
 @Setter
 @CsvBindByNameOrder({
-    "Date",
-    "First name",
-    "Last name",
-    "Phone number",
-    "Email address",
-    "ZIP code",
-    "Do any of the following apply to you or anyone living in your home? None of the above",
-    "A pregnant or recently pregnant woman",
-    "An infant",
-    "A child from 1 to 5 years old",
-    "Has anyone in your home ever received WIC in Louisiana?",
-    "Preferred language"})
+        "Date",
+        "First name",
+        "Last name",
+        "Phone number",
+        "Email address",
+        "ZIP code",
+        "Do any of the following apply to you or anyone living in your home? None of the above",
+        "A pregnant or recently pregnant woman",
+        "An infant",
+        "A child from 1 to 5 years old",
+        "Has anyone in your home ever received WIC in Louisiana?",
+        "Preferred language"
+})
 public class WICApplicationCsvModel extends BaseCsvModel {
 
 
