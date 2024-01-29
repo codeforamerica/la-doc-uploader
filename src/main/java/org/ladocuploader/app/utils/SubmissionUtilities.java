@@ -179,7 +179,7 @@ public class SubmissionUtilities {
     ArrayList<HashMap<String, Object>> items = new ArrayList<>();
 
     for (var job : (List<Map<String, Object>>) submission.getInputData().getOrDefault("income", new ArrayList<>())) {
-      if ((boolean) submission.getInputData().getOrDefault("iterationIsComplete", false)) {
+      if ((boolean) job.getOrDefault("iterationIsComplete", false)) {
         var item = new HashMap<String, Object>();
         var name = getHouseholdMemberFullnameByUUID((String) job.get("householdMemberJobAdd"), submission.getInputData());
         item.put("name", name);
