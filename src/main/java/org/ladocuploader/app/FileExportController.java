@@ -73,8 +73,7 @@ public class FileExportController {
         String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
         String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
 
-        log.info("GET downloadCSV ParentGuardian (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
-            encodedFlow, encodedSubmissionId);
+        log.info("GET downloadCSV ParentGuardian");
 
         return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.PARENT_GUARDIAN);
     }
@@ -91,8 +90,7 @@ public class FileExportController {
         String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
         String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
 
-        log.info("GET downloadCSV Student (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
-            encodedFlow, encodedSubmissionId);
+        log.info("GET downloadCSV Student");
 
         return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.STUDENT);
     }
@@ -109,8 +107,7 @@ public class FileExportController {
         String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
         String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
 
-        log.info("GET downloadCSV Relationship (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
-            encodedFlow, encodedSubmissionId);
+        log.info("GET downloadCSV Relationship");
 
         return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.RELATIONSHIP);
     }
@@ -128,8 +125,7 @@ public class FileExportController {
         String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
         String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
 
-        log.info("GET downloadCSV ECE Application (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
-            encodedFlow, encodedSubmissionId);
+        log.info("GET downloadCSV ECE Application");
 
         return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.ECE_APPLICATION);
     }
@@ -146,8 +142,7 @@ public class FileExportController {
         String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
         String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
 
-        log.info("GET downloadCSV WIC Application (url: {}): flow: {}, submissionId: {}", request.getRequestURI().toLowerCase(),
-            encodedFlow, encodedSubmissionId);
+        log.info("GET downloadCSV WIC Application");
 
         return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.WIC_APPLICATION);
     }
