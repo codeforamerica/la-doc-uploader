@@ -117,7 +117,7 @@ public class SubmissionTransfer {
     String batchSeq = Long.toString(transmissionRepository.nextValueBatchSequence());
     String batchIndex = Strings.padStart(batchSeq, BATCH_INDEX_LEN, '0');
     UUID uuid = UUID.randomUUID();
-    String zipFileName = batchIndex + ".zip.gpg";
+    String zipFileName = batchIndex + ".zip";
     log.info(String.format("Beginning transfer of %s: batch %s", uuid, batchIndex));
 
     // Stats on transfers
@@ -160,7 +160,7 @@ public class SubmissionTransfer {
 
       // Encrypt and transfer
       byte[] data = pgpEncryptor.signAndEncryptPayload(zipFileName);
-      ftpsClient.uploadFile(zipFileName, data);
+      ftpsClient.uploadFile(zipFileName + ".gpg", data);
     } catch (IOException ex) {
       throw new IllegalStateException(ex);
     } finally {
@@ -199,7 +199,7 @@ public class SubmissionTransfer {
         docUploadFilename = "%s_%s".formatted(filecount, docUploadFilename);
       }
 
-      ZipEntry docEntry = new ZipEntry(subfolder + "/" + docUploadFilename);
+      ZipEntry docEntry = new ZipEntry(batchIndex + "/" + subfolder + "/" + docUploadFilename);
       docEntry.setSize(userFile.getFilesize().longValue());
       zos.putNextEntry(docEntry);
 
@@ -217,8 +217,8 @@ public class SubmissionTransfer {
   private void packageSnapApplication(String batchIndex, ZipOutputStream zos, StringBuilder docMeta, Submission submission, String subfolder) throws IOException {
     byte[] file = pdfService.getFilledOutPDF(submission); // TODO Handle generate-pdf crashes
     String fileName = "SNAP_application.pdf";
-    zos.putNextEntry(new ZipEntry(subfolder + "/"));
-    ZipEntry entry = new ZipEntry(subfolder + "/" + fileName);
+    zos.putNextEntry(new ZipEntry(batchIndex + "/" + subfolder + "/"));
+    ZipEntry entry = new ZipEntry(batchIndex + "/" + subfolder + "/" + fileName);
     entry.setSize(file.length);
     zos.putNextEntry(entry);
     zos.write(file);
@@ -233,7 +233,7 @@ public class SubmissionTransfer {
     String formattedFilename = removeFileExtension(filename);
     String formattedBirthdate = formatBirthdate(submission.getInputData());
     String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
-    String fileLocation = String.format("\"%s/%s/%s\",", batchIndex, subfolder, filename);
+    String fileLocation = String.format("%s/%s/%s,", batchIndex, subfolder, filename);
 
     return "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n"
         .formatted(

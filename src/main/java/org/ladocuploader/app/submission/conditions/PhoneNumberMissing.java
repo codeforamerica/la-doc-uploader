@@ -11,9 +11,16 @@ public class PhoneNumberMissing implements Condition {
     @Override
     public Boolean run(Submission submission) {
         var inputData = submission.getInputData();
-        if (inputData.containsKey("phoneNumber")) {
-            return submission.getInputData().get("phoneNumber").equals("");
+        var anyNumber = true;
+        if (inputData.containsKey("phoneNumber") && !submission.getInputData().get("phoneNumber").equals("")) {
+            anyNumber = false;
         }
-        return true;
+        if (inputData.containsKey("cellPhoneNumber") && !submission.getInputData().get("cellPhoneNumber").equals("")) {
+            anyNumber = false;
+        }
+        if (inputData.containsKey("workPhoneNumber") && !submission.getInputData().get("workPhoneNumber").equals("")) {
+            anyNumber = false;
+        }
+        return anyNumber;
     }
 }

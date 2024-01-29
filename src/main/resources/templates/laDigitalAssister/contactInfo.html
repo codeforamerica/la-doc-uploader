@@ -44,18 +44,6 @@
                       th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='wantsReminders',value='true', label=#{contact-info.yes})}"/>
                 </th:block>
               </th:block>
-              <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
-                  checkboxFieldset(inputName='remindersMethod',
-                  label=#{contact-info.reminders},
-                  fieldsetHelpText=#{contact-info.email-address.check-all-that-apply},
-                  content=~{::reminderMethodCheckbox})}">
-                <th:block th:ref="reminderMethodCheckbox">
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='remindersMethod',value=#{contact-info.text}, label=#{contact-info.text})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='remindersMethod',value=#{contact-info.email}, label=#{contact-info.email})}"/>
-                </th:block>
-              </th:block>
               <th:block th:replace="~{fragments/inputs/radioFieldset ::
                             radioFieldset(
                             label=#{contact-info.deaf-or-hoh},
