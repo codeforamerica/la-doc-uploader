@@ -510,8 +510,14 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     // *** no questions for this one *** //
     @CsvBindByName(column="Provide a school transcript, detailed school schedule, or letter from the registrar")
     String adultOneProofOfSchoolEnrollment;
+
+    // *** no questions for this one *** //
     @CsvBindByName(column="Provide hours attending and training courses on organization’s letterhead")
     String adultOneHoursAttendingTrainingCoursesDocument;
+
+    // *** no questions for this one *** //
+    @CsvBindByName(column="Provide hours attending and training courses (or hours worked) on organization’s letterhead")
+    String hoursAttendingOrWorked;
 
     // mapped
     @CsvBindByName(column="Is Adult 2 working?")
