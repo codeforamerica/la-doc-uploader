@@ -30,7 +30,7 @@ public class UnmarriedMinorConverter<T, I> extends AbstractBeanField<T, I> {
               Integer.parseInt(unmarriedMinorInfo.get("day"))
       );
       LocalDate localDate = LocalDate.now();
-      if ((applicantBirthDate.isAfter(localDate.minusYears(18L))) & (HouseholdUtilities.unmarriedStatuses.contains(unmarriedMinorInfo.get("maritalStatus")))) {
+      if ((applicantBirthDate.isAfter(localDate.minusYears(18L))) && (HouseholdUtilities.unmarriedStatuses.contains(unmarriedMinorInfo.get("maritalStatus")))) {
         result = true;
       }
       return String.valueOf(result);
