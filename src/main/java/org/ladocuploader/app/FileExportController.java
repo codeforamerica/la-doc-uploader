@@ -11,6 +11,7 @@ import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepositoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import static org.ladocuploader.app.utils.SubmissionUtilities.*;
 
 
 import java.io.IOException;
@@ -118,7 +119,6 @@ public class FileExportController {
             @PathVariable String flow,
             @PathVariable String submissionId,
             HttpSession httpSession,
-            HttpServletRequest request,
             Locale locale
         ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
@@ -135,7 +135,6 @@ public class FileExportController {
         @PathVariable String flow,
         @PathVariable String submissionId,
         HttpSession httpSession,
-        HttpServletRequest request,
         Locale locale
     ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
@@ -169,8 +168,9 @@ public class FileExportController {
         }
         // TODO: get list of submissions based on another column - like transmission?
         Optional<Submission> maybeSubmission = submissionRepositoryService.findById(UUID.fromString(submissionId));
+        var submissionIdSanitized = sanitizeSubmissionId(submissionId);
         if (getSubmissionIdForFlow(httpSession, flow).toString().equals(submissionId) && maybeSubmission.isPresent()) {
-            log.info("Generating CSV with submission_id: " + submissionId);
+            log.info("Generating CSV with submission_id: " + submissionIdSanitized);
             Submission submission = maybeSubmission.get();
             CsvDocument csvDoc = csvService.generateCsvFormattedData(List.of(submission), csvType);
             HttpHeaders headers = new HttpHeaders();
@@ -182,8 +182,8 @@ public class FileExportController {
                     .headers(headers)
                     .body(csvDoc.getCsvData());
         } else {
-            log.error("Attempted to download PDF with submission_id: " + submissionId + " but session_id was: "
-                    + httpSession.getAttribute("id"));
+            log.error("Attempted to download PDF with submission_id: " + submissionIdSanitized + " but session_id was: "
+                    + sanitizeSubmissionId(httpSession.getAttribute("id").toString()));
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(messageSource.getMessage("error.forbidden", null, locale));
         }
     }

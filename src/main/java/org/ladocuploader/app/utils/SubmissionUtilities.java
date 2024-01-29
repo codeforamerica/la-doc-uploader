@@ -7,12 +7,17 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 import static java.util.Collections.emptyList;
 import static org.ladocuploader.app.utils.Parish.ORLEANS;
 
 public class SubmissionUtilities {
+
+
+  static Pattern UUID_REGEX =
+          Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
   public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
 
   public static Long expiryHours = 2L;
@@ -121,6 +126,7 @@ public class SubmissionUtilities {
     return false;
   }
 
+
   public static boolean isDocUploadActive(Submission submission) {
     OffsetDateTime submittedAt = submission.getSubmittedAt();
     OffsetDateTime now = OffsetDateTime.now();
@@ -132,6 +138,10 @@ public class SubmissionUtilities {
     }
     return false;
   }
+
+    public static String sanitizeSubmissionId(String submissionId) {
+        return UUID_REGEX.matcher(submissionId).matches() ? submissionId : "invalid submission id";
+    }
 
   public static boolean inExperimentGroup(String groupName, Submission submission) {
     return groupName.equals(submission.getInputData().get("experimentGroup"));
