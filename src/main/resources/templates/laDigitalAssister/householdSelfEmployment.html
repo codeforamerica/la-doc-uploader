@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
-<th:block
 <th:block th:with="
     hhMemberUUID=${fieldData.getOrDefault('householdMemberJobAdd', 'you')},
     householdMemberName=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUID(fieldData.getOrDefault('householdMemberJobAdd', 'you'), inputData)}">

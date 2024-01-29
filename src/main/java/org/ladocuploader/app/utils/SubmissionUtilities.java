@@ -159,13 +159,17 @@ public class SubmissionUtilities {
     }
 
     public static String getHouseholdMemberFullnameByUUID(String uuid, Map<String, Object> inputData) {
+        if ("you".equals(uuid)) {
+            return "%s %s".formatted(inputData.get("firstName"), inputData.get("lastName"));
+        }
+
         var members = (List<Map<String, Object>>) inputData.getOrDefault("household", emptyList());
         for (var member : members) {
             if (uuid.equals(member.get("uuid"))) {
                 return householdMemberFullName(member);
             }
         }
-        return "%s %s".formatted(inputData.get("firstName"), inputData.get("lastName"));
+        return "";
     }
     public static ArrayList<HashMap<String, Object>> getHouseholdIncomeReviewItems(Submission submission) {
         var applicantFullName = submission.getInputData().getOrDefault("firstName", "") + " " + submission.getInputData().getOrDefault("lastName", "");
