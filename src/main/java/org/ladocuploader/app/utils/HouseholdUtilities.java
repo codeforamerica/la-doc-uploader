@@ -6,7 +6,7 @@ import java.util.*;
 
 public class HouseholdUtilities {
 
-  public static List<String> unmarriedStatuses = Arrays.asList("Never married", "Legally separated", "Divorced", "Widowed");
+  public static List<String> unmarriedStatuses = Arrays.asList("NeverMarried", "LegallySeparated", "Divorced", "Widowed");
 
   public static Calendar ECE_CUTOFF_DATE = new Calendar.Builder().setDate(2019, 9, 30).build();
   /**

@@ -729,6 +729,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
         Map<String, Object> eceDataMap = new HashMap<>();
 
         eceDataMap.put("household", householdList);
+        eceDataMap.put("maritalStatus", inputData.getOrDefault("maritalStatus", ""));
         eceDataMap.put("phoneNumber", inputData.getOrDefault("phoneNumber", ""));
         eceDataMap.put("emailAddress", inputData.getOrDefault("emailAddress", ""));
         eceDataMap.put("id", submission.getId());
