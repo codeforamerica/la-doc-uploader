@@ -13,6 +13,7 @@ import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.csv.CsvDocument;
 import org.ladocuploader.app.csv.CsvPackage;
@@ -23,6 +24,7 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
+import org.ladocuploader.app.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -85,6 +87,7 @@ public class TransmitterCommandsTest {
         submission = Submission.builder()
                 .submittedAt(now())
                 .urlParams(new HashMap<>())
+                .submittedAt(TestUtils.makeOffsetDateTime("2024-01-28"))
                 .inputData(Map.of(
                         "firstName", "first",
                         "lastName", "last",
@@ -95,6 +98,7 @@ public class TransmitterCommandsTest {
         submissionWithDocs = Submission.builder()
                 .submittedAt(now())
                 .urlParams(new HashMap<>())
+                .submittedAt(TestUtils.makeOffsetDateTime("2024-01-28"))
                 .inputData(Map.of(
                         "firstName", "Other",
                         "lastName", "McOtherson",
