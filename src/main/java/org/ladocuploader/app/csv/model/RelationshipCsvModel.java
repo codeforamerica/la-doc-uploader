@@ -17,7 +17,7 @@ import org.ladocuploader.app.utils.HouseholdUtilities;
 @Getter
 @Setter
 @JsonTypeName("relationship")
-@CsvBindByNameOrder({"first_person", "last_person"})
+@CsvBindByNameOrder({"first_person", "second_person"})
 public class RelationshipCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column = "first_person", required=true)
