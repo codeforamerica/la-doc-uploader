@@ -37,11 +37,11 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
           var monthlyIncome = IncomeCalculator.futureIncomeForJob(incomeDetails);
           results.put("selfEmploymentName" + i, new SingleField("selfEmploymentName", employeeName, selfEmploymentIdx));
           results.put("selfEmploymentDesc" + i, new SingleField("selfEmploymentDesc", (String) employerName, selfEmploymentIdx));
-          results.put("selfEmploymentMonthlyIncome" + i, new SingleField("selfEmploymentMonthlyIncome", Double.toString(monthlyIncome), selfEmploymentIdx));
+          results.put("selfEmploymentMonthlyIncome" + i, new SingleField("selfEmploymentMonthlyIncome", "%.2f".formatted(monthlyIncome), selfEmploymentIdx));
           results.put("selfEmploymentHoursPerWeek" + i, new SingleField("selfEmploymentHoursPerWeek", (String) hoursPerWeek, selfEmploymentIdx));
           selfEmploymentIdx++;
         } else {
-          var payPeriod = incomeDetails.getOrDefault("payPeriod", "");
+          var payPeriod = incomeDetails.get("payPeriod");
           var hourlyWage = incomeDetails.get("hourlyWage");
           results.put("employeeName" + i, new SingleField("employeeName", employeeName, nonSelfEmploymentIdx));
           results.put("employerName" + i, new SingleField("employerName", (String) employerName, nonSelfEmploymentIdx));

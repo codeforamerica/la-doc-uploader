@@ -36,10 +36,31 @@ class IncomeDetailsPreparerTest {
     assertThat(results.size()).isEqualTo(18);
     assertThat(results.get("employeeName0")).isEqualTo(new SingleField("employeeName", "Joka Aksj", 1));
     assertThat(results.get("employerName0")).isEqualTo(new SingleField("employerName", "CfA", 1));
-    assertThat(results.get("employmentPayFreq0")).isEqualTo(new SingleField("employmentPayFreq", "hourly", 1));
+    assertThat(results.get("employmentPayFreq0")).isEqualTo(new SingleField("employmentPayFreq", null, 1));
     assertThat(results.get("employeeHoursPerWeek0")).isEqualTo(new SingleField("employeeHoursPerWeek", "10", 1));
     assertThat(results.get("employeeHourlyWage0")).isEqualTo(new SingleField("employeeHourlyWage", "11", 1));
 
+    assertThat(results.get("employeeName2")).isEqualTo(new SingleField("employeeName", "Olas Aksj", 2));
+    assertThat(results.get("employerName2")).isEqualTo(new SingleField("employerName", "ChA", 2));
+    assertThat(results.get("employmentPayFreq2")).isEqualTo(new SingleField("employmentPayFreq", "Every 2 weeks", 2));
+    assertThat(results.get("employeeHoursPerWeek2")).isEqualTo(new SingleField("employeeHoursPerWeek", null, 2));
+    assertThat(results.get("employeeHourlyWage2")).isEqualTo(new SingleField("employeeHourlyWage", null, 2));
+
+    assertThat(results.get("selfEmploymentName1")).isEqualTo(new SingleField("selfEmploymentName", "Bsod Aksj", 1));
+    assertThat(results.get("selfEmploymentDesc1")).isEqualTo(new SingleField("selfEmploymentDesc", "CgA", 1));
+    assertThat(results.get("selfEmploymentMonthlyIncome1")).isEqualTo(new SingleField("selfEmploymentMonthlyIncome", "3900.00", 1));
+    assertThat(results.get("selfEmploymentHoursPerWeek1")).isEqualTo(new SingleField("selfEmploymentHoursPerWeek", "90", 1));
+
+    assertThat(results.get("employeeName2")).isEqualTo(new SingleField("employeeName", "Olas Aksj", 2));
+    assertThat(results.get("employerName2")).isEqualTo(new SingleField("employerName", "ChA", 2));
+    assertThat(results.get("employmentPayFreq2")).isEqualTo(new SingleField("employmentPayFreq", "Every 2 weeks", 2));
+    assertThat(results.get("employeeHoursPerWeek2")).isEqualTo(new SingleField("employeeHoursPerWeek", null, 2));
+    assertThat(results.get("employeeHourlyWage2")).isEqualTo(new SingleField("employeeHourlyWage", null, 2));
+
+    assertThat(results.get("selfEmploymentName3")).isEqualTo(new SingleField("selfEmploymentName", "Ydopa Aksj", 2));
+    assertThat(results.get("selfEmploymentDesc3")).isEqualTo(new SingleField("selfEmploymentDesc", "CiA", 2));
+    assertThat(results.get("selfEmploymentMonthlyIncome3")).isEqualTo(new SingleField("selfEmploymentMonthlyIncome", "1000.00", 2));
+    assertThat(results.get("selfEmploymentHoursPerWeek3")).isEqualTo(new SingleField("selfEmploymentHoursPerWeek", null, 2));
   }
 
   @Test
