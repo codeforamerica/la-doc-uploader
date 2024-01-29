@@ -28,7 +28,6 @@ public class RelationshipCsvModel extends BaseCsvModel {
 
     public static List<BaseCsvModel> generateModel(Submission submission){
         Map<String, Object> inputData = submission.getInputData();
-        // TODO: Do we want to use submission application id here, or the applicant's 'uuid' that is assigned?
         // Having it be the submission id makes it easier for us to debug, if need be.
         UUID first_person_id = submission.getId();
         List<BaseCsvModel> relationships = new ArrayList<>();
@@ -36,7 +35,6 @@ public class RelationshipCsvModel extends BaseCsvModel {
 
         if (households != null && !households.isEmpty()) {
             for (Map<String, Object> member : households) {
-                // TODO: include check to see if someone in household is pregnant
                 if (!HouseholdUtilities.isMemberEceEligible(member, inputData)) {
                     continue;
                 }
