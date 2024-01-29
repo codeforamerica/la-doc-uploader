@@ -231,6 +231,7 @@ public class LaDigitalAssister extends FlowInputs {
 
   @NotBlank(message="{error.missing-general}")
   private String householdMemberJobAdd;
+  private String householdMemberJobUUID;
 
   @NotBlank(message="{error.missing-general}")
   private String employerName;
