@@ -4,7 +4,6 @@ import com.opencsv.CSVWriter;
 
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import com.opencsv.bean.exceptionhandler.CsvExceptionHandler;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
@@ -12,7 +11,6 @@ import formflow.library.data.Submission;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.csv.model.BaseCsvModel;
 import org.ladocuploader.app.csv.model.ECEApplicationCsvModel;
@@ -30,8 +28,6 @@ import java.io.OutputStreamWriter;
 @Component
 @Slf4j
 public class CsvGenerator {
-    // TODO: keep in mind for subflow unpacking etc.
-//    https://stackoverflow.com/questions/77230117/custom-converter-for-opencsv
 
 
     private static final String ECE_ELIGIBLE = "interestedInEceInd";
@@ -40,7 +36,7 @@ public class CsvGenerator {
         if (submission == null) {
             return false;
         }
-        String eceInterest = (String) submission.getInputData().getOrDefault("interestedInEceInd", "true");
+        String eceInterest = (String) submission.getInputData().getOrDefault("interestedInEceInd", "false");
         return "true".equals(eceInterest);
     }
      
@@ -126,7 +122,6 @@ public class CsvGenerator {
 
     private CsvDocument generateCsv(CsvType csvType, Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         CsvDocument csv = new CsvDocument(csvType);
-//        var mappingStrategy = new CustomBeanToCSVMappingStrategy<BaseCsvModel>();
         HeaderColumnNameAndOrderMappingStrategy<BaseCsvModel> mappingStrategy = new HeaderColumnNameAndOrderMappingStrategy<>();
         mappingStrategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
