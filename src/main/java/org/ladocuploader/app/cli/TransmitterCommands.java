@@ -55,9 +55,6 @@ public class TransmitterCommands {
 
     private final long TWO_HOURS = 2L;
 
-    @Autowired
-    private ConfigurableApplicationContext context;
-
     public TransmitterCommands(TransmissionRepository transmissionRepository,
                                SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository) {
         this.transmissionRepository = transmissionRepository;
@@ -76,7 +73,6 @@ public class TransmitterCommands {
             int totalQueued = queuedSubmissions.size();
             if (queuedSubmissions.isEmpty()) {
                 log.info("Nothing to transmit. Exiting.");
-                context.close();
                 return;
             }
             log.info("Found %s queued transmissions".formatted(totalQueued));
@@ -92,7 +88,6 @@ public class TransmitterCommands {
             }
 
         }
-        context.close();
 
     }
 

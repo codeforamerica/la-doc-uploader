@@ -53,7 +53,6 @@ import static java.time.OffsetDateTime.now;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@Disabled
 @Slf4j
 public class TransmitterCommandsTest {
 
