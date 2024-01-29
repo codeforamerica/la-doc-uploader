@@ -151,12 +151,13 @@ public class CsvGeneratorTest {
   }
 
   @Test
-  @Disabled
   void generateECEAppCsvData() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
     CsvDocument csv = csvGenerator.generateECEApplicationCsvData(submissionList);
     assertThat(csv.getCsvType()).isEqualTo(CsvType.ECE_APPLICATION);
     String theData = new String(csv.getCsvData());
     String expectedData = getExpectedData(EXPECTED_ECE_APPLICATION_CSV_FILENAME);
+    assertThat(theData).isEqualTo(expectedData);
+
   }
 
 }

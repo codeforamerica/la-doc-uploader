@@ -1,8 +1,6 @@
 package org.ladocuploader.app.csv.converters;
 
 import com.opencsv.bean.AbstractBeanField;
-import com.opencsv.exceptions.CsvConstraintViolationException;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.utils.HouseholdUtilities;
@@ -24,7 +22,7 @@ public class UnmarriedMinorConverter<T, I> extends AbstractBeanField<T, I> {
   @Override
   protected String convertToWrite(Object value) {
     Map<String, String> unmarriedMinorInfo = (Map) value;
-    var result = "No";
+    var result = false;
     try {
       LocalDate applicantBirthDate = LocalDate.of(
               Integer.parseInt(unmarriedMinorInfo.get("year")),
@@ -33,12 +31,12 @@ public class UnmarriedMinorConverter<T, I> extends AbstractBeanField<T, I> {
       );
       LocalDate localDate = LocalDate.now();
       if ((applicantBirthDate.isAfter(localDate.minusYears(18L))) & (HouseholdUtilities.unmarriedStatuses.contains(unmarriedMinorInfo.get("maritalStatus")))) {
-        result = "Yes";
+        result = true;
       }
-      return result;
+      return String.valueOf(result);
     } catch (Exception e){
       log.error(e.getMessage());
-      return result;
+      return String.valueOf(result);
     }
 
   }
