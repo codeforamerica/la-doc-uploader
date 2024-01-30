@@ -1,8 +1,8 @@
 package org.ladocuploader.app.data;
 
 import formflow.library.data.Submission;
-
 import formflow.library.inputs.FieldNameMarkers;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -105,16 +105,16 @@ public class SubmissionTestBuilder {
         return this;
     }
 
-    public SubmissionTestBuilder withJob(String employeeName, String employerName, String freq, String amount, String isSelfEmployed, String jobPaidByHour) {
+    public SubmissionTestBuilder withJob(String employeeUUID, String employerName, String freq, String amount, String isSelfEmployed, String jobPaidByHour) {
         List<Map<String, Object>> income = (List<Map<String, Object>>) submission.getInputData().get("income");
         if (income == null) {
             income = new ArrayList<>();
         }
 
         Map<String, Object> job = new HashMap<>();
-        String uuid = employeeName.toLowerCase();
+        String uuid = employeeUUID.toLowerCase();
         job.put("uuid", uuid);
-        job.put("householdMemberJobAdd", employeeName);
+        job.put("householdMemberJobAdd", employeeUUID);
         job.put("employerName", employerName);
         job.put("selfEmployed", isSelfEmployed);
         job.put("jobPaidByHour", jobPaidByHour);

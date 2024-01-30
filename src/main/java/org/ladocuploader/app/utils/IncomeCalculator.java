@@ -18,8 +18,9 @@ public class IncomeCalculator {
   public Double totalFutureEarnedIncome() {
     // TODO: check for annualIncome key and use that if it is entered?
 //    if submission.getInputData().
-    var jobs = (List<Map<String, Object>>) submission.getInputData().getOrDefault("income", new ArrayList<Map<String, Object>>());
+    var jobs = (List<Map<String, Object>>) submission.getInputData().getOrDefault("income", new ArrayList<>());
     var total = jobs.stream()
+      .filter(job -> (boolean) job.getOrDefault("iterationIsComplete", false))
       .map(IncomeCalculator::futureIncomeForJob)
       .reduce(0.0d, Double::sum);
 

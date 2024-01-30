@@ -60,8 +60,8 @@ dependencies {
     implementation 'commons-net:commons-net:3.10.0'
     testImplementation 'org.projectlombok:lombok:1.18.30'
 
-    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.2.0'
-    implementation 'io.sentry:sentry-logback:7.2.0'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.3.0'
+    implementation 'io.sentry:sentry-logback:7.3.0'
 
     testImplementation 'junit:junit:4.13.2'
 
@@ -76,7 +76,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.apache.httpcomponents.client5:httpclient5:5.3.1'
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.17.0'
-    testImplementation 'io.percy:percy-java-selenium:2.0.2'
+    testImplementation 'io.percy:percy-java-selenium:2.0.3'
     testImplementation 'org.awaitility:awaitility'
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
     testImplementation 'com.deque.html.axe-core:selenium:4.8.1'
