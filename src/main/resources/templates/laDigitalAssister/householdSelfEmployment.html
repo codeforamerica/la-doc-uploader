@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
-<th:block
-    th:with="messageVariant=${fieldData.getOrDefault('householdMemberJobAdd', '') == 'you' ? 'self' : 'householdMember'}">
+<th:block th:with="
+    hhMemberUUID=${fieldData.getOrDefault('householdMemberJobAdd', 'you')},
+    householdMemberName=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUID(fieldData.getOrDefault('householdMemberJobAdd', 'you'), inputData)}">
   <head th:replace="~{fragments/head :: head(title=#{self-employment.title})}"></head>
   <body>
   <div class="page-wrapper">
@@ -12,7 +13,7 @@
         <main id="content" role="main" class="form-card spacing-above-35">
           <p class="grey-text" th:text="${fieldData.get('employerName')}"></p>
           <th:block
-              th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'self' ? #messages.msgWithParams('self-employment.header', 'your') : #messages.msgWithParams('self-employment.header', fieldData.get('householdMemberJobAdd') + '''s')})}"/>
+              th:replace="~{fragments/cardHeader :: cardHeader(header=${hhMemberUUID == 'you' ? #messages.msg('self-employment.self.header') : #messages.msgWithParams('self-employment.householdMember.header', householdMemberName)})}"/>
           <th:block
               th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
             <th:block th:ref="formContent">
