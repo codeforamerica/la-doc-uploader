@@ -65,14 +65,14 @@ jobs:
           'SFTP_UPLOAD_URL=${{ secrets.SFTP_UPLOAD_URL }}' \
           'demo=true' \
           'RELEASE_HEALTHCHECK_TIMEOUT=900'
-      - name: Create Sentry release
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: codeforamerica
-          SENTRY_PROJECT: la-doc-uploader
-        with:
-          environment: staging
+#      - name: Create Sentry release
+#        uses: getsentry/action-release@v1
+#        env:
+#          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+#          SENTRY_ORG: codeforamerica
+#          SENTRY_PROJECT: la-doc-uploader
+#        with:
+#          environment: staging
   draft-release:
     name: Draft a new release
     needs: deploy
