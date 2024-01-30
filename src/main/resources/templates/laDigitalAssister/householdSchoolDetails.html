@@ -22,7 +22,7 @@
                     th:with="schoolNameInputName=${'schoolName' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
                   <th:block th:replace="~{fragments/inputs/text ::
                     text(inputName=${schoolNameInputName},
-                    label=${messageVariant == 'self' ? #messages.msgWithParams('schooldetails.formquestion1.posessive', individual.firstName) : #messages.msgWithParams('schooldetails.formquestion1', individual.firstName)})}"/>
+                    label=${messageVariant == 'self' ? #messages.msgWithParams('schooldetails.self-question1', individual.firstName) : #messages.msgWithParams('schooldetails.householdMember-question1', individual.firstName)})}"/>
                 </th:block>
                 <th:block
                     th:with="schoolEnrollmentInputName=${'schoolEnrollmentLevel' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
