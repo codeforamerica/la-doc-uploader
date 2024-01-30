@@ -16,6 +16,8 @@ import static org.ladocuploader.app.utils.Parish.ORLEANS;
 public class SubmissionUtilities {
 
 
+  public static LocalDate ONE_YEAR_AGO = LocalDate.now().minusYears(1L);
+  public static LocalDate FIVE_YEARS_AGO = LocalDate.now().minusYears(5L);
   static Pattern UUID_REGEX =
           Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
   public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
