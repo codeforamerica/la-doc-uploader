@@ -2,6 +2,7 @@ package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class HouseholdUtilities {
@@ -36,15 +37,11 @@ public class HouseholdUtilities {
       throw new NumberFormatException("cannot analyze birthdate as fields are missing");
     }
 
-    Calendar memberBirthDayCal = new Calendar.Builder().setDate(year, month, day).build();
+    LocalDate currentDate = LocalDate.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId());
+    LocalDate memberBirthDate = LocalDate.of(year, month, day);
+    LocalDate eighteenthBirthday = memberBirthDate.plusYears(18);
 
-    Calendar cal = new Calendar.Builder()
-            .setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).build();
-    cal.add(Calendar.YEAR, -18);
-
-    // these are converted to milliseconds since Epoch and then compared.
-    // if the memberBirthDayCal is < or == the cal, then they are 18+ years old.
-    return memberBirthDayCal.compareTo(cal) <= 0;
+    return eighteenthBirthday.isBefore(currentDate) || eighteenthBirthday.isEqual(currentDate);
   }
 
   /**

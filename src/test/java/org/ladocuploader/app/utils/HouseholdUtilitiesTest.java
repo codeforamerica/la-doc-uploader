@@ -11,8 +11,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class HouseholdUtilitiesTest {
-
-  private Calendar pretendCurrentDate = new Calendar.Builder().setDate(2024, 1, 10).build();
+  
+  // Because we manually set the date here, and Calendar uses 0-based months, this is January 10, 2024
+  // Note that in the actual code, this is set to Calendar.getInstance() and LocalDate handles the conversion to
+  // non 0 based months
+  private Calendar pretendCurrentDate = new Calendar.Builder().setDate(2024, 0, 10).build();
 
   @ParameterizedTest
   @CsvSource({
