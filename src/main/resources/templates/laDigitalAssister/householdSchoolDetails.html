@@ -27,7 +27,7 @@
                 <th:block
                     th:with="schoolEnrollmentInputName=${'schoolEnrollmentLevel' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
                   <th:block
-                      th:replace="~{fragments/inputs/radioFieldset :: radioFieldset(label=${messageVariant == 'self' ? #messages.msgWithParams('schooldetails.formquestion2.posessive', individual.firstName) : #messages.msgWithParams('schooldetails.formquestion2', individual.firstName)}, inputName=${schoolEnrollmentInputName}, fieldsetHelpText=#{schooldetails.question2-helptext}, content=~{::schoolEnrollmentLevels})}">
+                      th:replace="~{fragments/inputs/radioFieldset :: radioFieldset(label=${messageVariant == 'self' ? #messages.msgWithParams('schooldetails.self-question2', individual.firstName) : #messages.msgWithParams('schooldetails.householdMember-question2', individual.firstName)}, inputName=${schoolEnrollmentInputName}, fieldsetHelpText=#{schooldetails.question2-helptext}, content=~{::schoolEnrollmentLevels})}">
                     <th:block th:ref="schoolEnrollmentLevels">
                       <th:block
                           th:replace="~{fragments/inputs/radio :: radio(value=#{schooldetails.fulltime}, label=#{schooldetails.fulltime})}"/>

@@ -22,7 +22,7 @@
                     th:with="pregnancyDueDateInputName=${'PregnancyDueDate' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + individual.uuid}">
                   <th:block th:replace="~{fragments/inputs/duedate ::
                     duedate(inputName=${pregnancyDueDateInputName},
-                    label=${messageVariant == 'self' ? #messages.msgWithParams('pregnantduedate.question.posessive', individual.firstName) : #messages.msgWithParams('pregnantduedate.question', individual.firstName)},
+                    label=${messageVariant == 'self' ? #messages.msgWithParams('pregnantduedate.question.posessive', individual.firstName) : #messages.msgWithParams('pregnantduedate.householdMember-question', individual.firstName)},
                     groupHelpText=#{pregnantduedate.subheader},
                     groupName='PregnancyDueDate')}"/>
                 </th:block>
