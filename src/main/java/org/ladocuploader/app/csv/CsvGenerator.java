@@ -12,6 +12,7 @@ import formflow.library.data.Submission;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.csv.model.BaseCsvModel;
 import org.ladocuploader.app.csv.model.ECEApplicationCsvModel;
@@ -41,6 +42,14 @@ public class CsvGenerator {
         }
         String eceInterest = (String) submission.getInputData().getOrDefault("interestedInEceInd", "false");
         return "true".equals(eceInterest);
+    }
+     
+    private boolean isWicEligibleAndInterested(Submission submission) {
+        if (submission == null) {
+            return false;
+        }
+        String wicInterest = (String) submission.getInputData().getOrDefault("interestedInWicInd", "false");
+        return "true".equals(wicInterest);
     }
 
     public CsvDocument generateRelationshipCsvData(List<Submission> submissionList)
@@ -108,7 +117,7 @@ public class CsvGenerator {
         List<BaseCsvModel> applicationList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            if(isEceEligibleAndInterested(submission)) {
+            if(isWicEligibleAndInterested(submission)) {
                 BaseCsvModel application = WICApplicationCsvModel.generateModel(submission);
                 applicationList.add(application);
             }

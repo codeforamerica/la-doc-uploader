@@ -36,10 +36,10 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
     @CsvBindByName(column="email_address")
     private String emailAddress;
 
-    @CsvCustomBindByName(column="phone_number", converter= PhoneNumberConverter.class)
+    @CsvCustomBindByName(column="phone_number", converter = PhoneNumberConverter.class)
     private String phoneNumber;
 
-    @CsvCustomBindByName(column="street_address", converter=AddressStreetConverter.class)
+    @CsvCustomBindByName(column="street_address", converter = AddressStreetConverter.class)
     private Map<String, String> homeAddressStreet = new HashMap<>();
 
     @CsvBindByName(column="city")

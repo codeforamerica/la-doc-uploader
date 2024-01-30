@@ -22,7 +22,6 @@ public class SubmissionUtilities {
   public static final Map<String, String> PDF_EDUCATION_MAP = new HashMap<>();
   public static final Map<String, String> PDF_MARITAL_STATUS_MAP = new HashMap<>();
   public static final Map<String, String> PDF_RELATIONSHIP_MAP = new HashMap<>();
-
   public static final LocalDate ECE_CUTOFF_DATE = LocalDate.parse("2019-09-30");
   public static final LocalDate WIC_CUTOFF_DATE = LocalDate.parse("2020-02-29");
 
@@ -142,21 +141,16 @@ public class SubmissionUtilities {
     return householdMember.get("householdMemberFirstName") + " " + householdMember.get("householdMemberLastName");
   }
 
-//    public ParentGuardian getParentGuardianMap(Submission submission){
-//
-//
-//    }
 
-  public static List<String> getHouseholdMemberNames(Submission submission) {
-    ArrayList<String> names = new ArrayList<>();
+    public static List<String> getHouseholdMemberNames(Submission submission) {
+        ArrayList<String> names = new ArrayList<>();
+        var applicantName = submission.getInputData().get("firstName") + " " + submission.getInputData().get("lastName");
+        var householdMembers = (List<Map<String, Object>>) submission.getInputData().getOrDefault("household", new ArrayList<HashMap<String, Object>>());
 
-    var applicantName = submission.getInputData().get("firstName") + " " + submission.getInputData().get("lastName");
-    var householdMembers = (List<Map<String, Object>>) submission.getInputData().getOrDefault("household", new ArrayList<HashMap<String, Object>>());
+        names.add(applicantName);
+        householdMembers.forEach(hh -> names.add(householdMemberFullName(hh)));
 
-    names.add(applicantName);
-    householdMembers.forEach(hh -> names.add(householdMemberFullName(hh)));
-
-    return names;
+        return names;
   }
 
   public static String getHouseholdMemberFullnameByUUID(String uuid, Map<String, Object> inputData) {
