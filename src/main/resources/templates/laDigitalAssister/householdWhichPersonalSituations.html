@@ -21,7 +21,7 @@
                   content=~{::whichPersonalSituations})}"
                               th:with="messageVariant=${individual.uuid == 'you' ? 'self' : 'householdMember'}">
                       <th:block th:ref="whichPersonalSituations">
-                        <h2 th:text="${messageVariant == 'self' ? #messages.msgWithParams('personal-situations-which-you.subheader', individual.firstName) : #messages.msgWithParams('personal-situations-which.subheader', individual.firstName)}"></h2>
+                        <h2 th:text="${messageVariant == 'self' ? #messages.msgWithParams('personal-situations-which.self-subheader', individual.firstName) : #messages.msgWithParams('personal-situations-which.householdMember-subheader', individual.firstName)}"></h2>
                         <p th:text="#{general.check-all-that-apply}"></p>
                         <th:block th:each="personalSituation : ${T(org.ladocuploader.app.data.enums.PersonalSituationType).values()}">
                           <th:block
