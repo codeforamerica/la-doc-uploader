@@ -73,4 +73,4 @@ jobs:
           SENTRY_ORG: codeforamerica
           SENTRY_PROJECT: la-doc-uploader
         with:
-          environment: staging
+          environment: prod
