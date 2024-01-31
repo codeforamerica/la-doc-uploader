@@ -215,7 +215,7 @@ public class SubmissionTransfer {
     zos.putNextEntry(entry);
     zos.write(file);
     zos.closeEntry();
-    String metaEntry = generateMetaDataEntry(batchIndex, subfolder, fileName, "APP-OFS 4APP", submission);
+    String metaEntry = generateMetaDataEntry(batchIndex, subfolder, fileName, "APP-OFS 4 APP", submission);
     docMeta.append(metaEntry);
   }
 
