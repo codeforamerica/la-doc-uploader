@@ -187,8 +187,10 @@ public class SubmissionUtilities {
         item.put("jobName", job.get("employerName"));
         item.put("isApplicant", name.equals(applicantFullName));
         // TODO: handle income types - hourly vs. non hourly
-        var payPeriod = job.getOrDefault("jobPaidByHour", "false").equals("true") ? "Hourly, " + job.get("hoursPerWeek").toString() + " hours per week" : job.getOrDefault("payPeriod", "It varies").toString();
+        var payPeriod = job.getOrDefault("jobPaidByHour", "false").equals("true") ? "Hourly" : job.get("payPeriod").toString();
+        var hoursPerWeek = job.getOrDefault("hoursPerWeek", "").toString();
         item.put("payPeriod", payPeriod);
+        item.put("hoursPerWeek", hoursPerWeek);
 
         // TODO: add wage amount and not future income
         var payAmount = job.getOrDefault("jobPaidByHour", "false").equals("true") ? job.get("hourlyWage").toString() : job.get("payPeriodAmount").toString();
