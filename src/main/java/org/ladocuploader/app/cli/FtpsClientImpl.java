@@ -35,9 +35,10 @@ public class FtpsClientImpl implements FtpsClient {
   public void uploadFile(String zipFilename, byte[] data) throws IOException {
     FTPSClient ftp = new FTPSClient();
 
-    ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
-
     ftp.connect(uploadUrl);
+
+    ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+    
     int reply = ftp.getReplyCode();
     if (!FTPReply.isPositiveCompletion(reply)) {
       ftp.disconnect();

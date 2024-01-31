@@ -8,7 +8,6 @@ import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
@@ -21,7 +20,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.*;
@@ -33,13 +31,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.ladocuploader.app.cli.MockFtpsClientImpl.MOCK_SERVER_NAME;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@Disabled
 class SubmissionTransferTest {
 
   @Autowired
@@ -54,14 +51,14 @@ class SubmissionTransferTest {
   @Autowired
   UserFileRepository userFileRepository;
 
+  @Autowired
+  FtpsClient ftpsClient;
+
   @MockBean
   PdfService pdfService;
 
   @MockBean
   CloudFileRepository fileRepository;
-
-  @MockBean
-  FtpsClient ftpsClient;
 
   private Submission submissionWithDocs;
   private Submission submissionWithoutDocs;
@@ -70,16 +67,6 @@ class SubmissionTransferTest {
 
   @BeforeEach
   void setup() throws IOException {
-    doAnswer(args -> {
-      String zipfilename = (String) args.getArguments()[0];
-      String transmitlocation = "mocktransmit_" + args.getArguments()[0];
-      try (FileInputStream instream = new FileInputStream(zipfilename);
-           FileOutputStream outstream = new FileOutputStream(transmitlocation)) {
-        outstream.write(instream.readAllBytes());
-      }
-      return null;
-    }).when(ftpsClient).uploadFile(anyString(), any());
-
     submissionWithoutDocs = queueSubmissionWithoutDocs();
     submissionWithDocs = queueSubmissionWithDocs();
     invalidSubmission = queueInvalidSubmission();
@@ -94,10 +81,8 @@ class SubmissionTransferTest {
   public void transmitZipFile() throws IOException {
     submissionTransfer.transferSubmissions();
 
-    File zipFile = new File("mocktransmit_00050000000.zip");
+    File zipFile = new File(MOCK_SERVER_NAME + "/00050000000.zip.gpg");
     assertTrue(zipFile.exists());
-
-    verify(ftpsClient).uploadFile(any(), any());
 
     Transmission transmittedWithDocs = transmissionRepository.findBySubmissionAndTransmissionType(submissionWithDocs, TransmissionType.SNAP);
     assertThat(transmittedWithDocs.getStatus(), equalTo(TransmissionStatus.Complete));
@@ -118,13 +103,13 @@ class SubmissionTransferTest {
     String destDir = "output";
     List<String> fileNames = unzip(zipFile.getPath(), destDir);
 
-    assertThat(fileNames, hasItem("output/1/"));
-    assertThat(fileNames, hasItem("output/1/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/2/"));
-    assertThat(fileNames, hasItem("output/2/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/2/originalFilename.png"));
-    assertThat(fileNames, hasItem("output/2/2_originalFilename.png"));
-    assertThat(fileNames, hasItem("output/2/weird/:\\filename.jpg"));
+    assertThat(fileNames, hasItem("output/00050000000/1/"));
+    assertThat(fileNames, hasItem("output/00050000000/1/SNAP_application.pdf"));
+    assertThat(fileNames, hasItem("output/00050000000/2/"));
+    assertThat(fileNames, hasItem("output/00050000000/2/SNAP_application.pdf"));
+    assertThat(fileNames, hasItem("output/00050000000/2/originalFilename.png"));
+    assertThat(fileNames, hasItem("output/00050000000/2/2_originalFilename.png"));
+    assertThat(fileNames, hasItem("output/00050000000/2/weird/:\\filename.jpg"));
     assertThat(fileNames, hasItem("output/00050000000.txt"));
     assertEquals(8, fileNames.size());
 
