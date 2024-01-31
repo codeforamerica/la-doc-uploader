@@ -11,6 +11,7 @@ import static org.ladocuploader.app.csv.enums.CsvType.WIC_APPLICATION;
 import java.util.List;
 
 public enum CsvPackageType {
+<<<<<<< HEAD
   ECE_PACKAGE (
           List.of(PARENT_GUARDIAN, STUDENT, RELATIONSHIP, ECE_APPLICATION),
           "nola-ps",
@@ -25,6 +26,11 @@ public enum CsvPackageType {
   );
 
   @Getter
+=======
+  ECE_PACKAGE (List.of(PARENT_GUARDIAN, STUDENT, RELATIONSHIP, ECE_APPLICATION), "/la-du-moveit-transfer/nola-ps"),
+  WIC_PACKAGE (List.of(WIC_APPLICATION), "/la-du-moveit-transfer/dcfs");
+
+>>>>>>> 449ac468 (add base class + 2 subclasses extending PGPEncryptor)
   private final List<CsvType> csvTypeList;
 
   @Getter

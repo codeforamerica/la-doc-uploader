@@ -13,11 +13,11 @@ public class PGPEceEncryptorImpl extends BasePGPEncrpytorImpl {
     public PGPEceEncryptorImpl(@Value("${pgp.ece.sigkey-password}") String sigkeyPassword,
                                @Value("${pgp.ece.seckey-file-path}") String seckeyFilePath,
                                @Value("${pgp.ece.pubkey-file-path}") String pubkeyFilePath,
-                               @Value("${pgp.ece.bucket-name}") String bucketName) {
-        super();
-        this.sigkeyPassword = sigkeyPassword;
-        this.seckeyFilePath = seckeyFilePath;
-        this.pubkeyFilePath = pubkeyFilePath;
-        this.bucketName = bucketName;
+                               @Value("${pgp.ece.bucket-name}") String bucketName,
+                               @Value("${form-flow.aws.access_key}") String accessKey,
+                               @Value("${form-flow.aws.secret_key}") String secretKey,
+                               @Value("${form-flow.aws.region}") String region) {
+        super(sigkeyPassword, seckeyFilePath, pubkeyFilePath, bucketName, accessKey, secretKey, region);
+
     }
 }

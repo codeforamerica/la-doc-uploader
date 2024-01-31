@@ -13,11 +13,10 @@ public class PGPWicEncryptorImpl extends BasePGPEncrpytorImpl {
     public PGPWicEncryptorImpl(@Value("${pgp.wic.sigkey-password}") String sigkeyPassword,
                                @Value("${pgp.wic.seckey-file-path}") String seckeyFilePath,
                                @Value("${pgp.wic.pubkey-file-path}") String pubkeyFilePath,
-                               @Value("${pgp.wic.bucket-name}") String bucketName) {
-        super();
-        this.sigkeyPassword = sigkeyPassword;
-        this.seckeyFilePath = seckeyFilePath;
-        this.pubkeyFilePath = pubkeyFilePath;
-        this.bucketName = bucketName;
+                               @Value("${pgp.wic.bucket-name}") String bucketName,
+                               @Value("${form-flow.aws.access_key}") String accessKey,
+                               @Value("${form-flow.aws.secret_key}") String secretKey,
+                               @Value("${form-flow.aws.region}") String region) {
+        super(sigkeyPassword, seckeyFilePath, pubkeyFilePath, bucketName, accessKey, secretKey, region);
     }
 }
