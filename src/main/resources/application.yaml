@@ -118,9 +118,14 @@ ftps:
   upload-dir: ${FTPS_UPLOAD_DIR:-""}
 pgp:
   bucket-name: ${PGP_KEYS_DIR}
-  seckey-file-path: ${PGP_SECKEY_FILE_PATH}
-  pubkey-file-path: ${PGP_PUBKEY_FILE_PATH}
-  sigkey-password: ${PGP_SIGKEY_PASSWORD}
+  snap:
+    seckey-file-path: ${PGP_SECKEY_FILE_PATH}
+    pubkey-file-path: ${PGP_PUBKEY_FILE_PATH}
+    sigkey-password: ${PGP_SIGKEY_PASSWORD}
+  wic_ece:
+    seckey-file-path: ${PGP_SECKEY_FILE_PATH}
+    pubkey-file-path: ${PGP_PUBKEY_FILE_PATH}
+    sigkey-password: ${PGP_SIGKEY_PASSWORD}
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6

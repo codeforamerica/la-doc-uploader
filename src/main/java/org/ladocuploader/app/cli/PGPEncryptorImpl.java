@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Profile({"production", "staging"})
 public class PGPEncryptorImpl extends BasePGPEncrpytorImpl {
 
-  public PGPEncryptorImpl(@Value("${pgp.sigkey-password}") String sigkeyPassword,
-                          @Value("${pgp.seckey-file-path}") String seckeyFilePath,
-                          @Value("${pgp.pubkey-file-path}") String pubkeyFilePath,
+  public PGPEncryptorImpl(@Value("${pgp.snap.sigkey-password}") String sigkeyPassword,
+                          @Value("${pgp.snap.seckey-file-path}") String seckeyFilePath,
+                          @Value("${pgp.snap.pubkey-file-path}") String pubkeyFilePath,
                           @Value("${pgp.bucket-name}") String bucketName) {
     super(sigkeyPassword, seckeyFilePath, pubkeyFilePath, bucketName);
 
