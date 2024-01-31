@@ -30,6 +30,9 @@ jobs:
         with:
           key: ${{ secrets.APTIBLE_SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.APTIBLE_KNOWN_HOSTS }}
+      - name: Generate Sentry release name from sha
+        id: generate-release
+        run: echo "::set-output name=RELEASE::$(git rev-parse HEAD)"
       - name: Push to Aptible remote branch
         run: git push --force ${{ vars.APTIBLE_REMOTE_URL }} "${GITHUB_SHA}:prod-deploy"
       - name: Set Aptible environment variables and deploy
@@ -45,10 +48,17 @@ jobs:
           'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
           'AWS_BUCKET=${{ secrets.AWS_BUCKET_PROD }}' \
           'AWS_CMK=${{ secrets.AWS_CMK_PROD }}' \
+          'PGP_KEYS_DIR=${{ secrets.PGP_KEYS_DIR }}' \
+          'PGP_SECKEY_FILE_PATH=${{ secrets.PGP_SECKEY_FILE_PATH }}' \
+          'PGP_PUBKEY_FILE_PATH=${{ secrets.PGP_PUBKEY_FILE_PATH }}' \
+          'PGP_SIGKEY_PASSWORD=${{ secrets.PGP_SIGKEY_PASSWORD }}' \
+          'FTPS_USERNAME=${{ secrets.FTPS_USERNAME }}' \
+          'FTPS_PASSWORD=${{ secrets.FTPS_PASSWORD }}' \
+          'FTPS_UPLOAD_URL=${{ secrets.FTPS_UPLOAD_URL }}' \
+          'FTPS_UPLOAD_DIR=${{ secrets.FTPS_UPLOAD_DIR }}' \
           'SENTRY_DSN=${{ secrets.SENTRY_DSN }}' \
           'SENTRY_ENVIRONMENT=prod' \
           'FORCE_SSL=true' \
-          'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
           'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
           'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
           'SFTP_USERNAME=${{ secrets.SFTP_USERNAME_PROD }}' \
@@ -56,48 +66,11 @@ jobs:
           'SFTP_UPLOAD_URL=${{ secrets.SFTP_UPLOAD_URL }}' \
           'demo=false' \
           'RELEASE_HEALTHCHECK_TIMEOUT=900'
-  deploy_es:
-    needs:
-      - deploy_en
-    name: Deploy to Aptible (es)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fetch Latest Release
-        id: fetch-latest-release
-        uses: thebritican/fetch-latest-release@v2.0.0
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: codeforamerica
+          SENTRY_PROJECT: la-doc-uploader
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.fetch-latest-release.outputs.tag_name }}
-          fetch-depth: 0
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2.6.1
-        with:
-          key: ${{ secrets.APTIBLE_SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.APTIBLE_KNOWN_HOSTS }}
-      - name: Push to Aptible remote branch
-        run: git push --force ${{ vars.APTIBLE_REMOTE_URL_ES }} "${GITHUB_SHA}:prod-es-deploy"
-      - name: Set Aptible environment variables and deploy
-        run: |
-          wget -O aptible-package https://omnibus-aptible-toolbelt.s3.amazonaws.com/aptible/omnibus-aptible-toolbelt/master/206/pkg/aptible-toolbelt_0.16.5%2B20200508143656~ubuntu.16.04-1_amd64.deb
-          sudo dpkg -i aptible-package
-          aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
-          aptible deploy --app app-prod-es --git-commitish ${GITHUB_SHA} \
-          'SPRING_PROFILES_ACTIVE=prod' \
-          'DEFAULT_LOCALE=es' \
-          'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
-          'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
-          'AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}' \
-          'AWS_BUCKET=${{ secrets.AWS_BUCKET_PROD }}' \
-          'AWS_CMK=${{ secrets.AWS_CMK_PROD }}' \
-          'SENTRY_DSN=${{ secrets.SENTRY_DSN }}' \
-          'SENTRY_ENVIRONMENT=prod-es' \
-          'FORCE_SSL=true' \
-          'ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}' \
-          'SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
-          'SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
-          'DEFAULT_USER=${{ secrets.DEFAULT_USER }}' \
-          'DEFAULT_PASSWORD=${{ secrets.DEFAULT_PASSWORD }}' \
-          'demo=false' \
-          'RELEASE_HEALTHCHECK_TIMEOUT=900'
+          environment: prod
