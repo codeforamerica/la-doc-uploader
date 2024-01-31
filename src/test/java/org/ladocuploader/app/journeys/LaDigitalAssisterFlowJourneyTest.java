@@ -330,7 +330,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Language preference
     assertThat(testPage.getTitle()).isEqualTo(message("language-preference.title"));
-    testPage.selectFromDropdown("languageRead", "Spanish");
+    testPage.selectFromDropdown("languageRead", "Español");
     testPage.selectRadio("needInterpreter", "Yes");
     testPage.clickContinue();
 
