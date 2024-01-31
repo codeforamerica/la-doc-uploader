@@ -130,6 +130,7 @@ pgp:
     pubkey-file-path: ${ECE_PGP_PUBKEY_FILE_PATH}
     sigkey-password: ${ECE_PGP_SIGKEY_PASSWORD}
     bucket-name: ${ECE_PGP_KEYS_DIR}
+
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6
