@@ -18,11 +18,10 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import org.springframework.context.ConfigurableApplicationContext;
 
 
 import java.io.*;
@@ -55,12 +54,18 @@ public class TransmitterCommands {
 
     private final long TWO_HOURS = 2L;
 
+    private final PGPEncryptor pgpEncryptor;
+
+    private final StringEncryptor encryptor;
+
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor pgpEncryptor, StringEncryptor encryptor) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
         this.fileRepository = cloudFileRepository;
+        this.pgpEncryptor = pgpEncryptor;
+        this.encryptor = encryptor;
     }
 
     @ShellMethod(key = "transmit")
