@@ -4,11 +4,9 @@ import com.deque.html.axecore.results.Results;
 import com.deque.html.axecore.results.Rule;
 import com.deque.html.axecore.selenium.AxeBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.ladocuploader.app.utils.AccessibilityTestPage;
+import org.junit.jupiter.api.*;
+import org.ladocuploader.app.testutils.AbstractBasePageTest;
+import org.ladocuploader.app.testutils.AccessibilityTestPage;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

@@ -5,9 +5,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.bean.*;
 import formflow.library.data.Submission;
 import java.util.HashMap;
+
+import org.ladocuploader.app.csv.CsvBindByNameOrder;
 import org.ladocuploader.app.csv.converters.AddressStreetConverter;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +16,7 @@ import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 
 @Getter
 @Setter
+@CsvBindByNameOrder({"active","city","email_address","first_name","last_name","phone_number","reference_id","state","street_address","zip_code"})
 public class ParentGuardianCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column = "active")
@@ -33,10 +34,10 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
     @CsvBindByName(column="email_address")
     private String emailAddress;
 
-    @CsvCustomBindByName(column="phone_number", converter= PhoneNumberConverter.class)
+    @CsvCustomBindByName(column="phone_number", converter = PhoneNumberConverter.class)
     private String phoneNumber;
 
-    @CsvCustomBindByName(column="street_address", converter=AddressStreetConverter.class)
+    @CsvCustomBindByName(column="street_address", converter = AddressStreetConverter.class)
     private Map<String, String> homeAddressStreet = new HashMap<>();
 
     @CsvBindByName(column="city")
@@ -65,7 +66,7 @@ public class ParentGuardianCsvModel extends BaseCsvModel {
     public static BaseCsvModel generateModel(Submission submission) throws JsonProcessingException {
         Map<String, Object> inputData = submission.getInputData();
         inputData.put("id", submission.getId());
-
+        // TODO: check if they have a child who is eligible (or family member is pregnant)
         ParentGuardianCsvModel pgpModel = mapper.convertValue(inputData, ParentGuardianCsvModel.class);
         pgpModel.setSubmissionId(submission.getId());
         return pgpModel;
