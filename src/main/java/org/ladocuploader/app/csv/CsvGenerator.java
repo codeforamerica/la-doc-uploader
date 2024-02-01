@@ -4,7 +4,6 @@ import com.opencsv.CSVWriter;
 
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import com.opencsv.bean.exceptionhandler.CsvExceptionHandler;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
@@ -29,8 +28,25 @@ import java.io.OutputStreamWriter;
 @Component
 @Slf4j
 public class CsvGenerator {
-    // TODO: keep in mind for subflow unpacking etc.
-//    https://stackoverflow.com/questions/77230117/custom-converter-for-opencsv
+
+
+    private static final String ECE_ELIGIBLE = "interestedInEceInd";
+
+    private boolean isEceEligibleAndInterested(Submission submission) {
+        if (submission == null) {
+            return false;
+        }
+        String eceInterest = (String) submission.getInputData().getOrDefault("interestedInEceInd", "false");
+        return "true".equals(eceInterest);
+    }
+     
+    private boolean isWicEligibleAndInterested(Submission submission) {
+        if (submission == null) {
+            return false;
+        }
+        String wicInterest = (String) submission.getInputData().getOrDefault("interestedInWicInd", "false");
+        return "true".equals(wicInterest);
+    }
 
     public CsvDocument generateRelationshipCsvData(List<Submission> submissionList)
             throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
@@ -38,7 +54,9 @@ public class CsvGenerator {
         List<BaseCsvModel> relationships = new ArrayList<>();
 
         for(Submission submission : submissionList) {
-            relationships.addAll(RelationshipCsvModel.generateModel(submission));
+            if(isEceEligibleAndInterested(submission)) {
+                relationships.addAll(RelationshipCsvModel.generateModel(submission));
+            }
         }
 
         return generateCsv(CsvType.RELATIONSHIP, RelationshipCsvModel.class, relationships);
@@ -51,8 +69,10 @@ public class CsvGenerator {
         List<BaseCsvModel> pgList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            BaseCsvModel pg = ParentGuardianCsvModel.generateModel(submission);
-            pgList.add(pg);
+            if(isEceEligibleAndInterested(submission)) {
+                BaseCsvModel pg = ParentGuardianCsvModel.generateModel(submission);
+                pgList.add(pg);
+            }
         }
 
         return generateCsv(CsvType.PARENT_GUARDIAN,ParentGuardianCsvModel.class, pgList);
@@ -64,8 +84,10 @@ public class CsvGenerator {
         List<BaseCsvModel> studentList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            List<BaseCsvModel> students = StudentCsvModel.generateModel(submission);
-            studentList.addAll(students);
+            if(isEceEligibleAndInterested(submission)) {
+                List<BaseCsvModel> students = StudentCsvModel.generateModel(submission);
+                studentList.addAll(students);
+            }
         }
         return generateCsv(CsvType.STUDENT, StudentCsvModel.class, studentList);
     }
@@ -76,8 +98,10 @@ public class CsvGenerator {
         List<BaseCsvModel> applicationList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            BaseCsvModel application = ECEApplicationCsvModel.generateModel(submission);
-            applicationList.add(application);
+            if(isEceEligibleAndInterested(submission)) {
+                BaseCsvModel application = ECEApplicationCsvModel.generateModel(submission);
+                applicationList.add(application);
+            }
         }
         return generateCsv(CsvType.ECE_APPLICATION, ECEApplicationCsvModel.class, applicationList);
     }
@@ -88,22 +112,24 @@ public class CsvGenerator {
         List<BaseCsvModel> applicationList = new ArrayList<>();
 
         for (Submission submission : submissionList) {
-            BaseCsvModel application = WICApplicationCsvModel.generateModel(submission);
-            applicationList.add(application);
+            if(isWicEligibleAndInterested(submission)) {
+                BaseCsvModel application = WICApplicationCsvModel.generateModel(submission);
+                applicationList.add(application);
+            }
         }
         return generateCsv(CsvType.WIC_APPLICATION, WICApplicationCsvModel.class, applicationList);
     }
 
     private CsvDocument generateCsv(CsvType csvType, Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         CsvDocument csv = new CsvDocument(csvType);
-        HeaderColumnMappingStrategy<BaseCsvModel> strategy = new HeaderColumnMappingStrategy<>();
-        strategy.setType(classType);
+        HeaderColumnNameAndOrderMappingStrategy<BaseCsvModel> mappingStrategy = new HeaderColumnNameAndOrderMappingStrategy<>();
+        mappingStrategy.setType(classType);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         OutputStreamWriter streamWriter = new OutputStreamWriter(stream);
         CSVWriter writer = new CSVWriter(streamWriter);
         StatefulBeanToCsv<BaseCsvModel> beanToCsv = new StatefulBeanToCsvBuilder<BaseCsvModel>(writer)
                 .withSeparator(',')
-                .withMappingStrategy(strategy)
+                .withMappingStrategy(mappingStrategy)
                 .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                 .build();
         // write one line at a time to gather exceptions. Otherwise, we just have access to CsvExceptions and

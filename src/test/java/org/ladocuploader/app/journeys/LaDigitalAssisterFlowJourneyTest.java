@@ -2,7 +2,7 @@ package org.ladocuploader.app.journeys;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.ladocuploader.app.utils.AbstractBasePageTest;
+import org.ladocuploader.app.testutils.AbstractBasePageTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

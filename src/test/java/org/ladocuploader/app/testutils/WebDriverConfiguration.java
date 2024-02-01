@@ -1,4 +1,4 @@
-package org.ladocuploader.app.utils;
+package org.ladocuploader.app.testutils;
 
 import java.io.IOException;
 import java.nio.file.Files;

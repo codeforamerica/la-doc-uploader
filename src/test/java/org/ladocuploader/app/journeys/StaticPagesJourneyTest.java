@@ -4,11 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 import java.util.concurrent.TimeUnit;
-import org.ladocuploader.app.utils.AbstractBasePageTest;
-import org.ladocuploader.app.utils.Page;
+import org.ladocuploader.app.testutils.AbstractBasePageTest;
+import org.ladocuploader.app.testutils.Page;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 
 @Tag("staticPagesJourney")
 public class StaticPagesJourneyTest extends AbstractBasePageTest {

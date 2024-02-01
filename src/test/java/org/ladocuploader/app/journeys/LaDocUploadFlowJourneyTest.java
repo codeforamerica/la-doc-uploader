@@ -3,8 +3,7 @@ package org.ladocuploader.app.journeys;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.ladocuploader.app.utils.AbstractBasePageTest;
-import org.openqa.selenium.By;
+import org.ladocuploader.app.testutils.AbstractBasePageTest;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDate;

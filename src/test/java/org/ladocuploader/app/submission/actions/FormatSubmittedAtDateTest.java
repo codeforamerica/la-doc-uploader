@@ -2,7 +2,7 @@ package org.ladocuploader.app.submission.actions;
 
 import formflow.library.data.Submission;
 import org.junit.jupiter.api.Test;
-import org.ladocuploader.app.utils.TestUtils;
+import org.ladocuploader.app.testutils.TestUtils;
 
 import java.time.OffsetDateTime;
 import java.util.HashMap;
