@@ -211,7 +211,7 @@ public class SubmissionTransfer {
 
   private static String getDocType(Submission submission, UserFile userFile) {
     var docType = (String) submission.getInputData().get("docType_wildcard_" + userFile.getFileId());
-    return DOCTYPE_FORMAT_MAP.getOrDefault(docType, "CORR - Customer Correspondence");
+    return DOCTYPE_FORMAT_MAP.getOrDefault(docType, "CORR-Customer Correspondence");
   }
 
   private void packageSnapApplication(String batchIndex, ZipOutputStream zos, StringBuilder docMeta, Submission submission, String subfolder) throws IOException {
