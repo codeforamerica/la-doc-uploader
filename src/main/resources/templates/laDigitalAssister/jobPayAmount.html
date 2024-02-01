@@ -11,12 +11,10 @@
         <div th:replace="~{fragments/goBack :: goBackLink}"></div>
         <main id="content" role="main" class="form-card spacing-above-35">
           <p class="grey-text" th:text="${fieldData.get('employerName')}"></p>
-          <th:block th:with="payPeriod =${fieldData.get('payPeriod')}">
+          <th:block
+              th:with="labelValue=${#messages.msg(T(org.ladocuploader.app.data.enums.PayFrequencyType).getLabelSrcFromValue(fieldData.get('payPeriod'))).toLowerCase()}">
             <th:block
-                th:with="labelValue=${#messages.msg(T(org.ladocuploader.app.data.enums.PayFrequencyType).getLabelSrcFromValue(payPeriod)).toLowerCase()}">
-              <th:block
-                  th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'fixed' ? #messages.msgWithParams('job-pay-amount.fixed.header', labelValue) : #messages.msg('job-pay-amount.variable.header')}, subtext=#{job-pay-amount.subtext})}"/>
-            </th:block>
+                th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'fixed' ? #messages.msgWithParams('job-pay-amount.fixed.header', labelValue) : #messages.msg('job-pay-amount.variable.header')}, subtext=#{job-pay-amount.subtext})}"/>
           </th:block>
           <th:block
               th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
