@@ -20,9 +20,11 @@ import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Service;
 
 
 import java.io.*;
@@ -34,7 +36,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Slf4j
-@ShellComponent
+@Service
 public class TransmitterCommands {
 
     private final TransmissionRepository transmissionRepository;
@@ -63,7 +65,7 @@ public class TransmitterCommands {
         this.fileRepository = cloudFileRepository;
     }
 
-    @ShellMethod(key = "transmit")
+    @Scheduled(fixedRateString="${transmissions.wic-ece-transmission-rate}")
     public void transmit() throws IOException, JSchException, SftpException {
         log.info("Finding submissions to transmit...");
         OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
