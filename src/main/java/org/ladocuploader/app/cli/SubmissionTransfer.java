@@ -61,7 +61,7 @@ public class SubmissionTransfer {
   private final UserFileRepositoryService fileRepositoryService;
   private final CloudFileRepository fileRepository;
   private final PdfService pdfService;
-  private final PGPEncryptor pgpEncryptor;
+  private final PGPEncryptor snapPgpEncryptor;
 
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
@@ -69,12 +69,12 @@ public class SubmissionTransfer {
   @Autowired
   private ConfigurableApplicationContext context;
 
-  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
+  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor snapPgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;
     this.pdfService = pdfService;
-    this.pgpEncryptor = pgpEncryptor;
+    this.snapPgpEncryptor = snapPgpEncryptor;
     this.encryptor = encryptor;
     this.ftpsClient = ftpsClient;
   }
@@ -159,7 +159,7 @@ public class SubmissionTransfer {
       zos.close();
 
       // Encrypt and transfer
-      byte[] data = pgpEncryptor.signAndEncryptPayload(zipFileName);
+      byte[] data = snapPgpEncryptor.signAndEncryptPayload(zipFileName);
       ftpsClient.uploadFile(zipFileName + ".gpg", data);
     } catch (IOException ex) {
       throw new IllegalStateException(ex);

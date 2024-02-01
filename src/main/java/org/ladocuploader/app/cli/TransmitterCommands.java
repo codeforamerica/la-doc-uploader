@@ -23,8 +23,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -54,17 +56,17 @@ public class TransmitterCommands {
 
     private final long TWO_HOURS = 2L;
 
-    private final PGPEncryptor pgpEncryptor;
+    private final PGPEncryptor csvPgpEncryptor;
 
     private final StringEncryptor encryptor;
 
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor pgpEncryptor, StringEncryptor encryptor) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor csvPgpEncryptor, StringEncryptor encryptor) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
         this.fileRepository = cloudFileRepository;
-        this.pgpEncryptor = pgpEncryptor;
+        this.csvPgpEncryptor = csvPgpEncryptor;
         this.encryptor = encryptor;
     }
 

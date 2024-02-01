@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+@Component("snapPgpEncryptor")
 @Profile({"production", "staging"})
 public class PGPEncryptorImpl extends BasePGPEncrpytorImpl {
 
@@ -14,8 +14,11 @@ public class PGPEncryptorImpl extends BasePGPEncrpytorImpl {
                           @Value("${pgp.snap.seckey-file-path}") String seckeyFilePath,
                           @Value("${pgp.snap.pubkey-file-path}") String pubkeyFilePath,
                           @Value("${pgp.bucket-name}") String bucketName) {
-    super(sigkeyPassword, seckeyFilePath, pubkeyFilePath, bucketName);
-
+    super();
+    this.sigkeyPassword = sigkeyPassword;
+    this.seckeyFilePath = seckeyFilePath;
+    this.pubkeyFilePath = pubkeyFilePath;
+    this.bucketName = bucketName;
   }
 }
 

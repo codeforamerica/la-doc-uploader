@@ -34,20 +34,10 @@ public class BasePGPEncrpytorImpl implements PGPEncryptor {
     private PGPSecretKey signingKey;
     private PGPPublicKey pubKey;
 
-    private String sigkeyPassword;
-
-    private String seckeyFilePath;
-
-    private String pubkeyFilePath;
-
-    private String bucketName;
-
-    public BasePGPEncrpytorImpl(String sigkeyPassword, String seckeyFilePath, String pubkeyFilePath, String bucketName){
-        this.sigkeyPassword = sigkeyPassword;
-        this.seckeyFilePath = seckeyFilePath;
-        this.bucketName = bucketName;
-        this.pubkeyFilePath = pubkeyFilePath;
-    }
+    protected String pubkeyFilePath;
+    protected String sigkeyPassword;
+    protected String seckeyFilePath;
+    protected String bucketName;
 
     @PostConstruct
     public void init() {
