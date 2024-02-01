@@ -127,7 +127,6 @@ public class SubmissionTransfer {
           log.info("Generate applicant summary");
           packageSnapApplication(batchIndex, zos, docMeta, submission, subfolder);
 
-          log.info("Adding uploaded docs");
           packageUploadedDocuments(batchIndex, zos, docMeta, submission, subfolder);
 
           successfulTransmissions.add(transmission);
@@ -180,6 +179,10 @@ public class SubmissionTransfer {
 
   private void packageUploadedDocuments(String batchIndex, ZipOutputStream zos, StringBuilder docMeta, Submission submission, String subfolder) throws IOException {
     List<UserFile> userFiles = fileRepositoryService.findAllBySubmission(submission);
+    if (userFiles.isEmpty()) {
+      return;
+    }
+    log.info("Number of uploaded docs to transfer: %s".formatted(userFiles.size()));
     Map<String, Integer> filenameDuplicates = new HashMap<>();
     for (UserFile userFile : userFiles) {
       // Account for files of the same name
@@ -200,10 +203,15 @@ public class SubmissionTransfer {
       zos.closeEntry();
 
       // write doc metadata
-      String docType = (String) submission.getInputData().get("docType_wildcard_" + userFile.getFileId());
-      String metaEntry = generateMetaDataEntry(batchIndex, subfolder, docUploadFilename, DOCTYPE_FORMAT_MAP.get(docType), submission);
+      String docType = getDocType(submission, userFile);
+      String metaEntry = generateMetaDataEntry(batchIndex, subfolder, docUploadFilename, docType, submission);
       docMeta.append(metaEntry);
     }
+  }
+
+  private static String getDocType(Submission submission, UserFile userFile) {
+    var docType = (String) submission.getInputData().get("docType_wildcard_" + userFile.getFileId());
+    return DOCTYPE_FORMAT_MAP.getOrDefault(docType, "CORR - Customer Correspondence");
   }
 
   private void packageSnapApplication(String batchIndex, ZipOutputStream zos, StringBuilder docMeta, Submission submission, String subfolder) throws IOException {
