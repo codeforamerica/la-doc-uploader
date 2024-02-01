@@ -195,48 +195,50 @@ public class TransmitterCommands {
             );
 
             addZipEntries(csvPackage, zos);
-            submissions.forEach(submission -> {
-                List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submission);
-                log.info("Found " + userFiles.size() + " files associated with app.");
-                if (userFiles.size() == 0){
-                    return;
-                }
-                int fileCount = 0;
-                String subfolder = submission.getId() + "_files/";
-                try {
-                    zos.putNextEntry(new ZipEntry(subfolder));
-                } catch (Exception e){
-                    log.error("Error generating file collection for submission ID {}", submission.getId(), e);
-                }
-                Map<UUID, String> submissionDocumentationErrors = new HashMap<>();
-                for (UserFile userFile: userFiles) {
+            if (csvPackage.getPackageType().getIncludeDocuments()) {
+                submissions.forEach(submission -> {
+                    List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submission);
+                    log.info("Found " + userFiles.size() + " files associated with app.");
+                    if (userFiles.size() == 0) {
+                        return;
+                    }
+                    int fileCount = 0;
+                    String subfolder = submission.getId() + "_files/";
                     try {
-                        fileCount += 1;
-                        String fileName = userFile.getOriginalName();
-                        log.info("filename is: " + fileName);
-                        ZipEntry docEntry = new ZipEntry(subfolder + String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
-                        docEntry.setSize(userFile.getFilesize().longValue());
-                        zos.putNextEntry(docEntry);
-                        CloudFile docFile = fileRepository.get(userFile.getRepositoryPath());
-                        byte[] bytes = new byte[Math.toIntExact(docFile.getFileSize())];
-
-                        try (ByteArrayInputStream fis = new ByteArrayInputStream(docFile.getFileBytes())) {
-                            fis.read(bytes);
-                            zos.write(bytes);
-                        }
-                        zos.closeEntry();
-                        File file = new File(userFile.getRepositoryPath());
-                        file.delete(); // delete after download and added to zipfile
+                        zos.putNextEntry(new ZipEntry(subfolder));
                     } catch (Exception e) {
-                        submissionDocumentationErrors.put(userFile.getFileId(), e.getMessage());
                         log.error("Error generating file collection for submission ID {}", submission.getId(), e);
                     }
-                }
-                documentationErrors.put(submission.getId(), submissionDocumentationErrors);
+                    Map<UUID, String> submissionDocumentationErrors = new HashMap<>();
+                    for (UserFile userFile : userFiles) {
+                        try {
+                            fileCount += 1;
+                            String fileName = userFile.getOriginalName();
+                            log.info("filename is: " + fileName);
+                            ZipEntry docEntry = new ZipEntry(subfolder + String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
+                            docEntry.setSize(userFile.getFilesize().longValue());
+                            zos.putNextEntry(docEntry);
+                            CloudFile docFile = fileRepository.get(userFile.getRepositoryPath());
+                            byte[] bytes = new byte[Math.toIntExact(docFile.getFileSize())];
 
-            });
+                            try (ByteArrayInputStream fis = new ByteArrayInputStream(docFile.getFileBytes())) {
+                                fis.read(bytes);
+                                zos.write(bytes);
+                            }
+                            zos.closeEntry();
+                            File file = new File(userFile.getRepositoryPath());
+                            file.delete(); // delete after download and added to zipfile
+                        } catch (Exception e) {
+                            submissionDocumentationErrors.put(userFile.getFileId(), e.getMessage());
+                            log.error("Error generating file collection for submission ID {}", submission.getId(), e);
+                        }
+                    }
+                    documentationErrors.put(submission.getId(), submissionDocumentationErrors);
 
-            results.put(failedDocumentationKey, documentationErrors);
+                });
+
+                results.put(failedDocumentationKey, documentationErrors);
+            }
 
             results.put(failedSubmissionKey, submissionErrors);
 
