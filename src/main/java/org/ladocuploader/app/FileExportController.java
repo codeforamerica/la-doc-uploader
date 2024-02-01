@@ -183,7 +183,7 @@ public class FileExportController {
                     .body(csvDoc.getCsvData());
         } else {
             log.error("Attempted to download PDF with submission_id: " + submissionIdSanitized + " but session_id was: "
-                    + sanitizeSubmissionId(httpSession.getAttribute("id").toString()));
+                    + getSubmissionIdForFlow(httpSession, flow));
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(messageSource.getMessage("error.forbidden", null, locale));
         }
     }
