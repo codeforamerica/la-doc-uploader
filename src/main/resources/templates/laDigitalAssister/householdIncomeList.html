@@ -39,7 +39,7 @@
                                th:text="${incomeItem.jobName.toUpperCase()}"></div>
                         </strong>
                         <div><strong th:text="${incomeItem.income}"></strong></div>
-                        <div><span th:text="${incomeItem.payPeriod}"></span></div>
+                        <div><span th:text="${incomeItem.payPeriod == 'Hourly' ? #messages.msgWithParams('income-list.hourly-statement', incomeItem.hoursPerWeek) : #messages.msg(T(org.ladocuploader.app.data.enums.PayFrequencyType).getLabelSrcFromValue(incomeItem.payPeriod))}"></span></div>
                       </div>
 
                       <div class="subflow-list__item-actions">
