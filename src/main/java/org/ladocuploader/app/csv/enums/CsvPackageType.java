@@ -87,6 +87,7 @@ public enum CsvPackageType {
     this.encryptPackage = encryptPackage;
   }
 
+<<<<<<< HEAD
 
 <<<<<<< HEAD
   public String getUploadLocation() {
@@ -97,4 +98,6 @@ public enum CsvPackageType {
 >>>>>>> 33f952b0 (do not include documents for WIC - ECE only)
 =======
 >>>>>>> b663d9a1 (add override for in-memory upload file in sftp impl, encrypt for packages with encryption flag)
+=======
+>>>>>>> c502b506 (add separate encryptor for ECE - also waiting on key set)
 }
