@@ -14,11 +14,9 @@ import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Sort;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +30,7 @@ import java.util.zip.ZipOutputStream;
 import static org.ladocuploader.app.file.DocTypeEnum.*;
 
 @Slf4j
-@ShellComponent
+@Service
 public class SubmissionTransfer {
   private static final Map<String, String> DOCTYPE_FORMAT_MAP = new HashMap<>();
 
@@ -66,10 +64,10 @@ public class SubmissionTransfer {
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
 
-  @Autowired
-  private ConfigurableApplicationContext context;
 
-  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor snapPgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
+
+
+  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;
@@ -79,7 +77,7 @@ public class SubmissionTransfer {
     this.ftpsClient = ftpsClient;
   }
 
-  @ShellMethod(key = "transferSubmissions")
+  @Scheduled(fixedRateString ="${transmissions.snap-transmission-rate}")
   public void transferSubmissions() {
     // Give a 2-hour wait for folks to upload documents
     OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
@@ -87,7 +85,6 @@ public class SubmissionTransfer {
     int totalQueued = queuedSubmissions.size();
     if (queuedSubmissions.isEmpty()) {
       log.info("Nothing to transmit. Exiting.");
-      context.close();
       return;
     }
     log.info("Found %s queued transmissions".formatted(totalQueued));
@@ -97,7 +94,6 @@ public class SubmissionTransfer {
     log.info("Excluding %s submitted within last 2 hours".formatted(totalQueued - queuedSubmissions.size()));
     if (queuedSubmissions.isEmpty()) {
       log.info("No submissions older than 2 hour to transmit. Exiting.");
-      context.close();
       return;
     }
     log.info("Found %s transmissions to transmit".formatted(queuedSubmissions.size()));
@@ -109,7 +105,6 @@ public class SubmissionTransfer {
       transferSubmissionBatch(submissionBatch);
     }
     log.info("Done transmitting batches. Transmitted %s of %s batches. Exiting.".formatted(transmittedCount, submissionBatches.size()));
-    context.close();
   }
 
   private void transferSubmissionBatch(List<Submission> submissionsBatch) {
@@ -223,7 +218,7 @@ public class SubmissionTransfer {
     zos.putNextEntry(entry);
     zos.write(file);
     zos.closeEntry();
-    String metaEntry = generateMetaDataEntry(batchIndex, subfolder, fileName, "APP-OFS 4APP", submission);
+    String metaEntry = generateMetaDataEntry(batchIndex, subfolder, fileName, "APP-OFS 4 APP", submission);
     docMeta.append(metaEntry);
   }
 
