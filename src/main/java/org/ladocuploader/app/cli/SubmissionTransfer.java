@@ -39,15 +39,15 @@ public class SubmissionTransfer {
     DOCTYPE_FORMAT_MAP.put(DRIVERS_LICENSE.getValue(), "PD-Identification");
     DOCTYPE_FORMAT_MAP.put(SOCIAL_SECURITY_CARD.getValue(), "PD-SSN");
     DOCTYPE_FORMAT_MAP.put(CHECK_STUB.getValue(), "INC-Wage Documents");
-    DOCTYPE_FORMAT_MAP.put(OTHER_INCOME.getValue(), "INC - Other Unearned Income");
-    DOCTYPE_FORMAT_MAP.put(BILL.getValue(), "EXP - Utility");
-    DOCTYPE_FORMAT_MAP.put(MEDICAL_INFO.getValue(), "MED - Medical Forms");
-    DOCTYPE_FORMAT_MAP.put(BANKING_INFO.getValue(), "RES - Bank Statement");
-    DOCTYPE_FORMAT_MAP.put(MARRIAGE_LICENSE.getValue(), "LEG - Marriage License");
-    DOCTYPE_FORMAT_MAP.put(DIVORCE_DECREE.getValue(), "LEG - Divorce Decree");
-    DOCTYPE_FORMAT_MAP.put(COURT_ORDER.getValue(), "LEG - Court Order");
-    DOCTYPE_FORMAT_MAP.put(PATERNITY.getValue(), "PAT - Acknowledgement of Paternity (ES)");
-    DOCTYPE_FORMAT_MAP.put(OTHER.getValue(), "CORR - Customer Correspondence");
+    DOCTYPE_FORMAT_MAP.put(OTHER_INCOME.getValue(), "INC-Other Unearned Income");
+    DOCTYPE_FORMAT_MAP.put(BILL.getValue(), "EXP-Utility");
+    DOCTYPE_FORMAT_MAP.put(MEDICAL_INFO.getValue(), "MED-Medical Forms");
+    DOCTYPE_FORMAT_MAP.put(BANKING_INFO.getValue(), "RES-Bank Statement");
+    DOCTYPE_FORMAT_MAP.put(MARRIAGE_LICENSE.getValue(), "LEG-Marriage License");
+    DOCTYPE_FORMAT_MAP.put(DIVORCE_DECREE.getValue(), "LEG-Divorce / Separation Decree");
+    DOCTYPE_FORMAT_MAP.put(COURT_ORDER.getValue(), "LEG-Court Orders");
+    DOCTYPE_FORMAT_MAP.put(PATERNITY.getValue(), "PAT-Acknowledgement of Paternity (ES)");
+    DOCTYPE_FORMAT_MAP.put(OTHER.getValue(), "CORR-Customer Correspondence");
   }
 
   private final int BATCH_INDEX_LEN = "00050000000".length();
