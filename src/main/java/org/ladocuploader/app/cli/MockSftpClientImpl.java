@@ -17,7 +17,11 @@ public class MockSftpClientImpl implements SftpClient {
   }
 
   @Override
+<<<<<<< HEAD
   public void uploadFile(String zipFilename, String uploadLocation, byte [] data) {
+=======
+  public void uploadFile(String zipFilename, String filePath, byte [] data) {
+>>>>>>> b663d9a1 (add override for in-memory upload file in sftp impl, encrypt for packages with encryption flag)
     // Do nothing
     log.info("Mock uploading file " + zipFilename);
   }
