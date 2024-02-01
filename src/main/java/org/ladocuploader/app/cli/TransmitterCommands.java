@@ -56,17 +56,20 @@ public class TransmitterCommands {
 
     private final long TWO_HOURS = 2L;
 
-    private final PGPEncryptor csvPgpEncryptor;
+    private final PGPEncryptor wicPgpEncryptor;
+
+    private final PGPEncryptor ecePgpEncryptor;
 
     private final StringEncryptor encryptor;
 
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor csvPgpEncryptor, StringEncryptor encryptor) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor wicPgpEncryptor, PGPEncryptor ecePgpEncryptor, StringEncryptor encryptor) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
         this.fileRepository = cloudFileRepository;
-        this.csvPgpEncryptor = csvPgpEncryptor;
+        this.wicPgpEncryptor = wicPgpEncryptor;
+        this.ecePgpEncryptor = ecePgpEncryptor;
         this.encryptor = encryptor;
     }
 
@@ -115,8 +118,15 @@ public class TransmitterCommands {
         String uploadLocation = csvPackageType.getUploadLocation();
         if (csvPackageType.getEncryptPackage()){
             log.info("Encrypting data package");
-            byte[] data = csvPgpEncryptor.signAndEncryptPayload(zipFilename);
-            log.info("Uploading zip file from memory");
+            byte [] data = new byte[]{};
+            if (csvPackageType == CsvPackageType.WIC_PACKAGE) {
+                log.info("Uploading encrypted WIC zip file from memory");
+                data = wicPgpEncryptor.signAndEncryptPayload(zipFilename);
+            } else if (csvPackageType == CsvPackageType.ECE_PACKAGE ){
+                log.info("Uploading encrypted ECE zip file from memory");
+                data = ecePgpEncryptor.signAndEncryptPayload(zipFilename);
+            }
+
             sftpClient.uploadFile(zipFilename, uploadLocation, data);
         } else {
             log.info("Uploading zip file");

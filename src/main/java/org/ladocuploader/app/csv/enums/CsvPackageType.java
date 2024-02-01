@@ -43,5 +43,4 @@ public enum CsvPackageType {
     this.encryptPackage = encryptPackage;
   }
 
-
 }
