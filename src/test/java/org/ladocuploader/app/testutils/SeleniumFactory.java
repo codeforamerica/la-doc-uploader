@@ -1,4 +1,4 @@
-package org.ladocuploader.app.utils;
+package org.ladocuploader.app.testutils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.nio.file.Path;

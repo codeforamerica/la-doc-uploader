@@ -1,4 +1,4 @@
-package org.ladocuploader.app.utils;
+package org.ladocuploader.app.testutils;
 
 import io.percy.selenium.Percy;
 import java.util.Locale;

@@ -7,12 +7,19 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 import static java.util.Collections.emptyList;
 import static org.ladocuploader.app.utils.Parish.ORLEANS;
 
 public class SubmissionUtilities {
+
+
+  public static LocalDate ONE_YEAR_AGO = LocalDate.now().minusYears(1L);
+  public static LocalDate FIVE_YEARS_AGO = LocalDate.now().minusYears(5L);
+  static Pattern UUID_REGEX =
+          Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
   public static final String ENCRYPTED_SSNS_INPUT_NAME = "householdMemberEncryptedSSN";
 
   public static Long expiryHours = 2L;
@@ -22,7 +29,6 @@ public class SubmissionUtilities {
   public static final Map<String, String> PDF_EDUCATION_MAP = new HashMap<>();
   public static final Map<String, String> PDF_MARITAL_STATUS_MAP = new HashMap<>();
   public static final Map<String, String> PDF_RELATIONSHIP_MAP = new HashMap<>();
-
   public static final LocalDate ECE_CUTOFF_DATE = LocalDate.parse("2019-09-30");
   public static final LocalDate WIC_CUTOFF_DATE = LocalDate.parse("2020-02-29");
 
@@ -122,6 +128,7 @@ public class SubmissionUtilities {
     return false;
   }
 
+
   public static boolean isDocUploadActive(Submission submission) {
     OffsetDateTime submittedAt = submission.getSubmittedAt();
     OffsetDateTime now = OffsetDateTime.now();
@@ -134,6 +141,10 @@ public class SubmissionUtilities {
     return false;
   }
 
+    public static String sanitizeSubmissionId(String submissionId) {
+        return UUID_REGEX.matcher(submissionId).matches() ? submissionId : "invalid submission id";
+    }
+
   public static boolean inExperimentGroup(String groupName, Submission submission) {
     return groupName.equals(submission.getInputData().get("experimentGroup"));
   }
@@ -142,21 +153,16 @@ public class SubmissionUtilities {
     return householdMember.get("householdMemberFirstName") + " " + householdMember.get("householdMemberLastName");
   }
 
-//    public ParentGuardian getParentGuardianMap(Submission submission){
-//
-//
-//    }
 
-  public static List<String> getHouseholdMemberNames(Submission submission) {
-    ArrayList<String> names = new ArrayList<>();
+    public static List<String> getHouseholdMemberNames(Submission submission) {
+        ArrayList<String> names = new ArrayList<>();
+        var applicantName = submission.getInputData().get("firstName") + " " + submission.getInputData().get("lastName");
+        var householdMembers = (List<Map<String, Object>>) submission.getInputData().getOrDefault("household", new ArrayList<HashMap<String, Object>>());
 
-    var applicantName = submission.getInputData().get("firstName") + " " + submission.getInputData().get("lastName");
-    var householdMembers = (List<Map<String, Object>>) submission.getInputData().getOrDefault("household", new ArrayList<HashMap<String, Object>>());
+        names.add(applicantName);
+        householdMembers.forEach(hh -> names.add(householdMemberFullName(hh)));
 
-    names.add(applicantName);
-    householdMembers.forEach(hh -> names.add(householdMemberFullName(hh)));
-
-    return names;
+        return names;
   }
 
   public static String getHouseholdMemberFullnameByUUID(String uuid, Map<String, Object> inputData) {
