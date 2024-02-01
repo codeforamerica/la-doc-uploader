@@ -11,9 +11,6 @@
         <th:block th:replace="~{fragments/icons :: mail}"></th:block>
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{where-to-send-mail-pobox.header}, subtext=#{where-to-send-mail-pobox.subtext})}"/>
-        <a th:href="'https://sspweb.ie.dcfs.la.gov'" th:target="'_blank'" th:rel="'noreferrer noopener'"
-           th:text="#{where-to-send-mail-pobox.button}"
-           class="button button--primary"></a>
       </main>
     </div>
   </section>
