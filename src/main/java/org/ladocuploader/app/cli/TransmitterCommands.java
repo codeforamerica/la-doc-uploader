@@ -111,11 +111,19 @@ public class TransmitterCommands {
         Map<UUID, Map<String, String>> failedDocumentation = (Map<UUID, Map<String, String>>) zipResults.get(failedDocumentationKey);
 
         // send zip file
-        log.info("Uploading zip file");
-        String uploadLocation = transmissionType.getPackageType().getUploadLocation();
-        sftpClient.uploadFile(zipFilename, uploadLocation);
-        File zip = new File(zipFilename);
-        zip.delete();
+        CsvPackageType csvPackageType = transmissionType.getPackageType();
+        String uploadLocation = csvPackageType.getUploadLocation();
+        if (csvPackageType.getEncryptPackage()){
+            log.info("Encrypting data package");
+            byte[] data = csvPgpEncryptor.signAndEncryptPayload(zipFilename);
+            log.info("Uploading zip file from memory");
+            sftpClient.uploadFile(zipFilename, uploadLocation, data);
+        } else {
+            log.info("Uploading zip file");
+            sftpClient.uploadFile(zipFilename, uploadLocation);
+            File zip = new File(zipFilename);
+            zip.delete();
+        }
 
         successfullySubmittedIds.forEach(id -> {
             Submission submission = Submission.builder().id(id).build();
@@ -195,7 +203,7 @@ public class TransmitterCommands {
             );
 
             addZipEntries(csvPackage, zos);
-            if (csvPackage.getPackageType().getIncludeDocuments()) {
+            if (csvPackage.getPackageType().getIncludeDocumentation()) {
                 submissions.forEach(submission -> {
                     List<UserFile> userFiles = transmissionRepository.userFilesBySubmission(submission);
                     log.info("Found " + userFiles.size() + " files associated with app.");

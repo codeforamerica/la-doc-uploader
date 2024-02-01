@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Component
@@ -49,6 +52,27 @@ public class SftpClientImpl implements SftpClient {
         log.info(destinationFilePath);
 
         channelSftp.put(zipFilename, destinationFilePath );
+
+        channelSftp.exit();
+    }
+
+    @Override
+    public void uploadFile(String filePath, String zipFilename, byte [] data) throws IOException, JSchException, SftpException {
+        JSch jsch = new JSch();
+        jsch.setKnownHosts("src/main/resources/known_hosts");
+        Session jschSession = jsch.getSession(username, uploadUrl);
+        jschSession.setPassword(password);
+        jschSession.connect(10000);
+
+        Channel sftp = jschSession.openChannel("sftp");
+        sftp.connect(5000);
+
+        ChannelSftp channelSftp = (ChannelSftp) sftp;
+        String destinationFilePath = String.join("/", List.of(filePath + "-" + this.environmentPath, zipFilename));
+
+        InputStream local = new ByteArrayInputStream(data);
+
+        channelSftp.put(local, destinationFilePath );
 
         channelSftp.exit();
     }

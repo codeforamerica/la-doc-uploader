@@ -15,4 +15,10 @@ public class MockSftpClientImpl implements SftpClient {
     // Do nothing
     log.info("Mock uploading file " + zipFilename);
   }
+
+  @Override
+  public void uploadFile(String zipFilename, String filePath, byte [] data) {
+    // Do nothing
+    log.info("Mock uploading file " + zipFilename);
+  }
 }
