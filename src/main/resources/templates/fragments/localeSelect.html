@@ -1,6 +1,6 @@
 <!-- Based on https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-links.html -->
 <div th:fragment="localeSelect" id="translate-button" class="menu-button-links"
-     th:with="lang=${#locale.toString()}, currentURL=${screen}">
+     th:with="lang=${#locale.toString()}, currentURL=${subflow == null ? screen : fieldData.get('uuid')}">
   <button type="button"
           id="language_menu"
           class="button"
