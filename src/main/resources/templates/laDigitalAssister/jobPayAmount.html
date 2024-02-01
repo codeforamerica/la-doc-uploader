@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
-<th:block th:with="messageVariant=${fieldData.getOrDefault('payPeriod', 'It varies') == 'It varies' ? 'variable' : 'fixed'}">
+<th:block
+    th:with="messageVariant=${fieldData.getOrDefault('payPeriod', 'It varies') == 'It varies' ? 'variable' : 'fixed'}">
   <head th:replace="~{fragments/head :: head(title=#{job-pay-amount.title})}"></head>
   <body>
   <div class="page-wrapper">
@@ -11,12 +12,16 @@
         <main id="content" role="main" class="form-card spacing-above-35">
           <p class="grey-text" th:text="${fieldData.get('employerName')}"></p>
           <th:block
-              th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'fixed' ? #messages.msgWithParams('job-pay-amount.fixed.header', fieldData.getOrDefault('payPeriod', 'in the last 30 days').toLowerCase()) : #messages.msg('job-pay-amount.variable.header')}, subtext=#{job-pay-amount.subtext})}"/>
-          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
+              th:with="labelValue=${#messages.msg(T(org.ladocuploader.app.data.enums.PayFrequencyType).getLabelSrcFromValue(fieldData.get('payPeriod'))).toLowerCase()}">
+            <th:block
+                th:replace="~{fragments/cardHeader :: cardHeader(header=${messageVariant == 'fixed' ? #messages.msgWithParams('job-pay-amount.fixed.header', labelValue) : #messages.msg('job-pay-amount.variable.header')}, subtext=#{job-pay-amount.subtext})}"/>
+          </th:block>
+          <th:block
+              th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
             <th:block th:ref="content">
               <div class="form-card__content">
                 <th:block
-                  th:replace="~{fragments/inputs/money :: money(inputName='payPeriodAmount',
+                    th:replace="~{fragments/inputs/money :: money(inputName='payPeriodAmount',
                   ariaLabel='header')}"/>
 
               </div>
@@ -24,7 +29,7 @@
 
 
                 <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
-                  text=#{general.inputs.continue})}" />
+                  text=#{general.inputs.continue})}"/>
 
               </div>
             </th:block>
@@ -33,7 +38,7 @@
       </div>
     </section>
   </div>
-  <th:block th:replace="~{fragments/footer :: footer}" />
+  <th:block th:replace="~{fragments/footer :: footer}"/>
   </body>
 </th:block>
 </html>
