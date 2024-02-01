@@ -67,7 +67,7 @@ public class SubmissionTransfer {
 
 
 
-  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor pgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
+  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor snapPgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;
