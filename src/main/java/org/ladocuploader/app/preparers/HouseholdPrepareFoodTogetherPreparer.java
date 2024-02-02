@@ -24,7 +24,7 @@ public class HouseholdPrepareFoodTogetherPreparer implements SubmissionFieldPrep
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> result = new HashMap<>();
-    var household = (List<Map<String, Object>>) submission.getInputData().get("household");
+    var household = (List<Map<String, Object>>) submission.getInputData().getOrDefault("household", emptyList());
     List<String> preparerFoodTogetherUUIDs = (List<String>) submission.getInputData().getOrDefault("preparesFood[]", emptyList());
     List<String> householdMembersWhoDoNotPrepareFoodTogether = new ArrayList<>();
     
