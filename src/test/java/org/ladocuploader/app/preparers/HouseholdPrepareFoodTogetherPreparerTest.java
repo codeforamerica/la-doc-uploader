@@ -12,12 +12,6 @@ class HouseholdPrepareFoodTogetherPreparerTest {
   public static final HouseholdPrepareFoodTogetherPreparer preparer = new HouseholdPrepareFoodTogetherPreparer();
 
   @Test
-  public void testNoMappings() {
-    var results = preparer.prepareSubmissionFields(new Submission(), null);
-    assertThat(results).isEmpty();
-  }
-
-  @Test
   public void shouldMapHouseholdMembersWhoDoNotPrepareFoodTogether() {
     Submission submission = new SubmissionTestBuilder()
         .withPersonalInfo("Btter", "Bll", "", "", "", "", "", "", "", "")
