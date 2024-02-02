@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.emptyList;
+import static org.ladocuploader.app.utils.StringUtilities.joinWithCommaAndSpace;
 import static org.ladocuploader.app.utils.SubmissionUtilities.householdMemberFullName;
 
 @Component
@@ -22,8 +23,7 @@ public class SpecialSituationsPreparer implements SubmissionFieldPreparer {
   private static final List<String> INPUTS = List.of(
       "outOfStateBenefitsRecipients",
       "veterans",
-      "fostersAgedOut",
-      "preparesFood");
+      "fostersAgedOut");
 
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
@@ -58,7 +58,7 @@ public class SpecialSituationsPreparer implements SubmissionFieldPreparer {
         names.add("%s %s".formatted(submission.getInputData().get("firstName"), submission.getInputData().get("lastName")));
       }
       if (!names.isEmpty()) {
-        result.put(input + "Names", new SingleField(input + "Names", Strings.join(names, ','), null));
+        result.put(input + "Names", new SingleField(input + "Names", joinWithCommaAndSpace(names), null));
       }
     }
 
