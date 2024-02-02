@@ -3,20 +3,32 @@
         inOrleans=${T(org.ladocuploader.app.utils.SubmissionUtilities).isOrleansParish(submission)},
         inLinkGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('LINK', submission)},
         inApplyGroup=${T(org.ladocuploader.app.utils.SubmissionUtilities).inExperimentGroup('APPLY', submission)},
-        isEligibleForECE=${inputData.get('interestedInEceInd') != null},
-        isEligibleForWIC=${inputData.get('interestedInWicInd') != null},
+        isEligibleForECE=${inputData.containsKey('interestedInEceInd')},
+        isEligibleForWIC=${inputData.containsKey('interestedInWicInd')},
         isInterestedInECE=${'true'.equals(inputData.get('interestedInEceInd'))},
         isInterestedInWIC=${'true'.equals(inputData.get('interestedInWicInd'))}">
-
     <th:block th:if="${inApplyGroup || inLinkGroup}">
       <h2 class="h2" th:text="#{confirmation.next-steps-immediate}"></h2>
-    </th:block>
-    <th:block th:if="${inLinkGroup && isInterestedInWIC}">
-      <div class="notice-info steps-box spacing-below-15">
-        <p th:text="#{confirmation.scroll-down}"></p>
-      </div>
-    </th:block>
-    <th:block th:if="${inApplyGroup || inLinkGroup}">
+      <th:block th:if="${inLinkGroup && (isEligibleForECE || isEligibleForWIC)}">
+        <div class="notice-info steps-box spacing-below-35">
+          <p th:if="${isEligibleForWIC && !isEligibleForECE}"
+             th:text="#{confirmation.scroll-down.wic-only}"></p>
+          <p th:if="${isEligibleForWIC && isEligibleForECE}"
+             th:text="#{confirmation.scroll-down.ece-and-wic}"></p>
+          <p th:if="${isEligibleForECE && !isEligibleForWIC}"
+             th:text="#{confirmation.scroll-down.ece-only}"></p>
+        </div>
+      </th:block>
+      <th:block th:if="${inApplyGroup && ((isEligibleForECE && !isInterestedInECE) || (isEligibleForWIC && !isInterestedInWIC))}">
+        <div class="notice-info steps-box spacing-below-35">
+          <p th:if="${(isEligibleForWIC && !isInterestedInWIC) && (!isEligibleForECE || isInterestedInECE)}"
+             th:text="#{confirmation.scroll-down.wic-only}"></p>
+          <p th:if="${(isEligibleForWIC && !isInterestedInWIC) && (!isInterestedInECE && isEligibleForECE)}"
+             th:text="#{confirmation.scroll-down.ece-and-wic}"></p>
+          <p th:if="${(isEligibleForECE && !isInterestedInECE) && (!isEligibleForWIC || isInterestedInWIC)}"
+             th:text="#{confirmation.scroll-down.ece-only}"></p>
+        </div>
+      </th:block>
       <div class="notice--warning steps-box">
         <th:block th:replace="~{fragments/icons :: socialGroup}"></th:block>
         <p class="spacing-below-15"
