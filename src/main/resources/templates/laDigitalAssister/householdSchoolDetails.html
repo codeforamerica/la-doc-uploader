@@ -30,9 +30,9 @@
                       th:replace="~{fragments/inputs/radioFieldset :: radioFieldset(label=${messageVariant == 'self' ? #messages.msgWithParams('schooldetails.self-question2', individual.firstName) : #messages.msgWithParams('schooldetails.householdMember-question2', individual.firstName)}, inputName=${schoolEnrollmentInputName}, fieldsetHelpText=#{schooldetails.question2-helptext}, content=~{::schoolEnrollmentLevels})}">
                     <th:block th:ref="schoolEnrollmentLevels">
                       <th:block
-                          th:replace="~{fragments/inputs/radio :: radio(value=#{schooldetails.fulltime}, label=#{schooldetails.fulltime})}"/>
+                          th:replace="~{fragments/inputs/radio :: radio(value='Full-time', label=#{schooldetails.fulltime})}"/>
                       <th:block
-                          th:replace="~{fragments/inputs/radio :: radio(value=#{schooldetails.halftime}, label=#{schooldetails.halftime})}"/>
+                          th:replace="~{fragments/inputs/radio :: radio(value='Part-time', label=#{schooldetails.halftime})}"/>
                     </th:block>
                   </th:block>
                 </th:block>
