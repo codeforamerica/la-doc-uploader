@@ -13,15 +13,15 @@
                           content=~{::feedbackOptions})}">
       <th:block th:ref="feedbackOptions">
         <th:block
-            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o1}, label=#{final-confirmation.feedback-input.o1})}"/>
+            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value='Very easy', label=#{final-confirmation.feedback-input.o1})}"/>
         <th:block
-            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o2}, label=#{final-confirmation.feedback-input.o2})}"/>
+            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value='Easy', label=#{final-confirmation.feedback-input.o2})}"/>
         <th:block
-            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o3}, label=#{final-confirmation.feedback-input.o3})}"/>
+            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value='Neither easy nor difficult', label=#{final-confirmation.feedback-input.o3})}"/>
         <th:block
-            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o4}, label=#{final-confirmation.feedback-input.o4})}"/>
+            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value='Difficult', label=#{final-confirmation.feedback-input.o4})}"/>
         <th:block
-            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value=#{final-confirmation.feedback-input.o5}, label=#{final-confirmation.feedback-input.o5})}"/>
+            th:replace="~{'fragments/inputs/radio' :: radio(inputName='digitalAssisterFeedback',value='Very difficult', label=#{final-confirmation.feedback-input.o5})}"/>
       </th:block>
     </th:block>
     <th:block th:replace="~{'fragments/inputs/textArea' ::
