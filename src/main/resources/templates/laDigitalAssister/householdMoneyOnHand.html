@@ -22,25 +22,10 @@
                 content=~{::moneyOnHand})}">
                 <th:block th:ref="moneyOnHand">
                   <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option1}, label=#{moneyonhand-types.option1})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option2}, label=#{moneyonhand-types.option2})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option3}, label=#{moneyonhand-types.option3})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option4}, label=#{moneyonhand-types.option4})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option5}, label=#{moneyonhand-types.option5})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option6}, label=#{moneyonhand-types.option6})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option7}, label=#{moneyonhand-types.option7})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option8}, label=#{moneyonhand-types.option8})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option9}, label=#{moneyonhand-types.option9})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=#{moneyonhand-types.option10}, label=#{moneyonhand-types.option10})}"/>
+                      th:each="moneyonhand : ${T(org.ladocuploader.app.data.enums.MoneyOnHandType).values()}">
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value=${moneyonhand.getValue()}, label=#{${moneyonhand.getLabelSrc()}})}"/>
+                  </th:block>
                   <th:block
                       th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='moneyOnHandTypes',value='None', label=#{moneyonhand-types.option11}, noneOfTheAbove=true)}"/>
                 </th:block>
