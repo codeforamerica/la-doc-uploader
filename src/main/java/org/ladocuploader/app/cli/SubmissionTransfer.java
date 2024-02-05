@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.zip.ZipEntry;
@@ -32,6 +34,8 @@ import static org.ladocuploader.app.file.DocTypeEnum.*;
 @Slf4j
 @Service
 public class SubmissionTransfer {
+
+  private static final ZoneId CST = ZoneId.of("America/Chicago");
   private static final Map<String, String> DOCTYPE_FORMAT_MAP = new HashMap<>();
 
   static {
@@ -74,7 +78,7 @@ public class SubmissionTransfer {
     this.ftpsClient = ftpsClient;
   }
 
-  @Scheduled(fixedRateString ="${transmissions.snap-transmission-rate}")
+  @Scheduled(fixedRateString = "${transmissions.snap-transmission-rate}")
   public void transferSubmissions() {
     // Give a 2-hour wait for folks to upload documents
     OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
@@ -232,7 +236,8 @@ public class SubmissionTransfer {
     String formattedSSN = formatSSN(inputData);
     String formattedFilename = removeFileExtension(filename);
     String formattedBirthdate = formatBirthdate(submission.getInputData());
-    String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
+    ZonedDateTime submittedAt = submission.getSubmittedAt().atZoneSameInstant(ZoneId.systemDefault());
+    String formattedSubmissionDate = submittedAt.withZoneSameInstant(CST).format(MMDDYYYY_HHMMSS);
     String fileLocation = String.format("%s/%s/%s", batchIndex, subfolder, filename);
 
     return "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n"
