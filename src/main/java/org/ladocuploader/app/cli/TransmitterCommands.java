@@ -20,8 +20,11 @@ import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.data.domain.Sort;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
+import org.springframework.scheduling.annotation.Scheduled;
+
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Service;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -35,7 +38,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Slf4j
-@ShellComponent
+@Service
 public class TransmitterCommands {
 
     private final TransmissionRepository transmissionRepository;
@@ -73,7 +76,7 @@ public class TransmitterCommands {
         this.encryptor = encryptor;
     }
 
-    @ShellMethod(key = "transmit")
+    @Scheduled(fixedRateString="${transmissions.wic-ece-transmission-rate}")
     public void transmit() throws IOException, JSchException, SftpException {
         log.info("Finding submissions to transmit...");
         OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
