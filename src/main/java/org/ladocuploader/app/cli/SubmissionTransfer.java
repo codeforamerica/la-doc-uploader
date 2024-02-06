@@ -14,6 +14,7 @@ import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
+import org.slf4j.MDC;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -114,6 +115,8 @@ public class SubmissionTransfer {
     String batchIndex = Strings.padStart(batchSeq, BATCH_INDEX_LEN, '0');
     UUID uuid = UUID.randomUUID();
     String zipFileName = batchIndex + ".zip";
+    MDC.put("batchIndex", batchIndex);
+    MDC.put("run_id", uuid.toString());
     log.info(String.format("Beginning transfer of %s: batch %s", uuid, batchIndex));
 
     // Stats on transfers
@@ -125,8 +128,9 @@ public class SubmissionTransfer {
       StringBuilder docMeta = new StringBuilder();
       for (Submission submission : submissionsBatch) {
         Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.SNAP);
-
         String subfolder = Integer.toString(subfolderidx++);
+        MDC.put("submissionId", submission.getId().toString());
+        MDC.put("transmissionId", transmission.getTransmission_id().toString());
         try {
           log.info("Verifying required fields");
           verifyRequiredFieldsArePresent(submission.getInputData());
@@ -145,6 +149,8 @@ public class SubmissionTransfer {
           updateTransmission(uuid, transmission);
           failed++;
         }
+        MDC.remove("submissionId");
+        MDC.remove("transmissionId");
       }
 
       // Add metadata entry to zip
@@ -175,7 +181,10 @@ public class SubmissionTransfer {
       updateTransmission(uuid, transmission);
     }
 
+    MDC.put("successful", String.valueOf(successfulTransmissions.size()));
+    MDC.put("failed", String.valueOf(failed));
     log.info(String.format("Completed transfer of batch %s, total %s, successful %s, failed %s", batchIndex, subfolderidx - 1, successfulTransmissions.size(), failed));
+    MDC.clear();
   }
 
   private void verifyRequiredFieldsArePresent(Map<String, Object> inputData) {
