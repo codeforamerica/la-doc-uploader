@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Profile({"production", "staging"})
 public class PGPEceEncryptorImpl extends BasePGPEncrpytorImpl {
 
-    public PGPEceEncryptorImpl(@Value("${pgp.wic_ece.sigkey-password}") String sigkeyPassword,
-                               @Value("${pgp.wic_ece.seckey-file-path}") String seckeyFilePath,
-                               @Value("${pgp.wic_ece.pubkey-file-path}") String pubkeyFilePath,
-                               @Value("${pgp.bucket-name}") String bucketName) {
+    public PGPEceEncryptorImpl(@Value("${pgp.ece.sigkey-password}") String sigkeyPassword,
+                               @Value("${pgp.ece.seckey-file-path}") String seckeyFilePath,
+                               @Value("${pgp.ece.pubkey-file-path}") String pubkeyFilePath,
+                               @Value("${pgp.ece.bucket-name}") String bucketName) {
         super();
         this.sigkeyPassword = sigkeyPassword;
         this.seckeyFilePath = seckeyFilePath;
