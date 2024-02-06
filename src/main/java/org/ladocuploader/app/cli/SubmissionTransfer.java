@@ -128,6 +128,9 @@ public class SubmissionTransfer {
 
         String subfolder = Integer.toString(subfolderidx++);
         try {
+          log.info("Verifying required fields");
+          verifyRequiredFieldsArePresent(submission.getInputData());
+
           log.info("Generate applicant summary");
           packageSnapApplication(batchIndex, zos, docMeta, submission, subfolder);
 
@@ -173,6 +176,17 @@ public class SubmissionTransfer {
     }
 
     log.info(String.format("Completed transfer of batch %s, total %s, successful %s, failed %s", batchIndex, subfolderidx - 1, successfulTransmissions.size(), failed));
+  }
+
+  private void verifyRequiredFieldsArePresent(Map<String, Object> inputData) {
+    boolean hasFirstName = inputData.containsKey("firstName");
+    boolean hasLastName = inputData.containsKey("lastName");
+    boolean hasAddress = inputData.containsKey("homeAddressStreetAddress1") || inputData.containsKey("mailingAddressStreetAddress1");
+    boolean hasSignature = inputData.containsKey("signature");
+
+    if (!(hasFirstName && hasLastName && hasAddress && hasSignature)) {
+      throw new IllegalArgumentException("Required field(s) are missing");
+    }
   }
 
   private void updateTransmission(UUID uuid, Transmission transmission) {
