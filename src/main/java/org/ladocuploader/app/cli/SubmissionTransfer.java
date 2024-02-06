@@ -14,6 +14,7 @@ import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
+import org.slf4j.MDC;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.zip.ZipEntry;
@@ -32,6 +35,8 @@ import static org.ladocuploader.app.file.DocTypeEnum.*;
 @Slf4j
 @Service
 public class SubmissionTransfer {
+
+  private static final ZoneId CST = ZoneId.of("America/Chicago");
   private static final Map<String, String> DOCTYPE_FORMAT_MAP = new HashMap<>();
 
   static {
@@ -77,7 +82,7 @@ public class SubmissionTransfer {
     this.ftpsClient = ftpsClient;
   }
 
-  @Scheduled(fixedRateString ="${transmissions.snap-transmission-rate}")
+  @Scheduled(fixedRateString = "${transmissions.snap-transmission-rate}")
   public void transferSubmissions() {
     // Give a 2-hour wait for folks to upload documents
     OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
@@ -113,6 +118,8 @@ public class SubmissionTransfer {
     String batchIndex = Strings.padStart(batchSeq, BATCH_INDEX_LEN, '0');
     UUID uuid = UUID.randomUUID();
     String zipFileName = batchIndex + ".zip";
+    MDC.put("batchIndex", batchIndex);
+    MDC.put("run_id", uuid.toString());
     log.info(String.format("Beginning transfer of %s: batch %s", uuid, batchIndex));
 
     // Stats on transfers
@@ -124,9 +131,13 @@ public class SubmissionTransfer {
       StringBuilder docMeta = new StringBuilder();
       for (Submission submission : submissionsBatch) {
         Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.SNAP);
-
         String subfolder = Integer.toString(subfolderidx++);
+        MDC.put("submissionId", submission.getId().toString());
+        MDC.put("transmissionId", transmission.getTransmission_id().toString());
         try {
+          log.info("Verifying required fields");
+          verifyRequiredFieldsArePresent(submission.getInputData());
+
           log.info("Generate applicant summary");
           packageSnapApplication(batchIndex, zos, docMeta, submission, subfolder);
 
@@ -141,6 +152,8 @@ public class SubmissionTransfer {
           updateTransmission(uuid, transmission);
           failed++;
         }
+        MDC.remove("submissionId");
+        MDC.remove("transmissionId");
       }
 
       // Add metadata entry to zip
@@ -171,7 +184,21 @@ public class SubmissionTransfer {
       updateTransmission(uuid, transmission);
     }
 
+    MDC.put("successful", String.valueOf(successfulTransmissions.size()));
+    MDC.put("failed", String.valueOf(failed));
     log.info(String.format("Completed transfer of batch %s, total %s, successful %s, failed %s", batchIndex, subfolderidx - 1, successfulTransmissions.size(), failed));
+    MDC.clear();
+  }
+
+  private void verifyRequiredFieldsArePresent(Map<String, Object> inputData) {
+    boolean hasFirstName = inputData.containsKey("firstName");
+    boolean hasLastName = inputData.containsKey("lastName");
+    boolean hasAddress = inputData.containsKey("homeAddressStreetAddress1") || inputData.containsKey("mailingAddressStreetAddress1");
+    boolean hasSignature = inputData.containsKey("signature");
+
+    if (!(hasFirstName && hasLastName && hasAddress && hasSignature)) {
+      throw new IllegalArgumentException("Required field(s) are missing");
+    }
   }
 
   private void updateTransmission(UUID uuid, Transmission transmission) {
@@ -235,7 +262,8 @@ public class SubmissionTransfer {
     String formattedSSN = formatSSN(inputData);
     String formattedFilename = removeFileExtension(filename);
     String formattedBirthdate = formatBirthdate(submission.getInputData());
-    String formattedSubmissionDate = submission.getSubmittedAt().format(MMDDYYYY_HHMMSS);
+    ZonedDateTime submittedAt = submission.getSubmittedAt().atZoneSameInstant(ZoneId.systemDefault());
+    String formattedSubmissionDate = submittedAt.withZoneSameInstant(CST).format(MMDDYYYY_HHMMSS);
     String fileLocation = String.format("%s/%s/%s", batchIndex, subfolder, filename);
 
     return "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n"
