@@ -59,19 +59,26 @@ public class HouseholdUtilities {
       return true;
     }
 
-    int birthDay = Integer.parseInt((String) member.get("householdMemberBirthDay"));
-    int birthMonth = Integer.parseInt((String) member.get("householdMemberBirthMonth"));
-    int birthYear = Integer.parseInt((String) member.get("householdMemberBirthYear"));
+    try {
 
-    if (birthDay <= 0 || birthMonth <= 0 || birthYear <= 0 ) {
-      throw new NumberFormatException("cannot analyze birthdate as fields are missing");
+      int birthDay = Integer.parseInt((String) member.get("householdMemberBirthDay"));
+      int birthMonth = Integer.parseInt((String) member.get("householdMemberBirthMonth"));
+      int birthYear = Integer.parseInt((String) member.get("householdMemberBirthYear"));
+
+      if (birthDay <= 0 || birthMonth <= 0 || birthYear <= 0 ) {
+        throw new NumberFormatException("cannot analyze birthdate as fields are missing");
+      }
+
+      // these are converted to milliseconds since Epoch and then compared.
+      // if the memberBirthDayCal is > or == the cal, then they are 5 years old or younger.
+      Calendar memberBirthDayCal = new Calendar.Builder().setDate(birthYear, birthMonth, birthDay).build();
+      return memberBirthDayCal.compareTo(ECE_CUTOFF_DATE) >= 0;
+
+    } catch (NumberFormatException e){
+      return false;
     }
 
-    Calendar memberBirthDayCal = new Calendar.Builder().setDate(birthYear, birthMonth, birthDay).build();
 
-    // these are converted to milliseconds since Epoch and then compared.
-    // if the memberBirthDayCal is > or == the cal, then they are 5 years old or younger.
-    return memberBirthDayCal.compareTo(ECE_CUTOFF_DATE) >= 0;
   }
 
   public static List<Map<String, Object>> formattedHouseholdData(Submission submission, String key) {
