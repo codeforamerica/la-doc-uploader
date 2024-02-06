@@ -1,9 +1,12 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.*;
+
+@Slf4j
 
 public class HouseholdUtilities {
 
@@ -34,7 +37,8 @@ public class HouseholdUtilities {
   public static boolean isMember18orOlder(int year, int month, int day, Calendar calendar) throws NumberFormatException {
 
     if (day <= 0 || month <= 0 || year <= 0 ) {
-      throw new NumberFormatException("cannot analyze birthdate as fields are missing");
+      log.warn("Could not find birthdate. Marking member as under 18");
+      return false;
     }
 
     LocalDate currentDate = LocalDate.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId());
@@ -66,7 +70,8 @@ public class HouseholdUtilities {
       int birthYear = Integer.parseInt((String) member.get("householdMemberBirthYear"));
 
       if (birthDay <= 0 || birthMonth <= 0 || birthYear <= 0 ) {
-        throw new NumberFormatException("cannot analyze birthdate as fields are missing");
+          log.warn("Did not find birthdate. Marking household member as ineligible");
+          return false;
       }
 
       // these are converted to milliseconds since Epoch and then compared.
@@ -75,6 +80,7 @@ public class HouseholdUtilities {
       return memberBirthDayCal.compareTo(ECE_CUTOFF_DATE) >= 0;
 
     } catch (NumberFormatException e){
+      log.warn("Could not parse birthdate. Marking household member as ineligible");
       return false;
     }
 
