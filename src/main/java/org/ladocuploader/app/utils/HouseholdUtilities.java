@@ -37,8 +37,7 @@ public class HouseholdUtilities {
   public static boolean isMember18orOlder(int year, int month, int day, Calendar calendar) throws NumberFormatException {
 
     if (day <= 0 || month <= 0 || year <= 0 ) {
-      log.warn("Could not find birthdate. Marking member as under 18");
-      return false;
+      throw new NumberFormatException("cannot analyze birthdate as fields are missing");
     }
 
     LocalDate currentDate = LocalDate.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId());
