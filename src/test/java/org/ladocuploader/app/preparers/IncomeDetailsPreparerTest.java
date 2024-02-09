@@ -18,7 +18,7 @@ class IncomeDetailsPreparerTest {
     var results = preparer.prepareSubmissionFields(new Submission(), null);
     // 1 entry indicating no jobs
     assertThat(results.size()).isEqualTo(1);
-    assertThat(results.get("selfEmploymentIncome")).isEqualTo(new SingleField("selfEmploymentIncome", "No", null));
+    assertThat(results.get("selfEmploymentIncome")).isEqualTo(new SingleField("selfEmploymentIncome", "false", null));
   }
 
   @Test
@@ -64,7 +64,7 @@ class IncomeDetailsPreparerTest {
     assertThat(results.get("selfEmploymentMonthlyIncome3")).isEqualTo(new SingleField("selfEmploymentMonthlyIncome", "1000.00", 2));
     assertThat(results.get("selfEmploymentHoursPerWeek3")).isEqualTo(new SingleField("selfEmploymentHoursPerWeek", null, 2));
 
-    assertThat(results.get("selfEmploymentIncome")).isEqualTo(new SingleField("selfEmploymentIncome", "Yes", null));
+    assertThat(results.get("selfEmploymentIncome")).isEqualTo(new SingleField("selfEmploymentIncome", "true", null));
   }
 
   @Test

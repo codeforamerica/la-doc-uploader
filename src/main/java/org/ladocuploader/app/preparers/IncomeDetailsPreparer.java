@@ -19,11 +19,11 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> results = new HashMap<>();
-    var selfEmploymentIncome = "No";
+    var selfEmploymentIncome = "false";
 
     var income = (List<Map<String, Object>>) submission.getInputData().get("income");
     if (income != null) {
-      selfEmploymentIncome = "Yes";
+      selfEmploymentIncome = "true";
       int nonSelfEmploymentIdx = 1;
       int selfEmploymentIdx = 1;
       for (int i = 0; i < income.size(); i++) {
