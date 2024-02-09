@@ -534,6 +534,8 @@ flow:
     beforeSaveAction: AssociateDocTypeLabel
     nextScreens:
       - name: docUploadReview
+        condition: ContinueAssociateDocType
+      - name: docUpload
   docUploadReview:
     nextScreens:
       - name: docUploadSubmit
