@@ -13,7 +13,7 @@ public class PGPEncryptorImpl extends BasePGPEncrpytorImpl {
   public PGPEncryptorImpl(@Value("${pgp.snap.sigkey-password}") String sigkeyPassword,
                           @Value("${pgp.snap.seckey-file-path}") String seckeyFilePath,
                           @Value("${pgp.snap.pubkey-file-path}") String pubkeyFilePath,
-                          @Value("${pgp.bucket-name}") String bucketName) {
+                          @Value("${pgp.snap.bucket-name}") String bucketName) {
     super();
     this.sigkeyPassword = sigkeyPassword;
     this.seckeyFilePath = seckeyFilePath;
