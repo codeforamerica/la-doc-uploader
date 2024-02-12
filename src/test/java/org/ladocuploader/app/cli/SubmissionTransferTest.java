@@ -63,6 +63,7 @@ class SubmissionTransferTest {
   private Submission submissionWithDocs;
   private Submission submissionWithoutDocs;
   private Submission invalidSubmission;
+  private Submission submissionWithMissingFields;
   private Submission submittedBeforeDelayCutoff;
 
   @BeforeEach
@@ -70,15 +71,17 @@ class SubmissionTransferTest {
     submissionWithoutDocs = queueSubmissionWithoutDocs();
     submissionWithDocs = queueSubmissionWithDocs();
     invalidSubmission = queueInvalidSubmission();
+    submissionWithMissingFields = queueInvalidSubmission();
     submittedBeforeDelayCutoff = queueSubmittedNow();
 
     when(pdfService.getFilledOutPDF(eq(submissionWithoutDocs))).thenReturn("some bytes".getBytes());
     when(pdfService.getFilledOutPDF(eq(submissionWithDocs))).thenReturn("some other bytes".getBytes());
     when(pdfService.getFilledOutPDF(eq(invalidSubmission))).thenThrow(new IllegalArgumentException("There was an error generating the PDF"));
+    when(pdfService.getFilledOutPDF(eq(submissionWithMissingFields))).thenThrow(new IllegalArgumentException("Required field(s) are missing"));
   }
 
   @Test
-  public void transmitZipFile() throws IOException {
+  public void transmitZipFile() {
     submissionTransfer.transferSubmissions();
 
     File zipFile = new File(MOCK_SERVER_NAME + "/00050000000.zip.gpg");
@@ -96,6 +99,11 @@ class SubmissionTransferTest {
     assertThat(invalidTransmission.getStatus(), equalTo(TransmissionStatus.Failed));
     assertThat(invalidTransmission.getDocumentationErrors().get("error"), equalTo("There was an error generating the PDF"));
     assertThat(invalidTransmission.getDocumentationErrors().get("subfolder"), equalTo("3"));
+
+    Transmission missingFields = transmissionRepository.findBySubmissionAndTransmissionType(submissionWithMissingFields, TransmissionType.SNAP);
+    assertThat(missingFields.getStatus(), equalTo(TransmissionStatus.Failed));
+    assertThat(missingFields.getDocumentationErrors().get("error"), equalTo("Required field(s) are missing"));
+    assertThat(missingFields.getDocumentationErrors().get("subfolder"), equalTo("4"));
 
     Transmission notTransmittedYet = transmissionRepository.findBySubmissionAndTransmissionType(submittedBeforeDelayCutoff, TransmissionType.SNAP);
     assertThat(notTransmittedYet.getStatus(), equalTo(TransmissionStatus.Queued));
@@ -123,7 +131,11 @@ class SubmissionTransferTest {
         .submittedAt(submittedDate)
         .flow("laDigitalAssister")
         .urlParams(new HashMap<>())
-        .inputData(new HashMap<>()).build();
+        .inputData(Map.of(
+            "firstName", "test",
+            "lastName", "test",
+            "homeAddressStreetAddress1", "123 Foo Street",
+            "signature", "Tester McTest sig")).build();
     submissionRepository.save(submission);
     saveTransmissionRecord(submission);
     return submission;
@@ -135,7 +147,11 @@ class SubmissionTransferTest {
         .submittedAt(submittedDate)
         .flow("laDigitalAssister")
         .urlParams(new HashMap<>())
-        .inputData(new HashMap<>()).build();
+        .inputData(Map.of(
+            "firstName", "test",
+            "lastName", "test",
+            "homeAddressStreetAddress1", "123 Foo Street",
+            "signature", "Tester McTest sig")).build();
     submissionRepository.save(submission);
     saveTransmissionRecord(submission);
     return submission;
@@ -153,6 +169,7 @@ class SubmissionTransferTest {
             "birthDay", "1",
             "birthMonth", "11",
             "birthYear", "1111",
+            "homeAddressStreetAddress1", "123 Foo Street",
             "signature", "Other McOtherson sig"
         ))).build();
     submissionRepository.save(submission);
@@ -190,6 +207,7 @@ class SubmissionTransferTest {
             "birthDay", "3",
             "birthMonth", "12",
             "birthYear", "4567",
+            "mailingAddressStreetAddress1", "123 Foo Street",
             "signature", "Tester McTest sig"
         )).build();
     submissionRepository.save(submission);
