@@ -15,7 +15,7 @@ public enum CsvPackageType {
           List.of(PARENT_GUARDIAN, STUDENT, RELATIONSHIP, ECE_APPLICATION),
           "/la-du-moveit-transfer/nola-ps",
           true,
-          false
+          true
   ),
   WIC_PACKAGE (
           List.of(WIC_APPLICATION),
