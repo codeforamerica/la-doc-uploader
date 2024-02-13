@@ -9,6 +9,6 @@ public interface SftpClient {
 
     void uploadFile(String zipFilename, String filePath) throws JSchException, SftpException;
 
-    void uploadFile(String filePath, String zipFileName, byte [] data) throws IOException, JSchException, SftpException;
+    void uploadFile(String zipFileName, byte [] data) throws IOException, JSchException, SftpException;
 
 }

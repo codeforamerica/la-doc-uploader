@@ -13,13 +13,13 @@ import java.util.List;
 public enum CsvPackageType {
   ECE_PACKAGE (
           List.of(PARENT_GUARDIAN, STUDENT, RELATIONSHIP, ECE_APPLICATION),
-          "/la-du-moveit-transfer/nola-ps",
+          "nola-ps",
           true,
           true
   ),
   WIC_PACKAGE (
           List.of(WIC_APPLICATION),
-          "/la-du-moveit-transfer/dcfs",
+          "dcfs",
           false,
           true
   );

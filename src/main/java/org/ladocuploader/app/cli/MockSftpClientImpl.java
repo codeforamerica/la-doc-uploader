@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@Profile({"dev", "test", "demo"})
+@Profile({"test", "demo"})
 public class MockSftpClientImpl implements SftpClient {
 
   @Override
@@ -17,7 +17,7 @@ public class MockSftpClientImpl implements SftpClient {
   }
 
   @Override
-  public void uploadFile(String zipFilename, String filePath, byte [] data) {
+  public void uploadFile(String zipFilename, byte [] data) {
     // Do nothing
     log.info("Mock uploading file " + zipFilename);
   }

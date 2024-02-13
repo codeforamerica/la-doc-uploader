@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 @Slf4j
 @Component
-@Profile({"dev", "test"})
+@Profile({"test"})
 public class MockPGPEncryptorImpl implements PGPEncryptor {
 
   @Override

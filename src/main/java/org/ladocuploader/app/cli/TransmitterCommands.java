@@ -21,8 +21,6 @@ import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
-
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
 
@@ -130,12 +128,14 @@ public class TransmitterCommands {
                 data = ecePgpEncryptor.signAndEncryptPayload(zipFilename);
             }
 
-            sftpClient.uploadFile(zipFilename, uploadLocation, data);
+            sftpClient.uploadFile(zipFilename, data);
         } else {
             log.info("Uploading zip file");
             sftpClient.uploadFile(zipFilename, uploadLocation);
-            File zip = new File(zipFilename);
-            zip.delete();
+        }
+
+        if (new File(zipFilename).delete()) {
+            log.info("Deleting zip file");
         }
 
         successfullySubmittedIds.forEach(id -> {
@@ -257,9 +257,9 @@ public class TransmitterCommands {
                     documentationErrors.put(submission.getId(), submissionDocumentationErrors);
 
                 });
-
-                results.put(failedDocumentationKey, documentationErrors);
             }
+
+            results.put(failedDocumentationKey, documentationErrors);
 
             results.put(failedSubmissionKey, submissionErrors);
 

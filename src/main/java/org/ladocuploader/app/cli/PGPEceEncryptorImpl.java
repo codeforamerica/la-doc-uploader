@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component("ecePgpEncryptor")
-@Profile({"production", "staging"})
+@Profile({"production", "staging", "dev"})
 public class PGPEceEncryptorImpl extends BasePGPEncrpytorImpl {
 
     public PGPEceEncryptorImpl(@Value("${pgp.ece.sigkey-password}") String sigkeyPassword,
