@@ -368,7 +368,6 @@ flow:
       - name: householdUtilitiesAmount
         condition: HasUtilitiesExpenses
       - name: energyAssistance
-        afterSaveAction: SetLiheapInd
   householdUtilitiesAmount:
     nextScreens:
       - name: householdSeasonalFarmWorker
@@ -379,6 +378,7 @@ flow:
       - name: liheap
         condition: ReceivesEnergyAssistance
       - name: householdMedicalExpenses
+    afterSaveAction: SetLiheapInd
   liheap:
     nextScreens:
       - name: householdMedicalExpenses
