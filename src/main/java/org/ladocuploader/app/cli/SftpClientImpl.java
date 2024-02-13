@@ -57,7 +57,7 @@ public class SftpClientImpl implements SftpClient {
     }
 
     @Override
-    public void uploadFile(String zipFilename, byte [] data) throws IOException, JSchException, SftpException {
+    public void uploadFile(String zipFilename, String filePath, byte [] data) throws IOException, JSchException, SftpException {
         JSch jsch = new JSch();
         jsch.setKnownHosts("src/main/resources/known_hosts");
         Session jschSession = jsch.getSession(username, uploadUrl);
@@ -68,8 +68,13 @@ public class SftpClientImpl implements SftpClient {
         sftp.connect(5000);
 
         ChannelSftp channelSftp = (ChannelSftp) sftp;
-        String destinationFilePath = zipFilename + ".gpg";
-//        String destinationFilePath = String.join("/", List.of(filePath + "-" + this.environmentPath, zipFilename));
+//        String destinationFilePath = zipFilename + ".gpg";
+        String destinationFilePath = String.join("/",
+                List.of(
+                        filePath + "-" + this.environmentPath,
+                        zipFilename + ".gpg"
+                )
+        );
 
         InputStream local = new ByteArrayInputStream(data);
 

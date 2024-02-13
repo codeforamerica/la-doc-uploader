@@ -61,17 +61,14 @@ public class TransmitterCommands {
 
     private final PGPEncryptor ecePgpEncryptor;
 
-    private final StringEncryptor encryptor;
-
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor wicPgpEncryptor, PGPEncryptor ecePgpEncryptor, StringEncryptor encryptor) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor wicPgpEncryptor, PGPEncryptor ecePgpEncryptor) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
         this.fileRepository = cloudFileRepository;
         this.wicPgpEncryptor = wicPgpEncryptor;
         this.ecePgpEncryptor = ecePgpEncryptor;
-        this.encryptor = encryptor;
     }
 
     @Scheduled(fixedRateString="${transmissions.wic-ece-transmission-rate}")
@@ -106,7 +103,8 @@ public class TransmitterCommands {
 
         UUID runId = UUID.randomUUID();
         String zipFilename = createZipFilename(transmissionType, runId);
-        Map<String, Object> zipResults = zipFiles(submissions, zipFilename, transmissionType.getPackageType());
+        CsvPackageType csvPackageType = transmissionType.getPackageType();
+        Map<String, Object> zipResults = zipFiles(submissions, zipFilename, csvPackageType);
 
         List<UUID> successfullySubmittedIds = (List<UUID>) zipResults.get(successfulSubmissionKey);
 
@@ -115,7 +113,6 @@ public class TransmitterCommands {
         Map<UUID, Map<String, String>> failedDocumentation = (Map<UUID, Map<String, String>>) zipResults.get(failedDocumentationKey);
 
         // send zip file
-        CsvPackageType csvPackageType = transmissionType.getPackageType();
         String uploadLocation = csvPackageType.getUploadLocation();
         if (csvPackageType.getEncryptPackage()){
             log.info("Encrypting data package");
@@ -128,7 +125,7 @@ public class TransmitterCommands {
                 data = ecePgpEncryptor.signAndEncryptPayload(zipFilename);
             }
 
-            sftpClient.uploadFile(zipFilename, data);
+            sftpClient.uploadFile(zipFilename, uploadLocation, data);
         } else {
             log.info("Uploading zip file");
             sftpClient.uploadFile(zipFilename, uploadLocation);
