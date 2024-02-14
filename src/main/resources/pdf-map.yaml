@@ -39,6 +39,9 @@ inputFields:
   cellPhoneNumber: cellPhoneNumber
   workPhoneNumber: workPhoneNumber
   sex: sex
+  parish: parish
+  outOfStateBenefitsInd: outOfStateBenefitsInd
+  mealInd: paysForMeals
   highestEducationFormatted: highestEducation
   ethnicitySelected: ethnicitySelected
   raceSelected:
@@ -82,7 +85,7 @@ inputFields:
   fostersAgedOutNames: fostersAgedOutNames
   preparesFoodNames: preparesFoodNames
 
-  jobSearch: jobSearch
+  householdSearchingForJob: jobSearch
   migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
   roomRentalInd: roomRentalInd
 
