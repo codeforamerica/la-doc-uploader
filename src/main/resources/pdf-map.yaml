@@ -25,9 +25,9 @@ inputFields:
   mailingAddressCity: mailingAddressCity
   mailingAddressStreetAddress2: mailingAddressStreetAddress2
   mailingAddressStreetAddress1: mailingAddressStreetAddress1
-  expeditedSnapIncome: expeditedSnapIncome
-  expeditedSnapMoneyOnHand: expeditedSnapMoneyOnHand
-  expeditedSnapHousingCost: expeditedSnapHousingCost
+  householdIncomeLast30Days: expeditedSnapIncome
+  householdRentAmount: expeditedSnapHousingCost
+  expeditedMoneyOnHandAmount: expeditedSnapMoneyOnHand
   expeditedSnapHouseholdExpensesBool: expeditedSnapHouseholdExpensesBool
   expeditedSnapHeatingBool: expeditedSnapHeatingBool
   expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
@@ -86,7 +86,7 @@ inputFields:
   preparesFoodNames: preparesFoodNames
 
   householdSearchingForJob: jobSearch
-  migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
+  migrantOrSeasonalFarmWorkerInd: expeditedMigrantOrSeasonalWorkerBool
   roomRentalInd: roomRentalInd
 
   additionalIncome:
@@ -98,7 +98,9 @@ inputFields:
     VeteransBenefits: VeteransBenefits
     Contributions: Contributions
 
-  heatingOrCoolingInd: heatingOrCoolingInd
+  heatingOrCoolingInd: expeditedSnapHeatingBool
+  utilitiesInd: expeditedSnapUtilityExpensesBool
+  phoneInd: expeditedSnapPhoneExpensesBool
   householdUtilitiesExpenses:
     electricity: Electricity
     water: Water

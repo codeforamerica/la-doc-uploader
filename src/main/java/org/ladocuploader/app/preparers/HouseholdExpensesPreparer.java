@@ -57,6 +57,23 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
       // Heating or A/C
       results.put("heatingOrCoolingInd", new SingleField("heatingOrCoolingInd", Boolean.toString(householdUtilities.contains("heating") || householdUtilities.contains("cooling")), null));
 
+      // Electricity, Water, Garbage, Sewer, and/or Cooking Fuels
+      results.put(
+              "utilitiesInd",
+              new SingleField(
+                      "utilitiesInd",
+                      Boolean.toString(
+                               householdUtilities.contains("Electricity") ||
+                                  householdUtilities.contains("Water") ||
+                                  householdUtilities.contains("Garbage") ||
+                                  householdUtilities.contains("Sewer") ||
+                                  householdUtilities.contains("Gas")
+                      ),
+                      null)
+      );
+      // Phone/ cell phone
+      results.put("phoneInd", new SingleField("phoneInd", Boolean.toString(householdUtilities.contains("Phone/Cell Phone")), null));
+
       // Check for "Other" - theres only one spot for this in the PDF so just combine them
       var totalOtherAmount = 0.0;
       try {
