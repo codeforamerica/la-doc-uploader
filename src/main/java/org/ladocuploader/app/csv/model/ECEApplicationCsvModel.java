@@ -91,7 +91,7 @@ import org.ladocuploader.app.utils.IncomeCalculator;
         "Please select the ethnicity that best matches your SNAP application choice: {{2c07b960-12e1-49ff-9e91-69bf302b9928}}",
         "Please select the race that best matches your SNAP application choice: {{65ee6216-ddf8-4c9e-b174-21484c19966c}}",
         "Pay statement upload #1 and #2 (dated within 45-60 days of filling out this application) {{f191345b-d3b7-4463-a65a-947a2504670a}}",
-        "Pay statement upload #3 and #4, if needed (dated within 45-60 days of filling out this application) {{71ef3e8e-b841-4aaf-bc3d-036a51b02243}} {{06ca5c9c-013f-4b10-afc6-e8ab67c20bb7}}",
+        "Pay statement upload #3 and #4, if needed (dated within 45-60 days of filling out this application) {{06ca5c9c-013f-4b10-afc6-e8ab67c20bb7}}",
         "Employer letter (stating where adult is employed, work hours, rate of pay, start date and signature of employer with date signed) {{601c0ecc-59b7-4b4f-aa75-6b0f08a6daf4}}",
         "I state that my income or support comes from: {{0cbeb4ca-b51d-42e5-9109-e6e1f35dc806}}",
         "Upload your most recent IRS Form 1099 {{d403974c-fc46-4162-aa92-94b99472e5b5}}",
