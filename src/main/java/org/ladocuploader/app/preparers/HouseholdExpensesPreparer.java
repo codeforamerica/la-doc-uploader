@@ -53,15 +53,19 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
           i++;
         }
       }
+//
+//      expeditedSnapHeatingBool: expeditedSnapHeatingBool
+//      expeditedSnapUtilityExpensesBool: expeditedSnapUtilityExpensesBool
+//      expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
 
       // Heating or A/C
-      results.put("heatingOrCoolingInd", new SingleField("heatingOrCoolingInd", Boolean.toString(householdUtilities.contains("heating") || householdUtilities.contains("cooling")), null));
+      results.put("expeditedSnapHeatingBool", new SingleField("expeditedSnapHeatingBool", Boolean.toString(householdUtilities.contains("heating") || householdUtilities.contains("cooling")), null));
 
       // Electricity, Water, Garbage, Sewer, and/or Cooking Fuels
       results.put(
-              "utilitiesInd",
+              "expeditedSnapUtilityExpensesBool",
               new SingleField(
-                      "utilitiesInd",
+                      "expeditedSnapUtilityExpensesBool",
                       Boolean.toString(
                                householdUtilities.contains("Electricity") ||
                                   householdUtilities.contains("Water") ||
@@ -72,7 +76,7 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
                       null)
       );
       // Phone/ cell phone
-      results.put("phoneInd", new SingleField("phoneInd", Boolean.toString(householdUtilities.contains("Phone/Cell Phone")), null));
+      results.put("expeditedSnapPhoneExpensesBool", new SingleField("expeditedSnapPhoneExpensesBool", Boolean.toString(householdUtilities.contains("Phone/Cell Phone")), null));
 
       // Check for "Other" - theres only one spot for this in the PDF so just combine them
       var totalOtherAmount = 0.0;
