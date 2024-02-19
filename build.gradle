@@ -38,7 +38,7 @@ dependencies {
     implementation 'org.springframework.shell:spring-shell-starter:3.2.1'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation("com.mixpanel:mixpanel-java:1.5.2")
-    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.14'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.0'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.1'
