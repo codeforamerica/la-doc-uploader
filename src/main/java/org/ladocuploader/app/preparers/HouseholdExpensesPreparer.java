@@ -74,6 +74,8 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
       }
 
       if (totalOtherAmount > 0) {
+        results.put("Other", new SingleField("Other", "Yes", null));
+
         results.put("householdExpensesType_" + i, new SingleField("householdExpensesType_" + i, "Other", null));
         results.put("householdExpensesAmount_" + i, new SingleField("householdExpensesAmount_" + i, Double.toString(totalOtherAmount), null));
         results.put("householdExpensesFreq_" + i, new SingleField("householdExpensesFreq_" + i, "Monthly", null));
