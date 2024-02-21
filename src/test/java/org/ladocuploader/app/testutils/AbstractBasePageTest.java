@@ -1,16 +1,5 @@
 package org.ladocuploader.app.testutils;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -20,10 +9,25 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.context.MessageSource;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.Callable;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Import({WebDriverConfiguration.class})
@@ -95,5 +99,15 @@ public abstract class AbstractBasePageTest {
   public String message(String message) {
     return messageSource
         .getMessage(message, null, Locale.ENGLISH);
+  }
+
+  protected List<File> getAllFiles() {
+    return Arrays.stream(Objects.requireNonNull(path.toFile().listFiles()))
+        .filter(file -> file.getName().endsWith(".pdf"))
+        .toList();
+  }
+
+  protected Callable<Boolean> pdfDownloadCompletes() {
+    return () -> getAllFiles().size() > 0;
   }
 }

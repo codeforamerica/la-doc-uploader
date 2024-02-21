@@ -34,5 +34,9 @@
       <th:block th:replace="~{fragments/localeSelect :: translate_noscript}"></th:block>
     </div>
   </header>
+  <th:block th:if="${#arrays.contains(@environment.getActiveProfiles(), 'test')}">
+    <br/>Download links (demo-only):
+    <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download/laDigitalAssister/' + ${submission.getId()}">SNAP Applicant PDF</a>
+  </th:block>
   <th:block th:replace="~{fragments/demoBanner :: demoBanner(demoText=#{demo.banner-text}, demoProfile=${@environment.getProperty('demo')})}"/>
 </th:block>
