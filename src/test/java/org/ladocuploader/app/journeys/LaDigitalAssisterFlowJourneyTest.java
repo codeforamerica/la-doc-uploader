@@ -1,11 +1,16 @@
 package org.ladocuploader.app.journeys;
 
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.PdfReader;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.testutils.AbstractBasePageTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -44,7 +49,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     testPage.clickContinue();
     assertThat(testPage.getTitle()).isEqualTo(message("home-address.title"));
-
   }
 
   @Test
@@ -165,7 +169,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("special-situations.title"));
   }
-  
+
   @Test
   void expeditedSnapFlow() {
     loadUserPersonalData();
@@ -226,7 +230,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     List<WebElement> ethnicityInputs = driver.findElements(By.cssSelector("input[id*='householdMemberEthnicity_wildcard_']"));
 
     ethnicityInputs.stream()
-        .filter(ei ->  ei.getAttribute("value").equals("Hispanic or Latino"))
+        .filter(ei -> ei.getAttribute("value").equals("Hispanic or Latino"))
         .forEach(ei -> {
           ei.click();
           // make sure found them, even with the site language being in Vietnamese
@@ -256,9 +260,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // choose a few for each
     raceInputs.stream()
-        .filter(ri ->  {
+        .filter(ri -> {
           String value = ri.getAttribute("value");
-          return value.equals("Alaskan Native") ||  value.equals("Black or African American");
+          return value.equals("Alaskan Native") || value.equals("Black or African American");
         })
         .forEach(ri -> {
           ri.click();
@@ -744,7 +748,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("elderlycare-amount.title"));
     testPage.enter("expensesElderlyCare", "123");
-    testPage.clickContinue();;
+    testPage.clickContinue();
 
     var title = testPage.getTitle();
     if ("ECE link".equals(title)) {
@@ -884,8 +888,28 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     // Confirmation page
     assertThat(testPage.getTitle()).isEqualTo(message("confirmation.title"));
+
+    verifyPDF();
   }
 
+  private void verifyPDF() {
+    testPage.clickLink("SNAP Applicant PDF");
+    await().until(pdfDownloadCompletes());
+    File pdfFile = path.toFile().listFiles()[0];
+    try (PdfReader actualReader = new PdfReader(new FileInputStream(pdfFile));
+         PdfReader expectedReader = new PdfReader(new FileInputStream("src/test/resources/output/test_la_application_for_assistance.pdf"))) {
+      AcroFields actualAcroFields = actualReader.getAcroFields();
+      AcroFields expectedAcroFields = expectedReader.getAcroFields();
+
+      assertThat(actualAcroFields.getAllFields().size()).isEqualTo(expectedAcroFields.getAllFields().size());
+      for (String expectedField : expectedAcroFields.getAllFields().keySet()) {
+        assertThat(actualAcroFields.getField(expectedField)).isEqualTo(expectedAcroFields.getField(expectedField));
+      }
+    } catch (IOException e) {
+      log.error("Failed to generate PDF: %s", e);
+      throw new RuntimeException(e);
+    }
+  }
 
   void loadUserPersonalData() {
     testPage.navigateToFlowScreen("laDigitalAssister/parish");
@@ -914,7 +938,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.selectRadio("householdMemberSex", "F");
     testPage.clickContinue();
   }
-  
+
   void loadAddressData() {
     testPage.navigateToFlowScreen("laDigitalAssister/homeAddress");
     testPage.enter("homeAddressStreetAddress1", "123 Test St");
@@ -925,7 +949,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("sameAsHomeAddress-true");
     testPage.clickContinue();
   }
-  
+
   void loadContactData() {
     testPage.navigateToFlowScreen("laDigitalAssister/contactInfo");
     testPage.enter("emailAddress", "test@gmail.com");
