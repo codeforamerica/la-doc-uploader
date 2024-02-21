@@ -18,20 +18,25 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Service;
 
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Slf4j
-@ShellComponent
+@Service
 public class TransmitterCommands {
 
     private final TransmissionRepository transmissionRepository;
@@ -50,6 +55,8 @@ public class TransmitterCommands {
 
     private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE, TransmissionType.WIC);
 
+    private final long TWO_HOURS = 2L;
+
     public TransmitterCommands(TransmissionRepository transmissionRepository,
                                SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository) {
         this.transmissionRepository = transmissionRepository;
@@ -58,15 +65,26 @@ public class TransmitterCommands {
         this.fileRepository = cloudFileRepository;
     }
 
-    @ShellMethod(key = "transmit")
+    @Scheduled(fixedRateString="${transmissions.wic-ece-transmission-rate}")
     public void transmit() throws IOException, JSchException, SftpException {
         log.info("Finding submissions to transmit...");
+        OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
         for (TransmissionType transmissionType : transmissionTypes) {
-            var submissions = this.transmissionRepository.submissionsToTransmit(Sort.unsorted(), transmissionType);
-            log.info("Total submissions to transmit for {} is {}", transmissionType.name(), submissions.size());
-            if (submissions.size() > 0) {
+
+            List<Submission> queuedSubmissions = transmissionRepository.submissionsToTransmit(Sort.unsorted(), transmissionType);
+            int totalQueued = queuedSubmissions.size();
+            if (queuedSubmissions.isEmpty()) {
+                log.info("Nothing to transmit. Exiting.");
+                return;
+            }
+            log.info("Found %s queued transmissions".formatted(totalQueued));
+
+            queuedSubmissions = queuedSubmissions.stream()
+                    .filter(submission -> (submission.getSubmittedAt().isBefore(submittedAtCutoff))).toList();
+            log.info("Total submissions to transmit for {} is {}", transmissionType.name(), queuedSubmissions.size());
+            if (queuedSubmissions.size() > 0) {
                 log.info("Transmitting submissions for {}", transmissionType.name());
-                transmitBatch(submissions, transmissionType);
+                transmitBatch(queuedSubmissions, transmissionType);
             } else {
                 log.info("Skipping transmission for {}", transmissionType.name());
             }

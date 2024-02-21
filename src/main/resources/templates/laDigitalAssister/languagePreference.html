@@ -18,11 +18,11 @@
                     th:replace="~{fragments/inputs/select :: select(label=#{language-preference.language-to-read-label}, inputName='languageRead', helpText=#{language-preference.language-to-read-help}, content=~{::languageToReadContent})}">
                   <th:block th:ref="languageToReadContent">
                     <th:block
-                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='English', optionText=#{language-preference.english})}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='English', optionText=#{language-preferences.english})}"/>
                     <th:block
-                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Spanish', optionText=#{language-preference.spanish})}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Spanish', optionText=#{language-preferences.spanish})}"/>
                     <th:block
-                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Vietnamese', optionText=#{language-preference.vietnamese})}"/>
+                        th:replace="~{fragments/inputs/selectOption :: selectOption(value='Vietnamese', optionText=#{language-preferences.vietnamese})}"/>
                   </th:block>
                 </th:block>
                 <th:block th:replace="~{fragments/inputs/radioFieldset ::

@@ -1,13 +1,13 @@
-package org.ladocuploader.app.utils;
+package org.ladocuploader.app.testutils;
 import com.deque.html.axecore.results.Results;
 import com.deque.html.axecore.results.Rule;
 import com.deque.html.axecore.selenium.AxeBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.context.MessageSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.context.MessageSource;
 
 
 @Slf4j
@@ -57,6 +57,6 @@ public class AccessibilityTestPage extends Page {
         List<Rule> violations = results.getViolations();
         violations.forEach(rule -> rule.setUrl(getTitle()));
         resultsList.addAll(violations);
-        log.info("Testing a11y on page " + getTitle());
+        log.info("Testing a11y on page %s, found %s violations".formatted(getTitle(), violations.size()));
     }
 }

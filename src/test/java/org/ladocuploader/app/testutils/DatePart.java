@@ -1,4 +1,4 @@
-package org.ladocuploader.app.utils;
+package org.ladocuploader.app.testutils;
 
 public enum DatePart {
   YEAR(3), MONTH(1), DAY(2);

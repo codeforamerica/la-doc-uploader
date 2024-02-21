@@ -29,12 +29,13 @@
                               docTypeInputName=${'docType' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + fileId}">
                     <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile}, showDocType=false)}"></th:block>
 
-                    <th:block th:replace="~{fragments/inputs/select :: select(
+                    <th:block th:replace="~{fragments/inputs/selectCustom :: select(
                         inputName=${docTypeInputName},
                         helpText='',
                         content=~{::docTypes},
+                        ariaDescribedBy=${fileId},
                         label='',
-                        ariaLabel=${userFile.get('originalFilename')})}">
+                        ariaLabel='header')}">
                       <th:block th:ref="docTypes">
                         <th:block
                             th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{add-document-types.doc-type-label.placeholder})}"/>
@@ -49,9 +50,11 @@
               </div>
             </div>
             <div class="form-card__footer">
-              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
-                  text=#{general.inputs.continue})}"/>
-              <a class="button button--secondary" th:href="'/flow/' + ${flow} + '/docUpload'" th:text="#{general.add-or-delete-files}"></a>
+              <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
+                inputName='continueAssociateDocType',
+                ariaDescribe='header',
+                overrideNoText=#{general.add-or-delete-files},
+                overrideYesText=#{general.inputs.continue})}"/>
             </div>
           </th:block>
         </th:block>

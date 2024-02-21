@@ -18,15 +18,15 @@
               <div th:each="income, iter:${inputData.get('moneyOnHandTypes[]')}"
                    class="spacing-below-15">
                 <th:block
-                    th:with="whoInputName=${'moneyOnHandOwner' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}">
+                    th:with="whoInputName=${'moneyOnHandOwner' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}, incomeLabel=${#messages.msg(T(org.ladocuploader.app.data.enums.MoneyOnHandType).getLabelSrcFromValue(income.toString()).toString())}">
                   <th:block th:replace="~{fragments/inputs/radioFieldset ::
                             radioFieldset(
-                            label=#{moneyonhand-details.q1(${income})},
+                            label=#{moneyonhand-details.q1(${incomeLabel})},
                             inputName=${whoInputName},
                             content=~{::householdMembers})}">
                     <th:block th:ref="householdMembers">
                       <th:block
-                          th:replace="~{fragments/inputs/radio :: radio(inputName=${whoInputName},value='you', label=${inputData.firstName + ' ' + inputData.lastName + ' (you) '})}"/>
+                          th:replace="~{fragments/inputs/radio :: radio(inputName=${whoInputName},value='you', label=${inputData.firstName + ' ' + inputData.lastName + ' ' + #messages.msg('general.you')})}"/>
                       <th:block th:if="${inputData.containsKey('household')}">
                         <th:block th:each="householdMember, iter: ${inputData.household}"
                                   class="spacing-below-15">

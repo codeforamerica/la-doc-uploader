@@ -14,8 +14,8 @@
         <a th:href="'/flow/' + ${flow} + '/mailingAddressNoAddress'"
            th:text="#{where-to-send-mail.add-address}"
            class="button button--primary"></a>
-        <a th:href="'/flow/' + ${flow} + '/' + ${screen} + '/navigation'"
-           th:text="#{where-to-send-mail.continue-without}"
+        <a th:href="'/flow/' + ${flow} + '/whereToSendMail'"
+           th:text="#{where-to-send-mail.no-mailing-address}"
            class="button spacing-left-0"
            id="continue-link"></a>
       </main>

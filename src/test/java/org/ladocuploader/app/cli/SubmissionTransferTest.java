@@ -8,7 +8,6 @@ import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
@@ -21,7 +20,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.*;
@@ -33,13 +31,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.ladocuploader.app.cli.MockFtpsClientImpl.MOCK_SERVER_NAME;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@Disabled
 class SubmissionTransferTest {
 
   @Autowired
@@ -54,50 +51,41 @@ class SubmissionTransferTest {
   @Autowired
   UserFileRepository userFileRepository;
 
+  @Autowired
+  FtpsClient ftpsClient;
+
   @MockBean
   PdfService pdfService;
 
   @MockBean
   CloudFileRepository fileRepository;
 
-  @MockBean
-  FtpsClient ftpsClient;
-
   private Submission submissionWithDocs;
   private Submission submissionWithoutDocs;
   private Submission invalidSubmission;
+  private Submission submissionWithMissingFields;
   private Submission submittedBeforeDelayCutoff;
 
   @BeforeEach
   void setup() throws IOException {
-    doAnswer(args -> {
-      String zipfilename = (String) args.getArguments()[0];
-      String transmitlocation = "mocktransmit_" + args.getArguments()[0];
-      try (FileInputStream instream = new FileInputStream(zipfilename);
-           FileOutputStream outstream = new FileOutputStream(transmitlocation)) {
-        outstream.write(instream.readAllBytes());
-      }
-      return null;
-    }).when(ftpsClient).uploadFile(anyString(), any());
-
     submissionWithoutDocs = queueSubmissionWithoutDocs();
     submissionWithDocs = queueSubmissionWithDocs();
     invalidSubmission = queueInvalidSubmission();
+    submissionWithMissingFields = queueInvalidSubmission();
     submittedBeforeDelayCutoff = queueSubmittedNow();
 
     when(pdfService.getFilledOutPDF(eq(submissionWithoutDocs))).thenReturn("some bytes".getBytes());
     when(pdfService.getFilledOutPDF(eq(submissionWithDocs))).thenReturn("some other bytes".getBytes());
     when(pdfService.getFilledOutPDF(eq(invalidSubmission))).thenThrow(new IllegalArgumentException("There was an error generating the PDF"));
+    when(pdfService.getFilledOutPDF(eq(submissionWithMissingFields))).thenThrow(new IllegalArgumentException("Required field(s) are missing"));
   }
 
   @Test
-  public void transmitZipFile() throws IOException {
+  public void transmitZipFile() {
     submissionTransfer.transferSubmissions();
 
-    File zipFile = new File("mocktransmit_00050000000.zip");
+    File zipFile = new File(MOCK_SERVER_NAME + "/00050000000.zip.gpg");
     assertTrue(zipFile.exists());
-
-    verify(ftpsClient).uploadFile(any(), any());
 
     Transmission transmittedWithDocs = transmissionRepository.findBySubmissionAndTransmissionType(submissionWithDocs, TransmissionType.SNAP);
     assertThat(transmittedWithDocs.getStatus(), equalTo(TransmissionStatus.Complete));
@@ -112,19 +100,24 @@ class SubmissionTransferTest {
     assertThat(invalidTransmission.getDocumentationErrors().get("error"), equalTo("There was an error generating the PDF"));
     assertThat(invalidTransmission.getDocumentationErrors().get("subfolder"), equalTo("3"));
 
+    Transmission missingFields = transmissionRepository.findBySubmissionAndTransmissionType(submissionWithMissingFields, TransmissionType.SNAP);
+    assertThat(missingFields.getStatus(), equalTo(TransmissionStatus.Failed));
+    assertThat(missingFields.getDocumentationErrors().get("error"), equalTo("Required field(s) are missing"));
+    assertThat(missingFields.getDocumentationErrors().get("subfolder"), equalTo("4"));
+
     Transmission notTransmittedYet = transmissionRepository.findBySubmissionAndTransmissionType(submittedBeforeDelayCutoff, TransmissionType.SNAP);
     assertThat(notTransmittedYet.getStatus(), equalTo(TransmissionStatus.Queued));
 
     String destDir = "output";
     List<String> fileNames = unzip(zipFile.getPath(), destDir);
 
-    assertThat(fileNames, hasItem("output/1/"));
-    assertThat(fileNames, hasItem("output/1/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/2/"));
-    assertThat(fileNames, hasItem("output/2/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/2/originalFilename.png"));
-    assertThat(fileNames, hasItem("output/2/2_originalFilename.png"));
-    assertThat(fileNames, hasItem("output/2/weird/:\\filename.jpg"));
+    assertThat(fileNames, hasItem("output/00050000000/1/"));
+    assertThat(fileNames, hasItem("output/00050000000/1/SNAP_application.pdf"));
+    assertThat(fileNames, hasItem("output/00050000000/2/"));
+    assertThat(fileNames, hasItem("output/00050000000/2/SNAP_application.pdf"));
+    assertThat(fileNames, hasItem("output/00050000000/2/originalFilename.png"));
+    assertThat(fileNames, hasItem("output/00050000000/2/2_originalFilename.png"));
+    assertThat(fileNames, hasItem("output/00050000000/2/weird/:\\filename.jpg"));
     assertThat(fileNames, hasItem("output/00050000000.txt"));
     assertEquals(8, fileNames.size());
 
@@ -138,7 +131,11 @@ class SubmissionTransferTest {
         .submittedAt(submittedDate)
         .flow("laDigitalAssister")
         .urlParams(new HashMap<>())
-        .inputData(new HashMap<>()).build();
+        .inputData(Map.of(
+            "firstName", "test",
+            "lastName", "test",
+            "homeAddressStreetAddress1", "123 Foo Street",
+            "signature", "Tester McTest sig")).build();
     submissionRepository.save(submission);
     saveTransmissionRecord(submission);
     return submission;
@@ -150,7 +147,11 @@ class SubmissionTransferTest {
         .submittedAt(submittedDate)
         .flow("laDigitalAssister")
         .urlParams(new HashMap<>())
-        .inputData(new HashMap<>()).build();
+        .inputData(Map.of(
+            "firstName", "test",
+            "lastName", "test",
+            "homeAddressStreetAddress1", "123 Foo Street",
+            "signature", "Tester McTest sig")).build();
     submissionRepository.save(submission);
     saveTransmissionRecord(submission);
     return submission;
@@ -168,6 +169,7 @@ class SubmissionTransferTest {
             "birthDay", "1",
             "birthMonth", "11",
             "birthYear", "1111",
+            "homeAddressStreetAddress1", "123 Foo Street",
             "signature", "Other McOtherson sig"
         ))).build();
     submissionRepository.save(submission);
@@ -205,6 +207,7 @@ class SubmissionTransferTest {
             "birthDay", "3",
             "birthMonth", "12",
             "birthYear", "4567",
+            "mailingAddressStreetAddress1", "123 Foo Street",
             "signature", "Tester McTest sig"
         )).build();
     submissionRepository.save(submission);

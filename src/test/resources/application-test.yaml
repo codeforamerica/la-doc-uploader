@@ -1,4 +1,6 @@
 form-flow:
+  pdf:
+    generate-flattened: false
   disabled-flows: ~
   uploads:
     default-doc-type: "NotSet"

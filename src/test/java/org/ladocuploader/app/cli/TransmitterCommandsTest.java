@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.ladocuploader.app.testutils.TestUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -85,6 +86,7 @@ public class TransmitterCommandsTest {
         submission = Submission.builder()
                 .submittedAt(now())
                 .urlParams(new HashMap<>())
+                .submittedAt(TestUtils.makeOffsetDateTime("2024-01-28"))
                 .inputData(Map.of(
                         "firstName", "first",
                         "lastName", "last",
@@ -95,6 +97,7 @@ public class TransmitterCommandsTest {
         submissionWithDocs = Submission.builder()
                 .submittedAt(now())
                 .urlParams(new HashMap<>())
+                .submittedAt(TestUtils.makeOffsetDateTime("2024-01-28"))
                 .inputData(Map.of(
                         "firstName", "Other",
                         "lastName", "McOtherson",

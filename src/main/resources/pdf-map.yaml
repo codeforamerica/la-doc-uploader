@@ -4,9 +4,9 @@ inputFields:
   # submission field name --> PDF field name
 
   # Cross-check this list against the PDF with this command:
-  #   diff \
-  #     <(pdftk src/main/resources/pdfs/la_application_for_assistance.pdf dump_data_fields | grep 'FieldName: ' | cut -d' ' -f2 | sort) \
-  #     <(ruby -ryaml -e "y = YAML.load_file('src/main/resources/pdf-map.yaml'); puts y['inputFields'].values.concat(y['dbFields'].values)" | sort)
+#     diff \
+#       <(pdftk src/main/resources/pdfs/la_application_for_assistance.pdf dump_data_fields | grep 'FieldName: ' | cut -d' ' -f2 | sort) \
+#       <(ruby -ryaml -e "y = YAML.load_file('src/main/resources/pdf-map.yaml'); puts y['inputFields'].values.concat(y['dbFields'].values)" | sort)
   #
   # Red lines = in PDF but not YAML
   # Green lines = in YAML but not PDF
@@ -25,6 +25,13 @@ inputFields:
   mailingAddressCity: mailingAddressCity
   mailingAddressStreetAddress2: mailingAddressStreetAddress2
   mailingAddressStreetAddress1: mailingAddressStreetAddress1
+  expeditedSnapIncome: expeditedSnapIncome
+  expeditedSnapMoneyOnHand: expeditedSnapMoneyOnHand
+  expeditedSnapHousingCost: expeditedSnapHousingCost
+  expeditedSnapHouseholdExpensesBool: expeditedSnapHouseholdExpensesBool
+  expeditedSnapHeatingBool: expeditedSnapHeatingBool
+  expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
+  expeditedMigrantOrSeasonalWorkerBool: expeditedMigrantOrSeasonalWorkerBool
   signature: signature
   applicantBirthdayFormatted: applicantBirthday
   emailAddress: emailAddress
@@ -32,6 +39,9 @@ inputFields:
   cellPhoneNumber: cellPhoneNumber
   workPhoneNumber: workPhoneNumber
   sex: sex
+  parish: parish
+  outOfStateBenefitsInd: outOfStateBenefitsInd
+  mealInd: paysForMeals
   highestEducationFormatted: highestEducation
   ethnicitySelected: ethnicitySelected
   raceSelected:
@@ -45,6 +55,7 @@ inputFields:
   applicantStudentInd: applicantStudentInd
   applicantNonCitizenInd: applicantNonCitizenInd
   applicantHomelessInd: applicantHomelessInd
+  householdHasCriminalJusticeSituation: criminalJusticeSpecialSituation
 
   authorizedRepresentative: authorizedRepresentative
   authorizedRepFirstName: authorizedRepFirstName
@@ -56,7 +67,7 @@ inputFields:
   authorizedRepCity: authorizedRepCity
   authorizedRepPhoneNumber: authorizedRepPhoneNumber
   needsMedicaid: needsMedicaid
-
+  selfEmploymentIncome: selfEmploymentIncome
   hasDependentCareExpenses: hasDependentCareExpenses
   expensesDependentCare: expensesDependentCare
   hasChildSupportExpenses: hasChildSupportExpenses
@@ -74,7 +85,7 @@ inputFields:
   fostersAgedOutNames: fostersAgedOutNames
   preparesFoodNames: preparesFoodNames
 
-  jobSearch: jobSearch
+  householdSearchingForJob: jobSearch
   migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
   roomRentalInd: roomRentalInd
 

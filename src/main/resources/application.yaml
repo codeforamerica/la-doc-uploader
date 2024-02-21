@@ -111,6 +111,9 @@ server:
   servlet:
     session:
       persistent: true
+transmissions:
+  snap-transmission-rate: ${SNAP_TRANSMISSION_RATE:PT5M}
+  wic-ece-transmission-rate: ${WIC_ECE_TRANSMISSION_RATE:PT24H}
 ftps:
   username: ${FTPS_USERNAME:-""}
   password: ${FTPS_PASSWORD:-""}

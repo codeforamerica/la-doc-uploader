@@ -422,6 +422,8 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String addDocuments;
 
+  private String continueAssociateDocType;
+
   @NotBlank(message = "{doc-type.select-a-type}")
   @DynamicField
   private String docType;

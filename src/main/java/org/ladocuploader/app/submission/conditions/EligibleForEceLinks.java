@@ -5,14 +5,15 @@ import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 
 import static org.ladocuploader.app.submission.actions.SetExperimentGroups.ExperimentGroup.LINK;
-import static org.ladocuploader.app.utils.SubmissionUtilities.inExperimentGroup;
-import static org.ladocuploader.app.utils.SubmissionUtilities.isNolaParish;
+import static org.ladocuploader.app.utils.SubmissionUtilities.*;
 
 @Component
-public class EligibleForNolaWicEceLinks implements Condition {
+public class EligibleForEceLinks implements Condition {
 
   @Override
   public Boolean run(Submission submission) {
-    return isNolaParish(submission) && inExperimentGroup(LINK.name(), submission);
+    return isOrleansParish(submission)
+        && inExperimentGroup(LINK.name(), submission)
+        && (hasChildBornAfterCutoff(submission, ECE_CUTOFF_DATE) || hasHouseholdPregnancy(submission));
   }
 }

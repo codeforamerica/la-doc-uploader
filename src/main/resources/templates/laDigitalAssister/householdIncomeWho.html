@@ -22,12 +22,12 @@
                             content=~{::householdMembers})}">
                 <th:block th:ref="householdMembers">
                   <th:block
-                      th:replace="~{fragments/inputs/radio :: radio(inputName=${inputName},value='you', label=${inputData.firstName + ' ' + inputData.lastName + ' (you) '})}"/>
+                      th:replace="~{fragments/inputs/radio :: radio(inputName=${inputName},value='you', label=${inputData.firstName + ' ' + inputData.lastName + ' ' + #messages.msg('general.you')})}"/>
                   <th:block th:if="${inputData.containsKey('household')}">
                     <th:block th:each="householdMember, iter: ${inputData.household}"
                               class="spacing-below-15">
                       <th:block
-                          th:replace="~{fragments/inputs/radio :: radio(inputName=${inputName},value=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName}, label=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName})}"/>
+                          th:replace="~{fragments/inputs/radio :: radio(inputName=${inputName},value=${householdMember.uuid}, label=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName})}"/>
                     </th:block>
                   </th:block>
                 </th:block>
