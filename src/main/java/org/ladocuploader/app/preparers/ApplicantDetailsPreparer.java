@@ -45,6 +45,14 @@ public class ApplicantDetailsPreparer implements SubmissionFieldPreparer {
     var educationStatus = inputData.get("highestEducation");
     results.put("highestEducation", new SingleField("highestEducationFormatted", PDF_EDUCATION_MAP.get(educationStatus), null));
 
+    String languageRead = (String) submission.getInputData().getOrDefault("languageRead", "English");
+    if (languageRead.equals("English")){
+        results.put("canReadAndUnderstandEnglish", new SingleField("canReadAndUnderstandEnglish", "true", null));
+    } else {
+        results.put("canReadAndUnderstandEnglish", new SingleField("canReadAndUnderstandEnglish", "false", null));
+        results.put("whatLanguageCanReadAndUnderstand", new SingleField("whatLanguageCanReadAndUnderstand", languageRead, null));
+    }
+
     // If they said they don't want us to collect this info, don't pass it on, even if they had previously set it.
     // This check helps if they went back and forward in the pages changing values. The data that prepares these fields is
     // the default OneToManyPreparer in the ffl. This code just overwrites the fields to _unset_ them.
