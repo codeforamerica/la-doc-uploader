@@ -8,12 +8,13 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block th:replace="~{fragments/icons :: personMilestone}"></th:block>
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{criminal-justice-which.header}, subtext=#{general.check-all-that-apply})}"/>
           <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::criminalJusticeSituations})}">
             <th:block th:ref="criminalJusticeSituations">
               <div class="form-card__content">
-                cfa:<th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+                <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
                   checkboxFieldset(inputName='criminalJusticeSituations',
                   ariaLabel='header',
                   content=~{::checkboxOptions})}">
@@ -21,7 +22,13 @@
                       <!-- Copy the below input if you want to add more -->
                       <th:block
                         th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='criminalJusticeSituations',value='Fleeing felon', label=#{criminal-justice-which.option1})}"/>
-                    </th:block>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='criminalJusticeSituations',value='Parole violation', label=#{criminal-justice-which.option2})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='criminalJusticeSituations',value='Felony conviction', label=#{criminal-justice-which.option3})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='criminalJusticeSituations',value='Convicted of breaking program rules', label=#{criminal-justice-which.option4})}"/>
+                </th:block>
                 </th:block>
                 
               </div>
