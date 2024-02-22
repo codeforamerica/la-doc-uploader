@@ -205,16 +205,8 @@ flow:
     nextScreens:
       - name: householdVeteranWho
         condition: IsVeteran
-      - name: householdFoster
-  householdVeteranWho:
-    nextScreens:
-      - name: householdFoster
-  householdFoster:
-    nextScreens:
-      - name: householdFosterWho
-        condition: IsFosterPerson
       - name: householdFosterAgedOut
-  householdFosterWho:
+  householdVeteranWho:
     nextScreens:
       - name: householdFosterAgedOut
   householdFosterAgedOut:
