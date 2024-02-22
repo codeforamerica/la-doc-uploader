@@ -87,6 +87,8 @@ inputFields:
   householdSearchingForJob: jobSearch
   migrantOrSeasonalFarmWorkerInd: expeditedMigrantOrSeasonalWorkerBool
   roomRentalInd: roomRentalInd
+  canReadAndUnderstandEnglish: canReadAndUnderstandEnglish
+  whatLanguageCanReadAndUnderstand: whatLanguageCanReadAndUnderstand
 
   additionalIncome:
     SSI: SSI
