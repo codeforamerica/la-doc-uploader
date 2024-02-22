@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.testutils.TestUtils;
@@ -63,6 +62,9 @@ public class CsvGeneratorTest {
       inputData.put("lastName", lastNames.get(i));
       inputData.put("emailAddress", firstNames.get(i) + "@mailinator.com");
       inputData.put("phoneNumber", String.format("(555) 555-55%02d",i));
+      inputData.put("sex", "F");
+      inputData.put("ethnicitySelected", "Not Hispanic or Latino");
+      inputData.put("raceSelected", "Asian");
       inputData.put("homeAddressStreetAddress1", String.format("10%02d Main Street", i));
       inputData.put("homeAddressStreetAddress2", String.format("Apartment #1%s", i));
       inputData.put("homeAddressCity", "San Francisco");
@@ -159,6 +161,7 @@ public class CsvGeneratorTest {
     CsvDocument csv = csvGenerator.generateECEApplicationCsvData(submissionList);
     assertThat(csv.getCsvType()).isEqualTo(CsvType.ECE_APPLICATION);
     String theData = new String(csv.getCsvData());
+
     String expectedData = getExpectedData(EXPECTED_ECE_APPLICATION_CSV_FILENAME);
     assertThat(theData).isEqualTo(expectedData);
 
