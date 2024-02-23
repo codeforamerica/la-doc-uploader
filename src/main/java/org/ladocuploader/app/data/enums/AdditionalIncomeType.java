@@ -17,7 +17,9 @@ public enum AdditionalIncomeType {
 
     VETERANS_BENEFITS("VeteransBenefits", "additional-income.choice6"),
 
-    CONTRIBUTIONS("Contributions", "additional-income.choice7");
+    CONTRIBUTIONS("Contributions", "additional-income.choice7"),
+
+    OTHER("Other", "general.other");
 
     private final String value;
     private final String labelSrc;
