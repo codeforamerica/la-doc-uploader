@@ -11,10 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 import static java.util.Collections.emptyList;
-import static org.ladocuploader.app.utils.SubmissionUtilities.getHouseholdMemberFullnameByUUID;
 
 @Component
 public class AdditionalIncomeDetailsPreparer implements SubmissionFieldPreparer {
