@@ -182,7 +182,7 @@ subflowInfo:
       additionalIncomeAmount: additionalIncomeAmount
       additionalIncomeFrequency: additionalIncomeFrequency
       additionalIncomeExpectedToRunOut: additionalIncomeExpectedToRunOut
-      additionalIncomeExpectedEndDate: additionalIncomeExpectedEndDate
+      additionalIncomeEndDate: additionalIncomeEndDate
   household:
     totalIterations: 7
     inputFields:

@@ -68,7 +68,7 @@
                               </th:block>
                 </th:block>
                 <th:block
-                    th:with="additionalIncomeExpectedEndDate=${'additionalIncomeExpectedEndDate' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}">
+                    th:with="additionalIncomeExpectedEndDate=${'additionalIncomeEndDate' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}">
                   <th:block th:replace="~{fragments/inputs/text ::
                     text(inputName=${additionalIncomeExpectedEndDate},
                     label=#{additional-income-details.expect-to-end.when},

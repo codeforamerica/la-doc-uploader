@@ -23,7 +23,7 @@ public class AdditionalIncomeDetailsPreparer implements SubmissionFieldPreparer 
 
   private static final String EXPECTED_RUN_OUT_PREFIX = "additionalIncomeExpectRunOut_wildcard_";
 
-  private static final String EXPECTED_END_DATE_PREFIX = "additionalIncomeExpectedEndDate_wildcard_";
+  private static final String EXPECTED_END_DATE_PREFIX = "additionalIncomeEndDate_wildcard_";
   private static final List<String> RESOURCES = new ArrayList<>();
 
   static {
@@ -55,7 +55,7 @@ public class AdditionalIncomeDetailsPreparer implements SubmissionFieldPreparer 
           results.put("additionalIncomeAmount" + i, new SingleField("additionalIncomeAmount", (String) amount, i));
           results.put("additionalIncomeFrequency" + i, new SingleField("additionalIncomeFrequency", (String) frequency, i));
           results.put("additionalIncomeExpectedToRunOut" + i, new SingleField("additionalIncomeExpectedToRunOut", expectedToRunOut.equals("true") ? "true" : "false", i));
-          results.put("additionalIncomeExpectedEndDate" + i, new SingleField("additionalIncomeEndDate", expectedToRunOut.equals("true") ? (String) expectedEndDate : "", i));
+          results.put("additionalIncomeEndDate" + i, new SingleField("additionalIncomeEndDate", expectedToRunOut.equals("true") ? (String) expectedEndDate : "", i));
           i++;
         }
       }

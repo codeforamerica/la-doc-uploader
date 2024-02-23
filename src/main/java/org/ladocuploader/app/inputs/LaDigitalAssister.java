@@ -273,7 +273,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String additionalIncomeExpectRunOut;
 
   @DynamicField
-  private String additionalIncomeExpectedEndDate;
+  private String additionalIncomeEndDate;
 
   @NotEmpty
   private List<String> moneyOnHandTypes;
