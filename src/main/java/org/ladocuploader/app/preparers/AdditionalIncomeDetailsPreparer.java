@@ -51,7 +51,8 @@ public class AdditionalIncomeDetailsPreparer implements SubmissionFieldPreparer 
         if (amount != null) {
           var owner = getHouseholdResourceOwner(submission.getInputData(), OWNER_PREFIX+expense);
           results.put("additionalIncomeOwner" + i, new SingleField("additionalIncomeOwner", owner, i));
-          results.put("additionalIncomeType" + i, new SingleField("additionalIncomeAmount", (String) amount, i));
+          results.put("additionalIncomeType" + i, new SingleField("additionalIncomeType", expense, i));
+          results.put("additionalIncomeAmount" + i, new SingleField("additionalIncomeAmount", (String) amount, i));
           results.put("additionalIncomeFrequency" + i, new SingleField("additionalIncomeFrequency", (String) frequency, i));
           results.put("additionalIncomeExpectedToRunOut" + i, new SingleField("additionalIncomeExpectedToRunOut", expectedToRunOut.equals("true") ? "true" : "false", i));
           results.put("additionalIncomeExpectedEndDate" + i, new SingleField("additionalIncomeEndDate", expectedToRunOut.equals("true") ? (String) expectedEndDate : "", i));

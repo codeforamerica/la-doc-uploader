@@ -179,6 +179,7 @@ subflowInfo:
     inputFields:
       additionalIncomeOwner: additionalIncomeOwner
       additionalIncomeType: additionalIncomeType
+      additionalIncomeAmount: additionalIncomeAmount
       additionalIncomeFrequency: additionalIncomeFrequency
       additionalIncomeExpectedToRunOut: additionalIncomeExpectedToRunOut
       additionalIncomeExpectedEndDate: additionalIncomeExpectedEndDate
