@@ -259,6 +259,22 @@ public class LaDigitalAssister extends FlowInputs {
   @NotEmpty(message="{error.missing-general}")
   private List<String> additionalIncome;
 
+  @DynamicField
+  private String additionalIncomeProvider;
+
+  @Money
+  @DynamicField
+  private String additionalIncomeValue;
+
+  @DynamicField
+  private String additionalIncomeFrequency;
+
+  @DynamicField
+  private String additionalIncomeExpectRunOut;
+
+  @DynamicField
+  private String additionalIncomeExpectedEndDate;
+
   @NotEmpty
   private List<String> moneyOnHandTypes;
 
