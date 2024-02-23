@@ -72,7 +72,7 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
                       null)
       );
       // Phone/ cell phone
-      results.put("expeditedSnapPhoneExpensesBool", new SingleField("expeditedSnapPhoneExpensesBool", Boolean.toString(householdUtilities.contains("Phone/Cell Phone")), null));
+      results.put("expeditedSnapPhoneExpensesBool", new SingleField("expeditedSnapPhoneExpensesBool", Boolean.toString(householdUtilities.contains("phone")), null));
 
       // Check for "Other" - theres only one spot for this in the PDF so just combine them
       var totalOtherAmount = 0.0;
