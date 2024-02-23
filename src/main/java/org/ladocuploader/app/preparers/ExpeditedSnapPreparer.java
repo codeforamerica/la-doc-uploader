@@ -30,14 +30,6 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
 
       results.put("expeditedSnapHouseholdExpensesBool",
           new SingleField("expeditedSnapHouseholdExpensesBool", hasHouseholdExpenses(submission) ? "Yes" : "No", null));
-      results.put("expeditedSnapHeatingBool",
-          new SingleField("expeditedSnapHeatingBool", hasHeatingExpenses(submission) ? "Yes" : "No", null));
-
-      String householdPhoneExpenses = submission.getInputData()
-          .getOrDefault("householdUtilitiesExpenseAmount_wildcard_phone", "0").toString();
-      boolean hasPhoneExpenses = !householdPhoneExpenses.equals("0");
-      results.put("expeditedSnapPhoneExpensesBool",
-          new SingleField("expeditedSnapPhoneExpensesBool", hasPhoneExpenses ? "Yes" : "No", null));
 
       String isMigrantOrSeasonalFarmWorker = submission.getInputData().get("migrantOrSeasonalFarmWorkerInd").toString();
       results.put("expeditedMigrantOrSeasonalWorkerBool",
