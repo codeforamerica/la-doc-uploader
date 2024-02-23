@@ -41,7 +41,7 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
 
       String isMigrantOrSeasonalFarmWorker = submission.getInputData().get("migrantOrSeasonalFarmWorkerInd").toString();
       results.put("expeditedMigrantOrSeasonalWorkerBool",
-          new SingleField("expeditedMigrantOrSeasonalWorkerBool", isMigrantOrSeasonalFarmWorker.equals("true") ? "Yes" : "No",
+          new SingleField("expeditedMigrantOrSeasonalWorkerBool", Boolean.toString(isMigrantOrSeasonalFarmWorker.equals("true")),
               null));
     }
 

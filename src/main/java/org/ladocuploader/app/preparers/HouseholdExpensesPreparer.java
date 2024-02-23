@@ -63,11 +63,11 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
               new SingleField(
                       "expeditedSnapUtilityExpensesBool",
                       Boolean.toString(
-                               householdUtilities.contains("Electricity") ||
-                                  householdUtilities.contains("Water") ||
-                                  householdUtilities.contains("Garbage") ||
-                                  householdUtilities.contains("Sewer") ||
-                                  householdUtilities.contains("Gas")
+                               householdUtilities.contains("electricity") ||
+                                  householdUtilities.contains("water") ||
+                                  householdUtilities.contains("garbage") ||
+                                  householdUtilities.contains("sewer") ||
+                                  householdUtilities.contains("gas")
                       ),
                       null)
       );
