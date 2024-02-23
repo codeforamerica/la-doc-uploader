@@ -264,6 +264,11 @@ flow:
       - name: householdCriminalJusticeSituations
   householdCriminalJusticeSituations:
     nextScreens:
+      - name: householdCriminalJusticeWhich
+        condition: HouseholdHasCriminalJusticeSituation
+      - name: incomeSignPost
+  householdCriminalJusticeWhich:
+    nextScreens:
       - name: incomeSignPost
   incomeSignPost:
     nextScreens:

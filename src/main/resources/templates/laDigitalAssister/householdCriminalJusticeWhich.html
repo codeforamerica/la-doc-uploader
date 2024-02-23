@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title=#{criminal-justice-which.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block th:replace="~{fragments/icons :: personMilestone}"></th:block>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{criminal-justice-which.header}, subtext=#{general.check-all-that-apply})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::criminalJusticeSituations})}">
+            <th:block th:ref="criminalJusticeSituations">
+              <div class="form-card__content">
+                <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+                  checkboxFieldset(inputName='criminalJusticeSituations',
+                  ariaLabel='header',
+                  content=~{::checkboxOptions})}">
+                    <th:block th:ref="checkboxOptions">
+                      <!-- Copy the below input if you want to add more -->
+                      <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='criminalJusticeSituations',value='Fleeing felon', label=#{criminal-justice-which.option1})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='criminalJusticeSituations',value='Parole violation', label=#{criminal-justice-which.option2})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='criminalJusticeSituations',value='Felony conviction', label=#{criminal-justice-which.option3})}"/>
+                      <th:block
+                          th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='criminalJusticeSituations',value='Program rule conviction', label=#{criminal-justice-which.option4})}"/>
+                </th:block>
+                </th:block>
+                
+              </div>
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}" />
+</body>
+</html>
