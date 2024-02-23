@@ -54,26 +54,6 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
         }
       }
 
-      // Heating or A/C
-      results.put("expeditedSnapHeatingBool", new SingleField("expeditedSnapHeatingBool", Boolean.toString(householdUtilities.contains("heating") || householdUtilities.contains("cooling")), null));
-
-      // Electricity, Water, Garbage, Sewer, and/or Cooking Fuels
-      results.put(
-              "expeditedSnapUtilityExpensesBool",
-              new SingleField(
-                      "expeditedSnapUtilityExpensesBool",
-                      Boolean.toString(
-                               householdUtilities.contains("electricity") ||
-                                  householdUtilities.contains("water") ||
-                                  householdUtilities.contains("garbage") ||
-                                  householdUtilities.contains("sewer") ||
-                                  householdUtilities.contains("gas")
-                      ),
-                      null)
-      );
-      // Phone/ cell phone
-      results.put("expeditedSnapPhoneExpensesBool", new SingleField("expeditedSnapPhoneExpensesBool", Boolean.toString(householdUtilities.contains("phone")), null));
-
       // Check for "Other" - theres only one spot for this in the PDF so just combine them
       var totalOtherAmount = 0.0;
       try {

@@ -8,7 +8,10 @@ import formflow.library.pdf.SubmissionFieldPreparer;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static java.util.Collections.emptyList;
 
 @Component
 public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
@@ -16,6 +19,7 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> results = new HashMap<>();
+    var householdUtilities = (List) submission.getInputData().getOrDefault("householdUtilitiesExpenses[]", emptyList());
 
     var isEligibleForExpeditedSnap = submission.getInputData().getOrDefault("isEligibleForExpeditedSnap", "false");
     if (isEligibleForExpeditedSnap.equals("true")) {
@@ -32,6 +36,25 @@ public class ExpeditedSnapPreparer implements SubmissionFieldPreparer {
           new SingleField("expeditedSnapHouseholdExpensesBool", hasHouseholdExpenses(submission) ? "Yes" : "No", null));
 
       String isMigrantOrSeasonalFarmWorker = submission.getInputData().get("migrantOrSeasonalFarmWorkerInd").toString();
+      // Heating or A/C
+      results.put("expeditedSnapHeatingBool", new SingleField("expeditedSnapHeatingBool", Boolean.toString(householdUtilities.contains("heating") || householdUtilities.contains("cooling")), null));
+
+      // Electricity, Water, Garbage, Sewer, and/or Cooking Fuels
+      results.put(
+              "expeditedSnapUtilityExpensesBool",
+              new SingleField(
+                      "expeditedSnapUtilityExpensesBool",
+                      Boolean.toString(
+                              householdUtilities.contains("electricity") ||
+                                      householdUtilities.contains("water") ||
+                                      householdUtilities.contains("garbage") ||
+                                      householdUtilities.contains("sewer") ||
+                                      householdUtilities.contains("gas")
+                      ),
+                      null)
+      );
+      // Phone/ cell phone
+      results.put("expeditedSnapPhoneExpensesBool", new SingleField("expeditedSnapPhoneExpensesBool", Boolean.toString(householdUtilities.contains("phone")), null));
       results.put("expeditedMigrantOrSeasonalWorkerBool",
           new SingleField("expeditedMigrantOrSeasonalWorkerBool", Boolean.toString(isMigrantOrSeasonalFarmWorker.equals("true")),
               null));
