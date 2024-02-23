@@ -7,9 +7,7 @@ import formflow.library.pdf.SubmissionField;
 import formflow.library.pdf.SubmissionFieldPreparer;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class PersonalSituationsPreparer implements SubmissionFieldPreparer {
@@ -19,16 +17,26 @@ public class PersonalSituationsPreparer implements SubmissionFieldPreparer {
     List<String> disability = (List<String>) submission.getInputData().getOrDefault("personalSituationDisability[]", Collections.EMPTY_LIST);
     boolean disabilityFlag = disability.contains("you");
 
+    Map<String, SubmissionField> results = new HashMap<>();
+
+    var householdCriminalJusticeSituations = (ArrayList<String>) submission.getInputData().getOrDefault("criminalJusticeSituations", new ArrayList<>());
+    results.put("criminalJusticeFleeingFelon", new SingleField("criminalJusticeFleeingFelon", householdCriminalJusticeSituations.contains("Fleeing felon") ? "true" : "false", null));
+    results.put("criminalJusticeParoleViolation", new SingleField("criminalJusticeParoleViolation", householdCriminalJusticeSituations.contains("Parole violation") ? "true" : "false", null));
+    results.put("criminalJusticeFelonyConviction", new SingleField("criminalJusticeFelonyConviction", householdCriminalJusticeSituations.contains("Felony conviction") ? "true" : "false", null));
+    results.put("criminalJusticeProgramRulesViolation", new SingleField("criminalJusticeProgramRulesViolation", householdCriminalJusticeSituations.contains("Program rule conviction'") ? "true" : "false", null));
+
     var household = (List<Map<String, Object>>) submission.getInputData().get("household");
     if (!disabilityFlag && household != null) {
       for (Map<String, Object> member : household) {
         var uuid = member.get("uuid");
         if (disability.contains(uuid)) {
-          return Map.of("disablityInd", new SingleField("personalSituationDisablityInd", "true", null));
+          results.put("disablityInd", new SingleField("personalSituationDisablityInd", "true", null));
+          return results;
         }
       }
     }
 
-    return Map.of("disablityInd", new SingleField("personalSituationDisablityInd", disabilityFlag ? "true" : "false", null));
+    results.put("disablityInd", new SingleField("personalSituationDisablityInd", disabilityFlag ? "true" : "false", null));
+    return results;
   }
 }

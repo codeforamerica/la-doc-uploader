@@ -54,7 +54,10 @@ inputFields:
   applicantStudentInd: applicantStudentInd
   applicantNonCitizenInd: applicantNonCitizenInd
   applicantHomelessInd: applicantHomelessInd
-  householdHasCriminalJusticeSituation: criminalJusticeSpecialSituation
+  criminalJusticeFleeingFelon: criminalJusticeFleeingFelon
+  criminalJusticeParoleViolation: criminalJusticeParoleViolation
+  criminalJusticeFelonyConviction: criminalJusticeFelonyConviction
+  criminalJusticeProgramRulesViolation: criminalJusticeProgramRulesViolation
 
   authorizedRepresentative: authorizedRepresentative
   authorizedRepFirstName: authorizedRepFirstName
