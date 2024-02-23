@@ -19,7 +19,7 @@ public class PersonalSituationsPreparer implements SubmissionFieldPreparer {
 
     Map<String, SubmissionField> results = new HashMap<>();
 
-    var householdCriminalJusticeSituations = (ArrayList<String>) submission.getInputData().getOrDefault("criminalJusticeSituations", new ArrayList<>());
+    var householdCriminalJusticeSituations = (ArrayList<String>) submission.getInputData().getOrDefault("criminalJusticeSituations[]", new ArrayList<>());
     results.put("criminalJusticeFleeingFelon", new SingleField("criminalJusticeFleeingFelon", householdCriminalJusticeSituations.contains("Fleeing felon") ? "true" : "false", null));
     results.put("criminalJusticeParoleViolation", new SingleField("criminalJusticeParoleViolation", householdCriminalJusticeSituations.contains("Parole violation") ? "true" : "false", null));
     results.put("criminalJusticeFelonyConviction", new SingleField("criminalJusticeFelonyConviction", householdCriminalJusticeSituations.contains("Felony conviction") ? "true" : "false", null));
