@@ -23,7 +23,7 @@ public class PersonalSituationsPreparer implements SubmissionFieldPreparer {
     results.put("criminalJusticeFleeingFelon", new SingleField("criminalJusticeFleeingFelon", householdCriminalJusticeSituations.contains("Fleeing felon") ? "true" : "false", null));
     results.put("criminalJusticeParoleViolation", new SingleField("criminalJusticeParoleViolation", householdCriminalJusticeSituations.contains("Parole violation") ? "true" : "false", null));
     results.put("criminalJusticeFelonyConviction", new SingleField("criminalJusticeFelonyConviction", householdCriminalJusticeSituations.contains("Felony conviction") ? "true" : "false", null));
-    results.put("criminalJusticeProgramRulesViolation", new SingleField("criminalJusticeProgramRulesViolation", householdCriminalJusticeSituations.contains("Program rule conviction'") ? "true" : "false", null));
+    results.put("criminalJusticeProgramRulesViolation", new SingleField("criminalJusticeProgramRulesViolation", householdCriminalJusticeSituations.contains("Program rule conviction") ? "true" : "false", null));
 
     var household = (List<Map<String, Object>>) submission.getInputData().get("household");
     if (!disabilityFlag && household != null) {
