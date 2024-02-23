@@ -336,6 +336,11 @@ flow:
       - name: householdAdditionalIncome
   householdAdditionalIncome:
     nextScreens:
+      - name: householdAdditionalIncomeDetails
+        condition: HouseholdHasAdditionalIncome
+      - name: householdMoneyOnHand
+  householdAdditionalIncomeDetails:
+    nextScreens:
       - name: householdMoneyOnHand
   householdMoneyOnHand:
     nextScreens:
