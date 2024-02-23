@@ -53,10 +53,6 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
           i++;
         }
       }
-//
-//      expeditedSnapHeatingBool: expeditedSnapHeatingBool
-//      expeditedSnapUtilityExpensesBool: expeditedSnapUtilityExpensesBool
-//      expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
 
       // Heating or A/C
       results.put("expeditedSnapHeatingBool", new SingleField("expeditedSnapHeatingBool", Boolean.toString(householdUtilities.contains("heating") || householdUtilities.contains("cooling")), null));
