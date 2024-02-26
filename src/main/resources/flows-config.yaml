@@ -514,6 +514,9 @@ flow:
   signature:
     afterSaveAction: HandleApplicationSigned
     nextScreens:
+      - name: applicationCopy
+  applicationCopy:
+    nextScreens:
       - name: docUploadIntro
   docUploadIntro:
     nextScreens:
@@ -551,6 +554,7 @@ flow:
       - name: confirmation
 landmarks:
   afterSubmitPages:
+    - applicationCopy
     - confirmation
     - docUploadIntro
     - docUploadSignpost
