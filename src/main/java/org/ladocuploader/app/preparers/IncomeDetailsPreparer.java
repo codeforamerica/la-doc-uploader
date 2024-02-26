@@ -50,6 +50,7 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
           results.put("employmentPayFreq" + i, new SingleField("employmentPayFreq", (String) payPeriod, nonSelfEmploymentIdx));
           results.put("employeeHoursPerWeek" + i, new SingleField("employeeHoursPerWeek", (String) hoursPerWeek, nonSelfEmploymentIdx));
           results.put("employeeHourlyWage" + i, new SingleField("employeeHourlyWage", (String) hourlyWage, nonSelfEmploymentIdx));
+          results.put("employmentPayDescription" + i, new SingleField("employmentPayDescription", (String) hourlyWage, nonSelfEmploymentIdx));
           nonSelfEmploymentIdx++;
         }
       }
