@@ -31,6 +31,9 @@ inputFields:
   expeditedSnapHouseholdExpensesBool: expeditedSnapHouseholdExpensesBool
   expeditedSnapHeatingBool: expeditedSnapHeatingBool
   expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
+  copyOfApplicationInd: copyOfApplicationInd
+  paperCopyInd: paperCopyInd
+  electronicCopyInd: electronicCopyInd
   signature: signature
   applicantBirthdayFormatted: applicantBirthday
   emailAddress: emailAddress
