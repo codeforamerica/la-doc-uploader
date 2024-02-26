@@ -827,6 +827,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.enter("signature", "My signature");
     testPage.clickButton(message("signature-submit"));
 
+    assertThat(testPage.getTitle()).isEqualTo(message("application-copy.title"));
+    testPage.selectRadio("copyOfApplicationInd", "true");
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo(message("doc-upload-intro.title"));
     testPage.clickButton(message("doc-upload-intro.continue"));
 
