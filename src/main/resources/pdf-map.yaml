@@ -25,9 +25,9 @@ inputFields:
   mailingAddressCity: mailingAddressCity
   mailingAddressStreetAddress2: mailingAddressStreetAddress2
   mailingAddressStreetAddress1: mailingAddressStreetAddress1
-  householdIncomeLast30Days: expeditedSnapIncome
-  householdRentAmount: expeditedSnapHousingCost
-  expeditedMoneyOnHandAmount: expeditedSnapMoneyOnHand
+  expeditedSnapIncome: expeditedSnapIncome
+  expeditedSnapHousingCost: expeditedSnapHousingCost
+  expeditedSnapMoneyOnHand: expeditedSnapMoneyOnHand
   expeditedSnapHouseholdExpensesBool: expeditedSnapHouseholdExpensesBool
   expeditedSnapHeatingBool: expeditedSnapHeatingBool
   expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
@@ -88,7 +88,7 @@ inputFields:
   preparesFoodNames: preparesFoodNames
 
   householdSearchingForJob: jobSearch
-  migrantOrSeasonalFarmWorkerInd: expeditedMigrantOrSeasonalWorkerBool
+  expeditedMigrantOrSeasonalWorkerBool: expeditedMigrantOrSeasonalWorkerBool
   roomRentalInd: roomRentalInd
   canReadAndUnderstandEnglish: canReadAndUnderstandEnglish
   whatLanguageCanReadAndUnderstand: whatLanguageCanReadAndUnderstand
@@ -174,6 +174,15 @@ subflowInfo:
       moneyOnHandType: moneyOnHandType
       moneyOnHandAmount: moneyOnHandAmount
       moneyOnHandOwner: moneyOnHandOwner
+  additionalIncome:
+    totalIterations: 4
+    inputFields:
+      additionalIncomeOwner: additionalIncomeOwner
+      additionalIncomeType: additionalIncomeType
+      additionalIncomeAmount: additionalIncomeAmount
+      additionalIncomeFrequency: additionalIncomeFrequency
+      additionalIncomeExpectedToRunOut: additionalIncomeExpectedToRunOut
+      additionalIncomeEndDate: additionalIncomeEndDate
   household:
     totalIterations: 7
     inputFields:
