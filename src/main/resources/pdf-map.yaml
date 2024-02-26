@@ -44,6 +44,7 @@ inputFields:
   parish: parish
   outOfStateBenefitsInd: outOfStateBenefitsInd
   mealInd: paysForMeals
+  workDisqualificationInd: workDisqualificationInd
   highestEducationFormatted: highestEducation
   ethnicitySelected: ethnicitySelected
   raceSelected:
