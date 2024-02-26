@@ -8,23 +8,65 @@
     <div class="grid">
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
-        <th:block th:replace="~{fragments/icons :: personMilestone}"></th:block>
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{criminal-justice.header})}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{criminal-justice.header},
+            subtext=#{criminal-justice.subtext})}"/>
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::criminalJusticeSituation})}">
           <th:block th:ref="criminalJusticeSituation">
-            <div class="form-card__content">
-              <ul class="list--bulleted">
-                <li th:utext="#{criminal-justice-content.l1}"></li>
-                <li th:utext="#{criminal-justice-content.l2}"></li>
-                <li th:utext="#{criminal-justice-content.l3}"></li>
-              </ul>
-            </div>
+            <th:block th:replace="~{fragments/inputs/radioFieldset ::
+                          radioFieldset(inputName='fleeingFelonInd',
+                          label=#{criminal-justice.q1},
+                          content=~{::fleeingFelonOptions})}">
+                          <th:block th:ref="fleeingFelonOptions">
+                            <!-- Copy the below input if you want to add more -->
+                            <th:block
+                                th:replace="~{fragments/inputs/radio :: radio(inputName='fleeingFelonInd',value='false', label=#{general.inputs.no})}"/>
+                            <th:block
+                                th:replace="~{fragments/inputs/radio :: radio(inputName='fleeingFelonInd',value='true', label=#{general.inputs.yes})}"/>
+                          </th:block>
+            </th:block>
+            <th:block th:replace="~{fragments/inputs/radioFieldset ::
+                          radioFieldset(inputName='paroleViolationInd',
+                          label=#{criminal-justice.q2},
+                          content=~{::paroleViolationOptions})}">
+                          <th:block th:ref="paroleViolationOptions">
+                            <!-- Copy the below input if you want to add more -->
+                            <th:block
+                                th:replace="~{fragments/inputs/radio :: radio(inputName='paroleViolationInd',value='false', label=#{general.inputs.no})}"/>
+                            <th:block
+                                th:replace="~{fragments/inputs/radio :: radio(inputName='paroleViolationInd',value='true', label=#{general.inputs.yes})}"/>
+                          </th:block>
+            </th:block>
+            <th:block th:replace="~{fragments/inputs/radioFieldset ::
+                          radioFieldset(inputName='programRuleViolation',
+                          label=#{criminal-justice.q3},
+                          content=~{::programRuleOptions})}">
+              <th:block th:ref="programRuleOptions">
+                <!-- Copy the below input if you want to add more -->
+                <th:block
+                    th:replace="~{fragments/inputs/radio :: radio(inputName='programRuleViolation',value='false', label=#{general.inputs.no})}"/>
+                <th:block
+                    th:replace="~{fragments/inputs/radio :: radio(inputName='programRuleViolation',value='true', label=#{general.inputs.yes})}"/>
+              </th:block>
+            </th:block>
+            <th:block th:replace="~{fragments/inputs/radioFieldset ::
+                          radioFieldset(inputName='felonyConviction',
+                          label=#{criminal-justice.q4},
+                          fieldsetHelpText=#{criminal-justice.q4.helptext},
+                          content=~{::felonyConvictionOptions})}">
+              <th:block th:ref="felonyConvictionOptions">
+                <!-- Copy the below input if you want to add more -->
+                <th:block
+                    th:replace="~{fragments/inputs/radio :: radio(inputName='felonyConviction',value='false', label=#{general.inputs.no})}"/>
+                <th:block
+                    th:replace="~{fragments/inputs/radio :: radio(inputName='felonyConviction',value='true', label=#{general.inputs.yes})}"/>
+              </th:block>
+            </th:block>
+
+
             <div class="form-card__footer">
-              <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
-                inputName='householdHasCriminalJusticeSituation',
-                ariaDescribe=#{criminal-justice.header})}"/>
+              <th:block th:replace="~{fragments/continueButton :: continue}" />
             </div>
           </th:block>
         </th:block>
