@@ -205,16 +205,8 @@ flow:
     nextScreens:
       - name: householdVeteranWho
         condition: IsVeteran
-      - name: householdFoster
-  householdVeteranWho:
-    nextScreens:
-      - name: householdFoster
-  householdFoster:
-    nextScreens:
-      - name: householdFosterWho
-        condition: IsFosterPerson
       - name: householdFosterAgedOut
-  householdFosterWho:
+  householdVeteranWho:
     nextScreens:
       - name: householdFosterAgedOut
   householdFosterAgedOut:
@@ -271,6 +263,11 @@ flow:
     nextScreens:
       - name: householdCriminalJusticeSituations
   householdCriminalJusticeSituations:
+    nextScreens:
+      - name: householdCriminalJusticeWhich
+        condition: HouseholdHasCriminalJusticeSituation
+      - name: incomeSignPost
+  householdCriminalJusticeWhich:
     nextScreens:
       - name: incomeSignPost
   incomeSignPost:
@@ -338,6 +335,11 @@ flow:
     nextScreens:
       - name: householdAdditionalIncome
   householdAdditionalIncome:
+    nextScreens:
+      - name: householdAdditionalIncomeDetails
+        condition: HouseholdHasAdditionalIncome
+      - name: householdMoneyOnHand
+  householdAdditionalIncomeDetails:
     nextScreens:
       - name: householdMoneyOnHand
   householdMoneyOnHand:

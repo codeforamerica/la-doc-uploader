@@ -519,23 +519,12 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("veteran.title"));
     testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("foster.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("foster-aged-out.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("veteran-who.title"));
     testPage.clickElementById("veterans-you");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("foster.title"));
-    testPage.clickButton("No");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("foster-aged-out.title"));
-    testPage.goBack();
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("foster-who.title"));
-    testPage.clickElementById("fosters-you");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("foster-aged-out.title"));
@@ -544,7 +533,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("homeless.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
-
 
     assertThat(testPage.getTitle()).isEqualTo(message("foster-aged-out-who.title"));
     testPage.clickElementById("fostersAgedOut-you");
@@ -611,6 +599,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("criminal-justice.title"));
     testPage.clickButton("Yes");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("criminal-justice-which.title"));
+    testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("income-signpost.title"));
     testPage.clickContinue();

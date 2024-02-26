@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,7 +26,13 @@ public class HouseholdPrepareFoodTogetherPreparer implements SubmissionFieldPrep
     List<String> preparerFoodTogetherUUIDs = (List<String>) submission.getInputData().getOrDefault("preparesFood[]", emptyList());
     List<String> householdMembersWhoDoNotPrepareFoodTogether = new ArrayList<>();
     
-    if (household.isEmpty()) {
+    if (
+            (household.isEmpty()) ||
+                    (submission.getInputData().getOrDefault(
+                            "buyPrepareMealsSeparateIndicator",
+                            "false").equals("true")
+                    )
+    ) {
       return result;
     }
     

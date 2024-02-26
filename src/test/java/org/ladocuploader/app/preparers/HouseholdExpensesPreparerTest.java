@@ -34,9 +34,7 @@ class HouseholdExpensesPreparerTest {
 
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
-    assertThat(result.size()).isEqualTo(10);
-    assertThat(result.get("heatingOrCoolingInd"))
-        .isEqualTo(new SingleField("heatingOrCoolingInd", "true", null));
+    assertThat(result.size()).isEqualTo(9);
     assertThat(result.get("householdExpensesType1"))
         .isEqualTo(new SingleField("householdExpensesType", "Homeowner's Insurance", 1));
     assertThat(result.get("householdExpensesAmount1"))
@@ -69,9 +67,7 @@ class HouseholdExpensesPreparerTest {
 
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
-    assertThat(result.size()).isEqualTo(5);
-    assertThat(result.get("heatingOrCoolingInd"))
-        .isEqualTo(new SingleField("heatingOrCoolingInd", "false", null));
+    assertThat(result.size()).isEqualTo(4);
     assertThat(result.get("Other"))
         .isEqualTo(new SingleField("Other", "Yes", null));
     assertThat(result.get("householdExpensesType_1"))

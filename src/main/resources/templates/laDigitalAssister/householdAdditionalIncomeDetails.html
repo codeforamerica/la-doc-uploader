@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{additional-income-details.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block th:replace="~{fragments/icons :: assetsCashAccounts}"></th:block>
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{additional-income-details.header})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContent})}">
+          <th:block th:ref="formContent">
+            <div class="form-card__content">
+              <div th:each="income, iter:${inputData.get('additionalIncome[]')}"
+                   class="spacing-below-15">
+                <th:block
+                    th:with="whoInputName=${'additionalIncomeProvider' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}, incomeLabel=${#messages.msg(T(org.ladocuploader.app.data.enums.AdditionalIncomeType).getLabelSrcFromValue(income.toString()).toString())}">
+                  <th:block th:replace="~{fragments/inputs/radioFieldset ::
+                            radioFieldset(
+                            label=#{additional-income-details.who-receives(${incomeLabel})},
+                            inputName=${whoInputName},
+                            content=~{::householdMembers})}">
+                    <th:block th:ref="householdMembers">
+                      <th:block
+                          th:replace="~{fragments/inputs/radio :: radio(inputName=${whoInputName},value='you', label=${inputData.firstName + ' ' + inputData.lastName + ' ' + #messages.msg('general.you')})}"/>
+                      <th:block th:if="${inputData.containsKey('household')}">
+                        <th:block th:each="householdMember, iter: ${inputData.household}"
+                                  class="spacing-below-15">
+                          <th:block
+                              th:replace="~{fragments/inputs/radio :: radio(inputName=${whoInputName},value=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName}, label=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName})}"/>
+                        </th:block>
+                      </th:block>
+                    </th:block>
+                  </th:block>
+                </th:block>
+                <th:block
+                    th:with="amountInputName=${'additionalIncomeValue' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}">
+                  <th:block
+                      th:replace="~{fragments/inputs/money :: money(inputName=${amountInputName},
+                      label=#{moneyonhand-details.q2},
+                      helpText=#{general.optional})}"/>
+                </th:block>
+                <th:block
+                    th:with="howOftenInputName=${'additionalIncomeFrequency' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}">
+                  <th:block th:replace="~{fragments/inputs/text ::
+                    text(inputName=${howOftenInputName},
+                    label=#{additional-income-details.how-often},
+                    helpText=#{additional-income-details.how-often.subtext})}" />
+                </th:block>
+                <th:block
+                    th:with="expectToRunOutInputName=${'additionalIncomeExpectRunOut' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}">
+                  <th:block th:replace="~{fragments/inputs/radioFieldset ::
+                                radioFieldset(inputName=${expectToRunOutInputName},
+                                label=#{additional-income-details.expect-to-end},
+                                fieldsetHelpText=#{general.optional},
+                                content=~{::runOutOptions})}">
+                                <th:block th:ref="runOutOptions">
+                                  <!-- Copy the below input if you want to add more -->
+                                  <th:block
+                                      th:replace="~{fragments/inputs/radio :: radio(inputName=${expectToRunOutInputName},value='true', label=#{general.inputs.yes})}"/>
+                                  <th:block
+                                      th:replace="~{fragments/inputs/radio :: radio(inputName=${expectToRunOutInputName},value='false', label=#{general.inputs.no})}"/>
+                                </th:block>
+                              </th:block>
+                </th:block>
+                <th:block
+                    th:with="additionalIncomeExpectedEndDate=${'additionalIncomeEndDate' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + income}">
+                  <th:block th:replace="~{fragments/inputs/text ::
+                    text(inputName=${additionalIncomeExpectedEndDate},
+                    label=#{additional-income-details.expect-to-end.when},
+                    helpText=#{additional-income-details.expect-to-end.when.subtext})}" />
+                </th:block>
+
+                <hr/>
+              </div>
+
+            </div>
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                text=#{general.inputs.continue})}"/>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>

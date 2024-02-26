@@ -38,7 +38,7 @@ dependencies {
     implementation 'org.springframework.shell:spring-shell-starter:3.2.1'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation("com.mixpanel:mixpanel-java:1.5.2")
-    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.14'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.0'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.1'
@@ -60,8 +60,8 @@ dependencies {
     implementation 'commons-net:commons-net:3.10.0'
     testImplementation 'org.projectlombok:lombok:1.18.30'
 
-    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.3.0'
-    implementation 'io.sentry:sentry-logback:7.3.0'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.4.0'
+    implementation 'io.sentry:sentry-logback:7.4.0'
 
     testImplementation 'junit:junit:4.13.2'
 
@@ -78,7 +78,7 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
     testImplementation 'io.percy:percy-java-selenium:2.0.4'
     testImplementation 'org.awaitility:awaitility'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.6.4'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
     testImplementation 'com.deque.html.axe-core:selenium:4.8.2'
 
     testAnnotationProcessor 'org.projectlombok:lombok'

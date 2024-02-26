@@ -54,9 +54,6 @@ public class HouseholdExpensesPreparer implements SubmissionFieldPreparer {
         }
       }
 
-      // Heating or A/C
-      results.put("heatingOrCoolingInd", new SingleField("heatingOrCoolingInd", Boolean.toString(householdUtilities.contains("heating") || householdUtilities.contains("cooling")), null));
-
       // Check for "Other" - theres only one spot for this in the PDF so just combine them
       var totalOtherAmount = 0.0;
       try {

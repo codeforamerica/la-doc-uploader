@@ -215,6 +215,8 @@ public class LaDigitalAssister extends FlowInputs {
   
   private String householdHasCriminalJusticeSituation;
 
+  private List<String> criminalJusticeSituations;
+
   @NotEmpty(message="{error.missing-general}")
   @DynamicField
   private List<String> personalSituations;
@@ -256,6 +258,22 @@ public class LaDigitalAssister extends FlowInputs {
 
   @NotEmpty(message="{error.missing-general}")
   private List<String> additionalIncome;
+
+  @DynamicField
+  private String additionalIncomeProvider;
+
+  @Money
+  @DynamicField
+  private String additionalIncomeValue;
+
+  @DynamicField
+  private String additionalIncomeFrequency;
+
+  @DynamicField
+  private String additionalIncomeExpectRunOut;
+
+  @DynamicField
+  private String additionalIncomeEndDate;
 
   @NotEmpty
   private List<String> moneyOnHandTypes;

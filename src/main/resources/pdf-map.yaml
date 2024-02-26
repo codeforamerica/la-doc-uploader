@@ -26,12 +26,11 @@ inputFields:
   mailingAddressStreetAddress2: mailingAddressStreetAddress2
   mailingAddressStreetAddress1: mailingAddressStreetAddress1
   expeditedSnapIncome: expeditedSnapIncome
-  expeditedSnapMoneyOnHand: expeditedSnapMoneyOnHand
   expeditedSnapHousingCost: expeditedSnapHousingCost
+  expeditedSnapMoneyOnHand: expeditedSnapMoneyOnHand
   expeditedSnapHouseholdExpensesBool: expeditedSnapHouseholdExpensesBool
   expeditedSnapHeatingBool: expeditedSnapHeatingBool
   expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
-  expeditedMigrantOrSeasonalWorkerBool: expeditedMigrantOrSeasonalWorkerBool
   signature: signature
   applicantBirthdayFormatted: applicantBirthday
   emailAddress: emailAddress
@@ -55,7 +54,10 @@ inputFields:
   applicantStudentInd: applicantStudentInd
   applicantNonCitizenInd: applicantNonCitizenInd
   applicantHomelessInd: applicantHomelessInd
-  householdHasCriminalJusticeSituation: criminalJusticeSpecialSituation
+  criminalJusticeFleeingFelon: criminalJusticeFleeingFelon
+  criminalJusticeParoleViolation: criminalJusticeParoleViolation
+  criminalJusticeFelonyConviction: criminalJusticeFelonyConviction
+  criminalJusticeProgramRulesViolation: criminalJusticeProgramRulesViolation
 
   authorizedRepresentative: authorizedRepresentative
   authorizedRepFirstName: authorizedRepFirstName
@@ -86,8 +88,10 @@ inputFields:
   preparesFoodNames: preparesFoodNames
 
   householdSearchingForJob: jobSearch
-  migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmWorkerInd
+  expeditedMigrantOrSeasonalWorkerBool: expeditedMigrantOrSeasonalWorkerBool
   roomRentalInd: roomRentalInd
+  canReadAndUnderstandEnglish: canReadAndUnderstandEnglish
+  whatLanguageCanReadAndUnderstand: whatLanguageCanReadAndUnderstand
 
   additionalIncome:
     SSI: SSI
@@ -97,8 +101,7 @@ inputFields:
     ChildSupport: ChildSupport
     VeteransBenefits: VeteransBenefits
     Contributions: Contributions
-
-  heatingOrCoolingInd: heatingOrCoolingInd
+  expeditedSnapUtilityExpensesBool: expeditedSnapUtilityExpensesBool
   householdUtilitiesExpenses:
     electricity: Electricity
     water: Water
@@ -171,6 +174,15 @@ subflowInfo:
       moneyOnHandType: moneyOnHandType
       moneyOnHandAmount: moneyOnHandAmount
       moneyOnHandOwner: moneyOnHandOwner
+  additionalIncome:
+    totalIterations: 4
+    inputFields:
+      additionalIncomeOwner: additionalIncomeOwner
+      additionalIncomeType: additionalIncomeType
+      additionalIncomeAmount: additionalIncomeAmount
+      additionalIncomeFrequency: additionalIncomeFrequency
+      additionalIncomeExpectedToRunOut: additionalIncomeExpectedToRunOut
+      additionalIncomeEndDate: additionalIncomeEndDate
   household:
     totalIterations: 7
     inputFields:
