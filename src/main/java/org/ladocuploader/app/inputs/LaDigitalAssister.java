@@ -29,6 +29,11 @@ public class LaDigitalAssister extends FlowInputs {
   private String languageSpeak;
   private String needInterpreter;
 
+  @NotBlank(message="{error.missing-general}")
+  private String copyOfApplicationInd;
+
+  private List<String> copyReceiveMethod;
+
   // Who is Applying
   @NotBlank(message="{error.missing-general}")
   private String whosApplying;
