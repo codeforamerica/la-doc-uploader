@@ -50,6 +50,11 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
           results.put("employmentPayFreq" + i, new SingleField("employmentPayFreq", (String) payPeriod, nonSelfEmploymentIdx));
           results.put("employeeHoursPerWeek" + i, new SingleField("employeeHoursPerWeek", (String) hoursPerWeek, nonSelfEmploymentIdx));
           results.put("employeeHourlyWage" + i, new SingleField("employeeHourlyWage", (String) hourlyWage, nonSelfEmploymentIdx));
+          // only fill this out if job is not paid by the hour
+          if (incomeDetails.get("jobPaidByHour").equals("false")) {
+            var payPeriodAmount = incomeDetails.get("payPeriodAmount");
+            results.put("employmentPayDescription" + i, new SingleField("employmentPayDescription", payPeriodAmount + " per pay period", nonSelfEmploymentIdx));
+          }
           nonSelfEmploymentIdx++;
         }
       }

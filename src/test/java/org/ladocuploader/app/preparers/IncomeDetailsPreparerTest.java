@@ -35,7 +35,7 @@ class IncomeDetailsPreparerTest {
         .build();
 
     var results = preparer.prepareSubmissionFields(submission, null);
-    assertThat(results.size()).isEqualTo(19);
+    assertThat(results.size()).isEqualTo(20);
     assertThat(results.get("employeeName0")).isEqualTo(new SingleField("employeeName", "Joka Aksj", 1));
     assertThat(results.get("employerName0")).isEqualTo(new SingleField("employerName", "CfA", 1));
     assertThat(results.get("employmentPayFreq0")).isEqualTo(new SingleField("employmentPayFreq", null, 1));

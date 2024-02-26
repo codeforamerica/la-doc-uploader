@@ -33,6 +33,7 @@
                     <th:block th:ref="copyReceiveOptions">
                       <!-- Copy the below input if you want to add more -->
                       <th:block
+
                         th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='copyReceiveMethod',value='Paper', label=#{application-copy.how-to-receive.option1})}"/>
                       <th:block
                           th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='copyReceiveMethod',value='Electronic', label=#{application-copy.how-to-receive.option2})}"/>
