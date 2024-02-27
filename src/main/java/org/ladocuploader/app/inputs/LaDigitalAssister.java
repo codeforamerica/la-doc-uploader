@@ -218,9 +218,13 @@ public class LaDigitalAssister extends FlowInputs {
   
   private String householdHasDomesticViolenceSituation;
   
-  private String householdHasCriminalJusticeSituation;
+  private String criminalJusticeFleeingFelon;
 
-  private List<String> criminalJusticeSituations;
+  private String criminalJusticeParoleViolation;
+
+  private String criminalJusticeFelonyConviction;
+
+  private String criminalJusticeProgramRulesViolation;
 
   @NotEmpty(message="{error.missing-general}")
   @DynamicField
