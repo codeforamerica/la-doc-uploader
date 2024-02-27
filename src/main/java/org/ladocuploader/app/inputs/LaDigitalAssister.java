@@ -365,18 +365,14 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String authorizedRepOtherNames;
 
-  @NotBlank(message="{error.missing-general}")
   private String authorizedRepStreetAddress1;
 
   private String authorizedRepStreetAddress2;
 
-  @NotBlank(message="{error.missing-general}")
   private String authorizedRepCity;
 
-  @NotBlank(message="{error.missing-general}")
   private String authorizedRepState;
 
-  @NotBlank(message="{error.missing-general}")
   @Pattern(regexp = "\\d{5}", message = "{error.format-zip}")
   private String authorizedRepZipCode;
 
