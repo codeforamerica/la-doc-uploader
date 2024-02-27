@@ -377,10 +377,10 @@ flow:
     nextScreens:
       - name: liheap
         condition: ReceivesEnergyAssistance
-      - name: householdMedicalExpenses
+      - name: expensesElderlyCare
   liheap:
     nextScreens:
-      - name: householdMedicalExpenses
+      - name: expensesElderlyCare
   householdMedicalExpenses:
     nextScreens:
       - name: householdMedicalExpensesAmount
@@ -407,7 +407,7 @@ flow:
       - name: expensesElderlyCare
   expensesElderlyCare:
     nextScreens:
-      - name: expensesElderlyCareAmount
+      - name: householdMedicalExpenses
         condition: HasElderlyCareExpenses
       - name: nolaEceLinks
         condition: EligibleForEceLinks
