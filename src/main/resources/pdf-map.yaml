@@ -92,6 +92,7 @@ inputFields:
   preparesFoodNames: preparesFoodNames
 
   householdSearchingForJob: jobSearch
+  migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmworkerBool
   expeditedMigrantOrSeasonalWorkerBool: expeditedMigrantOrSeasonalWorkerBool
   roomRentalInd: roomRentalInd
   canReadAndUnderstandEnglish: canReadAndUnderstandEnglish
