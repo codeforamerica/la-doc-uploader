@@ -702,15 +702,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("liheap.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses.title"));
-
-    testPage.clickElementById("householdMedicalExpenses-dentalBills-label");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses-amount.title"));
-    testPage.enter("householdMedicalExpenseAmount_wildcard_dentalBills", "200");
-    testPage.clickContinue();
-
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
     testPage.clickButton("No");
 
@@ -718,9 +709,12 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("dependentcare-expenses.title"));
-    testPage.enter("expensesDependentCare", "15");
+    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses.title"));
+    testPage.clickElementById("none__checkbox");
     testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
+    testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
     testPage.clickButton("No");

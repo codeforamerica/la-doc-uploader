@@ -380,21 +380,18 @@ flow:
       - name: householdMedicalExpenses
   liheap:
     nextScreens:
+      - name: expensesDependentCare
+  expensesDependentCare:
+    nextScreens:
       - name: householdMedicalExpenses
+        condition: HasDependentCareExpenses
+      - name: expensesChildSupport
   householdMedicalExpenses:
     nextScreens:
       - name: householdMedicalExpensesAmount
         condition: HasMedicalExpenses
       - name: expensesDependentCare
   householdMedicalExpensesAmount:
-    nextScreens:
-      - name: expensesDependentCare
-  expensesDependentCare:
-    nextScreens:
-      - name: expensesDependentCareAmount
-        condition: HasDependentCareExpenses
-      - name: expensesChildSupport
-  expensesDependentCareAmount:
     nextScreens:
       - name: expensesChildSupport
   expensesChildSupport:
