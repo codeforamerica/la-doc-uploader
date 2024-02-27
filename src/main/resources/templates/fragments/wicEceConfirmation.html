@@ -34,14 +34,6 @@
         <p class="spacing-below-15"
            th:utext="|<b>SNAP:</b> #{confirmation.p1_html(${inputData.get('interviewDate')})}|"></p>
       </div>
-      <div
-          th:if="${inputData.getOrDefault('householdSearchingForJob', 'false').equals('true')}"
-          class="vertical-steps__step">
-        <div class="notice--warning steps-box spacing-below-0">
-          <i class="icon-large icon-">&#xE8f9;</i>
-          <p class="spacing-below-15" th:utext="#{confirmation.looking_for_job_html}"></p>
-        </div>
-      </div>
     </th:block>
 
     <div th:if="${inApplyGroup && isInterestedInECE}" class="notice--warning steps-box">
