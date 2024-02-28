@@ -381,6 +381,11 @@ flow:
   liheap:
     nextScreens:
       - name: expensesElderlyCare
+  expensesElderlyCare:
+    nextScreens:
+      - name: householdMedicalExpenses
+        condition: HasElderlyCareExpenses
+      - name: expensesDependentCare
   householdMedicalExpenses:
     nextScreens:
       - name: householdMedicalExpensesAmount
@@ -393,6 +398,14 @@ flow:
     nextScreens:
       - name: expensesDependentCareAmount
         condition: HasDependentCareExpenses
+      - name: nolaEceLinks
+        condition: EligibleForEceLinks
+      - name: wicLinks
+        condition: EligibleForWicLinks
+      - name: nolaApplyStart
+        condition: EligibleForEceApply
+      - name: wicApply
+        condition: EligibleForWicApply
       - name: expensesChildSupport
   expensesDependentCareAmount:
     nextScreens:
@@ -401,34 +414,21 @@ flow:
     nextScreens:
       - name: expensesChildSupportAmount
         condition: HasChildSupportExpenses
-      - name: expensesElderlyCare
+      - name: finalSignPost
   expensesChildSupportAmount:
     nextScreens:
-      - name: expensesElderlyCare
-  expensesElderlyCare:
-    nextScreens:
-      - name: householdMedicalExpenses
-        condition: HasElderlyCareExpenses
-      - name: nolaEceLinks
-        condition: EligibleForEceLinks
-      - name: wicLinks
-        condition: EligibleForWicLinks
-      - name: nolaApplyStart
-        condition: EligibleForEceApply
-      - name: wicApply
-        condition: EligibleForWicApply
       - name: finalSignPost
-  expensesElderlyCareAmount:
-    nextScreens:
-      - name: nolaEceLinks
-        condition: EligibleForEceLinks
-      - name: wicLinks
-        condition: EligibleForWicLinks
-      - name: nolaApplyStart
-        condition: EligibleForEceApply
-      - name: wicApply
-        condition: EligibleForWicApply
-      - name: finalSignPost
+#  expensesElderlyCareAmount:
+#    nextScreens:
+#      - name: nolaEceLinks
+#        condition: EligibleForEceLinks
+#      - name: wicLinks
+#        condition: EligibleForWicLinks
+#      - name: nolaApplyStart
+#        condition: EligibleForEceApply
+#      - name: wicApply
+#        condition: EligibleForWicApply
+#      - name: finalSignPost
   nolaEceLinks:
     nextScreens:
       - name: wicLinks
