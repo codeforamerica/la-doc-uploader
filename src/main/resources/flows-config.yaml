@@ -406,14 +406,6 @@ flow:
     nextScreens:
       - name: expensesDependentCareAmount
         condition: HasDependentCareExpenses
-      - name: nolaEceLinks
-        condition: EligibleForEceLinks
-      - name: wicLinks
-        condition: EligibleForWicLinks
-      - name: nolaApplyStart
-        condition: EligibleForEceApply
-      - name: wicApply
-        condition: EligibleForWicApply
       - name: expensesChildSupport
   expensesDependentCareAmount:
     nextScreens:
@@ -426,17 +418,6 @@ flow:
   expensesChildSupportAmount:
     nextScreens:
       - name: finalSignPost
-#  expensesElderlyCareAmount:
-#    nextScreens:
-#      - name: nolaEceLinks
-#        condition: EligibleForEceLinks
-#      - name: wicLinks
-#        condition: EligibleForWicLinks
-#      - name: nolaApplyStart
-#        condition: EligibleForEceApply
-#      - name: wicApply
-#        condition: EligibleForWicApply
-#      - name: finalSignPost
   nolaEceLinks:
     nextScreens:
       - name: wicLinks
