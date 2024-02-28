@@ -385,6 +385,14 @@ flow:
     nextScreens:
       - name: householdMedicalExpenses
         condition: HasElderlyCareExpenses
+      - name: nolaEceLinks
+        condition: EligibleForEceLinks
+      - name: wicLinks
+        condition: EligibleForWicLinks
+      - name: nolaApplyStart
+        condition: EligibleForEceApply
+      - name: wicApply
+        condition: EligibleForWicApply
       - name: expensesDependentCare
   householdMedicalExpenses:
     nextScreens:

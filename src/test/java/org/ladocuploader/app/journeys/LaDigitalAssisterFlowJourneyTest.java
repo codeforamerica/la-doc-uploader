@@ -726,16 +726,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
     testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.goBack();
-
-    testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
-    testPage.enter("expensesChildSupport", "150");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));
-    testPage.clickButton("No");
 
     var title = testPage.getTitle();
     if ("ECE link".equals(title)) {
@@ -752,6 +744,11 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
       testPage.clickButton("Yes, start my WIC app");
       testPage.clickContinue();
     }
+
+    testPage.clickButton("Yes");
+    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
+    testPage.enter("expensesChildSupport", "150");
+    testPage.clickContinue();
 
     // Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
