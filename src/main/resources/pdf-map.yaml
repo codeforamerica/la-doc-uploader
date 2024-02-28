@@ -33,6 +33,7 @@ inputFields:
   expeditedSnapPhoneExpensesBool: expeditedSnapPhoneExpensesBool
   copyOfApplicationInd: copyOfApplicationInd
   paperCopyInd: paperCopyInd
+  hasElderlyCareExpenses: hasElderlyCareExpenses
   electronicCopyInd: electronicCopyInd
   signature: signature
   applicantBirthdayFormatted: applicantBirthday

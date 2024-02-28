@@ -109,11 +109,12 @@ import org.ladocuploader.app.utils.IncomeCalculator;
         "Gross Income October: {{96104436-97f9-4b6b-9596-48bec6d73d49}}",
         "Gross Income November: {{51bc9013-0aba-4ccb-9b65-691693b65a3e}}",
         "Gross Income December: {{55abbef5-1595-4916-8e8e-468a616fee04}}",
-        "My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{801d7ffb-c6ef-4f4a-947a-754f3f5e1051}} {{3d0e1ee7-629e-433c-b861-1bc337e770bc}}",
+        "My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{3d0e1ee7-629e-433c-b861-1bc337e770bc}}",
         "Upload documentation of your Unemployment Benefits: a Monetary Determination letter from the Workforce Commission {{cff9e036-1b9c-4c21-8e8e-2b7bbdf04efb}}",
         "Enter the number of months you have been without income: {{6485dab3-b8e0-4c44-9460-7811e9feec18}}",
         "I am (check all that apply) {{422428f3-d96b-4df7-8c24-8e09454ddd8a}}",
         "If 'Other' please describe your employment status {{f5cd0c9f-84b9-447d-a039-7f05d6d38072}}",
+        "My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{801d7ffb-c6ef-4f4a-947a-754f3f5e1051}}",
         "Is Adult 1 (yourself) in school, in a training program, or seeking work? {{c906066e-72bd-441a-9fef-6674d9b5fe1d}}",
         "Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement {{db824fb9-9ab1-4446-a0f3-4f55248a21cd}}",
         "Provide a school transcript, detailed school schedule, or letter from the registrar {{74af906d-47d9-4c15-b97b-7211f0162cdc}}",
@@ -566,7 +567,7 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
     String adultOneGrossIncomeDecember;
 
     // *** no questions for this one *** //
-    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{801d7ffb-c6ef-4f4a-947a-754f3f5e1051}} {{3d0e1ee7-629e-433c-b861-1bc337e770bc}}")
+    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{3d0e1ee7-629e-433c-b861-1bc337e770bc}}")
     String adultOneHouseholdThingsPaidForByIrregularIncome; // TODO assumption it means irregular, not sure
 
     // *** no questions for this one *** //
@@ -583,6 +584,9 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="If 'Other' please describe your employment status {{f5cd0c9f-84b9-447d-a039-7f05d6d38072}}")
     String adultOneIAmOtherEmploymentStatusDescription;
+
+    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{801d7ffb-c6ef-4f4a-947a-754f3f5e1051}}")
+    String adultOneHousingPayments;
 
     // mapped
     @CsvBindByName(column="Is Adult 1 (yourself) in school, in a training program, or seeking work? {{c906066e-72bd-441a-9fef-6674d9b5fe1d}}")
