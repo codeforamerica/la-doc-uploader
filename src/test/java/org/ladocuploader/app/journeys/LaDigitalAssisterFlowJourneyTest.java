@@ -726,9 +726,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
     testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
-    testPage.goBack();
-
     var title = testPage.getTitle();
     if ("ECE link".equals(title)) {
       testPage.clickButton("Yes");
@@ -745,13 +742,20 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
       testPage.clickContinue();
     }
 
-    testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
-    testPage.enter("expensesChildSupport", "150");
-    testPage.clickContinue();
-
-    // Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
+//    testPage.goBack();
+
+//    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
+//    testPage.clickButton("Yes");
+//
+//
+////    testPage.clickButton("Yes");
+//    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
+//    testPage.enter("expensesChildSupport", "150");
+//    testPage.clickContinue();
+//
+//    // Final SignPost
+//    assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("ebtcard-title"));

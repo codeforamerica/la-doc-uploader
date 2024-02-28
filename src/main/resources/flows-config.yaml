@@ -383,6 +383,8 @@ flow:
       - name: expensesElderlyCare
   expensesElderlyCare:
     nextScreens:
+      - name: householdMedicalExpenses
+        condition: HasElderlyCareExpenses
       - name: expensesDependentCare
   householdMedicalExpenses:
     nextScreens:
@@ -404,8 +406,6 @@ flow:
     nextScreens:
       - name: expensesChildSupportAmount
         condition: HasChildSupportExpenses
-      - name: householdMedicalExpenses
-        condition: HasElderlyCareExpenses
       - name: nolaEceLinks
         condition: EligibleForEceLinks
       - name: wicLinks
@@ -417,8 +417,6 @@ flow:
       - name: finalSignPost
   expensesChildSupportAmount:
     nextScreens:
-      - name: householdMedicalExpenses
-        condition: HasElderlyCareExpenses
       - name: nolaEceLinks
         condition: EligibleForEceLinks
       - name: wicLinks
