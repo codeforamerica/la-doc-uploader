@@ -104,6 +104,7 @@ inputFields:
     SocialSecurity: SocialSecurity
     Unemployment: Unemployment
     WorkersCompensation: WorkersCompensation
+    Other: Other
     ChildSupport: ChildSupport
     VeteransBenefits: VeteransBenefits
     Contributions: Contributions
