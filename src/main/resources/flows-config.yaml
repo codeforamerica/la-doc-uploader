@@ -377,10 +377,15 @@ flow:
     nextScreens:
       - name: liheap
         condition: ReceivesEnergyAssistance
-      - name: householdMedicalExpenses
+      - name: expensesElderlyCare
   liheap:
     nextScreens:
+      - name: expensesElderlyCare
+  expensesElderlyCare:
+    nextScreens:
       - name: householdMedicalExpenses
+        condition: HasElderlyCareExpenses
+      - name: expensesDependentCare
   householdMedicalExpenses:
     nextScreens:
       - name: householdMedicalExpensesAmount
@@ -401,14 +406,6 @@ flow:
     nextScreens:
       - name: expensesChildSupportAmount
         condition: HasChildSupportExpenses
-      - name: expensesElderlyCare
-  expensesChildSupportAmount:
-    nextScreens:
-      - name: expensesElderlyCare
-  expensesElderlyCare:
-    nextScreens:
-      - name: expensesElderlyCareAmount
-        condition: HasElderlyCareExpenses
       - name: nolaEceLinks
         condition: EligibleForEceLinks
       - name: wicLinks
@@ -418,7 +415,7 @@ flow:
       - name: wicApply
         condition: EligibleForWicApply
       - name: finalSignPost
-  expensesElderlyCareAmount:
+  expensesChildSupportAmount:
     nextScreens:
       - name: nolaEceLinks
         condition: EligibleForEceLinks

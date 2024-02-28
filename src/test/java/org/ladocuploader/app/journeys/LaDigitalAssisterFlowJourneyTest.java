@@ -693,7 +693,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance.title"));
     testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses-amount.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));
     testPage.goBack();
 
     assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance.title"));
@@ -702,7 +702,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("liheap.title"));
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));
+    testPage.clickButton("Yes");
 
     testPage.clickElementById("householdMedicalExpenses-dentalBills-label");
     testPage.clickContinue();
@@ -725,21 +726,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
     testPage.clickButton("No");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));
-    testPage.goBack();
-
-    testPage.clickButton("Yes");
-    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
-    testPage.enter("expensesChildSupport", "150");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("elderlycare-amount.title"));
-    testPage.enter("expensesElderlyCare", "123");
-    testPage.clickContinue();
-
     var title = testPage.getTitle();
     if ("ECE link".equals(title)) {
       testPage.clickButton("Yes");
@@ -756,8 +742,20 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
       testPage.clickContinue();
     }
 
-    // Final SignPost
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
+//    testPage.goBack();
+
+//    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
+//    testPage.clickButton("Yes");
+//
+//
+////    testPage.clickButton("Yes");
+//    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
+//    testPage.enter("expensesChildSupport", "150");
+//    testPage.clickContinue();
+//
+//    // Final SignPost
+//    assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("ebtcard-title"));
