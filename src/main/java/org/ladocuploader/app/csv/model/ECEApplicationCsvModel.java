@@ -114,6 +114,7 @@ import org.ladocuploader.app.utils.IncomeCalculator;
         "Enter the number of months you have been without income: {{6485dab3-b8e0-4c44-9460-7811e9feec18}}",
         "I am (check all that apply) {{422428f3-d96b-4df7-8c24-8e09454ddd8a}}",
         "If 'Other' please describe your employment status {{f5cd0c9f-84b9-447d-a039-7f05d6d38072}}",
+        "My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{801d7ffb-c6ef-4f4a-947a-754f3f5e1051}}",
         "Is Adult 1 (yourself) in school, in a training program, or seeking work? {{c906066e-72bd-441a-9fef-6674d9b5fe1d}}",
         "Upload proof of HIRE account registration with date of registration OR proof of unemployment pay statement {{db824fb9-9ab1-4446-a0f3-4f55248a21cd}}",
         "Provide a school transcript, detailed school schedule, or letter from the registrar {{74af906d-47d9-4c15-b97b-7211f0162cdc}}",
@@ -583,6 +584,9 @@ public class ECEApplicationCsvModel extends BaseCsvModel {
 
     @CsvBindByName(column="If 'Other' please describe your employment status {{f5cd0c9f-84b9-447d-a039-7f05d6d38072}}")
     String adultOneIAmOtherEmploymentStatusDescription;
+
+    @CsvBindByName(column="My rent/house payments, utilities, food, and transportation expenses are being paid for by: {{801d7ffb-c6ef-4f4a-947a-754f3f5e1051}}")
+    String adultOneHousingPayments;
 
     // mapped
     @CsvBindByName(column="Is Adult 1 (yourself) in school, in a training program, or seeking work? {{c906066e-72bd-441a-9fef-6674d9b5fe1d}}")
