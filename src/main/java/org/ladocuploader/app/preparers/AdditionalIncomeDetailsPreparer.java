@@ -34,6 +34,7 @@ public class AdditionalIncomeDetailsPreparer implements SubmissionFieldPreparer 
     RESOURCES.add("ChildSupport");
     RESOURCES.add("VeteransBenefits");
     RESOURCES.add("Contributions");
+    RESOURCES.add("Other");
   }
 
   @Override
