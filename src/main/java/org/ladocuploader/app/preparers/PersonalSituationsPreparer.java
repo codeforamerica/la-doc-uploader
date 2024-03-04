@@ -19,11 +19,8 @@ public class PersonalSituationsPreparer implements SubmissionFieldPreparer {
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
 
-//    : ["personal issue or disability"]
-
     List<String> personalSituations = (List<String>) submission.getInputData().getOrDefault(PERSONAL_SITUATION_STRING + "you[]", Collections.EMPTY_LIST);
     boolean disabilityFlag = personalSituations.contains("personal issue or disability");
-//
     Map<String, SubmissionField> results = new HashMap<>();
 
     var household = (List<Map<String, Object>>) submission.getInputData().get("household");
