@@ -128,6 +128,24 @@ public class SubmissionUtilities {
     return false;
   }
 
+  public static String getParishMailingAddress1(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getMailingAddress1();
+  }
+
+  public static String getParishMailingAddress2(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getMailingAddress2();
+  }
+
+  public static String getParishDisplayName(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getDisplayName() + " DCFS Office";
+  }
+
 
   public static boolean isDocUploadActive(Submission submission) {
     OffsetDateTime submittedAt = submission.getSubmittedAt();
