@@ -37,23 +37,23 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
 
         if (isSelfEmployed) {
           var monthlyIncome = IncomeCalculator.futureIncomeForJob(incomeDetails);
-          results.put("selfEmploymentName" + i, new SingleField("selfEmploymentName", employeeName, selfEmploymentIdx));
-          results.put("selfEmploymentDesc" + i, new SingleField("selfEmploymentDesc", (String) employerName, selfEmploymentIdx));
-          results.put("selfEmploymentMonthlyIncome" + i, new SingleField("selfEmploymentMonthlyIncome", "%.2f".formatted(monthlyIncome), selfEmploymentIdx));
-          results.put("selfEmploymentHoursPerWeek" + i, new SingleField("selfEmploymentHoursPerWeek", (String) hoursPerWeek, selfEmploymentIdx));
+          results.put("selfEmploymentName" + selfEmploymentIdx, new SingleField("selfEmploymentName", employeeName, selfEmploymentIdx));
+          results.put("selfEmploymentDesc" + selfEmploymentIdx, new SingleField("selfEmploymentDesc", (String) employerName, selfEmploymentIdx));
+          results.put("selfEmploymentMonthlyIncome" + selfEmploymentIdx, new SingleField("selfEmploymentMonthlyIncome", "%.2f".formatted(monthlyIncome), selfEmploymentIdx));
+          results.put("selfEmploymentHoursPerWeek" + selfEmploymentIdx, new SingleField("selfEmploymentHoursPerWeek", (String) hoursPerWeek, selfEmploymentIdx));
           selfEmploymentIdx++;
         } else {
           var payPeriod = incomeDetails.get("payPeriod");
           var hourlyWage = incomeDetails.get("hourlyWage");
-          results.put("employeeName" + i, new SingleField("employeeName", employeeName, nonSelfEmploymentIdx));
-          results.put("employerName" + i, new SingleField("employerName", (String) employerName, nonSelfEmploymentIdx));
-          results.put("employmentPayFreq" + i, new SingleField("employmentPayFreq", (String) payPeriod, nonSelfEmploymentIdx));
-          results.put("employeeHoursPerWeek" + i, new SingleField("employeeHoursPerWeek", (String) hoursPerWeek, nonSelfEmploymentIdx));
-          results.put("employeeHourlyWage" + i, new SingleField("employeeHourlyWage", (String) hourlyWage, nonSelfEmploymentIdx));
+          results.put("employeeName" + nonSelfEmploymentIdx, new SingleField("employeeName", employeeName, nonSelfEmploymentIdx));
+          results.put("employerName" + nonSelfEmploymentIdx, new SingleField("employerName", (String) employerName, nonSelfEmploymentIdx));
+          results.put("employmentPayFreq" + nonSelfEmploymentIdx, new SingleField("employmentPayFreq", (String) payPeriod, nonSelfEmploymentIdx));
+          results.put("employeeHoursPerWeek" + nonSelfEmploymentIdx, new SingleField("employeeHoursPerWeek", (String) hoursPerWeek, nonSelfEmploymentIdx));
+          results.put("employeeHourlyWage" + nonSelfEmploymentIdx, new SingleField("employeeHourlyWage", (String) hourlyWage, nonSelfEmploymentIdx));
           // only fill this out if job is not paid by the hour
           if (incomeDetails.get("jobPaidByHour").equals("false")) {
             var payPeriodAmount = incomeDetails.get("payPeriodAmount");
-            results.put("employmentPayDescription" + i, new SingleField("employmentPayDescription", payPeriodAmount + " per pay period", nonSelfEmploymentIdx));
+            results.put("employmentPayDescription" + nonSelfEmploymentIdx, new SingleField("employmentPayDescription", payPeriodAmount + " per pay period", nonSelfEmploymentIdx));
           }
           nonSelfEmploymentIdx++;
         }
