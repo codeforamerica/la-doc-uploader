@@ -12,7 +12,7 @@
         <th:block
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{dcfs-mailing-address.header})}"/>
         <div class="form-card__content">
-          <div class="grid__item boxed-content boxed-content--green spacing-below-25">
+          <div class="notice-teal spacing-below-25">
             <p style="font-weight:bold" th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishDisplayName(submission)}"></p>
             <p th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishMailingAddress1(submission)}"></p>
             <p th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishMailingAddress2(submission)}"></p>
@@ -20,19 +20,46 @@
           <th:block th:utext="#{dcfs-mailing-address.write-down}"></th:block>
           <hr class="spacing-below-25 spacing-above-25">
           <p style="font-weight:bold" th:text="#{general.helpful-resources}"></p>
-<!--          <th:block th:replace="~{fragments/icons :: icons-list}"></th:block>-->
-<!--          <th:block th:replace="~{fragments/icons :: contactPhone}">-->
-          <p class="spacing-below-25">
+<p>
+          <span class="cardSpan">
+          <span class="icon">
+           <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_7352_701)">
+          <path d="M10.1615 15.7427C12.2615 19.8698 15.6375 23.2458 19.7719 25.3458L22.9802 22.1302C23.3813 21.7292 23.9573 21.6125 24.4604 21.7729C26.0938 22.3125 27.851 22.6042 29.6667 22.6042C30.476 22.6042 31.125 23.2531 31.125 24.0625V29.1667C31.125 29.976 30.476 30.625 29.6667 30.625C15.9729 30.625 4.875 19.5271 4.875 5.83333C4.875 5.02396 5.53125 4.375 6.33333 4.375H11.4375C12.2469 4.375 12.8958 5.02396 12.8958 5.83333C12.8958 7.64896 13.1875 9.40625 13.7271 11.0396C13.8875 11.5427 13.7708 12.1188 13.3698 12.5198L10.1615 15.7427Z" fill="black"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_7352_701">
+          <rect width="35" height="35" fill="white" transform="translate(0.5)"/>
+          </clipPath>
+          </defs>
+          </svg>
 
-              <i class="icon-phone_in_talk"></i>
-              <span th:utext="#{dcfs-mailing-address.call}"></span>
-          </p>
-<!--          </th:block>-->
-          <p class="spacing-below-25">
+          </span>
+          <span class="text" th:utext="#{dcfs-mailing-address.call}"></span>
+        </span>
+</p>
 
-            <i class="icon-phone_in_talk"></i>
-            <span th:utext="#{dcfs-mailing-address.dcfs-worker}"></span>
+          <p>
+
+          <span class="cardSpan">
+          <span class="icon">
+           <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_7352_706)">
+            <path d="M28.2083 2.91663H7.79167C6.18021 2.91663 4.875 4.22183 4.875 5.83329V26.25C4.875 27.8614 6.18021 29.1666 7.79167 29.1666H13.625L18 33.5416L22.375 29.1666H28.2083C29.8198 29.1666 31.125 27.8614 31.125 26.25V5.83329C31.125 4.22183 29.8198 2.91663 28.2083 2.91663ZM19.4583 26.25H16.5417V23.3333H19.4583V26.25ZM22.4698 14.9552L21.1646 16.2968C20.1146 17.3468 19.4583 18.2291 19.4583 20.4166H16.5417V19.6875C16.5417 18.076 17.1979 16.6177 18.2479 15.5604L20.0635 13.7229C20.5885 13.1979 20.9167 12.4687 20.9167 11.6666C20.9167 10.0552 19.6115 8.74996 18 8.74996C16.3885 8.74996 15.0833 10.0552 15.0833 11.6666H12.1667C12.1667 8.44371 14.7771 5.83329 18 5.83329C21.2229 5.83329 23.8333 8.44371 23.8333 11.6666C23.8333 12.95 23.3156 14.1093 22.4698 14.9552Z" fill="black"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_7352_706">
+            <rect width="35" height="35" fill="white" transform="translate(0.5)"/>
+            </clipPath>
+            </defs>
+            </svg>
+
+
+          </span>
+          <span class="text" th:utext="#{dcfs-mailing-address.dcfs-worker}"></span>
+        </span>
           </p>
+
           
         </div>
         <div class="form-card__footer">

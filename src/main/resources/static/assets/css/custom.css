@@ -13,6 +13,16 @@ body,
   background-color: var(--light);
 }
 
+.icon,
+.text {
+  vertical-align: middle;
+  display: inline-block !important;
+}
+
+.cardSpan {
+  display: flex;
+}
+
 body {
   margin-bottom: 0;
 }
@@ -26,9 +36,6 @@ body {
   content: "\e7ff";
 }
 
-.icon-questionIcon::before {
-  content: "\e7ff";
-}
 
 .icon-house-outline::before {
   content: "\e7ff"
@@ -207,6 +214,13 @@ input[type="number"] {
 .notice-blue {
   background: #E9F6FF;
   border: 1px solid #003865;
+  border-radius: 3px;
+  position: relative;
+  padding: 20px 15px 0 15px;
+}
+
+.notice-teal {
+  border: 2px solid #008060;
   border-radius: 3px;
   position: relative;
   padding: 20px 15px 0 15px;
