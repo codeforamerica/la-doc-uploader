@@ -79,7 +79,7 @@ inputFields:
   expensesDependentCare: expensesDependentCare
   hasChildSupportExpenses: hasChildSupportExpenses
   expensesChildSupport: expensesChildSupport
-  personalSituationDisablityInd: disablityInd
+  personalSituationDisabilityInd: disablityInd
   pregnancyInd: pregnancyInd
   pregnantMemberNames: pregnantMemberNames
   pregnantMemberDueDates: pregnantMemberDueDates
