@@ -12,25 +12,33 @@ import java.util.*;
 @Component
 public class PersonalSituationsPreparer implements SubmissionFieldPreparer {
 
+//  you[]
+
+  static String PERSONAL_SITUATION_STRING = "personalSituations_wildcard_";
+
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
-    List<String> disability = (List<String>) submission.getInputData().getOrDefault("personalSituationDisability[]", Collections.EMPTY_LIST);
-    boolean disabilityFlag = disability.contains("you");
 
+//    : ["personal issue or disability"]
+
+    List<String> personalSituations = (List<String>) submission.getInputData().getOrDefault(PERSONAL_SITUATION_STRING + "you[]", Collections.EMPTY_LIST);
+    boolean disabilityFlag = personalSituations.contains("personal issue or disability");
+//
     Map<String, SubmissionField> results = new HashMap<>();
 
     var household = (List<Map<String, Object>>) submission.getInputData().get("household");
     if (!disabilityFlag && household != null) {
       for (Map<String, Object> member : household) {
         var uuid = member.get("uuid");
-        if (disability.contains(uuid)) {
-          results.put("disablityInd", new SingleField("personalSituationDisablityInd", "true", null));
+        List<String> hhmemberSituations = (List<String>) submission.getInputData().getOrDefault(PERSONAL_SITUATION_STRING + uuid + "[]", Collections.EMPTY_LIST);
+        if (hhmemberSituations.contains("personal issue or disability")) {
+          results.put("personalSituationDisabilityInd", new SingleField("personalSituationDisabilityInd", "true", null));
           return results;
         }
       }
     }
 
-    results.put("disablityInd", new SingleField("personalSituationDisablityInd", disabilityFlag ? "true" : "false", null));
+    results.put("personalSituationDisabilityInd", new SingleField("personalSituationDisabilityInd", disabilityFlag ? "true" : "false", null));
     return results;
   }
 }
