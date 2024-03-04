@@ -12,8 +12,6 @@ import java.util.*;
 @Component
 public class PersonalSituationsPreparer implements SubmissionFieldPreparer {
 
-//  you[]
-
   static String PERSONAL_SITUATION_STRING = "personalSituations_wildcard_";
 
   @Override
