@@ -60,8 +60,9 @@ dependencies {
     implementation 'commons-net:commons-net:3.10.0'
     testImplementation 'org.projectlombok:lombok:1.18.30'
 
-    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.4.0'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.5.0'
     implementation 'io.sentry:sentry-logback:7.5.0'
+
 
     testImplementation 'junit:junit:4.13.2'
 
