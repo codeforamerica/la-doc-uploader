@@ -20,7 +20,7 @@ class PersonalSituationsPreparerTest {
         Submission submission = new Submission();
         Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
-        assertThat(result.get("disablityInd")).isEqualTo(new SingleField("personalSituationDisablityInd", "false", null));
+        assertThat(result.get("personalSituationDisabilityInd")).isEqualTo(new SingleField("personalSituationDisabilityInd", "false", null));
     }
 
     @Test
@@ -30,7 +30,7 @@ class PersonalSituationsPreparerTest {
                 .build();
         Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
-        assertThat(result.get("disablityInd")).isEqualTo(new SingleField("personalSituationDisablityInd", "true", null));
+        assertThat(result.get("personalSituationDisabilityInd")).isEqualTo(new SingleField("personalSituationDisabilityInd", "true", null));
     }
 
     @Test
@@ -41,6 +41,6 @@ class PersonalSituationsPreparerTest {
                 .build();
         Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
-        assertThat(result.get("disablityInd")).isEqualTo(new SingleField("personalSituationDisablityInd", "true", null));
+        assertThat(result.get("personalSituationDisabilityInd")).isEqualTo(new SingleField("personalSituationDisabilityInd", "true", null));
     }
 }

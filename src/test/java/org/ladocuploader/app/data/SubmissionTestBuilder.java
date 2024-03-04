@@ -87,7 +87,9 @@ public class SubmissionTestBuilder {
     }
 
     public SubmissionTestBuilder withPersonalSituations(List<String> uuids) {
-        submission.getInputData().put("personalSituationDisability[]", uuids);
+        for (String uuid : uuids) {
+            submission.getInputData().put("personalSituations_wildcard_" + uuid + "[]", List.of("personal issue or disability"));
+        }
         return this;
     }
 

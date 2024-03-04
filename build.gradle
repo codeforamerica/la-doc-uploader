@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '3.1.5'
+    id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'java'
     id 'com.adarshr.test-logger' version '3.2.0'
@@ -28,7 +28,7 @@ repositories {
 }
 
 def profile = props.getProperty('SPRING_PROFILES_ACTIVE')
-def formFlowLibraryVersion = '1.1.1'
+def formFlowLibraryVersion = '1.2.0'
 def useLocalLibrary = System.getenv('USE_LOCAL_LIBRARY')
 
 dependencies {
@@ -61,7 +61,8 @@ dependencies {
     testImplementation 'org.projectlombok:lombok:1.18.30'
 
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.5.0'
-    implementation 'io.sentry:sentry-logback:7.4.0'
+    implementation 'io.sentry:sentry-logback:7.5.0'
+
 
     testImplementation 'junit:junit:4.13.2'
 
@@ -76,7 +77,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.apache.httpcomponents.client5:httpclient5:5.3.1'
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
-    testImplementation 'io.percy:percy-java-selenium:2.0.4'
+    testImplementation 'io.percy:percy-java-selenium:2.0.5'
     testImplementation 'org.awaitility:awaitility'
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
     testImplementation 'com.deque.html.axe-core:selenium:4.8.2'
