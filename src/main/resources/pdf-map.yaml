@@ -207,7 +207,7 @@ subflowInfo:
     totalIterations: 7
     inputFields:
       employeeName: employeeName
-      employerName: employerName
+      employer: employer
       employmentPayFreq: employmentPayFreq
       employmentPayDescription: employmentPayDescription
       employeeHoursPerWeek: employeeHoursPerWeek
