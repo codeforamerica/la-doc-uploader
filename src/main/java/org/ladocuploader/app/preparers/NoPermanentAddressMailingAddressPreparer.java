@@ -5,13 +5,10 @@ import formflow.library.pdf.*;
 import org.ladocuploader.app.data.enums.Parish;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
-import static org.ladocuploader.app.utils.SubmissionUtilities.PDF_EDUCATION_MAP;
 
 @Component
 public class NoPermanentAddressMailingAddressPreparer implements SubmissionFieldPreparer {
@@ -31,7 +28,7 @@ public class NoPermanentAddressMailingAddressPreparer implements SubmissionField
       results.put("mailingAddressZipCode", new SingleField("mailingAddressZipCode", parishDetails.getMailingAddressZipcode(), null));
       results.put("mailingAddressState", new SingleField("mailingAddressState", parishDetails.getMailingAddressState(), null));
       results.put("mailingAddressCity", new SingleField("mailingAddressCity", parishDetails.getMailingAddressCity(), null));
-      results.put("mailingAddressStreetAddress1", new SingleField("mailingAddressStreetAddress1", parishDetails.getMailingAddress1(), null));
+      results.put("mailingAddressStreetAddress1", new SingleField("mailingAddressStreetAddress2", parishDetails.getMailingAddress1(), null));
       results.put("mailingAddressStreetAddress2", new SingleField("mailingAddressStreetAddress2", parishDetails.getMailingAddress1(), null));
     }
 
