@@ -23,7 +23,6 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
 
     var income = (List<Map<String, Object>>) submission.getInputData().get("income");
     if (income != null) {
-      selfEmploymentIncome = "true";
       int nonSelfEmploymentIdx = 1;
       int selfEmploymentIdx = 1;
       for (int i = 0; i < income.size(); i++) {
@@ -36,6 +35,7 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
         var hoursPerWeek = incomeDetails.get("hoursPerWeek");
 
         if (isSelfEmployed) {
+          selfEmploymentIncome = "true";
           var monthlyIncome = IncomeCalculator.futureIncomeForJob(incomeDetails);
           results.put("selfEmploymentName" + selfEmploymentIdx, new SingleField("selfEmploymentName", employeeName, selfEmploymentIdx));
           results.put("selfEmploymentDesc" + selfEmploymentIdx, new SingleField("selfEmploymentDesc", (String) employerName, selfEmploymentIdx));
@@ -46,7 +46,7 @@ public class IncomeDetailsPreparer implements SubmissionFieldPreparer {
           var payPeriod = incomeDetails.get("payPeriod");
           var hourlyWage = incomeDetails.get("hourlyWage");
           results.put("employeeName" + nonSelfEmploymentIdx, new SingleField("employeeName", employeeName, nonSelfEmploymentIdx));
-          results.put("employerName" + nonSelfEmploymentIdx, new SingleField("employerName", (String) employerName, nonSelfEmploymentIdx));
+          results.put("employer" + nonSelfEmploymentIdx, new SingleField("employer", (String) employerName, nonSelfEmploymentIdx));
           results.put("employmentPayFreq" + nonSelfEmploymentIdx, new SingleField("employmentPayFreq", (String) payPeriod, nonSelfEmploymentIdx));
           results.put("employeeHoursPerWeek" + nonSelfEmploymentIdx, new SingleField("employeeHoursPerWeek", (String) hoursPerWeek, nonSelfEmploymentIdx));
           results.put("employeeHourlyWage" + nonSelfEmploymentIdx, new SingleField("employeeHourlyWage", (String) hourlyWage, nonSelfEmploymentIdx));
