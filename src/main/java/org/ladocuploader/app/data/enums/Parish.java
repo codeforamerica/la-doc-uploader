@@ -1,7 +1,9 @@
 package org.ladocuploader.app.data.enums;
 
 
+import lombok.Getter;
 
+@Getter
 public enum Parish {
   
   ACADIA("Acadia", "825 Kaliste Saloom Street", "","Lafayette", "70508"),
@@ -77,24 +79,20 @@ public enum Parish {
 
   private final String mailingAddressCity;
 
-  private final String mailingAddressState;
+  private String mailingAddressState = "LA";
 
   private final String mailingAddressZipcode;
 
-  private static final String LOUISIANA = "LA";
+
 
   Parish(String displayName, String mailingAddress1, String mailingAddress2, String mailingAddressCity,
          String mailingAddressZipcode) {
     this.displayName = displayName;
     this.mailingAddressCity = mailingAddressCity;
-    this.mailingAddressState = Parish.LOUISIANA;
+    this.mailingAddressState = "LA";
     this.mailingAddressZipcode = mailingAddressZipcode;
     this.mailingAddress1 = mailingAddress1;
     this.mailingAddress2 = mailingAddress2;
-  }
-
-  public String getDisplayName() {
-    return displayName;
   }
 
   public String getMailingAddressLine1() {
