@@ -36,14 +36,14 @@ class IncomeDetailsPreparerTest {
 
     var results = preparer.prepareSubmissionFields(submission, null);
     assertThat(results.size()).isEqualTo(20);
-    assertThat(results.get("employeeName0")).isEqualTo(new SingleField("employeeName", "Joka Aksj", 1));
-    assertThat(results.get("employerName0")).isEqualTo(new SingleField("employerName", "CfA", 1));
-    assertThat(results.get("employmentPayFreq0")).isEqualTo(new SingleField("employmentPayFreq", null, 1));
-    assertThat(results.get("employeeHoursPerWeek0")).isEqualTo(new SingleField("employeeHoursPerWeek", "10", 1));
-    assertThat(results.get("employeeHourlyWage0")).isEqualTo(new SingleField("employeeHourlyWage", "11", 1));
+    assertThat(results.get("employeeName1")).isEqualTo(new SingleField("employeeName", "Joka Aksj", 1));
+    assertThat(results.get("employer1")).isEqualTo(new SingleField("employer", "CfA", 1));
+    assertThat(results.get("employmentPayFreq1")).isEqualTo(new SingleField("employmentPayFreq", null, 1));
+    assertThat(results.get("employeeHoursPerWeek1")).isEqualTo(new SingleField("employeeHoursPerWeek", "10", 1));
+    assertThat(results.get("employeeHourlyWage1")).isEqualTo(new SingleField("employeeHourlyWage", "11", 1));
 
     assertThat(results.get("employeeName2")).isEqualTo(new SingleField("employeeName", "Olas Aksj", 2));
-    assertThat(results.get("employerName2")).isEqualTo(new SingleField("employerName", "ChA", 2));
+    assertThat(results.get("employer2")).isEqualTo(new SingleField("employer", "ChA", 2));
     assertThat(results.get("employmentPayFreq2")).isEqualTo(new SingleField("employmentPayFreq", "Every 2 weeks", 2));
     assertThat(results.get("employeeHoursPerWeek2")).isEqualTo(new SingleField("employeeHoursPerWeek", null, 2));
     assertThat(results.get("employeeHourlyWage2")).isEqualTo(new SingleField("employeeHourlyWage", null, 2));
@@ -54,15 +54,15 @@ class IncomeDetailsPreparerTest {
     assertThat(results.get("selfEmploymentHoursPerWeek1")).isEqualTo(new SingleField("selfEmploymentHoursPerWeek", "90", 1));
 
     assertThat(results.get("employeeName2")).isEqualTo(new SingleField("employeeName", "Olas Aksj", 2));
-    assertThat(results.get("employerName2")).isEqualTo(new SingleField("employerName", "ChA", 2));
+    assertThat(results.get("employer2")).isEqualTo(new SingleField("employer", "ChA", 2));
     assertThat(results.get("employmentPayFreq2")).isEqualTo(new SingleField("employmentPayFreq", "Every 2 weeks", 2));
     assertThat(results.get("employeeHoursPerWeek2")).isEqualTo(new SingleField("employeeHoursPerWeek", null, 2));
     assertThat(results.get("employeeHourlyWage2")).isEqualTo(new SingleField("employeeHourlyWage", null, 2));
 
-    assertThat(results.get("selfEmploymentName3")).isEqualTo(new SingleField("selfEmploymentName", "Ydopa Aksj", 2));
-    assertThat(results.get("selfEmploymentDesc3")).isEqualTo(new SingleField("selfEmploymentDesc", "CiA", 2));
-    assertThat(results.get("selfEmploymentMonthlyIncome3")).isEqualTo(new SingleField("selfEmploymentMonthlyIncome", "1000.00", 2));
-    assertThat(results.get("selfEmploymentHoursPerWeek3")).isEqualTo(new SingleField("selfEmploymentHoursPerWeek", null, 2));
+    assertThat(results.get("selfEmploymentName2")).isEqualTo(new SingleField("selfEmploymentName", "Ydopa Aksj", 2));
+    assertThat(results.get("selfEmploymentDesc2")).isEqualTo(new SingleField("selfEmploymentDesc", "CiA", 2));
+    assertThat(results.get("selfEmploymentMonthlyIncome2")).isEqualTo(new SingleField("selfEmploymentMonthlyIncome", "1000.00", 2));
+    assertThat(results.get("selfEmploymentHoursPerWeek2")).isEqualTo(new SingleField("selfEmploymentHoursPerWeek", null, 2));
 
     assertThat(results.get("selfEmploymentIncome")).isEqualTo(new SingleField("selfEmploymentIncome", "true", null));
   }
@@ -74,7 +74,7 @@ class IncomeDetailsPreparerTest {
         .withJob("you", "CfA", "10", "11", "false", "true").build();
 
     var results = preparer.prepareSubmissionFields(submission, null);
-    assertThat(results.get("employeeName0").toString().equals("testFirstName testLastName"));
+    assertThat(results.get("employeeName1").toString().equals("testFirstName testLastName"));
   }
 
   @Test
@@ -84,7 +84,7 @@ class IncomeDetailsPreparerTest {
         .withJob("first last", "CfA", "10", "11", "false", "true").build();
 
     var results = preparer.prepareSubmissionFields(submission, null);
-    assertThat(results.get("employeeName0").toString().equals("first last"));
+    assertThat(results.get("employeeName1").toString().equals("first last"));
   }
 
 }
