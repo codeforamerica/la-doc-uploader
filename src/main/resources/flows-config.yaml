@@ -264,6 +264,9 @@ flow:
       - name: householdWorkDisqualifications
   householdWorkDisqualifications:
     nextScreens:
+      - name: householdOnStrike
+  householdOnStrike:
+    nextScreens:
       - name: householdEmploymentStatus
   householdEmploymentStatus:
     nextScreens:

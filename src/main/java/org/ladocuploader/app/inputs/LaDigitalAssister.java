@@ -41,6 +41,8 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank(message="{error.missing-lastname}")
   private String lastName;
 
+  private String onStrikeInd;
+
   private String otherNames;
 
   private String birthDay;
