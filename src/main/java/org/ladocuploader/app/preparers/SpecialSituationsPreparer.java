@@ -25,11 +25,14 @@ public class SpecialSituationsPreparer implements SubmissionFieldPreparer {
       "veterans",
       "fostersAgedOut");
 
+  private static final String OUT_OF_STATE_PREFIX = "outOfStateBenefitsStates_wildcard_";
+
   @Override
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> result = new HashMap<>();
 
     Map<String, List<String>> inputToNames = new HashMap<>();
+    List<String> outOfStateBenefitsStates = new ArrayList<>();
     Map<String, List<String>> inputToUUIDs = new HashMap<>();
     for (String input : INPUTS) {
       List inputValue = (List) submission.getInputData().getOrDefault(input + "[]", emptyList());
@@ -42,12 +45,18 @@ public class SpecialSituationsPreparer implements SubmissionFieldPreparer {
       for (var member : members) {
         var uuid = (String) member.get("uuid");
         var memberName = householdMemberFullName(member);
+        // TODO: search for out of state benefits wildcard
+        String outOfStateBenefitsValue = (String) submission.getInputData().getOrDefault(OUT_OF_STATE_PREFIX + uuid, null);
+        if (outOfStateBenefitsValue != null) {
+          outOfStateBenefitsStates.add(outOfStateBenefitsValue);
+        }
 
         for (String input : INPUTS) {
           if (inputToUUIDs.get(input).contains(uuid)) {
             inputToNames.get(input).add(memberName);
           }
         }
+
       }
     }
 
@@ -61,6 +70,12 @@ public class SpecialSituationsPreparer implements SubmissionFieldPreparer {
         result.put(input + "Names", new SingleField(input + "Names", joinWithCommaAndSpace(names), null));
       }
     }
+    String outOfStateBenefitsYou = (String) submission.getInputData().getOrDefault(OUT_OF_STATE_PREFIX + "you", null);
+    // TODO: check if there is a state for wildcard_you
+    if (outOfStateBenefitsYou != null) {
+      outOfStateBenefitsStates.add(outOfStateBenefitsYou);
+    }
+    result.put("outOfStateBenefitsStates", new SingleField("outOfStateBenefitsStates", joinWithCommaAndSpace(outOfStateBenefitsStates), null));
 
     return result;
   }
