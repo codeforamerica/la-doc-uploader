@@ -160,6 +160,9 @@ flow:
       - name: householdPrepareFood
   householdBenefitsWho:
     nextScreens:
+      - name: householdBenefitsWhich
+  householdBenefitsWhich:
+    nextScreens:
       - name: householdPrepareFood
   householdPrepareFood:
     nextScreens:
