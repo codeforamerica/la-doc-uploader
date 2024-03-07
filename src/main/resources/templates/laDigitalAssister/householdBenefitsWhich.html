@@ -18,7 +18,7 @@
               <div th:each="member, iter:${inputData.get('outOfStateBenefitsRecipients[]')}"
                    class="spacing-below-15">
                 <th:block
-                    th:with="stateInputName=${'outOfStateBenefitsRecipient' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + member}">
+                    th:with="stateInputName=${'outOfStateBenefitsStates' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + member}">
                   <th:block th:replace="~{fragments/inputs/state ::
                   state(inputName=${stateInputName},
                   label=#{household-benefits-which.question(${member})},

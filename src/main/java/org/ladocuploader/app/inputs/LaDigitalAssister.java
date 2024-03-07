@@ -124,7 +124,7 @@ public class LaDigitalAssister extends FlowInputs {
   private String ssn;
 
   @DynamicField
-  private String outOfStateBenefitsRecipient;
+  private String outOfStateBenefitsStates;
 
   @Size(min=11, max=11, message="{error.invalid-ssn}")
   @DynamicField
