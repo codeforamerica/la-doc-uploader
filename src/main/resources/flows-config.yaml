@@ -370,17 +370,26 @@ flow:
       - name: expensesElderlyCare
   expensesElderlyCare:
     nextScreens:
-      - name: householdMedicalExpenses
+      - name: expensesElderlyCareWho
         condition: HasElderlyCareExpenses
       - name: expensesDependentCare
-  householdMedicalExpenses:
+  expensesElderlyCareWho:
     nextScreens:
-      - name: householdMedicalExpensesAmount
-        condition: HasMedicalExpenses
-      - name: expensesDependentCare
-  householdMedicalExpensesAmount:
+      - name: householdMedicalExpensesWho
+  householdMedicalExpensesWho:
     nextScreens:
-      - name: expensesDependentCare
+      - name: householdMedicalExpensesWhich
+  householdMedicalExpensesWhich:
+    nextScreens: null
+
+#  householdMedicalExpenses:
+#    nextScreens:
+#      - name: householdMedicalExpensesAmount
+#        condition: HasMedicalExpenses
+#      - name: expensesDependentCare
+#  householdMedicalExpensesAmount:
+#    nextScreens:
+#      - name: expensesDependentCare
   expensesDependentCare:
     nextScreens:
       - name: expensesDependentCareAmount

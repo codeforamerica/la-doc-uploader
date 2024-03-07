@@ -135,6 +135,10 @@ public class LaDigitalAssister extends FlowInputs {
   @NotEmpty(message="{error.missing-general}")
   private List<String> students;
 
+  private List<String> householdMedicalExpensesWho;
+
+  private String medicalExpenseMember;
+
   @NotBlank(message="{error.missing-general}")
   @DynamicField
   private String schoolName;
