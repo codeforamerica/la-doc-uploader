@@ -75,7 +75,9 @@ public class SpecialSituationsPreparer implements SubmissionFieldPreparer {
     if (outOfStateBenefitsYou != null) {
       outOfStateBenefitsStates.add(outOfStateBenefitsYou);
     }
-    result.put("outOfStateBenefitsStates", new SingleField("outOfStateBenefitsStates", joinWithCommaAndSpace(outOfStateBenefitsStates), null));
+    if (!outOfStateBenefitsStates.isEmpty()) {
+      result.put("outOfStateBenefitsStates", new SingleField("outOfStateBenefitsStates", joinWithCommaAndSpace(outOfStateBenefitsStates), null));
+    }
 
     return result;
   }
