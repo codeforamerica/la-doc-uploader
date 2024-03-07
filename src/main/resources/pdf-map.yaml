@@ -92,6 +92,7 @@ inputFields:
   veteransNames: veteransNames
   fostersAgedOutNames: fostersAgedOutNames
   preparesFoodNames: preparesFoodNames
+  outOfStateBenefitsStates: outOfStateBenefitsStates
 
   householdSearchingForJob: jobSearch
   migrantOrSeasonalFarmWorkerInd: migrantOrSeasonalFarmworkerBool
