@@ -354,6 +354,8 @@ public class LaDigitalAssister extends FlowInputs {
   private String adultsWorking;
   private String guardiansHaveDisabilityInd;
 
+  private String disabilityInd;
+
   // Final Screen
   private String needsNewEbtCard;
 
