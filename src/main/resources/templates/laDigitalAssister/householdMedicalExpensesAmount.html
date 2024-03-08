@@ -19,7 +19,8 @@
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formDetails})}">
           <th:block th:ref="formDetails">
             <div class="form-card__content">
-              <div th:each="expense, iter:${inputData.get('householdMedicalExpenses[]')}"
+              <th:block th:with="subflowExpenses=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMedicalExpensesSubflowItem(submission, hhMemberUUID)}">
+              <div th:each="expense, iter:${subflowExpenses}"
                    class="spacing-below-15">
                 <th:block
                     th:with="inputName=${'householdMedicalExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
@@ -34,6 +35,7 @@
                 </th:block>
                 <hr/>
               </div>
+              </th:block>
             </div>
             <div class="form-card__footer">
               <th:block

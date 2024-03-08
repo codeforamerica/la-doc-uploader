@@ -19,15 +19,14 @@
                             inputName='medicalExpenseMember',
                             content=~{::householdMembers})}">
                   <th:block th:ref="householdMembers">
-                    <th:block
-                        th:replace="~{fragments/inputs/radio :: radio(inputName='medicalExpenseMember',value='you', label=${inputData.firstName + ' ' + inputData.lastName + ' ' + #messages.msg('general.you')})}"/>
-                    <th:block th:if="${inputData.containsKey('householdMedicalExpensesWho')}">
-                      <th:block th:each="householdMember, iter: ${inputData.householdMedicalExpensesWho}"
+                      <th:block th:each="householdMember, iter: ${inputData.get('householdMedicalExpensesWho[]')}"
                                 class="spacing-below-15">
+                        <th:block th:with="hhmemberLabel=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUID(householdMember, inputData)}">
                         <th:block
-                            th:replace="~{fragments/inputs/radio :: radio(inputName='medicalExpenseMember',value=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName}, label=${householdMember.householdMemberFirstName + ' ' + householdMember.householdMemberLastName})}"/>
+                            th:replace="~{fragments/inputs/radio :: radio(inputName='medicalExpenseMember',value=${householdMember}, label=${hhmemberLabel})}"/>
                       </th:block>
-                    </th:block>
+                      </th:block>
+
                   </th:block>
                 </th:block>
                 

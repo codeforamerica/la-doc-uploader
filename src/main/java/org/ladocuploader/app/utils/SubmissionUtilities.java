@@ -198,6 +198,16 @@ public class SubmissionUtilities {
     return "";
   }
 
+  public static ArrayList<String> getHouseholdMedicalExpensesSubflowItem(Submission submission, String hhMemberId){
+    ArrayList<HashMap<String, Object>> subflowList = (ArrayList<HashMap<String, Object>>) submission.getInputData().getOrDefault("householdMedical", emptyList());
+    for (var subflowItem : subflowList){
+      if (hhMemberId.equals(subflowItem.get("medicalExpenseMember"))){
+        return (ArrayList<String>) subflowItem.getOrDefault("householdMedicalExpenses[]", emptyList());
+      }
+    }
+    return new ArrayList<>();
+  }
+
   public static ArrayList<HashMap<String, Object>> getHouseholdIncomeReviewItems(Submission submission) {
     var applicantFullName = submission.getInputData().getOrDefault("firstName", "") + " " + submission.getInputData().getOrDefault("lastName", "");
     var notYetShownNames = getHouseholdMemberNames(submission);
