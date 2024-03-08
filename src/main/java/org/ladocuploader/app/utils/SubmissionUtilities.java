@@ -189,6 +189,18 @@ public class SubmissionUtilities {
       return "%s %s".formatted(inputData.get("firstName"), inputData.get("lastName"));
     }
 
+    return getHouseholdMemberName(uuid, inputData);
+  }
+
+  public static String getHouseholdMemberFullnameByUUIDWithYou(String uuid, Map<String, Object> inputData) {
+    if ("you".equals(uuid)) {
+      return "%s %s (you)".formatted(inputData.get("firstName"), inputData.get("lastName"));
+    }
+
+    return getHouseholdMemberName(uuid, inputData);
+  }
+
+  public static String getHouseholdMemberName(String uuid, Map<String, Object> inputData){
     var members = (List<Map<String, Object>>) inputData.getOrDefault("household", emptyList());
     for (var member : members) {
       if (uuid.equals(member.get("uuid"))) {
