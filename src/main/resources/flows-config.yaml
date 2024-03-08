@@ -377,19 +377,21 @@ flow:
     nextScreens:
       - name: householdMedicalExpensesWho
   householdMedicalExpensesWho:
+    subflow: householdMedical
     nextScreens:
       - name: householdMedicalExpensesWhich
   householdMedicalExpensesWhich:
-    nextScreens: null
-
-#  householdMedicalExpenses:
-#    nextScreens:
-#      - name: householdMedicalExpensesAmount
-#        condition: HasMedicalExpenses
-#      - name: expensesDependentCare
-#  householdMedicalExpensesAmount:
-#    nextScreens:
-#      - name: expensesDependentCare
+    subflow: householdMedical
+    nextScreens:
+      - name: householdMedicalExpensesAmount
+  householdMedicalExpensesAmount:
+    subflow: householdMedical
+    nextScreens:
+      - name: householdMedicalExpensesConfirmation # TODO: change to confirmation
+  householdMedicalExpensesConfirmation:
+    subflow: householdMedical
+    nextScreens:
+      - name: expensesDependentCare
   expensesDependentCare:
     nextScreens:
       - name: expensesDependentCareAmount
@@ -571,4 +573,9 @@ subflows:
     entryScreen: householdIncomeByJob
     iterationStartScreen: householdIncomeWho
     reviewScreen: householdIncomeList
+    deleteConfirmationScreen: householdIncomeDeleteConfirmation
+  householdMedical:
+    entryScreen: expensesElderlyCareWho
+    iterationStartScreen: householdMedicalExpensesWho
+    reviewScreen: householdMedicalExpensesConfirmation
     deleteConfirmationScreen: householdIncomeDeleteConfirmation
