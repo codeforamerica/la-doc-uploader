@@ -25,16 +25,26 @@ class MedicalExpensesPreparerTest {
   @Test
   public void shouldAddFieldsForMedicalExpenses() {
     Submission submission = new SubmissionTestBuilder()
-        .with("householdMedicalExpenses[]", List.of("dentalBills"))
-        .with("householdMedicalExpenseAmount_wildcard_dentalBills", "10")
-        .with("householdMedicalExpenseAmount_wildcard_hospitalBills", "20")
-        .with("householdMedicalExpenseAmount_wildcard_nursingHome", "30")
-        .with("householdMedicalExpenseAmount_wildcard_prescriptionMedicine", "40")
+            .with("householdMedical", List.of(
+                    Map.of("medicalExpenseMember", "test",
+                            "householdMedicalExpenses[]",
+                            List.of(
+                                    "dentalBills",
+                                    "hospitalBills",
+                                    "nursingHome",
+                                    "prescriptionMedicine"
+                            ),
+                            "householdMedicalExpenseAmount_wildcard_dentalBills", "10",
+                            "householdMedicalExpenseAmount_wildcard_hospitalBills", "20",
+                            "householdMedicalExpenseAmount_wildcard_nursingHome", "30",
+                            "householdMedicalExpenseAmount_wildcard_prescriptionMedicine", "40"
+                    )
+            ))
         .build();
 
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
-    assertThat(result.size()).isEqualTo(12);
+    assertThat(result.size()).isEqualTo(16);
     assertThat(result.get("medicalExpensesType1"))
         .isEqualTo(new SingleField("medicalExpensesType", "Dental bills", 1));
     assertThat(result.get("medicalExpensesAmount1"))
