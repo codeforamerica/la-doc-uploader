@@ -21,7 +21,7 @@
                   <th:block th:ref="householdMembers">
                       <th:block th:each="householdMember, iter: ${inputData.get('householdMedicalExpensesWho[]')}"
                                 class="spacing-below-15">
-                        <th:block th:with="hhmemberLabel=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUID(householdMember, inputData)}">
+                        <th:block th:with="hhmemberLabel=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUIDWithYou(householdMember, inputData)}">
                         <th:block
                             th:replace="~{fragments/inputs/radio :: radio(inputName='medicalExpenseMember',value=${householdMember}, label=${hhmemberLabel})}"/>
                       </th:block>
