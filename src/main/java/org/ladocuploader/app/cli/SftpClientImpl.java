@@ -19,7 +19,7 @@ import java.util.List;
 
 @Component
 @Slf4j
-@Profile({"production", "staging", "dev"})
+@Profile({"production", "staging"})
 public class SftpClientImpl implements SftpClient {
 
     String username;

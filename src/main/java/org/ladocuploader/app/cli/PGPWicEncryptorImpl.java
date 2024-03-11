@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component("wicPgpEncryptor")
-@Profile({"production", "staging", "dev"})
+@Profile({"production", "staging"})
 public class PGPWicEncryptorImpl extends BasePGPEncrpytorImpl {
 
     public PGPWicEncryptorImpl(@Value("${pgp.wic.sigkey-password}") String sigkeyPassword,

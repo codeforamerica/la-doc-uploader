@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component("snapPgpEncryptor")
-@Profile({"production", "staging", "dev"})
+@Profile({"production", "staging"})
 public class PGPEncryptorImpl extends BasePGPEncrpytorImpl {
 
   public PGPEncryptorImpl(@Value("${pgp.snap.sigkey-password}") String sigkeyPassword,
