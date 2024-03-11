@@ -15,6 +15,7 @@ import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
 import org.slf4j.MDC;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ import static org.ladocuploader.app.file.DocTypeEnum.*;
 
 @Slf4j
 @Service
+@ComponentScan("org.ladocuploader.app.cli")
 public class SubmissionTransfer {
 
   private static final ZoneId CST = ZoneId.of("America/Chicago");
@@ -64,15 +66,13 @@ public class SubmissionTransfer {
   private final UserFileRepositoryService fileRepositoryService;
   private final CloudFileRepository fileRepository;
   private final PdfService pdfService;
-  private final PGPEncryptor snapPgpEncryptor;
+  private final BasePGPEncrpytorImpl snapPgpEncryptor;
 
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
 
 
-
-
-  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor snapPgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
+  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, BasePGPEncrpytorImpl snapPgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;
