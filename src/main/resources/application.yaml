@@ -108,17 +108,28 @@ server:
       persistent: true
 transmissions:
   snap-transmission-rate: ${SNAP_TRANSMISSION_RATE:PT5M}
-  wic-ece-transmission-rate: ${WIC_ECE_TRANSMISSION_RATE:PT24H}
+  wic-ece-transmission-schedule: ${WIC_ECE_TRANSMISSION_SCHEDULE:0 14 * * 1 ?}
 ftps:
   username: ${FTPS_USERNAME:-""}
   password: ${FTPS_PASSWORD:-""}
   upload-url: ${FTPS_UPLOAD_URL:-""}
   upload-dir: ${FTPS_UPLOAD_DIR:-""}
 pgp:
-  bucket-name: ${PGP_KEYS_DIR}
-  seckey-file-path: ${PGP_SECKEY_FILE_PATH}
-  pubkey-file-path: ${PGP_PUBKEY_FILE_PATH}
-  sigkey-password: ${PGP_SIGKEY_PASSWORD}
+  snap:
+    seckey-file-path: ${PGP_SECKEY_FILE_PATH}
+    pubkey-file-path: ${PGP_PUBKEY_FILE_PATH}
+    sigkey-password: ${PGP_SIGKEY_PASSWORD}
+    bucket-name: ${PGP_KEYS_DIR}
+  wic:
+    seckey-file-path: ${WIC_PGP_SECKEY_FILE_PATH}
+    pubkey-file-path: ${WIC_PGP_PUBKEY_FILE_PATH}
+    sigkey-password: ${WIC_PGP_SIGKEY_PASSWORD}
+    bucket-name: ${WIC_PGP_KEYS_DIR}
+  ece:
+    seckey-file-path: ${ECE_PGP_SECKEY_FILE_PATH}
+    pubkey-file-path: ${ECE_PGP_PUBKEY_FILE_PATH}
+    sigkey-password: ${ECE_PGP_SIGKEY_PASSWORD}
+    bucket-name: ${ECE_PGP_KEYS_DIR}
 sentry:
   dsn: ${SENTRY_DSN}
   traces-sample-rate: 0.6
