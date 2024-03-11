@@ -70,7 +70,7 @@ public class TransmitterCommands {
         this.ecePgpEncryptor = ecePgpEncryptor;
     }
 
-    @Scheduled(cron="0 14 * * 1 ?")
+    @Scheduled(cron="${transmissions.wic-ece-transmission-schedule}")
     public void transmit() throws IOException, JSchException, SftpException {
         log.info("Finding submissions to transmit...");
         OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
