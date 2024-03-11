@@ -21,7 +21,7 @@ import java.util.Iterator;
 @Slf4j
 @ComponentScan
 @Profile({"production", "staging"})
-public class BasePGPEncrpytorImpl implements PGPEncryptor {
+public class BasePGPEncrpytorImpl {
 
     private String accessKey;
     private String secretKey;
@@ -60,7 +60,6 @@ public class BasePGPEncrpytorImpl implements PGPEncryptor {
         }
     }
 
-    @Override
     public byte[] signAndEncryptPayload(String filename) throws IOException {
         FileInputStream instream = new FileInputStream(filename);
         ByteArrayOutputStream outstream = new ByteArrayOutputStream();
