@@ -10,6 +10,9 @@ import org.bouncycastle.openpgp.*;
 import org.bouncycastle.openpgp.jcajce.JcaPGPPublicKeyRingCollection;
 import org.bouncycastle.openpgp.operator.KeyFingerPrintCalculator;
 import org.bouncycastle.openpgp.operator.jcajce.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -17,11 +20,15 @@ import java.util.Date;
 import java.util.Iterator;
 
 @Slf4j
-public abstract class BasePGPEncrpytorImpl {
+@Component
+@Profile({"production", "staging"})
+public class BasePGPEncrpytorImpl implements PGPEncryptor {
 
+    @Value("${form-flow.aws.access_key}")
     private String accessKey;
+    @Value("${form-flow.aws.secret_key}")
     private String secretKey;
-
+    @Value("${form-flow.aws.region}")
     private String region;
 
     private PGPSecretKey signingKey;
@@ -31,16 +38,6 @@ public abstract class BasePGPEncrpytorImpl {
     protected String sigkeyPassword;
     protected String seckeyFilePath;
     protected String bucketName;
-
-    public BasePGPEncrpytorImpl(String sigkeyPassword, String seckeyFilePath, String pubkeyFilePath, String bucketName, String accessKey, String secretKey, String region) {
-        this.sigkeyPassword = sigkeyPassword;
-        this.seckeyFilePath = seckeyFilePath;
-        this.pubkeyFilePath = pubkeyFilePath;
-        this.bucketName = bucketName;
-        this.accessKey = accessKey;
-        this.secretKey = secretKey;
-        this.region = region;
-    }
 
     @PostConstruct
     public void init() {
@@ -56,6 +53,7 @@ public abstract class BasePGPEncrpytorImpl {
         }
     }
 
+    @Override
     public byte[] signAndEncryptPayload(String filename) throws IOException {
         FileInputStream instream = new FileInputStream(filename);
         ByteArrayOutputStream outstream = new ByteArrayOutputStream();

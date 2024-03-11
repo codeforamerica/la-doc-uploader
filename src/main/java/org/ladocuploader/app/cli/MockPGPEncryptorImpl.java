@@ -11,16 +11,7 @@ import java.io.InputStream;
 @Slf4j
 @Component
 @Profile({"dev", "test"})
-public class MockPGPEncryptorImpl extends BasePGPEncrpytorImpl {
-
-  public MockPGPEncryptorImpl() {
-    super(null, null, null, null, null, null, null);
-  }
-
-  @Override
-  public void init() {
-    log.info("do nothing");
-  }
+public class MockPGPEncryptorImpl implements PGPEncryptor {
 
   @Override
   public byte[] signAndEncryptPayload(String filename) throws IOException {

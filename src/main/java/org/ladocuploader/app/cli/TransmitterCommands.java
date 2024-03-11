@@ -18,10 +18,10 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -36,7 +36,6 @@ import java.util.zip.ZipOutputStream;
 
 @Slf4j
 @Service
-@ComponentScan("org.ladocuploader.app.cli")
 public class TransmitterCommands {
 
     private final TransmissionRepository transmissionRepository;
@@ -57,12 +56,12 @@ public class TransmitterCommands {
 
     private final long TWO_HOURS = 2L;
 
-    private final BasePGPEncrpytorImpl wicPgpEncryptor;
+    private final PGPEncryptor wicPgpEncryptor;
 
-    private final BasePGPEncrpytorImpl ecePgpEncryptor;
+    private final PGPEncryptor ecePgpEncryptor;
 
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, BasePGPEncrpytorImpl wicPgpEncryptor, BasePGPEncrpytorImpl ecePgpEncryptor) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor wicPgpEncryptor, PGPEncryptor ecePgpEncryptor) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
