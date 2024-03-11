@@ -8,6 +8,7 @@ ARG APTIBLE_ENV=/opt/form-flow-starter-app/.aptible.env
 RUN set -a  && \
     if [ -e ${APTIBLE_ENV} ] ; then . ${APTIBLE_ENV} ; fi && \
     ./gradlew assemble && \
-    cp ./build/libs/app.jar app.jar
+    cp /opt/form-flow-starter-app/build/libs/app.jar app.jar
 
+ENTRYPOINT ["java", "-jar", "/opt/form-flow-starter-app/app.jar", "--spring.profiles.active=demo"]
 EXPOSE 8080
