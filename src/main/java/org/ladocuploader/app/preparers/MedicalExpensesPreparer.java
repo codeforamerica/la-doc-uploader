@@ -6,12 +6,10 @@ import formflow.library.pdf.SingleField;
 import formflow.library.pdf.SubmissionField;
 import formflow.library.pdf.SubmissionFieldPreparer;
 import lombok.extern.slf4j.Slf4j;
+import org.ladocuploader.app.utils.SubmissionUtilities;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 
@@ -36,15 +34,19 @@ public class MedicalExpensesPreparer implements SubmissionFieldPreparer {
   public Map<String, SubmissionField> prepareSubmissionFields(Submission submission, PdfMap pdfMap) {
     Map<String, SubmissionField> results = new HashMap<>();
 
-    var expenses = (List) submission.getInputData().getOrDefault("householdMedicalExpenses[]", emptyList());
-    if (!expenses.isEmpty()) {
-      List<String> expensesList = EXPENSES.keySet().stream().toList();
+    var householdMemberExpenses = (List<Map<String, Object>>) submission.getInputData().getOrDefault("householdMedical", emptyList());
+
+    if (!householdMemberExpenses.isEmpty()) {
       int i = 1;
-      for (String expense : expensesList) {
-        var expenseInput = submission.getInputData().get(AMOUNT_PREFIX + expense);
-        if (expenseInput != null) {
+      for (Map<String, Object> householdMember: householdMemberExpenses){
+        String memberUUID = (String) householdMember.get("medicalExpenseMember");
+        String memberFullname = SubmissionUtilities.getHouseholdMemberFullnameByUUID(memberUUID, submission.getInputData());
+        List<String> medicalExpenses = (List<String>) householdMember.get("householdMedicalExpenses[]");
+        for (String expense : medicalExpenses){
+          var amount = householdMember.get(AMOUNT_PREFIX + expense);
+          results.put("medicalExpensesPerson" + i, new SingleField("medicalExpensesPerson", memberFullname, i));
+          results.put("medicalExpensesAmount" + i, new SingleField("medicalExpensesAmount", (String) amount, i));
           results.put("medicalExpensesType" + i, new SingleField("medicalExpensesType", EXPENSES.get(expense), i));
-          results.put("medicalExpensesAmount" + i, new SingleField("medicalExpensesAmount", (String) expenseInput, i));
           results.put("medicalExpensesFreq" + i, new SingleField("medicalExpensesFreq", "Monthly", i));
           i++;
         }

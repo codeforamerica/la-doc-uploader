@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<th:block th:with="
+ hhMemberUUID=${fieldData.getOrDefault('medicalExpenseMember', 'you')},
+ householdMemberName=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUID(fieldData.getOrDefault('medicalExpenseMember', 'you'), inputData)}">
+<head th:replace="~{fragments/head :: head(title=#{medical-expenses.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block
+            th:replace="~{fragments/cardHeader ::
+            cardHeader(header=${hhMemberUUID == 'you' ?
+            #messages.msgWithParams('medical-expenses-you.header', householdMemberName) :
+            #messages.msgWithParams('medical-expenses-hhmember.header', householdMemberName)})}"/>
+        <th:block
+            th:replace="~{fragments/form :: form(action=${formAction}, content=~{::healthExpenses})}">
+          <th:block th:ref="healthExpenses">
+            <div class="form-card__content">
+              <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+                  checkboxFieldset(inputName='householdMedicalExpenses',
+                  ariaLabel='header',
+                  content=~{::whichHouseholdExpenses})}">
+                <th:block th:ref="whichHouseholdExpenses">
+                  <th:block
+                      th:each="option : ${T(org.ladocuploader.app.data.enums.MedicalExpensesType).values()}">
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='householdMedicalExpenses',value=${option.getValue()}, label=#{${option.getLabelSrc()}})}"/>
+                  </th:block>
+                </th:block>
+              </th:block>
+
+            </div>
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</th:block>
+</html>

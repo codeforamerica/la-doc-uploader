@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
+<th:block th:with="
+ hhMemberUUID=${fieldData.getOrDefault('medicalExpenseMember', 'you')},
+ householdMemberName=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUID(fieldData.getOrDefault('medicalExpenseMember', 'you'), inputData)}">
 <head th:replace="~{fragments/head :: head(title=#{medical-expenses-amount.title})}"></head>
 <body>
 <div class="page-wrapper">
@@ -9,12 +12,15 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{expenses-amount.question(#{medical-expenses})})}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=${hhMemberUUID == 'you' ?
+            #messages.msgWithParams('medical-expense-amount-you.question', householdMemberName) :
+            #messages.msgWithParams('medical-expense-amount-hhmember.question', householdMemberName)})}"/>
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formDetails})}">
           <th:block th:ref="formDetails">
             <div class="form-card__content">
-              <div th:each="expense, iter:${inputData.get('householdMedicalExpenses[]')}"
+              <th:block th:with="subflowExpenses=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMedicalExpensesSubflowItem(submission, hhMemberUUID)}">
+              <div th:each="expense, iter:${subflowExpenses}"
                    class="spacing-below-15">
                 <th:block
                     th:with="inputName=${'householdMedicalExpenseAmount' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + expense}">
@@ -29,6 +35,7 @@
                 </th:block>
                 <hr/>
               </div>
+              </th:block>
             </div>
             <div class="form-card__footer">
               <th:block
@@ -42,4 +49,5 @@
 </div>
 <th:block th:replace="~{fragments/footer :: footer}"/>
 </body>
+</th:block>
 </html>

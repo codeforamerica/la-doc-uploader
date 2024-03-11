@@ -25,16 +25,26 @@ class MedicalExpensesPreparerTest {
   @Test
   public void shouldAddFieldsForMedicalExpenses() {
     Submission submission = new SubmissionTestBuilder()
-        .with("householdMedicalExpenses[]", List.of("dentalBills"))
-        .with("householdMedicalExpenseAmount_wildcard_dentalBills", "10")
-        .with("householdMedicalExpenseAmount_wildcard_hospitalBills", "20")
-        .with("householdMedicalExpenseAmount_wildcard_nursingHome", "30")
-        .with("householdMedicalExpenseAmount_wildcard_prescriptionMedicine", "40")
+            .with("householdMedical", List.of(
+                    Map.of("medicalExpenseMember", "test",
+                            "householdMedicalExpenses[]",
+                            List.of(
+                                    "dentalBills",
+                                    "hospitalBills",
+                                    "nursingHome",
+                                    "prescriptionMedicine"
+                            ),
+                            "householdMedicalExpenseAmount_wildcard_dentalBills", "10",
+                            "householdMedicalExpenseAmount_wildcard_hospitalBills", "20",
+                            "householdMedicalExpenseAmount_wildcard_nursingHome", "30",
+                            "householdMedicalExpenseAmount_wildcard_prescriptionMedicine", "40"
+                    )
+            ))
         .build();
 
     Map<String, SubmissionField> result = preparer.prepareSubmissionFields(submission, null);
 
-    assertThat(result.size()).isEqualTo(12);
+    assertThat(result.size()).isEqualTo(16);
     assertThat(result.get("medicalExpensesType1"))
         .isEqualTo(new SingleField("medicalExpensesType", "Dental bills", 1));
     assertThat(result.get("medicalExpensesAmount1"))
@@ -49,19 +59,19 @@ class MedicalExpensesPreparerTest {
     assertThat(result.get("medicalExpensesFreq2"))
         .isEqualTo(new SingleField("medicalExpensesFreq", "Monthly", 2));
 
-    assertThat(result.get("medicalExpensesType3"))
-        .isEqualTo(new SingleField("medicalExpensesType", "Prescribed medicine", 3));
-    assertThat(result.get("medicalExpensesAmount3"))
-        .isEqualTo(new SingleField("medicalExpensesAmount", "40", 3));
-    assertThat(result.get("medicalExpensesFreq3"))
-        .isEqualTo(new SingleField("medicalExpensesFreq", "Monthly", 3));
-
     assertThat(result.get("medicalExpensesType4"))
-        .isEqualTo(new SingleField("medicalExpensesType", "Nursing home", 4));
+        .isEqualTo(new SingleField("medicalExpensesType", "Prescribed medicine", 4));
     assertThat(result.get("medicalExpensesAmount4"))
-        .isEqualTo(new SingleField("medicalExpensesAmount", "30", 4));
+        .isEqualTo(new SingleField("medicalExpensesAmount", "40", 4));
     assertThat(result.get("medicalExpensesFreq4"))
         .isEqualTo(new SingleField("medicalExpensesFreq", "Monthly", 4));
+
+    assertThat(result.get("medicalExpensesType3"))
+        .isEqualTo(new SingleField("medicalExpensesType", "Nursing home", 3));
+    assertThat(result.get("medicalExpensesAmount3"))
+        .isEqualTo(new SingleField("medicalExpensesAmount", "30", 3));
+    assertThat(result.get("medicalExpensesFreq3"))
+        .isEqualTo(new SingleField("medicalExpensesFreq", "Monthly", 3));
   }
 
 }

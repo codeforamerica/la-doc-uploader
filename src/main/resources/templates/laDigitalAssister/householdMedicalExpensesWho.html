@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title=#{household-medical-expenses-who.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{household-medical-expenses-who.header})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::formContents})}">
+            <th:block th:ref="formContents">
+              <div class="form-card__content">
+                <th:block th:replace="~{fragments/inputs/radioFieldset ::
+                            radioFieldset(
+                            ariaLabel=#{household-medical-expenses-who.header},
+                            inputName='medicalExpenseMember',
+                            content=~{::householdMembers})}">
+                  <th:block th:ref="householdMembers">
+                      <th:block th:each="householdMember, iter: ${inputData.get('householdMedicalExpensesWho[]')}"
+                                class="spacing-below-15">
+                        <th:block th:with="hhmemberLabel=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUIDWithYou(householdMember, inputData)}">
+                        <th:block
+                            th:replace="~{fragments/inputs/radio :: radio(inputName='medicalExpenseMember',value=${householdMember}, label=${hhmemberLabel})}"/>
+                      </th:block>
+                      </th:block>
+
+                  </th:block>
+                </th:block>
+                
+              </div>
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}" />
+</body>
+</html>
