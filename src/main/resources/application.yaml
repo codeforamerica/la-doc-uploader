@@ -86,7 +86,7 @@ logging:
   pattern:
     console:
   level:
-    root: DEBUG
+    root: INFO
     org:
       springframework:
         boot:
