@@ -16,13 +16,13 @@
     </layout>
   </appender>
 
-  <springProfile name="dev | test | demo">
+  <springProfile name="dev | test | demo | staging">
     <root level="INFO">
       <appender-ref ref="LocalConsole"/>
     </root>
   </springProfile>
 
-  <springProfile name="staging | production">
+  <springProfile name="production">
     <root level="INFO | WARN | ERROR">
       <appender-ref ref="JsonConsole"/>
     </root>
