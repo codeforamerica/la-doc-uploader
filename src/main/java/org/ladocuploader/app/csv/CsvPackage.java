@@ -12,6 +12,7 @@ import org.ladocuploader.app.csv.enums.CsvPackageType;
 public class CsvPackage {
 
   @Setter
+  @Getter
   private CsvPackageType packageType;
 
   private Map<CsvType, CsvDocument> csvDocumentMap;
