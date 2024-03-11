@@ -41,7 +41,7 @@ dependencies {
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.3'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.2'
     implementation 'com.opencsv:opencsv:5.9'
 
     if (profile == 'dev' || useLocalLibrary == 'true') {
