@@ -18,7 +18,6 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
-import org.ladocuploader.app.submission.StringEncryptor;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -53,7 +52,7 @@ public class TransmitterCommands {
 
     private final String successfulSubmissionKey = "success";
 
-    private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE, TransmissionType.WIC);
+    private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE);
 
     private final long TWO_HOURS = 2L;
 
