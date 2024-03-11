@@ -10,8 +10,6 @@ import org.bouncycastle.openpgp.*;
 import org.bouncycastle.openpgp.jcajce.JcaPGPPublicKeyRingCollection;
 import org.bouncycastle.openpgp.operator.KeyFingerPrintCalculator;
 import org.bouncycastle.openpgp.operator.jcajce.*;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Profile;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -19,9 +17,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 @Slf4j
-@ComponentScan
-@Profile({"production", "staging"})
-public class BasePGPEncrpytorImpl implements PGPEncryptor {
+public abstract class BasePGPEncrpytorImpl {
 
     private String accessKey;
     private String secretKey;
@@ -60,7 +56,6 @@ public class BasePGPEncrpytorImpl implements PGPEncryptor {
         }
     }
 
-    @Override
     public byte[] signAndEncryptPayload(String filename) throws IOException {
         FileInputStream instream = new FileInputStream(filename);
         ByteArrayOutputStream outstream = new ByteArrayOutputStream();

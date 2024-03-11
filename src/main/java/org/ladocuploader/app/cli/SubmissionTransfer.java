@@ -64,7 +64,7 @@ public class SubmissionTransfer {
   private final UserFileRepositoryService fileRepositoryService;
   private final CloudFileRepository fileRepository;
   private final PdfService pdfService;
-  private final PGPEncryptor snapPgpEncryptor;
+  private final BasePGPEncrpytorImpl snapPgpEncryptor;
 
   private final StringEncryptor encryptor;
   private final FtpsClient ftpsClient;
@@ -72,7 +72,7 @@ public class SubmissionTransfer {
 
 
 
-  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, PGPEncryptor snapPgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
+  public SubmissionTransfer(TransmissionRepository transmissionRepository, UserFileRepositoryService fileRepositoryService, CloudFileRepository fileRepository, PdfService pdfService, BasePGPEncrpytorImpl snapPgpEncryptor, StringEncryptor encryptor, FtpsClient ftpsClient) {
     this.transmissionRepository = transmissionRepository;
     this.fileRepositoryService = fileRepositoryService;
     this.fileRepository = fileRepository;

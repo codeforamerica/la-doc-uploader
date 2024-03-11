@@ -22,7 +22,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -56,12 +55,12 @@ public class TransmitterCommands {
 
     private final long TWO_HOURS = 2L;
 
-    private final PGPEncryptor wicPgpEncryptor;
+    private final BasePGPEncrpytorImpl wicPgpEncryptor;
 
-    private final PGPEncryptor ecePgpEncryptor;
+    private final BasePGPEncrpytorImpl ecePgpEncryptor;
 
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor wicPgpEncryptor, PGPEncryptor ecePgpEncryptor) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, BasePGPEncrpytorImpl wicPgpEncryptor, BasePGPEncrpytorImpl ecePgpEncryptor) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
