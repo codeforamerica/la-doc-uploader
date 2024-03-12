@@ -43,6 +43,7 @@ inputFields:
   workPhoneNumber: workPhoneNumber
   sex: sex
   parish: parish
+  onStrikeInd: onStrikeInd
   outOfStateBenefitsInd: outOfStateBenefitsInd
   mealInd: paysForMeals
   workDisqualificationInd: workDisqualificationInd
@@ -79,7 +80,7 @@ inputFields:
   expensesDependentCare: expensesDependentCare
   hasChildSupportExpenses: hasChildSupportExpenses
   expensesChildSupport: expensesChildSupport
-  personalSituationDisabilityInd: disablityInd
+  disabilityInd: disablityInd
   pregnancyInd: pregnancyInd
   pregnantMemberNames: pregnantMemberNames
   pregnantMemberDueDates: pregnantMemberDueDates
