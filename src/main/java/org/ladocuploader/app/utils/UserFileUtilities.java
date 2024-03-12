@@ -1,5 +1,6 @@
 package org.ladocuploader.app.utils;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class UserFileUtilities {
      * @return
      * @throws JsonProcessingException
      */
-    public static Map<UUID, Map<String, String>> getUserFileInfo(String userFileMapString, List<UserFile> userFiles, String flow, String inputName) throws JsonProcessingException {
+    public static Map<UUID, Map<String, String>> getUserFileInfo(String userFileMapString, List<UserFile> userFiles, String flow, String inputName) throws IOException {
         Map<UUID, Map<String,String>> fileData = new HashMap<>();
 
         ObjectMapper objectMapper = new ObjectMapper();
