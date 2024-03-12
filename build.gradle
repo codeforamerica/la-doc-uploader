@@ -9,13 +9,11 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-    configureEach {
-        exclude group: "commons-logging", module: "commons-logging"
-    }
 }
 
 configurations.configureEach {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    exclude group: "commons-logging", module: "commons-logging"
 }
 
 def props = new Properties()
