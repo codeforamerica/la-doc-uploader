@@ -41,7 +41,7 @@ jobs:
           sudo dpkg -i aptible-package
           aptible login --email=${{ secrets.APTIBLE_USERNAME }} --password=${{ secrets.APTIBLE_PASSWORD}}
           aptible deploy --app app-prod --git-commitish ${GITHUB_SHA} \
-          'SPRING_PROFILES_ACTIVE=prod' \
+          'SPRING_PROFILES_ACTIVE=production' \
           'DEFAULT_LOCALE=en' \
           'SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}' \
           'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' \
