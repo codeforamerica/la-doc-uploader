@@ -43,6 +43,7 @@ inputFields:
   workPhoneNumber: workPhoneNumber
   sex: sex
   parish: parish
+  onStrikeInd: onStrikeInd
   outOfStateBenefitsInd: outOfStateBenefitsInd
   mealInd: paysForMeals
   workDisqualificationInd: workDisqualificationInd
