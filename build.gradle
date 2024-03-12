@@ -13,6 +13,7 @@ configurations {
 
 configurations.all{
     exclude group: "commons-logging", module: "commons-logging"
+    exclude group: "org.slf4j", module : "slf4j-log4j12"
 }
 
 configurations.configureEach {
