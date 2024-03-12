@@ -70,6 +70,7 @@ dependencies {
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.6.0'
     implementation 'io.sentry:sentry-logback:7.6.0'
     implementation 'org.slf4j:log4j-over-slf4j:1.6.4'
+    implementation 'org.slf4j:jcl-over-slf4j'
 
 
     testImplementation 'junit:junit:4.13.2'
