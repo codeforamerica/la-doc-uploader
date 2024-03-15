@@ -171,7 +171,8 @@ public class SubmissionTransfer {
       byte[] data = snapPgpEncryptor.signAndEncryptPayload(zipFileName);
       ftpsClient.uploadFile(zipFileName + ".gpg", data);
     } catch (IOException ex) {
-      throw new IllegalStateException(ex);
+      log.error("Transfer failed for batch %s, run_id %s".formatted(batchIndex, uuid), ex);
+      return;
     } finally {
       // Cleanup
       if (new File(zipFileName).delete()) {
