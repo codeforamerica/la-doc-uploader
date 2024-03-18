@@ -84,6 +84,8 @@ class SubmissionTransferTest {
   public void transmitZipFile() {
     submissionTransfer.transferSubmissions();
 
+    assertThat(transmissionRepository.nextValueBatchSequence(), equalTo(50000001L));
+
     File zipFile = new File(MOCK_SERVER_NAME + "/00050000000.zip.gpg");
     assertTrue(zipFile.exists());
 
