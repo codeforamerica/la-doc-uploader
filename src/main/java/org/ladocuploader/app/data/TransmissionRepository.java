@@ -28,4 +28,7 @@ public interface TransmissionRepository extends JpaRepository<Transmission, UUID
 
     @Query(value = "SELECT nextval('batch_seq')")
     Long nextValueBatchSequence();
+
+    @Query(value = "SELECT setval('batch_seq', :rollbackValue)")
+    void rollbackBatchSequence(Long rollbackValue);
 }
