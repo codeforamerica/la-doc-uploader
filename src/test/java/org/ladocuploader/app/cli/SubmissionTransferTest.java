@@ -7,6 +7,7 @@ import formflow.library.data.UserFileRepository;
 import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.data.Transmission;
@@ -20,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.*;
@@ -81,7 +83,7 @@ class SubmissionTransferTest {
   }
 
   @Test
-  public void transmitZipFile() {
+  public void transmitZipFile() throws IOException {
     submissionTransfer.transferSubmissions();
 
     assertThat(transmissionRepository.nextValueBatchSequence(), equalTo(50000001L));
@@ -125,6 +127,27 @@ class SubmissionTransferTest {
 
     // cleanup
     zipFile.delete();
+    FileUtils.deleteDirectory(new File(MOCK_SERVER_NAME));
+  }
+
+  @Test
+  public void failedToTransmitZipFile() throws IOException {
+    // Mock error on package transfer
+    FileUtils.deleteDirectory(new File(MOCK_SERVER_NAME));
+    File file = new File(MOCK_SERVER_NAME);
+    file.deleteOnExit();
+    file.createNewFile();
+    FileOutputStream dummyFile = new FileOutputStream(MOCK_SERVER_NAME);
+    dummyFile.write("Some info that isn't a directory".getBytes());
+
+    submissionTransfer.transferSubmissions();
+
+    // Should have been reset
+    assertThat(transmissionRepository.nextValueBatchSequence(), equalTo(50000000L));
+
+    // cleanup
+    dummyFile.close();
+    file.delete();
   }
 
   private Submission queueInvalidSubmission() {
