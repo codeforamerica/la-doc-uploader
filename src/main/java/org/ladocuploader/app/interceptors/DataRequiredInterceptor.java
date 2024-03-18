@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Nullable;
 import org.ladocuploader.app.data.RecoverySubmissionIDs;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -40,6 +41,9 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     try {
+      var session = request.getSession(false);
+      var recoverySubmissionId = setRecoverySubmissionId(session);
+
       var parsedUrl = new AntPathMatcher().extractUriTemplateVariables(PATH_FORMAT, request.getRequestURI());
       var requiredData = REQUIRED_DATA.get(parsedUrl.get("screen"));
       var flow = "laDigitalAssister";
@@ -49,19 +53,11 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
         return true; // There are no data requirements for this page
       }
 
-      var recoverySubmissionId = recoveryRecoverySubmissionIDs.getFlowSubmissionId(flow);
-
-      var session = request.getSession(false);
       if (session == null) {
         return handleSessionMissing(request, response, flow, redirect_url, recoverySubmissionId);
       }
 
-      Map<String, UUID> submissionMap = (Map) session.getAttribute(FormFlowController.SUBMISSION_MAP_NAME);
-      UUID submissionId = null;
-      if (submissionMap != null && submissionMap.get(parsedUrl.get("flow")) != null) {
-        submissionId = submissionMap.get(parsedUrl.get("flow"));
-      }
-
+      UUID submissionId = getSubmissionIdFromSession(session, flow);
       if (submissionId != null && !submissionId.equals(recoverySubmissionId)) {
         // Reconcile
         if (recoverySubmissionId == null) {
@@ -101,6 +97,35 @@ public class DataRequiredInterceptor implements HandlerInterceptor {
       log.error("Unexpected error", e);
       return true;
     }
+  }
+
+  @Nullable
+  private static UUID getSubmissionIdFromSession(HttpSession session, String flow) {
+    var submissionMap = (Map<String, UUID>) session.getAttribute(FormFlowController.SUBMISSION_MAP_NAME);
+    if (submissionMap != null && submissionMap.containsKey(flow)) {
+      return submissionMap.get(flow);
+    }
+    return null;
+  }
+
+  /**
+   * Initialize recovery submission ID.
+   */
+  private UUID setRecoverySubmissionId(HttpSession session) {
+    String flow = "laDigitalAssister";
+    var recoverySubmissionId = recoveryRecoverySubmissionIDs.getFlowSubmissionId(flow);
+    if (recoverySubmissionId != null || session == null) {
+      return recoverySubmissionId;
+    }
+
+    UUID submissionId = getSubmissionIdFromSession(session, flow);
+    if (submissionId != null) {
+      log.info("Setting recoverySubmissionId to " + submissionId);
+      recoveryRecoverySubmissionIDs.setFlowSubmissionId(flow, submissionId);
+      return submissionId;
+    }
+
+    return recoverySubmissionId;
   }
 
   private static boolean handleUnrecoverableSubmissionId(HttpServletResponse response, String requiredData, String redirect_url) throws IOException {

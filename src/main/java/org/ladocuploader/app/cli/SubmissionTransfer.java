@@ -172,6 +172,7 @@ public class SubmissionTransfer {
       ftpsClient.uploadFile(zipFileName + ".gpg", data);
     } catch (IOException ex) {
       log.error("Transfer failed for batch %s, run_id %s".formatted(batchIndex, uuid), ex);
+      transmissionRepository.rollbackBatchSequence(Long.parseLong(batchSeq) - 1);
       return;
     } finally {
       // Cleanup
