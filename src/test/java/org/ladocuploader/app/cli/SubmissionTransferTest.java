@@ -8,6 +8,7 @@ import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
 import org.apache.commons.io.FileUtils;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.ladocuploader.app.data.Transmission;
@@ -84,9 +85,11 @@ class SubmissionTransferTest {
 
   @Test
   public void transmitZipFile() throws IOException {
+    Long expectedNextBatchSeq = transmissionRepository.nextValueBatchSequence() + 2;
+
     submissionTransfer.transferSubmissions();
 
-    assertThat(transmissionRepository.nextValueBatchSequence(), equalTo(50000001L));
+    assertThat(transmissionRepository.nextValueBatchSequence(), equalTo(expectedNextBatchSeq));
 
     File zipFile = new File(MOCK_SERVER_NAME + "/00050000000.zip.gpg");
     assertTrue(zipFile.exists());
@@ -132,6 +135,20 @@ class SubmissionTransferTest {
 
   @Test
   public void failedToTransmitZipFile() throws IOException {
+    FileOutputStream dummyFile = mockTransferExcetion();
+    Long expectedNextBatchSeq = transmissionRepository.nextValueBatchSequence() + 1;
+
+    submissionTransfer.transferSubmissions();
+
+    // Should not increment
+    assertThat(transmissionRepository.nextValueBatchSequence(), equalTo(expectedNextBatchSeq));
+
+    // cleanup
+    dummyFile.close();
+  }
+
+  @NotNull
+  private static FileOutputStream mockTransferExcetion() throws IOException {
     // Mock error on package transfer
     FileUtils.deleteDirectory(new File(MOCK_SERVER_NAME));
     File file = new File(MOCK_SERVER_NAME);
@@ -139,15 +156,7 @@ class SubmissionTransferTest {
     file.createNewFile();
     FileOutputStream dummyFile = new FileOutputStream(MOCK_SERVER_NAME);
     dummyFile.write("Some info that isn't a directory".getBytes());
-
-    submissionTransfer.transferSubmissions();
-
-    // Should have been reset
-    assertThat(transmissionRepository.nextValueBatchSequence(), equalTo(50000000L));
-
-    // cleanup
-    dummyFile.close();
-    file.delete();
+    return dummyFile;
   }
 
   private Submission queueInvalidSubmission() {
