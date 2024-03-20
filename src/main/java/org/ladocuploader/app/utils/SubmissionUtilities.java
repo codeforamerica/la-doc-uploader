@@ -1,6 +1,7 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
+import org.ladocuploader.app.data.enums.Parish;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 import static java.util.Collections.emptyList;
-import static org.ladocuploader.app.utils.Parish.ORLEANS;
+import static org.ladocuploader.app.data.enums.Parish.ORLEANS;
 
 public class SubmissionUtilities {
 
@@ -126,6 +127,24 @@ public class SubmissionUtilities {
       }
     }
     return false;
+  }
+
+  public static String getParishMailingAddress1(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getMailingAddressLine1();
+  }
+
+  public static String getParishMailingAddress2(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getMailingAddressLine2();
+  }
+
+  public static String getParishDisplayName(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getDisplayName() + " DCFS Office";
   }
 
 
