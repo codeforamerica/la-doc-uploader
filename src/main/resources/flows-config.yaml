@@ -219,11 +219,6 @@ flow:
       - name: householdRoomRental
   householdRoomRental:
     nextScreens:
-      - name: householdRoomRentalWho
-        condition: HasRoomRental
-      - name: householdMeals
-  householdRoomRentalWho:
-    nextScreens:
       - name: householdMeals
   householdMeals:
     nextScreens:

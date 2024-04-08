@@ -529,16 +529,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("household-room-rental.title"));
-    testPage.clickButton("No");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-meals.title"));
-    testPage.goBack();
     testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-room-rental-who.title"));
-    testPage.clickElementById("roomRentals-you");
-    testPage.clickContinue();
-
+    
     assertThat(testPage.getTitle()).isEqualTo(message("household-meals.title"));
     testPage.clickButton("No");
 
