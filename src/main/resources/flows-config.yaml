@@ -39,14 +39,6 @@ flow:
       - name: signPost
   signPost:
     nextScreens:
-      - name: whosApplying
-  whosApplying:
-    nextScreens:
-      - name: applicantNotice
-        condition: ApplicantIsNotSelf
-      - name: personalInfo
-  applicantNotice:
-    nextScreens:
       - name: personalInfo
   personalInfo:
     crossFieldValidationAction: ValidateBirthdate

@@ -34,10 +34,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private List<String> copyReceiveMethod;
 
-  // Who is Applying
-  @NotBlank(message="{error.missing-general}")
-  private String whosApplying;
-
   // Personal Information
   @NotBlank(message="{error.missing-firstname}")
   private String firstName;
