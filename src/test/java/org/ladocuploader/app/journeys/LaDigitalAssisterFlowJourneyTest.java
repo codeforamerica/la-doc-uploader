@@ -538,10 +538,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.goBack();
     testPage.clickButton("Yes");
 
-    assertThat(testPage.getTitle()).isEqualTo(message("household-meals-who.title"));
-    testPage.clickElementById("meals-you");
-    testPage.clickContinue();
-
     // Sensitive Questions
     assertThat(testPage.getTitle()).isEqualTo(message("sensitive-questions.title"));
     testPage.clickContinue();

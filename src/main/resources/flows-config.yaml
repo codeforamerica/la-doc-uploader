@@ -222,11 +222,6 @@ flow:
       - name: householdMeals
   householdMeals:
     nextScreens:
-      - name: householdMealsWho
-        condition: PayForMeals
-      - name: sensitiveQuestions
-  householdMealsWho:
-    nextScreens:
       - name: sensitiveQuestions
   sensitiveQuestions:
     nextScreens:
