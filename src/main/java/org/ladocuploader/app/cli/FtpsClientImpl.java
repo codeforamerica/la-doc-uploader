@@ -38,7 +38,7 @@ public class FtpsClientImpl implements FtpsClient {
     ftp.connect(uploadUrl);
 
     ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
-    
+
     int reply = ftp.getReplyCode();
     if (!FTPReply.isPositiveCompletion(reply)) {
       ftp.disconnect();
@@ -58,14 +58,10 @@ public class FtpsClientImpl implements FtpsClient {
     boolean isComplete = ftp.storeFile(zipFilename, local);
     local.close();
 
-    try {
-      if (isComplete || ftp.completePendingCommand()) {
-        ftp.logout();
-          ftp.disconnect();
-        log.info("Upload completed with isComplete: %s. Disconnected.".formatted(isComplete));
-      }
-    } catch (IOException e) {
-      log.error("Failed to finalize transfer", e);
+    if (isComplete || ftp.completePendingCommand()) {
+      ftp.logout();
+      ftp.disconnect();
+      log.info("Upload completed with isComplete: %s. Disconnected.".formatted(isComplete));
     }
   }
 }
