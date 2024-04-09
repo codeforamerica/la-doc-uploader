@@ -46,6 +46,7 @@ inputFields:
   outOfStateBenefitsInd: outOfStateBenefitsInd
   mealInd: paysForMeals
   workDisqualificationInd: workDisqualificationInd
+  householdOnStrike: householdOnStrike
   highestEducationFormatted: highestEducation
   ethnicitySelected: ethnicitySelected
   raceSelected:

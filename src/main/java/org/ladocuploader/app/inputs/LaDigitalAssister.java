@@ -237,6 +237,8 @@ public class LaDigitalAssister extends FlowInputs {
   private List<String> jobSearch;
 
   private String workDisqualificationInd;
+  
+  private String householdOnStrike;
 
   private String selfEmploymentIncome;
 
