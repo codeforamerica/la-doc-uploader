@@ -34,10 +34,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   private List<String> copyReceiveMethod;
 
-  // Who is Applying
-  @NotBlank(message="{error.missing-general}")
-  private String whosApplying;
-
   // Personal Information
   @NotBlank(message="{error.missing-firstname}")
   private String firstName;
@@ -92,12 +88,6 @@ public class LaDigitalAssister extends FlowInputs {
 
   @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{4}$", message="{error.invalid-phone}")
   private String workPhoneNumber;
-
-  private String wantsReminders;
-
-  private String identifiesAsDeaf;
-
-  private String preferredCommsMethod;
 
   @Pattern(regexp = "^[\\w-\\.]+@[\\w-\\.]+\\.[\\w-]{2,4}$", message = "{client-info.provide-correct-email}")
   private String emailAddress;
@@ -201,8 +191,6 @@ public class LaDigitalAssister extends FlowInputs {
   private String homeless;
 
   private String roomRentalInd;
-
-  private String roomRentals;
 
   private String mealInd;
 

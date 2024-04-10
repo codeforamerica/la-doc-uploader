@@ -27,18 +27,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
   protected static final String RANGE_ERROR_MESSAGE = "Make sure to provide a value between 1 and 100.";
 
   @Test
-  void whosApplyingFlow() {
-    testPage.navigateToFlowScreen("laDigitalAssister/whosApplying");
-    testPage.clickContinue();
-
-    assert (testPage.hasErrorText(message("error.missing-general")));
-    testPage.clickElementById("whosApplying-Self");
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("personal-info.title"));
-  }
-
-  @Test
   void personalInformationFlow() {
     testPage.navigateToFlowScreen("laDigitalAssister/personalInfo");
     testPage.clickContinue();
@@ -347,15 +335,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("signpost.title"));
     testPage.clickContinue();
 
-    // Who's Applying
-    assertThat(testPage.getTitle()).isEqualTo(message("whos-applying.title"));
-    testPage.clickElementById("whosApplying-CommunityPartner");
-    testPage.clickContinue();
-
-    // Applicant is not self - check that flow next page is the notice
-    assertThat(testPage.getTitle()).isEqualTo(message("applicant-notice.title"));
-    testPage.clickContinue();
-
     // Personal Info
     assertThat(testPage.getTitle()).isEqualTo(message("personal-info.title"));
     testPage.enter("firstName", "test");
@@ -550,26 +529,14 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("household-room-rental.title"));
-    testPage.clickButton("No");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-meals.title"));
-    testPage.goBack();
     testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-room-rental-who.title"));
-    testPage.clickElementById("roomRentals-you");
-    testPage.clickContinue();
-
+    
     assertThat(testPage.getTitle()).isEqualTo(message("household-meals.title"));
     testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("sensitive-questions.title"));
     testPage.goBack();
     testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("household-meals-who.title"));
-    testPage.clickElementById("meals-you");
-    testPage.clickContinue();
 
     // Sensitive Questions
     assertThat(testPage.getTitle()).isEqualTo(message("sensitive-questions.title"));
