@@ -41,7 +41,7 @@ dependencies {
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.3'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.17.0'
     implementation 'com.opencsv:opencsv:5.9'
 
     if (profile == 'dev' || useLocalLibrary == 'true') {
@@ -94,7 +94,7 @@ springBoot {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.shell:spring-shell-dependencies:3.2.2"
+        mavenBom "org.springframework.shell:spring-shell-dependencies:3.2.3"
     }
 }
 
