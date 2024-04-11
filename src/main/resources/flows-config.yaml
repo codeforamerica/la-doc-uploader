@@ -39,14 +39,6 @@ flow:
       - name: signPost
   signPost:
     nextScreens:
-      - name: whosApplying
-  whosApplying:
-    nextScreens:
-      - name: applicantNotice
-        condition: ApplicantIsNotSelf
-      - name: personalInfo
-  applicantNotice:
-    nextScreens:
       - name: personalInfo
   personalInfo:
     crossFieldValidationAction: ValidateBirthdate
@@ -66,8 +58,9 @@ flow:
     beforeSaveAction: MailingAddressSetToHomeAddress
     nextScreens:
       - name: contactInfo
-  whereToSendMail:
-    nextScreens: null
+  dcfsMailingAddress:
+    nextScreens:
+      - name: contactInfo
   mailingAddress:
     crossFieldValidationAction: ValidateMailingAddress
     beforeSaveAction: MailingAddressSetToHomeAddress
@@ -167,6 +160,9 @@ flow:
       - name: householdPrepareFood
   householdBenefitsWho:
     nextScreens:
+      - name: householdBenefitsWhich
+  householdBenefitsWhich:
+    nextScreens:
       - name: householdPrepareFood
   householdPrepareFood:
     nextScreens:
@@ -227,27 +223,15 @@ flow:
       - name: householdRoomRental
   householdRoomRental:
     nextScreens:
-      - name: householdRoomRentalWho
-        condition: HasRoomRental
-      - name: householdMeals
-  householdRoomRentalWho:
-    nextScreens:
       - name: householdMeals
   householdMeals:
-    nextScreens:
-      - name: householdMealsWho
-        condition: PayForMeals
-      - name: sensitiveQuestions
-  householdMealsWho:
     nextScreens:
       - name: sensitiveQuestions
   sensitiveQuestions:
     nextScreens:
-      - name: householdPersonalSituations
-  householdPersonalSituations:
+      - name: householdDisability
+  householdDisability:
     nextScreens:
-      - name: householdPersonalSituationsWho
-        condition: HouseholdHasPersonalSituations
       - name: householdVictimOfDomesticViolence
   householdPersonalSituationsWho:
     beforeSaveAction: ReformatPersonalSituationUserData
@@ -280,6 +264,9 @@ flow:
     nextScreens:
       - name: householdWorkDisqualifications
   householdWorkDisqualifications:
+    nextScreens:
+      - name: householdOnStrike
+  householdOnStrike:
     nextScreens:
       - name: householdEmploymentStatus
   householdEmploymentStatus:
@@ -383,15 +370,26 @@ flow:
       - name: expensesElderlyCare
   expensesElderlyCare:
     nextScreens:
-      - name: householdMedicalExpenses
+      - name: expensesElderlyCareWho
         condition: HasElderlyCareExpenses
       - name: expensesDependentCare
-  householdMedicalExpenses:
+  expensesElderlyCareWho:
+    nextScreens:
+      - name: householdMedicalExpensesWho
+  householdMedicalExpensesWho:
+    subflow: householdMedical
+    nextScreens:
+      - name: householdMedicalExpensesWhich
+  householdMedicalExpensesWhich:
+    subflow: householdMedical
     nextScreens:
       - name: householdMedicalExpensesAmount
-        condition: HasMedicalExpenses
-      - name: expensesDependentCare
   householdMedicalExpensesAmount:
+    subflow: householdMedical
+    nextScreens:
+      - name: householdMedicalExpensesConfirmation # TODO: change to confirmation
+  householdMedicalExpensesConfirmation:
+    subflow: householdMedical
     nextScreens:
       - name: expensesDependentCare
   expensesDependentCare:
@@ -506,9 +504,14 @@ flow:
   legalStuff:
     nextScreens:
       - name: signature
+  dcfsMailingAddressReminder:
+    nextScreens:
+      - name: applicationCopy
   signature:
     afterSaveAction: HandleApplicationSigned
     nextScreens:
+      - name: dcfsMailingAddressReminder
+        condition: NoPermanentAddress
       - name: applicationCopy
   applicationCopy:
     nextScreens:
@@ -550,6 +553,7 @@ flow:
 landmarks:
   afterSubmitPages:
     - applicationCopy
+    - dcfsMailingAddressReminder
     - confirmation
     - docUploadIntro
     - docUploadSignpost
@@ -569,4 +573,9 @@ subflows:
     entryScreen: householdIncomeByJob
     iterationStartScreen: householdIncomeWho
     reviewScreen: householdIncomeList
+    deleteConfirmationScreen: householdIncomeDeleteConfirmation
+  householdMedical:
+    entryScreen: expensesElderlyCareWho
+    iterationStartScreen: householdMedicalExpensesWho
+    reviewScreen: householdMedicalExpensesConfirmation
     deleteConfirmationScreen: householdIncomeDeleteConfirmation
