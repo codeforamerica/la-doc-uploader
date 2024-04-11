@@ -471,6 +471,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickElementById("outOfStateBenefitsRecipients-you");
     testPage.clickContinue();
 
+    assertThat(testPage.getTitle()).isEqualTo(message("household-benefits-which.title"));
+    testPage.clickContinue();
+
     assertThat(testPage.getTitle()).isEqualTo(message("household-prepare-food.title"));
     testPage.clickButton("No");
 
