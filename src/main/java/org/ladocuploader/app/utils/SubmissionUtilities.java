@@ -1,6 +1,7 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
+import org.ladocuploader.app.data.enums.Parish;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 import static java.util.Collections.emptyList;
-import static org.ladocuploader.app.utils.Parish.ORLEANS;
+import static org.ladocuploader.app.data.enums.Parish.ORLEANS;
 
 public class SubmissionUtilities {
 
@@ -128,6 +129,24 @@ public class SubmissionUtilities {
     return false;
   }
 
+  public static String getParishMailingAddress1(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getMailingAddressLine1();
+  }
+
+  public static String getParishMailingAddress2(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getMailingAddressLine2();
+  }
+
+  public static String getParishDisplayName(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getDisplayName() + " DCFS Office";
+  }
+
 
   public static boolean isDocUploadActive(Submission submission) {
     OffsetDateTime submittedAt = submission.getSubmittedAt();
@@ -170,6 +189,18 @@ public class SubmissionUtilities {
       return "%s %s".formatted(inputData.get("firstName"), inputData.get("lastName"));
     }
 
+    return getHouseholdMemberName(uuid, inputData);
+  }
+
+  public static String getHouseholdMemberFullnameByUUIDWithYou(String uuid, Map<String, Object> inputData) {
+    if ("you".equals(uuid)) {
+      return "%s %s (you)".formatted(inputData.get("firstName"), inputData.get("lastName"));
+    }
+
+    return getHouseholdMemberName(uuid, inputData);
+  }
+
+  public static String getHouseholdMemberName(String uuid, Map<String, Object> inputData){
     var members = (List<Map<String, Object>>) inputData.getOrDefault("household", emptyList());
     for (var member : members) {
       if (uuid.equals(member.get("uuid"))) {
@@ -177,6 +208,16 @@ public class SubmissionUtilities {
       }
     }
     return "";
+  }
+
+  public static ArrayList<String> getHouseholdMedicalExpensesSubflowItem(Submission submission, String hhMemberId){
+    ArrayList<HashMap<String, Object>> subflowList = (ArrayList<HashMap<String, Object>>) submission.getInputData().getOrDefault("householdMedical", emptyList());
+    for (var subflowItem : subflowList){
+      if (hhMemberId.equals(subflowItem.get("medicalExpenseMember"))){
+        return (ArrayList<String>) subflowItem.getOrDefault("householdMedicalExpenses[]", emptyList());
+      }
+    }
+    return new ArrayList<>();
   }
 
   public static ArrayList<HashMap<String, Object>> getHouseholdIncomeReviewItems(Submission submission) {

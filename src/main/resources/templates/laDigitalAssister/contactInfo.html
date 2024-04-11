@@ -34,41 +34,6 @@
                   text(inputName='emailAddress',
                   label=#{contact-info.email-address},
                   helpText=#{contact-info.email-address.help})}"/>
-              <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
-                  checkboxFieldset(inputName='wantsReminders',
-                  label=#{contact-info.can-we-contact},
-                  fieldsetHelpText=#{general.optional},
-                  content=~{::canWeContactYou})}">
-                <th:block th:ref="canWeContactYou">
-                  <th:block
-                      th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='wantsReminders',value='true', label=#{contact-info.yes})}"/>
-                </th:block>
-              </th:block>
-              <th:block th:replace="~{fragments/inputs/radioFieldset ::
-                            radioFieldset(
-                            label=#{contact-info.deaf-or-hoh},
-                            fieldsetHelpText=#{general.optional},
-                            inputName='identifiesAsDeaf',
-                            content=~{::options})}">
-                <th:block th:ref="options">
-                  <th:block
-                      th:replace="~{fragments/inputs/radio :: radio(inputName='identifiesAsDeaf',value='true', label=#{general.inputs.yes})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/radio :: radio(inputName='identifiesAsDeaf',value='false', label=#{general.inputs.no})}"/>
-                </th:block>
-              </th:block>
-
-              <th:block
-                  th:replace="~{fragments/inputs/select :: select(label=#{contact-info.deaf-contact-preference}, inputName='preferredCommsMethod', helpText=#{contact-info.email-address.check-all-that-apply}, content=~{::preferredComms})}">
-                <th:block th:ref="preferredComms">
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{contact-info.deaf-contact-preference.placeholder})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='Relay', optionText=#{contact-info.deaf-contact-preference.option1})}"/>
-                  <th:block
-                      th:replace="~{fragments/inputs/selectOption :: selectOption(value='TTY', optionText=#{contact-info.deaf-contact-preference.option2})}"/>
-                </th:block>
-              </th:block>
               <p th:text="#{contact-info.message-rates}" class="grey-text font-size--smaller"></p>
             </div>
             <div class="form-card__footer">
