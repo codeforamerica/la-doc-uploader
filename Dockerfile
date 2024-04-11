@@ -10,7 +10,6 @@ RUN set -a  && \
     ./gradlew assemble && \
     cp /opt/form-flow-starter-app/build/libs/app.jar app.jar
 
-ENTRYPOINT ["java", "-jar", "/opt/form-flow-starter-app/app.jar", "--spring.profiles.active=demo"]
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "/opt/form-flow-starter-app/app.jar"]
