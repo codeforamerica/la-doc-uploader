@@ -543,20 +543,8 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     //    Case when no personal situations apply
-    assertThat(testPage.getTitle()).isEqualTo(message("personal-situations.title"));
+    assertThat(testPage.getTitle()).isEqualTo(message("disability.title"));
     testPage.clickButton("No");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("domestic-violence.title"));
-    testPage.goBack();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("personal-situations.title"));
-    testPage.clickButton("Yes");
-
-    assertThat(testPage.getTitle()).isEqualTo(message("personal-situations-who.title"));
-    testPage.clickContinue();
-
-    assertThat(testPage.getTitle()).isEqualTo(message("personal-situations-which.title"));
-    testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("domestic-violence.title"));
     testPage.clickContinue();
@@ -579,6 +567,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
 
     assertThat(testPage.getTitle()).isEqualTo(message("work-disqualifications.title"));
     testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("on-strike.title"));
+    testPage.clickButton("Yes");
 
     assertThat(testPage.getTitle()).isEqualTo(message("employment-status.title"));
     testPage.clickButton("No");
@@ -930,6 +921,9 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("work-disqualifications.title"));
+    testPage.clickButton("No");
+
+    assertThat(testPage.getTitle()).isEqualTo(message("on-strike.title"));
     testPage.clickButton("No");
 
     testPage.clickButton("Yes");

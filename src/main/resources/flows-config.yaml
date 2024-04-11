@@ -226,11 +226,9 @@ flow:
       - name: sensitiveQuestions
   sensitiveQuestions:
     nextScreens:
-      - name: householdPersonalSituations
-  householdPersonalSituations:
+      - name: householdDisability
+  householdDisability:
     nextScreens:
-      - name: householdPersonalSituationsWho
-        condition: HouseholdHasPersonalSituations
       - name: householdVictimOfDomesticViolence
   householdPersonalSituationsWho:
     beforeSaveAction: ReformatPersonalSituationUserData
@@ -263,6 +261,9 @@ flow:
     nextScreens:
       - name: householdWorkDisqualifications
   householdWorkDisqualifications:
+    nextScreens:
+      - name: householdOnStrike
+  householdOnStrike:
     nextScreens:
       - name: householdEmploymentStatus
   householdEmploymentStatus:
