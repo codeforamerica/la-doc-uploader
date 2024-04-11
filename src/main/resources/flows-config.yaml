@@ -39,14 +39,6 @@ flow:
       - name: signPost
   signPost:
     nextScreens:
-      - name: whosApplying
-  whosApplying:
-    nextScreens:
-      - name: applicantNotice
-        condition: ApplicantIsNotSelf
-      - name: personalInfo
-  applicantNotice:
-    nextScreens:
       - name: personalInfo
   personalInfo:
     crossFieldValidationAction: ValidateBirthdate
@@ -228,18 +220,8 @@ flow:
       - name: householdRoomRental
   householdRoomRental:
     nextScreens:
-      - name: householdRoomRentalWho
-        condition: HasRoomRental
-      - name: householdMeals
-  householdRoomRentalWho:
-    nextScreens:
       - name: householdMeals
   householdMeals:
-    nextScreens:
-      - name: householdMealsWho
-        condition: PayForMeals
-      - name: sensitiveQuestions
-  householdMealsWho:
     nextScreens:
       - name: sensitiveQuestions
   sensitiveQuestions:
