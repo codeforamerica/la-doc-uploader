@@ -41,6 +41,8 @@ public class LaDigitalAssister extends FlowInputs {
   @NotBlank(message="{error.missing-lastname}")
   private String lastName;
 
+  private String onStrikeInd;
+
   private String otherNames;
 
   private String birthDay;
@@ -121,6 +123,9 @@ public class LaDigitalAssister extends FlowInputs {
   @Size(min=11, max=11, message="{error.invalid-ssn}")
   private String ssn;
 
+  @DynamicField
+  private String outOfStateBenefitsStates;
+
   @Size(min=11, max=11, message="{error.invalid-ssn}")
   @DynamicField
   private String householdMemberSsn;
@@ -129,6 +134,10 @@ public class LaDigitalAssister extends FlowInputs {
 
   @NotEmpty(message="{error.missing-general}")
   private List<String> students;
+
+  private List<String> householdMedicalExpensesWho;
+
+  private String medicalExpenseMember;
 
   @NotBlank(message="{error.missing-general}")
   @DynamicField
@@ -339,6 +348,8 @@ public class LaDigitalAssister extends FlowInputs {
   private String interestedInWicInd;
   private String adultsWorking;
   private String guardiansHaveDisabilityInd;
+
+  private String disabilityInd;
 
   // Final Screen
   private String needsNewEbtCard;
