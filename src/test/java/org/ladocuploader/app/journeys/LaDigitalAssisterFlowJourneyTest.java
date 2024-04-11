@@ -666,12 +666,24 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("elderlycare.title"));
     testPage.clickButton("Yes");
 
-    testPage.clickElementById("householdMedicalExpenses-dentalBills-label");
+     // TODO: subflow
+    testPage.clickElementById("householdMedicalExpensesWho-you-label");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("household-medical-expenses-who.title"));
+    testPage.selectRadio("medicalExpenseMember", "you");
+    testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses.title"));
+    testPage.clickElementById("householdMedicalExpenses-prescriptionMedicine-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses-amount.title"));
-    testPage.enter("householdMedicalExpenseAmount_wildcard_dentalBills", "200");
+    testPage.enter("householdMedicalExpenseAmount_wildcard_prescriptionMedicine", "10");
     testPage.clickContinue();
+
+    assertThat(testPage.getTitle()).isEqualTo(message("medical-expenses-confirmation.title"));
+    testPage.clickButton("No");
 
     assertThat(testPage.getTitle()).isEqualTo(message("dependentcare.title"));
     testPage.clickButton("No");
@@ -704,19 +716,6 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     }
 
     assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
-//    testPage.goBack();
-
-//    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses.title"));
-//    testPage.clickButton("Yes");
-//
-//
-////    testPage.clickButton("Yes");
-//    assertThat(testPage.getTitle()).isEqualTo(message("childsupportexpenses-amount.title"));
-//    testPage.enter("expensesChildSupport", "150");
-//    testPage.clickContinue();
-//
-//    // Final SignPost
-//    assertThat(testPage.getTitle()).isEqualTo(message("final-signpost.title"));
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("ebtcard-title"));

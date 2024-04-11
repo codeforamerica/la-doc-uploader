@@ -177,6 +177,7 @@ subflowInfo:
       medicalExpensesType: medicalExpensesType
       medicalExpensesAmount: medicalExpensesAmount
       medicalExpensesFreq: medicalExpensesFreq
+      medicalExpensesPerson: medicalExpensesPerson
   householdResources:
     totalIterations: 7
     inputFields:

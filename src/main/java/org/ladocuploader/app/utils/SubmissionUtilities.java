@@ -189,6 +189,18 @@ public class SubmissionUtilities {
       return "%s %s".formatted(inputData.get("firstName"), inputData.get("lastName"));
     }
 
+    return getHouseholdMemberName(uuid, inputData);
+  }
+
+  public static String getHouseholdMemberFullnameByUUIDWithYou(String uuid, Map<String, Object> inputData) {
+    if ("you".equals(uuid)) {
+      return "%s %s (you)".formatted(inputData.get("firstName"), inputData.get("lastName"));
+    }
+
+    return getHouseholdMemberName(uuid, inputData);
+  }
+
+  public static String getHouseholdMemberName(String uuid, Map<String, Object> inputData){
     var members = (List<Map<String, Object>>) inputData.getOrDefault("household", emptyList());
     for (var member : members) {
       if (uuid.equals(member.get("uuid"))) {
@@ -196,6 +208,16 @@ public class SubmissionUtilities {
       }
     }
     return "";
+  }
+
+  public static ArrayList<String> getHouseholdMedicalExpensesSubflowItem(Submission submission, String hhMemberId){
+    ArrayList<HashMap<String, Object>> subflowList = (ArrayList<HashMap<String, Object>>) submission.getInputData().getOrDefault("householdMedical", emptyList());
+    for (var subflowItem : subflowList){
+      if (hhMemberId.equals(subflowItem.get("medicalExpenseMember"))){
+        return (ArrayList<String>) subflowItem.getOrDefault("householdMedicalExpenses[]", emptyList());
+      }
+    }
+    return new ArrayList<>();
   }
 
   public static ArrayList<HashMap<String, Object>> getHouseholdIncomeReviewItems(Submission submission) {
