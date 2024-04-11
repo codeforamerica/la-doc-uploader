@@ -58,8 +58,9 @@ flow:
     beforeSaveAction: MailingAddressSetToHomeAddress
     nextScreens:
       - name: contactInfo
-  whereToSendMail:
-    nextScreens: null
+  dcfsMailingAddress:
+    nextScreens:
+      - name: contactInfo
   mailingAddress:
     crossFieldValidationAction: ValidateMailingAddress
     beforeSaveAction: MailingAddressSetToHomeAddress
@@ -488,9 +489,14 @@ flow:
   legalStuff:
     nextScreens:
       - name: signature
+  dcfsMailingAddressReminder:
+    nextScreens:
+      - name: applicationCopy
   signature:
     afterSaveAction: HandleApplicationSigned
     nextScreens:
+      - name: dcfsMailingAddressReminder
+        condition: NoPermanentAddress
       - name: applicationCopy
   applicationCopy:
     nextScreens:
@@ -532,6 +538,7 @@ flow:
 landmarks:
   afterSubmitPages:
     - applicationCopy
+    - dcfsMailingAddressReminder
     - confirmation
     - docUploadIntro
     - docUploadSignpost
