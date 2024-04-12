@@ -536,8 +536,14 @@ flow:
   docUploadType:
     beforeSaveAction: AssociateDocTypeLabel
     nextScreens:
-      - name: docUploadReview
+      - name: docUploadWho
         condition: ContinueAssociateDocType
+      - name: docUpload
+  docUploadWho:
+    beforeSaveAction: AssociateDocWho
+    nextScreens:
+      - name: docUploadReview
+        condition: ContinueDocWho
       - name: docUpload
   docUploadReview:
     nextScreens:
@@ -561,6 +567,7 @@ landmarks:
     - docUploadRecommendations
     - docUpload
     - docUploadType
+    - docUploadWho
     - docUploadReview
     - docUploadSubmit
 subflows:
