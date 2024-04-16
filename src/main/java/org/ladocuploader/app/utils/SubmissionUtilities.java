@@ -290,4 +290,11 @@ public class SubmissionUtilities {
   public static String getDecryptedSSNKeyName(String uuid) {
     return "householdMemberSsn%s%s".formatted(DYNAMIC_FIELD_MARKER, uuid);
   }
+  
+  public static String getHouseholdMemberNameByFileId(UUID fileId, Submission submission) {
+    if (submission.getInputData().containsKey("documentOwner_wildcard_" + fileId)) {
+      return submission.getInputData().get("documentOwner_wildcard_" + fileId).toString();
+    }
+    return "";
+  }
 }

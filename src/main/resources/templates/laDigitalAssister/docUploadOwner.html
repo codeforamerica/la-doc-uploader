@@ -26,9 +26,8 @@
                 <th:block th:each="fileId, iter: ${fileIds}">
                   <th:block th:with="
                               userFile=${userFileInfo.get(fileId)},
-                              docWhoInputName=${'docWho' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + fileId}">
-                    <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile}, showDocType=true)}"></th:block>
-
+                              docWhoInputName=${'documentOwner' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + fileId}">
+                    <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile}, person=${''}, showDocType=false)}"></th:block>
                     <th:block th:replace="~{fragments/inputs/selectCustom :: select(
                         inputName=${docWhoInputName},
                         helpText='',
@@ -38,10 +37,10 @@
                         ariaLabel='header')}">
                       <th:block th:ref="docWho">
                         <th:block
-                            th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{add-document-types.doc-type-label.placeholder})}"/>
-                        <th:block th:each="docPerson : ${T(org.ladocuploader.app.file.DocTypeEnum).values()}">
+                            th:replace="~{fragments/inputs/selectOptionPlaceholder :: selectOptionPlaceholder(optionText=#{document-who.placeholder})}"/>
+                        <th:block th:each="docPerson : ${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberNames(submission)}">
                           <th:block
-                              th:replace="~{fragments/inputs/selectOption :: selectOption(value=${docTypeOpt.getValue()}, optionText=#{${docTypeOpt.getNameSrc()}})}"/>
+                              th:replace="~{fragments/inputs/selectOption :: selectOption(value=${docPerson}, optionText=${docPerson})}"/>
                         </th:block>
                       </th:block>
                     </th:block>
@@ -51,7 +50,7 @@
             </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
-                inputName='continueAssociateDocType',
+                inputName='continueDocOwner',
                 ariaDescribe='header',
                 overrideNoText=#{general.add-or-delete-files},
                 overrideYesText=#{general.inputs.continue})}"/>
