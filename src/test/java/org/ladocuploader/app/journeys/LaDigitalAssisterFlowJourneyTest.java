@@ -191,7 +191,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     // Utilities
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
-    testPage.clickElementById("none__checkbox");
+    testPage.clickElementById("none__checkbox-householdUtilitiesExpenses");
     testPage.clickContinue();
     // Seasonal Farm Worker
     assertThat(testPage.getTitle()).isEqualTo(message("seasonal-farmworker.title"));
@@ -615,7 +615,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton(message("income-list.continue"));
 
     assertThat(testPage.getTitle()).isEqualTo(message("additional-income.title"));
-    testPage.clickElementById("none__checkbox");
+    testPage.clickElementById("none__checkbox-additionalIncome-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("moneyonhand-types.title"));
@@ -641,14 +641,13 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
-
     testPage.clickElementById("householdUtilitiesExpenses-water-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("utilities-expenses-amount.title"));
     testPage.goBack();
 
-    testPage.clickElementById("none__checkbox-label"); // none selected
+    testPage.clickElementById("none__checkbox-householdUtilitiesExpenses"); // none selected
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance.title"));
@@ -824,7 +823,23 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(driver.findElement(By.className("filename-text-ext")).getText()).isEqualTo(".jpeg");
     assertThat(driver.findElement(By.className("dz-detail")).findElement(By.tagName("span")).getText()).isEqualTo("Type: Divorce Decree");
     testPage.clickButton("Yes, continue");
-
+    
+    // Doc owner page
+    assertThat(testPage.getTitle()).isEqualTo(message("document-who.title"));
+    WebElement docOwnerSelect = driver.findElements(By.className("select__element")).get(0);
+    testPage.selectFromDropdown(docOwnerSelect.getAttribute("name"), "roomy smith");
+    testPage.clickContinue();
+    
+    // Doc review owner page
+    assertThat(testPage.getTitle()).isEqualTo(message("review-documents.title"));
+    assertThat(driver.findElement(By.className("filename-text-name")).getText()).isEqualTo("test");
+    assertThat(driver.findElement(By.className("filename-text-ext")).getText()).isEqualTo(".jpeg");
+    List<WebElement> spans = driver.findElement(By.className("dz-detail")).findElements(By.tagName("span"));
+    assertThat(spans.size()).isEqualTo(2);
+    assertThat(spans.get(0).getText()).isEqualTo("Type: Divorce Decree");
+    assertThat(spans.get(1).getText()).isEqualTo("Person: roomy smith");
+    testPage.clickButton("Yes, continue");
+    
     // Confirm submit
     assertThat(testPage.getTitle()).isEqualTo(message("doc-submit-confirmation.title"));
     testPage.clickButton("No, add more documents");
@@ -832,6 +847,10 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     // add document types
     testPage.clickContinue();
     // review document types
+    testPage.clickContinue();
+    // add doc owner
+    testPage.clickButton("Yes, continue");
+    // review document owner
     testPage.clickContinue();
     // doc submit confirmation
     testPage.clickButton("Yes, continue");
