@@ -1,5 +1,5 @@
 <th:block
-  th:fragment="fileDetails(userFile)"
+  th:fragment="fileDetails(userFile, person)"
   th:id="${userFile.get('originalFilename')}"
   th:with="extIndex=${userFile.get('originalFilename').lastIndexOf('.')},
             docTypeInfo=${showDocType != null ? showDocType : true}">
@@ -22,6 +22,10 @@
         <div class="display-flex file-details">
           <div class="dz-detail">
             <span th:if="${docTypeInfo == true}" th:text="${'Type: ' + #messages.msg(T(org.ladocuploader.app.file.DocTypeEnum).findNameSrcForValue(userFile.get('docTypeLabel')))}"></span>
+            <th:block th:if="${person != ''}">
+              <br />
+              <span th:text="${'Person: ' + person}"></span>
+            </th:block>
           </div>
         </div>
         <div class="display-flex body-gray file-details">

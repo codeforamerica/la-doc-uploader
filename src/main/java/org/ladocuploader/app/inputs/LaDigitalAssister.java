@@ -446,8 +446,14 @@ public class LaDigitalAssister extends FlowInputs {
 
   private String continueAssociateDocType;
 
+  private String continueDocOwner;
+
   @NotBlank(message = "{doc-type.select-a-type}")
   @DynamicField
   private String docType;
+  
+  @NotBlank(message = "{document-who.please-select}")
+  @DynamicField
+  private String documentOwner;
 }
 
