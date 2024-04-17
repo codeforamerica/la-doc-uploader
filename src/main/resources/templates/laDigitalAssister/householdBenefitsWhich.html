@@ -18,10 +18,11 @@
               <div th:each="member, iter:${inputData.get('outOfStateBenefitsRecipients[]')}"
                    class="spacing-below-15">
                 <th:block
-                    th:with="stateInputName=${'outOfStateBenefitsStates' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + member}">
+                    th:with="stateInputName=${'outOfStateBenefitsStates' + T(formflow.library.inputs.FieldNameMarkers).DYNAMIC_FIELD_MARKER + member},
+                    person=${T(org.ladocuploader.app.utils.SubmissionUtilities).getHouseholdMemberFullnameByUUIDWithYou(member, inputData)}">
                   <th:block th:replace="~{fragments/inputs/state ::
                   state(inputName=${stateInputName},
-                  label=#{household-benefits-which.question(${member})},
+                  label=#{household-benefits-which.question(${person})},
                   helpText=#{general.optional})}"/>
                 </th:block>
                 <hr/>
