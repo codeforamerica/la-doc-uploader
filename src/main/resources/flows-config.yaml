@@ -539,14 +539,14 @@ flow:
       - name: docUploadReviewTypes
         condition: ContinueAssociateDocType
       - name: docUpload
+  docUploadReviewTypes:
+    nextScreens:
+      - name: docUploadOwner
   docUploadOwner:
     nextScreens:
       - name: docUploadReviewOwner
         condition: ContinueDocOwner
       - name: docUpload
-  docUploadReviewTypes:
-    nextScreens:
-      - name: docUploadOwner
   docUploadReviewOwner:
     nextScreens:
       - name: docUploadSubmit

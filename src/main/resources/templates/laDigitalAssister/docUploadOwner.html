@@ -30,10 +30,8 @@
                     <th:block th:replace="~{fragments/fileDetails :: fileDetails(userFile=${userFile}, person=${''}, showDocType=false)}"></th:block>
                     <th:block th:replace="~{fragments/inputs/selectCustom :: select(
                         inputName=${docWhoInputName},
-                        helpText='',
                         content=~{::docWho},
                         ariaDescribedBy=${fileId},
-                        label='',
                         ariaLabel='header')}">
                       <th:block th:ref="docWho">
                         <th:block
