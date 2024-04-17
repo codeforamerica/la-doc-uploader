@@ -191,7 +191,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
     // Utilities
     assertThat(testPage.getTitle()).isEqualTo(message("utilities.title"));
-    testPage.clickElementById("none__checkbox");
+    testPage.clickElementById("none__checkbox-householdUtilitiesExpenses");
     testPage.clickContinue();
     // Seasonal Farm Worker
     assertThat(testPage.getTitle()).isEqualTo(message("seasonal-farmworker.title"));
@@ -615,7 +615,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickButton(message("income-list.continue"));
 
     assertThat(testPage.getTitle()).isEqualTo(message("additional-income.title"));
-    testPage.clickElementById("none__checkbox");
+    testPage.clickElementById("none__checkbox-additionalIncome-label");
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("moneyonhand-types.title"));
@@ -648,7 +648,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getTitle()).isEqualTo(message("utilities-expenses-amount.title"));
     testPage.goBack();
 
-    testPage.clickElementById("none__checkbox-label"); // none selected
+    testPage.clickElementById("none__checkbox-householdUtilitiesExpenses"); // none selected
     testPage.clickContinue();
 
     assertThat(testPage.getTitle()).isEqualTo(message("energy-assistance.title"));
