@@ -208,7 +208,7 @@ public class LaDocUploadFlowJourneyTest extends AbstractBasePageTest {
     testPage.clickContinue();
 
     // Go back and ensure that SSN value shown in input is decrypted
-    testPage.clickLink("< Go Back");
+    testPage.goBack();
     assertEquals("000-00-1111", testPage.getInputValue("ssn"));
     testPage.clickContinue();
 
