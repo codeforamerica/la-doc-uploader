@@ -405,22 +405,24 @@ flow:
       - name: expensesChildSupportAmount
         condition: HasChildSupportExpenses
       - name: nolaEceLinks
-        condition: EligibleForEceLinks
+        condition: EligibleForEceLinksNola
       - name: wicLinks
         condition: EligibleForWicLinks
       - name: nolaApplyStart
-        condition: EligibleForEceApply
+        condition: EligibleForEceApplyNola
+      - name: jeffersonApplyStart
+        condition: EligibleForEceApplyJefferson
       - name: wicApply
         condition: EligibleForWicApply
       - name: finalSignPost
   expensesChildSupportAmount:
     nextScreens:
       - name: nolaEceLinks
-        condition: EligibleForEceLinks
+        condition: EligibleForEceLinksNola
       - name: wicLinks
         condition: EligibleForWicLinks
       - name: nolaApplyStart
-        condition: EligibleForEceApply
+        condition: EligibleForEceApplyNola
       - name: wicApply
         condition: EligibleForWicApply
       - name: finalSignPost
@@ -439,9 +441,19 @@ flow:
       - name: wicApply
         condition: EligibleForWicApply
       - name: finalSignPost
+  jeffersonApplyStart:
+    nextScreens:
+      - name: jeffersonApplyQuestions
+        condition: InterestedInECE
+      - name: wicApply
+        condition: EligibleForWicApply
+      - name: finalSignPost
   nolaApplyQuestions:
     nextScreens:
       - name: nolaApplyIEP
+  jeffersonApplyQuestions:
+    nextScreens:
+      - name: jeffersonApplyIEP
   nolaApplyIEP:
     nextScreens:
       - name: nolaApplyHouseholdAdultsWork
