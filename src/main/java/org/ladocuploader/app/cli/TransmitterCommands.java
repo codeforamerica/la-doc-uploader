@@ -18,6 +18,7 @@ import org.ladocuploader.app.data.Transmission;
 import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
+import org.ladocuploader.app.utils.SubmissionUtilities;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -234,7 +235,8 @@ public class TransmitterCommands {
                             fileCount += 1;
                             String fileName = userFile.getOriginalName();
                             log.info("filename is: " + fileName);
-                            ZipEntry docEntry = new ZipEntry(subfolder + String.format("%02d", fileCount) + "_" + userFile.getOriginalName().replaceAll("[/:\\\\]", "_"));
+                            String formattedFileName = SubmissionUtilities.createFileNameForUploadedDocument(submission, userFile, fileCount, userFiles.size());
+                            ZipEntry docEntry = new ZipEntry(subfolder + formattedFileName);
                             docEntry.setSize(userFile.getFilesize().longValue());
                             zos.putNextEntry(docEntry);
                             CloudFile docFile = fileRepository.get(userFile.getRepositoryPath());
