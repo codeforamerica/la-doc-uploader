@@ -1,6 +1,8 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
+import formflow.library.data.UserFile;
+import java.time.ZoneId;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -11,7 +13,8 @@ import java.util.regex.Pattern;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 import static java.util.Collections.emptyList;
-import static org.ladocuploader.app.utils.Parish.ORLEANS;
+import static org.ladocuploader.app.data.enums.Parish.JEFFERSON;
+import static org.ladocuploader.app.data.enums.Parish.ORLEANS;
 
 public class SubmissionUtilities {
 
@@ -100,6 +103,10 @@ public class SubmissionUtilities {
   public static boolean isOrleansParish(Submission submission) {
     return ORLEANS.name().equals(submission.getInputData().get("parish"));
   }
+  
+  public static boolean isJeffersonParish(Submission submission) {
+    return JEFFERSON.name().equals(submission.getInputData().get("parish"));
+  }
 
   public static boolean isEligibleForExperiment(Submission submission) {
     return hasHouseholdPregnancy(submission) || hasChildBornAfterCutoff(submission, ECE_CUTOFF_DATE);
@@ -126,6 +133,24 @@ public class SubmissionUtilities {
       }
     }
     return false;
+  }
+
+  public static String getParishMailingAddress1(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getMailingAddressLine1();
+  }
+
+  public static String getParishMailingAddress2(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getMailingAddressLine2();
+  }
+
+  public static String getParishDisplayName(Submission submission){
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getDisplayName() + " DCFS Office";
   }
 
 
@@ -170,6 +195,18 @@ public class SubmissionUtilities {
       return "%s %s".formatted(inputData.get("firstName"), inputData.get("lastName"));
     }
 
+    return getHouseholdMemberName(uuid, inputData);
+  }
+
+  public static String getHouseholdMemberFullnameByUUIDWithYou(String uuid, Map<String, Object> inputData) {
+    if ("you".equals(uuid)) {
+      return "%s %s (you)".formatted(inputData.get("firstName"), inputData.get("lastName"));
+    }
+
+    return getHouseholdMemberName(uuid, inputData);
+  }
+
+  public static String getHouseholdMemberName(String uuid, Map<String, Object> inputData){
     var members = (List<Map<String, Object>>) inputData.getOrDefault("household", emptyList());
     for (var member : members) {
       if (uuid.equals(member.get("uuid"))) {
@@ -177,6 +214,16 @@ public class SubmissionUtilities {
       }
     }
     return "";
+  }
+
+  public static ArrayList<String> getHouseholdMedicalExpensesSubflowItem(Submission submission, String hhMemberId){
+    ArrayList<HashMap<String, Object>> subflowList = (ArrayList<HashMap<String, Object>>) submission.getInputData().getOrDefault("householdMedical", emptyList());
+    for (var subflowItem : subflowList){
+      if (hhMemberId.equals(subflowItem.get("medicalExpenseMember"))){
+        return (ArrayList<String>) subflowItem.getOrDefault("householdMedicalExpenses[]", emptyList());
+      }
+    }
+    return new ArrayList<>();
   }
 
   public static ArrayList<HashMap<String, Object>> getHouseholdIncomeReviewItems(Submission submission) {
@@ -248,5 +295,23 @@ public class SubmissionUtilities {
 
   public static String getDecryptedSSNKeyName(String uuid) {
     return "householdMemberSsn%s%s".formatted(DYNAMIC_FIELD_MARKER, uuid);
+  }
+  
+  public static String getHouseholdMemberNameByFileId(UUID fileId, Submission submission) {
+    if (submission.getInputData().containsKey("documentOwner_wildcard_" + fileId)) {
+      return submission.getInputData().get("documentOwner_wildcard_" + fileId).toString();
+    }
+    return "";
+  }
+
+  public static String createFileNameForUploadedDocument(Submission submission, UserFile userFile, int currentFileCount, int totalFiles) {
+    String documentType = userFile.getDocTypeLabel();
+    String fileType = userFile.getOriginalName().substring(userFile.getOriginalName().lastIndexOf("."));
+    String fileOwner = submission.getInputData().get("documentOwner_wildcard_" + userFile.getFileId())
+            .toString().replace(" ", "_");
+    String cstTime = submission.getSubmittedAt().atZoneSameInstant(ZoneId.of("America/Chicago"))
+            .format(DateTimeFormatter.ofPattern("MMddyyyyHHmm"));
+    String fileCountString = String.format("%d_of_%d", currentFileCount, totalFiles);
+    return String.format("%s_%s_%s_%s%s", fileOwner, documentType, fileCountString, cstTime, fileType);
   }
 }

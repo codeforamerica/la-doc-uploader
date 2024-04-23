@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}">
+<head th:replace="~{fragments/head :: head(title=#{nola-ece-apply.title})}"></head>
+<body>
+<div class="page-wrapper">
+    <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+    <section class="slab">
+        <div class="grid">
+            <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+            <main id="content" role="main" class="form-card spacing-above-35">
+                <th:block th:replace="~{fragments/icons :: choosePrograms}"></th:block>
+                <th:block
+                        th:replace="~{fragments/cardHeader :: cardHeader(header=|#{general.good-news} #{nola-ece.if-youre-approved}|, subtext=#{jefferson-ece.subheader})}"/>
+                <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
+                    <th:block th:ref="content">
+                        <div class="form-card__footer spacing-below-60">
+                            <th:block th:replace="~{fragments/inputs/yesOrNo :: yesOrNo(
+                              label=#{jefferson-ece.would-you-like},
+                              helpText=#{jefferson-ece.would-you-like-help},
+                              overrideYesText=#{nola-ece-apply.yes-start-app},
+                              overrideNoText=#{general.not-interested},
+                              inputName='interestedInEceInd',
+                              ariaDescribe='header')}"/>
+                        </div>
+                    </th:block>
+                </th:block>
+            </main>
+        </div>
+    </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>
