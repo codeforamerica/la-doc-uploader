@@ -1,6 +1,8 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
+import formflow.library.data.UserFile;
+import java.time.ZoneId;
 import org.ladocuploader.app.data.enums.Parish;
 
 import java.text.DecimalFormat;
@@ -301,5 +303,16 @@ public class SubmissionUtilities {
       return submission.getInputData().get("documentOwner_wildcard_" + fileId).toString();
     }
     return "";
+  }
+
+  public static String createFileNameForUploadedDocument(Submission submission, UserFile userFile, int currentFileCount, int totalFiles) {
+    String documentType = userFile.getDocTypeLabel();
+    String fileType = userFile.getOriginalName().substring(userFile.getOriginalName().lastIndexOf("."));
+    String fileOwner = submission.getInputData().get("documentOwner_wildcard_" + userFile.getFileId())
+            .toString().replace(" ", "_");
+    String cstTime = submission.getSubmittedAt().atZoneSameInstant(ZoneId.of("America/Chicago"))
+            .format(DateTimeFormatter.ofPattern("MMddyyyyHHmm"));
+    String fileCountString = String.format("%d_of_%d", currentFileCount, totalFiles);
+    return String.format("%s_%s_%s_%s%s", fileOwner, documentType, fileCountString, cstTime, fileType);
   }
 }
