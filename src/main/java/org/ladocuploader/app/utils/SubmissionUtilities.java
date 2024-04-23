@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 import static java.util.Collections.emptyList;
+import static org.ladocuploader.app.data.enums.Parish.JEFFERSON;
 import static org.ladocuploader.app.data.enums.Parish.ORLEANS;
 
 public class SubmissionUtilities {
@@ -102,6 +103,10 @@ public class SubmissionUtilities {
 
   public static boolean isOrleansParish(Submission submission) {
     return ORLEANS.name().equals(submission.getInputData().get("parish"));
+  }
+  
+  public static boolean isJeffersonParish(Submission submission) {
+    return JEFFERSON.name().equals(submission.getInputData().get("parish"));
   }
 
   public static boolean isEligibleForExperiment(Submission submission) {
