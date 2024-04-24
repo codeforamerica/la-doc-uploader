@@ -26,6 +26,17 @@ public class IncomeCalculator {
 
     return total;
   }
+  
+  public Double applicantTotalFutureEarnedIncome() {
+    var jobs = (List<Map<String, Object>>) submission.getInputData().getOrDefault("income", new ArrayList<>());
+    var total = jobs.stream()
+      .filter(job -> (boolean) job.getOrDefault("iterationIsComplete", false))
+      .filter(job -> "you".equals(job.get("householdMemberJobAdd")))
+      .map(IncomeCalculator::futureIncomeForJob)
+      .reduce(0.0d, Double::sum);
+
+    return total;
+  }
 
   public static double futureIncomeForJob(Map<String, Object> job) throws NumberFormatException {
     if (job.getOrDefault("jobPaidByHour", "false").toString().equals("true")) {

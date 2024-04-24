@@ -1,6 +1,7 @@
 package org.ladocuploader.app.csv;
 
 
+import static org.ladocuploader.app.csv.enums.CsvType.JEFFERSON_ECE;
 import static org.ladocuploader.app.csv.enums.CsvType.PARENT_GUARDIAN;
 import static org.ladocuploader.app.csv.enums.CsvType.RELATIONSHIP;
 import static org.ladocuploader.app.csv.enums.CsvType.STUDENT;
@@ -49,6 +50,7 @@ public class CsvService {
         case PARENT_GUARDIAN -> csvGenerator.generateParentGuardianCsvData(submissionList);
         case ECE_APPLICATION -> csvGenerator.generateECEApplicationCsvData(submissionList);
         case WIC_APPLICATION -> csvGenerator.generateWICApplicationCsvData(submissionList);
+        case JEFFERSON_ECE -> csvGenerator.generateJeffersionApplicationCsvData(submissionList);
         default -> {
           log.warn("Unknown CSV Type requested: {}", csvType.name());
           yield null;

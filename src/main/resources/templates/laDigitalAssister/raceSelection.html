@@ -29,7 +29,6 @@
               <hr/>
 
               <th:block th:if="${fieldData.containsKey('household')}">
-                <p th:value="${fieldData.household}"></p>
                 <div th:each="householdMember, iter: ${fieldData.household}"
                      class="spacing-below-15">
                   <th:block
