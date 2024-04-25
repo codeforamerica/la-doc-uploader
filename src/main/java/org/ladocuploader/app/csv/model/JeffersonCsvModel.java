@@ -1,5 +1,7 @@
 package org.ladocuploader.app.csv.model;
 
+import static org.ladocuploader.app.utils.SubmissionUtilities.formatMoney;
+
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.opencsv.bean.CsvBindByName;
@@ -18,6 +20,7 @@ import org.ladocuploader.app.csv.converters.HouseholdBirthDateConverter;
 import org.ladocuploader.app.csv.converters.PhoneNumberConverter;
 import org.ladocuploader.app.utils.HouseholdUtilities;
 import org.ladocuploader.app.utils.IncomeCalculator;
+import org.ladocuploader.app.utils.SubmissionUtilities;
 
 @Getter
 @Setter
@@ -162,9 +165,11 @@ public class JeffersonCsvModel extends BaseCsvModel {
 
         IncomeCalculator incomeCalculator = new IncomeCalculator(submission);
         
-        jeffersonDataMap.put("applicantGrossIncome", incomeCalculator.applicantTotalFutureEarnedIncome());
-        boolean guardianHasDisability = "true".equals(inputData.getOrDefault("guardiansHaveDisabilityInd", "false"));
-        jeffersonDataMap.put("disability", guardianHasDisability ? "Yes" : "No");
+        jeffersonDataMap.put("applicantGrossIncome", formatMoney(incomeCalculator.applicantTotalFutureEarnedIncome()));
+        if (inputData.containsKey("guardiansHaveDisabilityInd")) {
+            boolean guardianHasDisability = "true".equals(inputData.get("guardiansHaveDisabilityInd"));
+            jeffersonDataMap.put("disability", guardianHasDisability ? "Yes" : "No");
+        }
         jeffersonDataMap.put("guardiansWorking", inputData.getOrDefault("adultsWorking", ""));
         JeffersonCsvModel jeffersonModel = mapper.convertValue(jeffersonDataMap, JeffersonCsvModel.class);
         jeffersonModel.setSubmissionId(submission.getId());
