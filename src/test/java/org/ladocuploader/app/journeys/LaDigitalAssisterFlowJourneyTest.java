@@ -305,7 +305,7 @@ public class LaDigitalAssisterFlowJourneyTest extends AbstractBasePageTest {
     assertThat(testPage.getElementText("translate-button")).contains("Traducir");
     testPage.clickElementById("translate-button");
     testPage.clickLink("Tiếng Việt");
-    assertThat(testPage.getElementText("translate-button")).contains("Phiên dịch");
+    assertThat(testPage.getElementText("translate-button")).contains("Phi�n dịch");
     testPage.clickElementById("translate-button");
     testPage.clickLink("English");
 
