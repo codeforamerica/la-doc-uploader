@@ -165,7 +165,7 @@ public class JeffersonCsvModel extends BaseCsvModel {
         jeffersonDataMap.put("applicantGrossIncome", incomeCalculator.applicantTotalFutureEarnedIncome());
         boolean guardianHasDisability = "true".equals(inputData.getOrDefault("guardiansHaveDisabilityInd", "false"));
         jeffersonDataMap.put("disability", guardianHasDisability ? "Yes" : "No");
-        jeffersonDataMap.put("guardiansWorking", inputData.getOrDefault("adultsWorking", "NONE"));
+        jeffersonDataMap.put("guardiansWorking", inputData.getOrDefault("adultsWorking", ""));
         JeffersonCsvModel jeffersonModel = mapper.convertValue(jeffersonDataMap, JeffersonCsvModel.class);
         jeffersonModel.setSubmissionId(submission.getId());
         return jeffersonModel;
