@@ -62,6 +62,10 @@ public class HouseholdUtilities {
       return true;
     }
 
+    return isMemberCutoffEligible(member);
+  }
+  
+  public static boolean isMemberCutoffEligible(Map<String, Object> member) {
     try {
 
       int birthDay = Integer.parseInt((String) member.get("householdMemberBirthDay"));
@@ -69,8 +73,8 @@ public class HouseholdUtilities {
       int birthYear = Integer.parseInt((String) member.get("householdMemberBirthYear"));
 
       if (birthDay <= 0 || birthMonth <= 0 || birthYear <= 0 ) {
-          log.warn("Did not find birthdate. Marking household member as ineligible");
-          return false;
+        log.warn("Did not find birthdate. Marking household member as ineligible");
+        return false;
       }
 
       // these are converted to milliseconds since Epoch and then compared.
@@ -82,8 +86,6 @@ public class HouseholdUtilities {
       log.warn("Could not parse birthdate. Marking household member as ineligible");
       return false;
     }
-
-
   }
 
   public static List<Map<String, Object>> formattedHouseholdData(Submission submission, String key) {

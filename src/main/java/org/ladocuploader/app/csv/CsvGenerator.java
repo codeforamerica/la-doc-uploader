@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.csv.enums.CsvType;
 import org.ladocuploader.app.csv.model.BaseCsvModel;
 import org.ladocuploader.app.csv.model.ECEApplicationCsvModel;
+import org.ladocuploader.app.csv.model.JeffersonCsvModel;
 import org.ladocuploader.app.csv.model.ParentGuardianCsvModel;
 import org.ladocuploader.app.csv.model.StudentCsvModel;
 import org.ladocuploader.app.csv.model.RelationshipCsvModel;
@@ -118,6 +119,20 @@ public class CsvGenerator {
             }
         }
         return generateCsv(CsvType.WIC_APPLICATION, WICApplicationCsvModel.class, applicationList);
+    }
+    
+    public CsvDocument generateJeffersionApplicationCsvData(List<Submission> submissionList)
+        throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+
+        List<BaseCsvModel> applicationList = new ArrayList<>();
+
+        for (Submission submission : submissionList) {
+            if(isEceEligibleAndInterested(submission)) {
+                BaseCsvModel application = JeffersonCsvModel.generateModel(submission);
+                applicationList.add(application);
+            }
+        }
+        return generateCsv(CsvType.JEFFERSON_ECE, JeffersonCsvModel.class, applicationList);
     }
 
     private CsvDocument generateCsv(CsvType csvType, Class classType, List<BaseCsvModel> objects) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {

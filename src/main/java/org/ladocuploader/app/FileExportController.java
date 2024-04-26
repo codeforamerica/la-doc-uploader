@@ -145,6 +145,22 @@ public class FileExportController {
 
         return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.WIC_APPLICATION);
     }
+    
+    @GetMapping("{flow}/jefferson-ece/{submissionId}")
+    ResponseEntity<?> downloadJeffersonEceCsv(
+        @PathVariable String flow,
+        @PathVariable String submissionId,
+        HttpSession httpSession,
+        Locale locale
+    ) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+
+        String encodedFlow = UriComponentsBuilder.fromPath(flow).build().toUriString();
+        String encodedSubmissionId = UriComponentsBuilder.fromPath(submissionId).build().toUriString();
+
+        log.info("GET downloadCSV Jefferson ECE");
+
+        return handleCsvGeneration(encodedFlow, encodedSubmissionId, httpSession, locale, CsvType.JEFFERSON_ECE);
+    }
 
 
     protected static void throwNotFoundError(String flow, String message) {
