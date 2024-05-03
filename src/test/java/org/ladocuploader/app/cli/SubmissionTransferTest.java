@@ -7,6 +7,8 @@ import formflow.library.data.UserFileRepository;
 import formflow.library.file.CloudFile;
 import formflow.library.file.CloudFileRepository;
 import formflow.library.pdf.PdfService;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
@@ -122,9 +124,15 @@ class SubmissionTransferTest {
     assertThat(fileNames, hasItem("output/00050000000/1/SNAP_application.pdf"));
     assertThat(fileNames, hasItem("output/00050000000/2/"));
     assertThat(fileNames, hasItem("output/00050000000/2/SNAP_application.pdf"));
-    assertThat(fileNames, hasItem("output/00050000000/2/originalFilename.png"));
-    assertThat(fileNames, hasItem("output/00050000000/2/2_originalFilename.png"));
-    assertThat(fileNames, hasItem("output/00050000000/2/weird/:\\filename.jpg"));
+    assertThat(fileNames, hasItem(String.format("output/00050000000/2/Other_McOtherson_BirthCertificate_1_of_3_%s.png", 
+            submissionWithDocs.getSubmittedAt().atZoneSameInstant(ZoneId.of("America/Chicago"))
+            .format(DateTimeFormatter.ofPattern("MMddyyyyHHmm")))));
+    assertThat(fileNames, hasItem(String.format("output/00050000000/2/Other_McOtherson_DriversLicense_2_of_3_%s.png", 
+            submissionWithDocs.getSubmittedAt().atZoneSameInstant(ZoneId.of("America/Chicago"))
+            .format(DateTimeFormatter.ofPattern("MMddyyyyHHmm")))));
+    assertThat(fileNames, hasItem(String.format("output/00050000000/2/Other_McOtherson_Other_3_of_3_%s.jpg",
+            submissionWithDocs.getSubmittedAt().atZoneSameInstant(ZoneId.of("America/Chicago"))
+            .format(DateTimeFormatter.ofPattern("MMddyyyyHHmm")))));
     assertThat(fileNames, hasItem("output/00050000000.txt"));
     assertEquals(8, fileNames.size());
 
@@ -207,14 +215,17 @@ class SubmissionTransferTest {
             "signature", "Other McOtherson sig"
         ))).build();
     submissionRepository.save(submission);
-    UUID docId1 = saveUserFile(submission, "applicant1_birth-certificate.jpeg", "originalFilename.png");
-    UUID docId2 = saveUserFile(submission, "applicant1_license.jpeg", "originalFilename.png");
-    UUID docId3 = saveUserFile(submission, "applicant1_pay-stub.png", "weird/:\\filename.jpg");
-    saveTransmissionRecord(submission);
+    UUID docId1 = saveUserFile(submission, "applicant1_birth-certificate.jpeg", "originalFilename.png", "BirthCertificate");
+    UUID docId2 = saveUserFile(submission, "applicant1_license.jpeg", "originalFilename.png", "DriversLicense");
+    UUID docId3 = saveUserFile(submission, "applicant1_pay-stub.png", "weird/:\\filename.jpg", "Other");
+    submission.getInputData().putAll(Map.of("documentOwner_wildcard_" + docId1, "Other McOtherson",
+        "documentOwner_wildcard_" + docId2, "Other McOtherson",
+        "documentOwner_wildcard_" + docId3, "Other McOtherson"));
     submission.getInputData().putAll(Map.of("uploadDocuments", "[\"%s\",\"%s\",\"%s\"]".formatted(docId1, docId2, docId3),
         "docType_wildcard_" + docId1, "BirthCertificate",
-        "docType_wildcard_" + docId2, "Other",
-        "docType_wildcard_" + docId3, "DriversLicense"));
+        "docType_wildcard_" + docId2, "DriversLicense",
+        "docType_wildcard_" + docId3, "Other"));
+    saveTransmissionRecord(submission);
     submissionRepository.save(submission);
 
     Stream.of("applicant1_birth-certificate.jpeg", "applicant1_license.jpeg", "applicant1_pay-stub.png")
@@ -256,11 +267,12 @@ class SubmissionTransferTest {
     transmissionRepository.save(transmission);
   }
 
-  private UUID saveUserFile(Submission submission, String repoPath, String originalName) {
+  private UUID saveUserFile(Submission submission, String repoPath, String originalName, String docTypeLabel) {
     UserFile docFile = new UserFile();
     docFile.setFilesize(10.0f);
     docFile.setSubmission(submission);
     docFile.setRepositoryPath(repoPath);
+    docFile.setDocTypeLabel(docTypeLabel);
     docFile.setOriginalName(originalName);
     userFileRepository.save(docFile);
     return docFile.getFileId();

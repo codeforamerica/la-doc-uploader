@@ -6,7 +6,9 @@
         isEligibleForECE=${inputData.containsKey('interestedInEceInd')},
         isEligibleForWIC=${inputData.containsKey('interestedInWicInd')},
         isInterestedInECE=${'true'.equals(inputData.get('interestedInEceInd'))},
-        isInterestedInWIC=${'true'.equals(inputData.get('interestedInWicInd'))}">
+        isInterestedInWIC=${'true'.equals(inputData.get('interestedInWicInd'))},
+        isNola=${T(org.ladocuploader.app.utils.SubmissionUtilities).isOrleansParish(submission)},
+        isJefferson=${T(org.ladocuploader.app.utils.SubmissionUtilities).isJeffersonParish(submission)}">
     <th:block th:if="${inApplyGroup || inLinkGroup}">
       <h2 class="h2" th:text="#{confirmation.next-steps-immediate}"></h2>
       <th:block th:if="${inLinkGroup && (isEligibleForECE || isEligibleForWIC)}">
@@ -38,7 +40,8 @@
 
     <div th:if="${inApplyGroup && isInterestedInECE}" class="notice--warning steps-box">
       <div class="large-icon"><i class="icon-">&#xE625;</i></div>
-      <p class="spacing-below-15" th:utext="#{ece-notice-confirmation}"></p>
+      <p th:if="${isNola}" class="spacing-below-15" th:utext="#{nola-ece-notice-confirmation}"></p>
+      <p th:if="${isJefferson}" class="spacing-below-15" th:utext="#{jefferson-ece-notice-confirmation}"></p>
     </div>
 
     <div th:if="${inApplyGroup && isInterestedInWIC}"
@@ -52,8 +55,10 @@
       <h2 class="h2" th:utext="#{ece-no-confirmation.header}"></h2>
       <p th:utext="#{nola-ece.if-youre-approved}"></p>
       <p th:utext="#{nola-ece.subheader}"></p>
-      <a class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
-         th:text="#{nola-ece-go-to-application}"></a>
+      <a th:if="${isNola}" class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
+         th:text="#{ece-go-to-application}"></a>
+      <a th:if="${isJefferson}" class="button button--primary" target="_blank" href="https://jeffersonchild.com/parent-guardians/"
+          th:text="#{ece-go-to-application}"></a>
     </th:block>
 
     <th:block th:if="${inLinkGroup && isInterestedInECE}">
@@ -61,8 +66,10 @@
       <h2 class="h2" th:utext="#{ece-yes-confirmation.header}"></h2>
       <p th:utext="#{nola-ece.if-youre-approved}"></p>
       <p th:utext="#{nola-ece.subheader}"></p>
-      <a class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
-         th:text="#{nola-ece-go-to-application}"></a>
+      <a th:if="${isNola}" class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
+         th:text="#{ece-go-to-application}"></a>
+      <a th:if="${isJefferson}" class="button button--primary" target="_blank" href="https://jeffersonchild.com/parent-guardians/"
+          th:text="#{ece-go-to-application}"></a>
     </th:block>
 
     <th:block th:if="${isEligibleForWIC && !isInterestedInWIC}">

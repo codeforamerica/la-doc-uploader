@@ -8,6 +8,7 @@ public enum CsvType {
   STUDENT("Student", "student.csv"),
   RELATIONSHIP("Relationship", "relationship.csv"),
   ECE_APPLICATION("ECE Application", "application.csv"),
+  JEFFERSON_ECE("Jefferson ECE", "jefferson_ece.csv"),
   WIC_APPLICATION("WIC Application", "application.csv");
 
   private final String name;

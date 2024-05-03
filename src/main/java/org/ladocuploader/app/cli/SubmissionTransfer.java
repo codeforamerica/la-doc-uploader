@@ -14,6 +14,7 @@ import org.ladocuploader.app.data.TransmissionRepository;
 import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.ladocuploader.app.submission.StringEncryptor;
+import org.ladocuploader.app.utils.SubmissionUtilities;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
@@ -217,17 +218,10 @@ public class SubmissionTransfer {
       return;
     }
     log.info("Number of uploaded docs to transfer: %s".formatted(userFiles.size()));
-    Map<String, Integer> filenameDuplicates = new HashMap<>();
+    int fileCount = 0;
     for (UserFile userFile : userFiles) {
-      // Account for files of the same name
-      String docUploadFilename = userFile.getOriginalName();
-      filenameDuplicates.putIfAbsent(docUploadFilename, 0);
-      filenameDuplicates.computeIfPresent(docUploadFilename, (s, i) -> i + 1);
-      Integer filecount = filenameDuplicates.get(docUploadFilename);
-      if (filecount > 1) {
-        docUploadFilename = "%s_%s".formatted(filecount, docUploadFilename);
-      }
-
+      fileCount += 1;
+      String docUploadFilename = SubmissionUtilities.createFileNameForUploadedDocument(submission, userFile, fileCount, userFiles.size());
       ZipEntry docEntry = new ZipEntry(batchIndex + "/" + subfolder + "/" + docUploadFilename);
       docEntry.setSize(userFile.getFilesize().longValue());
       zos.putNextEntry(docEntry);

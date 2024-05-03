@@ -4,6 +4,7 @@ import formflow.library.config.submission.Condition;
 import formflow.library.data.Submission;
 import org.springframework.stereotype.Component;
 
+import static org.ladocuploader.app.utils.SubmissionUtilities.isJeffersonParish;
 import static org.ladocuploader.app.utils.SubmissionUtilities.isOrleansParish;
 
 @Component
@@ -19,6 +20,6 @@ public class InterestedInWicEce implements Condition {
 
   @Override
   public Boolean run(Submission submission) {
-    return isOrleansParish(submission) && (interestedInECE.run(submission) || interestedInWIC.run(submission));
+    return isOrleansParish(submission) || isJeffersonParish(submission) && (interestedInECE.run(submission) || interestedInWIC.run(submission));
   }
 }
