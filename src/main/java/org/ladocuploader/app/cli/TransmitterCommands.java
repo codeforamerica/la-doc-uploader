@@ -54,7 +54,7 @@ public class TransmitterCommands {
 
     private final String successfulSubmissionKey = "success";
 
-    private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE);
+    private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE, TransmissionType.WIC);
 
     private final long TWO_HOURS = 2L;
 
