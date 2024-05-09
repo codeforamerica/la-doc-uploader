@@ -61,7 +61,7 @@ public class SubmissionTransfer {
   private final int BATCH_INDEX_LEN = "00050000000".length();
   private final int BATCH_SIZE_LIMIT = 25;
   private final long TWO_HOURS = 2L;
-  public static final DateTimeFormatter MMDDYYYY_HHMMSS = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss");
+  public static final DateTimeFormatter MMDDYYYY_HHMMSS = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
 
   private final TransmissionRepository transmissionRepository;
   private final UserFileRepositoryService fileRepositoryService;
@@ -259,6 +259,8 @@ public class SubmissionTransfer {
     Map<String, Object> inputData = submission.getInputData();
     String formattedSSN = formatSSN(inputData);
     String formattedFilename = removeFileExtension(filename);
+    String documentOwnerFirstName = formattedFilename.split("_")[0];
+    String documentOwnerLastName = formattedFilename.split("_")[1];
     String formattedBirthdate = formatBirthdate(submission.getInputData());
     ZonedDateTime submittedAt = submission.getSubmittedAt().atZoneSameInstant(ZoneId.systemDefault());
     String formattedSubmissionDate = submittedAt.withZoneSameInstant(CST).format(MMDDYYYY_HHMMSS);
@@ -269,8 +271,8 @@ public class SubmissionTransfer {
             batchIndex,
             formattedFilename,
             documentType,
-            inputData.getOrDefault("firstName", ""),
-            inputData.getOrDefault("lastName", ""),
+            documentOwnerFirstName,
+            documentOwnerLastName,
             formattedSSN,
             formattedBirthdate,
             formattedSubmissionDate,
