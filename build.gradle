@@ -43,14 +43,10 @@ dependencies {
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.17.0'
     implementation 'com.opencsv:opencsv:5.9'
+    
+    implementation "org.codeforamerica.platform:form-flow:${formFlowLibraryVersion}"
+    println "📚Using form flow library ${formFlowLibraryVersion}"
 
-    if (profile == 'dev' || useLocalLibrary == 'true') {
-        implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
-        println "📦 Using local library"
-    } else {
-        implementation "org.codeforamerica.platform:form-flow:${formFlowLibraryVersion}"
-        println "📚Using form flow library ${formFlowLibraryVersion}"
-    }
 
     implementation 'com.amazonaws:aws-encryption-sdk-java:3.0.0'
     implementation 'org.bouncycastle:bcpg-jdk15on:1.70'
