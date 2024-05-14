@@ -179,11 +179,14 @@ public class TransmitterCommands {
     private void addZipEntries(CsvPackage csvPackage, ZipOutputStream zipOutput){
         CsvPackageType packageType = csvPackage.getPackageType();
         List<CsvType> csvTypes = packageType.getCsvTypeList();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddyyyyHHmm");
+        LocalDateTime now = LocalDateTime.now();
+        String datePostfix = dtf.format(now);
         csvTypes.forEach(csvType ->
                 {
                     try {
                         byte[] document = csvPackage.getCsvDocument(csvType).getCsvData();
-                        ZipEntry entry = new ZipEntry(csvType.getFileName());
+                        ZipEntry entry = new ZipEntry(csvType.getFileNamePrefix() + "-" + datePostfix + ".csv");
                         entry.setSize(document.length);
                         zipOutput.putNextEntry(entry);
                         zipOutput.write(document);
