@@ -56,9 +56,9 @@ jobs:
           'ECE_PGP_SECKEY_FILE_PATH=${{ secrets.ECE_PGP_SECKEY_FILE_PATH_STAGING }}' \
           'ECE_PGP_SIGKEY_PASSWORD=${{ secrets.ECE_PGP_SIGKEY_PASSWORD_STAGING }}' \
           'WIC_PGP_KEYS_DIR=${{ secrets.WIC_PGP_KEYS_DIR }}' \
-          'WIC_PGP_PUBKEY_FILE_PATH=${{ secrets.WIC_PGP_PUBKEY_FILE_PATH }}' \
-          'WIC_PGP_SECKEY_FILE_PATH=${{ secrets.WIC_PGP_SECKEY_FILE_PATH }}' \
-          'WIC_PGP_SIGKEY_PASSWORD=${{ secrets.WIC_PGP_SIGKEY_PASSWORD }}' \
+          'WIC_PGP_PUBKEY_FILE_PATH=${{ secrets.WIC_PGP_PUBKEY_FILE_PATH_STAGING }}' \
+          'WIC_PGP_SECKEY_FILE_PATH=${{ secrets.WIC_PGP_SECKEY_FILE_PATH_STAGING }}' \
+          'WIC_PGP_SIGKEY_PASSWORD=${{ secrets.WIC_PGP_SIGKEY_PASSWORD_STAGING }}' \
           'FTPS_USERNAME=${{ secrets.FTPS_USERNAME }}' \
           'FTPS_PASSWORD=${{ secrets.FTPS_PASSWORD }}' \
           'FTPS_UPLOAD_URL=${{ secrets.FTPS_UPLOAD_URL }}' \
