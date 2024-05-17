@@ -222,6 +222,8 @@ public class SubmissionTransfer {
     for (UserFile userFile : userFiles) {
       fileCount += 1;
       String docUploadFilename = SubmissionUtilities.createFileNameForUploadedDocument(submission, userFile, fileCount, userFiles.size());
+      String docOwnerName = submission.getInputData().get("documentOwner_wildcard_" + userFile.getFileId())
+              .toString().replace(" ", "_");
       ZipEntry docEntry = new ZipEntry(batchIndex + "/" + subfolder + "/" + docUploadFilename);
       docEntry.setSize(userFile.getFilesize().longValue());
       zos.putNextEntry(docEntry);
@@ -232,7 +234,8 @@ public class SubmissionTransfer {
 
       // write doc metadata
       String docType = getDocType(submission, userFile);
-      String metaEntry = generateMetaDataEntry(batchIndex, subfolder, docUploadFilename, docType, submission);
+      String metaEntry = generateMetaDataEntry(batchIndex, subfolder, docUploadFilename, docType, submission,
+              docOwnerName.split("_")[0], docOwnerName.split("_")[1]);
       docMeta.append(metaEntry);
     }
   }
@@ -251,16 +254,22 @@ public class SubmissionTransfer {
     zos.putNextEntry(entry);
     zos.write(file);
     zos.closeEntry();
-    String metaEntry = generateMetaDataEntry(batchIndex, subfolder, fileName, "APP-OFS 4 APP", submission);
+    String metaEntry = generateMetaDataEntry(batchIndex, subfolder, fileName, "APP-OFS 4 APP", submission,
+            submission.getInputData().getOrDefault("firstName", "").toString(),
+            submission.getInputData().getOrDefault("lastName", "").toString());
     docMeta.append(metaEntry);
   }
 
-  private String generateMetaDataEntry(String batchIndex, String subfolder, String filename, String documentType, Submission submission) {
+  private String generateMetaDataEntry(String batchIndex,
+          String subfolder,
+          String filename,
+          String documentType,
+          Submission submission,
+          String documentOwnerFirstName,
+          String documentOwnerLastName) {
     Map<String, Object> inputData = submission.getInputData();
     String formattedSSN = formatSSN(inputData);
     String formattedFilename = removeFileExtension(filename);
-    String documentOwnerFirstName = formattedFilename.split("_")[0];
-    String documentOwnerLastName = formattedFilename.split("_")[1];
     String formattedBirthdate = formatBirthdate(submission.getInputData());
     ZonedDateTime submittedAt = submission.getSubmittedAt().atZoneSameInstant(ZoneId.systemDefault());
     String formattedSubmissionDate = submittedAt.withZoneSameInstant(CST).format(MMDDYYYY_HHMMSS);
