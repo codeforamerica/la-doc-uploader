@@ -25,10 +25,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -74,22 +71,21 @@ public class TransmitterCommands {
     }
 
     @Scheduled(cron="${transmissions.wic-ece-transmission-schedule}")
-    public void transmit() throws IOException, JSchException, SftpException {
-        log.info("Finding submissions to transmit...");
+    public void transmit() throws IOException, JSchException, SftpException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
         for (TransmissionType transmissionType : transmissionTypes) {
-
+            log.info("Finding submissions to transmit for {}", transmissionType.name());
             List<Submission> queuedSubmissions = transmissionRepository.submissionsToTransmit(Sort.unsorted(), transmissionType);
             int totalQueued = queuedSubmissions.size();
             if (queuedSubmissions.isEmpty()) {
-                log.info("Nothing to transmit. Exiting.");
-                return;
+                log.info("Nothing to transmit for {}. Exiting.", transmissionType.name());
+                continue;
             }
             log.info("Found %s queued transmissions".formatted(totalQueued));
 
             queuedSubmissions = queuedSubmissions.stream()
                     .filter(submission -> (submission.getSubmittedAt().isBefore(submittedAtCutoff))).toList();
-            log.info("Total submissions to transmit for {} is {}", transmissionType.name(), queuedSubmissions.size());
+            log.info("Total submissions pre-filtering for interest for {} is {}", transmissionType.name(), queuedSubmissions.size());
             if (queuedSubmissions.size() > 0) {
                 log.info("Transmitting submissions for {}", transmissionType.name());
                 transmitBatch(queuedSubmissions, transmissionType);
@@ -101,18 +97,37 @@ public class TransmitterCommands {
 
     }
 
-    private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException{
+    public String createSingleEntryFilename(CsvType csvType){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddyyyyHHmm");
+        LocalDateTime now = LocalDateTime.now();
+        String datePostfix = dtf.format(now);
+        return csvType.getFileNamePrefix() + "-" + datePostfix + ".csv";
+    }
+
+    private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
         UUID runId = UUID.randomUUID();
-        String zipFilename = createZipFilename(transmissionType, runId);
         CsvPackageType csvPackageType = transmissionType.getPackageType();
-        Map<String, Object> zipResults = zipFiles(submissions, zipFilename, csvPackageType);
+        String fileName;
+        if (transmissionType == TransmissionType.WIC){
+            fileName = createSingleEntryFilename(CsvType.WIC_APPLICATION);
+        } else {
+            fileName = createZipFilename(transmissionType, runId);
+        }
 
-        List<UUID> successfullySubmittedIds = (List<UUID>) zipResults.get(successfulSubmissionKey);
+        Map<String, Object> results;
+        if (csvPackageType.getCreateZipArchive()) {
+            // only zip if the package indicates it
+            results = zipFiles(submissions, fileName, csvPackageType);
+        } else {
+            results = prepareSingleDocument(submissions, csvPackageType, fileName);
+        }
 
-        Map<UUID, Map<CsvType, String>> failedSubmissions = (Map<UUID, Map<CsvType, String>>) zipResults.get(failedSubmissionKey);
+        List<UUID> successfullySubmittedIds = (List<UUID>) results.get(successfulSubmissionKey);
 
-        Map<UUID, Map<String, String>> failedDocumentation = (Map<UUID, Map<String, String>>) zipResults.get(failedDocumentationKey);
+        Map<UUID, Map<CsvType, String>> failedSubmissions = (Map<UUID, Map<CsvType, String>>) results.get(failedSubmissionKey);
+
+        Map<UUID, Map<String, String>> failedDocumentation = (Map<UUID, Map<String, String>>) results.get(failedDocumentationKey);
 
         // send zip file
         String uploadLocation = csvPackageType.getUploadLocation();
@@ -120,20 +135,23 @@ public class TransmitterCommands {
             log.info("Encrypting data package");
             byte [] data = new byte[]{};
             if (csvPackageType == CsvPackageType.WIC_PACKAGE) {
-                log.info("Uploading encrypted WIC zip file from memory");
-                data = wicPgpEncryptor.signAndEncryptPayload(zipFilename);
+                log.info("Encrypting WIC file from memory");
+                data = wicPgpEncryptor.signAndEncryptPayload(fileName);
+                log.info("Finished encrypting WIC file");
             } else if (csvPackageType == CsvPackageType.ECE_PACKAGE ){
-                log.info("Uploading encrypted ECE zip file from memory");
-                data = ecePgpEncryptor.signAndEncryptPayload(zipFilename);
+                log.info("Encrypting ECE zip file from memory");
+                data = ecePgpEncryptor.signAndEncryptPayload(fileName);
+                log.info("Finished encrypting ECE zip file");
             }
-
-            sftpClient.uploadFile(zipFilename, uploadLocation, data);
+            log.info("Uploading encrypted file");
+            sftpClient.uploadFile(fileName, uploadLocation, data);
+            log.info("Finished uploading encrypted file");
         } else {
             log.info("Uploading zip file");
-            sftpClient.uploadFile(zipFilename, uploadLocation);
+            sftpClient.uploadFile(fileName, uploadLocation);
         }
 
-        if (new File(zipFilename).delete()) {
+        if (new File(fileName).delete()) {
             log.info("Deleting zip file");
         }
 
@@ -164,8 +182,6 @@ public class TransmitterCommands {
                 }
         );
 
-
-
     }
 
     @NotNull
@@ -175,6 +191,21 @@ public class TransmitterCommands {
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
         return "Apps__" + transmissionType.name() + "__" + runId + "__" + date + ".zip";
+    }
+
+    private void writeCsvToFile(CsvPackage csvPackage, String fileName) {
+        CsvPackageType packageType = csvPackage.getPackageType();
+        List<CsvType> csvTypes = packageType.getCsvTypeList();
+        CsvType wicType = csvTypes.get(0);
+        try {
+            byte[] document = csvPackage.getCsvDocument(wicType).getCsvData();
+
+            try (FileOutputStream outputStream = new FileOutputStream(fileName)){
+                outputStream.write(document);
+            }
+        } catch (Exception e) {
+            log.error("Failed to generate csv document %s for package".formatted(wicType));
+        }
     }
 
     private void addZipEntries(CsvPackage csvPackage, ZipOutputStream zipOutput){
@@ -198,6 +229,29 @@ public class TransmitterCommands {
 
                 }
         );
+    }
+
+    private Map<String, Object> prepareSingleDocument(List<Submission> submissions, CsvPackageType packageType, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        Map<String, Object> results = new HashMap<>();
+        List<UUID> successfullySubmittedIds = new ArrayList<>(submissions.stream()
+                .map(Submission::getId)
+                .toList());
+
+        CsvPackage csvPackage = csvService.generateCsvPackage(submissions, packageType);
+        Map<UUID, Map<CsvType, String>> submissionErrors = csvPackage.getErrorMessages();
+
+        submissionErrors.forEach((submissionId, submissionErrorMessages) -> {
+                    successfullySubmittedIds.remove(submissionId);
+                }
+        );
+
+        results.put(failedSubmissionKey, submissionErrors);
+
+        results.put(successfulSubmissionKey, successfullySubmittedIds);
+
+        writeCsvToFile(csvPackage, fileName);
+
+        return results;
     }
 
     private Map<String, Object> zipFiles(List<Submission> submissions, String zipFileName, CsvPackageType packageType) throws IOException {
