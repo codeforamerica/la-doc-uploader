@@ -71,7 +71,7 @@ public class TransmitterCommands {
     }
 
     @Scheduled(cron="${transmissions.wic-ece-transmission-schedule}")
-    public void transmit() throws IOException, JSchException, SftpException {
+    public void transmit() throws IOException, JSchException, SftpException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         log.info("Finding submissions to transmit...");
         OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
         for (TransmissionType transmissionType : transmissionTypes) {
@@ -103,7 +103,7 @@ public class TransmitterCommands {
         UUID runId = UUID.randomUUID();
         String zipFilename = createZipFilename(transmissionType, runId);
         CsvPackageType csvPackageType = transmissionType.getPackageType();
-        Map<String, Object> results = new HashMap<>();
+        Map<String, Object> results;
         if (csvPackageType.getCreateZipArchive()) {
             // only zip if the package indicates it
             results = zipFiles(submissions, zipFilename, csvPackageType);
