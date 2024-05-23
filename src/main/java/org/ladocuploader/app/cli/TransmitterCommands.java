@@ -72,21 +72,20 @@ public class TransmitterCommands {
 
     @Scheduled(cron="${transmissions.wic-ece-transmission-schedule}")
     public void transmit() throws IOException, JSchException, SftpException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        log.info("Finding submissions to transmit...");
         OffsetDateTime submittedAtCutoff = OffsetDateTime.now().minusHours(TWO_HOURS);
         for (TransmissionType transmissionType : transmissionTypes) {
-
+            log.info("Finding submissions to transmit for {}", transmissionType.name());
             List<Submission> queuedSubmissions = transmissionRepository.submissionsToTransmit(Sort.unsorted(), transmissionType);
             int totalQueued = queuedSubmissions.size();
             if (queuedSubmissions.isEmpty()) {
-                log.info("Nothing to transmit. Exiting.");
-                return;
+                log.info("Nothing to transmit for {}. Exiting.", transmissionType.name());
+                continue;
             }
             log.info("Found %s queued transmissions".formatted(totalQueued));
 
             queuedSubmissions = queuedSubmissions.stream()
                     .filter(submission -> (submission.getSubmittedAt().isBefore(submittedAtCutoff))).toList();
-            log.info("Total submissions to transmit for {} is {}", transmissionType.name(), queuedSubmissions.size());
+            log.info("Total submissions pre-filtering for interest for {} is {}", transmissionType.name(), queuedSubmissions.size());
             if (queuedSubmissions.size() > 0) {
                 log.info("Transmitting submissions for {}", transmissionType.name());
                 transmitBatch(queuedSubmissions, transmissionType);
@@ -98,17 +97,30 @@ public class TransmitterCommands {
 
     }
 
+    public String createSingleEntryFilename(CsvType csvType){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddyyyyHHmm");
+        LocalDateTime now = LocalDateTime.now();
+        String datePostfix = dtf.format(now);
+        return csvType.getFileNamePrefix() + "-" + datePostfix + ".csv";
+    }
+
     private void transmitBatch(List<Submission> submissions, TransmissionType transmissionType) throws IOException, JSchException, SftpException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
         UUID runId = UUID.randomUUID();
-        String zipFilename = createZipFilename(transmissionType, runId);
         CsvPackageType csvPackageType = transmissionType.getPackageType();
+        String fileName;
+        if (transmissionType == TransmissionType.WIC){
+            fileName = createSingleEntryFilename(CsvType.WIC_APPLICATION);
+        } else {
+            fileName = createZipFilename(transmissionType, runId);
+        }
+
         Map<String, Object> results;
         if (csvPackageType.getCreateZipArchive()) {
             // only zip if the package indicates it
-            results = zipFiles(submissions, zipFilename, csvPackageType);
+            results = zipFiles(submissions, fileName, csvPackageType);
         } else {
-            results = prepareSingleDocument(submissions, csvPackageType);
+            results = prepareSingleDocument(submissions, csvPackageType, fileName);
         }
 
         List<UUID> successfullySubmittedIds = (List<UUID>) results.get(successfulSubmissionKey);
@@ -123,20 +135,23 @@ public class TransmitterCommands {
             log.info("Encrypting data package");
             byte [] data = new byte[]{};
             if (csvPackageType == CsvPackageType.WIC_PACKAGE) {
-                log.info("Uploading encrypted WIC zip file from memory");
-                data = wicPgpEncryptor.signAndEncryptPayload(zipFilename);
+                log.info("Encrypting WIC file from memory");
+                data = wicPgpEncryptor.signAndEncryptPayload(fileName);
+                log.info("Finished encrypting WIC file");
             } else if (csvPackageType == CsvPackageType.ECE_PACKAGE ){
-                log.info("Uploading encrypted ECE zip file from memory");
-                data = ecePgpEncryptor.signAndEncryptPayload(zipFilename);
+                log.info("Encrypting ECE zip file from memory");
+                data = ecePgpEncryptor.signAndEncryptPayload(fileName);
+                log.info("Finished encrypting ECE zip file");
             }
-
-            sftpClient.uploadFile(zipFilename, uploadLocation, data);
+            log.info("Uploading encrypted file");
+            sftpClient.uploadFile(fileName, uploadLocation, data);
+            log.info("Finished uploading encrypted file");
         } else {
             log.info("Uploading zip file");
-            sftpClient.uploadFile(zipFilename, uploadLocation);
+            sftpClient.uploadFile(fileName, uploadLocation);
         }
 
-        if (new File(zipFilename).delete()) {
+        if (new File(fileName).delete()) {
             log.info("Deleting zip file");
         }
 
@@ -178,26 +193,19 @@ public class TransmitterCommands {
         return "Apps__" + transmissionType.name() + "__" + runId + "__" + date + ".zip";
     }
 
-    private void writeCsvToFile(CsvPackage csvPackage) throws FileNotFoundException {
+    private void writeCsvToFile(CsvPackage csvPackage, String fileName) {
         CsvPackageType packageType = csvPackage.getPackageType();
         List<CsvType> csvTypes = packageType.getCsvTypeList();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddyyyyHHmm");
-        LocalDateTime now = LocalDateTime.now();
-        String datePostfix = dtf.format(now);
-        csvTypes.forEach(csvType ->
-                {
-                    try {
-                        byte[] document = csvPackage.getCsvDocument(csvType).getCsvData();
-                        File outputFile = new File(csvType.getFileNamePrefix() + "-" + datePostfix + ".csv");
-                        try (FileOutputStream outputStream = new FileOutputStream(outputFile)){
-                            outputStream.write(document);
-                        }
-                    } catch (Exception e) {
-                        log.error("Failed to generate csv document %s for package".formatted(csvType));
-                    }
+        CsvType wicType = csvTypes.get(0);
+        try {
+            byte[] document = csvPackage.getCsvDocument(wicType).getCsvData();
 
-                }
-        );
+            try (FileOutputStream outputStream = new FileOutputStream(fileName)){
+                outputStream.write(document);
+            }
+        } catch (Exception e) {
+            log.error("Failed to generate csv document %s for package".formatted(wicType));
+        }
     }
 
     private void addZipEntries(CsvPackage csvPackage, ZipOutputStream zipOutput){
@@ -223,7 +231,7 @@ public class TransmitterCommands {
         );
     }
 
-    private Map<String, Object> prepareSingleDocument(List<Submission> submissions, CsvPackageType packageType) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+    private Map<String, Object> prepareSingleDocument(List<Submission> submissions, CsvPackageType packageType, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         Map<String, Object> results = new HashMap<>();
         List<UUID> successfullySubmittedIds = new ArrayList<>(submissions.stream()
                 .map(Submission::getId)
@@ -241,7 +249,7 @@ public class TransmitterCommands {
 
         results.put(successfulSubmissionKey, successfullySubmittedIds);
 
-        writeCsvToFile(csvPackage);
+        writeCsvToFile(csvPackage, fileName);
 
         return results;
     }
