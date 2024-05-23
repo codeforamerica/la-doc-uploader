@@ -15,13 +15,15 @@ public enum CsvPackageType {
           List.of(PARENT_GUARDIAN, STUDENT, RELATIONSHIP, ECE_APPLICATION),
           "nola-ps",
           false,
+          true,
           true
   ),
   WIC_PACKAGE (
           List.of(WIC_APPLICATION),
           "dcfs",
           false,
-          true
+          true,
+          false
   );
 
   @Getter
@@ -36,11 +38,16 @@ public enum CsvPackageType {
   @Getter
   private final Boolean encryptPackage;
 
-  CsvPackageType(List<CsvType> csvTypeList, String uploadLocation, Boolean includeDocumentation, Boolean encryptPackage) {
+  @Getter
+  private final Boolean createZipArchive;
+
+  CsvPackageType(List<CsvType> csvTypeList, String uploadLocation, Boolean includeDocumentation, Boolean encryptPackage,
+                 Boolean createZipArchive) {
     this.csvTypeList = csvTypeList;
     this.uploadLocation = uploadLocation;
     this.includeDocumentation = includeDocumentation;
     this.encryptPackage = encryptPackage;
+    this.createZipArchive = createZipArchive;
   }
 
 }
