@@ -109,7 +109,7 @@ public class TransmitterCommands {
         UUID runId = UUID.randomUUID();
         CsvPackageType csvPackageType = transmissionType.getPackageType();
         String fileName;
-        if (transmissionType == TransmissionType.WIC){
+        if (transmissionType == TransmissionType.WIC) {
             fileName = createSingleEntryFilename(CsvType.WIC_APPLICATION);
         } else {
             fileName = createZipFilename(transmissionType, runId);
