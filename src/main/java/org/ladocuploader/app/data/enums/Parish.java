@@ -41,7 +41,7 @@ public enum Parish {
   MADISON("Madison", "Madison", "1707 Felicia Ave", "", "Tallulah", "71282", "1707 Felicia Ave", "", "Tallulah", "71282"),
   MOREHOUSE("Morehouse", "Morehouse", "1045 E Madison Ave", "", "Bastrop", "71220", "1045 E Madison Ave", "", "Bastrop", "71220"),
   NATCHITOCHES("Natchitoches", "Natchitoches", "106 Charlene St", "", "Natchitoches", "71457", "106 Charlene St", "", "Natchitoches", "71457"),
-  ORLEANS("Orleans", "Algiers", "DCFS Family Support/Economic Stability P O Box 260031", "", "Baton Rouge", "70826", "2703 General DeGaulle Drive", "", "New Orleans", "70114"),
+  ORLEANS("Orleans", "Orleans - Midtown", "DCFS Family Support/Economic Stability P O Box 260031", "", "Baton Rouge", "70826", "2703 General DeGaulle Drive", "", "New Orleans", "70114"),
   OUACHITA("Ouachita", "Ouachita", "24 Accent Dr", "Ste 106", "Monroe", "71202", "24 Accent Dr", "Ste 106", "Monroe", "71202"),
   PLAQUEMINES("Plaquemines", "Jefferson - West Bank", "2150 Westbank Expy", "Ste 201", "Harvey", "70058", "2150 Westbank Expy", "Ste 201", "Harvey", "70058"),
   POINTE_COUPLEE("Pointe Coupee", "East Baton Rouge", "1919 North Blvd", "", "Baton Rouge", "70806", "1919 North Blvd", "", "Baton Rouge", "70806"),
@@ -49,7 +49,7 @@ public enum Parish {
   RED_RIVER("Red River", "Red River", "5040 Cut Off Rd", "", "Coushatta", "71019", "5040 Cut Off Rd", "", "Coushatta", "71019"),
   RICHLAND("Richland", "Ouachita", "24 Accent Dr", "Ste 106", "Monroe", "71202", "24 Accent Dr", "Ste 106", "Monroe", "71202"),
   SABINE("Sabine", "Natchitoches", "106 Charlene St", "", "Natchitoches", "71457", "106 Charlene St", "", "Natchitoches", "71457"),
-  ST_BERNARD_ALGIERS("St. Bernard", "Algiers", "DCFS Family Support/Economic Stability P O Box 260031", "", "Baton Rouge", "70826", "2703 General DeGaulle Drive", "", "New Orleans", "70114"),
+  ST_BERNARD("St. Bernard", "Orleans - Midtown", "DCFS Family Support/Economic Stability P O Box 260031", "", "Baton Rouge", "70826", "2703 General DeGaulle Drive", "", "New Orleans", "70114"),
   ST_CHARLES("St. Charles", "St. John", "425 W Airline Hwy", "Suite C", "LaPlace", "70068", "425 W Airline Hwy", "Suite C", "LaPlace", "70068"),
   ST_HELENA("St. Helena", "Tangipahoa", "1211 NW Central Avenue", "", "Amite", "70422", "1211 NW Central Ave", "", "Amite", "70422"),
   ST_JAMES("St. James", "St. John", "425 W Airline Hwy", "Suite C", "LaPlace", "70068", "425 W Airline Hwy", "Suite C", "LaPlace", "70068"),
@@ -122,5 +122,12 @@ public enum Parish {
   public String getMailingAddressLine2(){
     return mailingAddressCity + ", " + mailingAddressState + " " + mailingAddressZipcode;
   }
-
+  
+  public String getPhysicalAddressLine1() {
+    return physicalAddress1 + physicalAddress2;
+  }
+  
+    public String getPhysicalAddressLine2(){
+        return physicalAddressCity + ", " + physicalAddressState + " " + physicalAddressZipcode;
+    }
 }

@@ -136,25 +136,42 @@ public class SubmissionUtilities {
     return false;
   }
 
-  public static String getParishMailingAddress1(Submission submission){
+  public static String getParishMailingAddress1(Submission submission) {
     String selectedParish = (String) submission.getInputData().get("parish");
     Parish parishDetails = Parish.valueOf(selectedParish);
     return parishDetails.getMailingAddressLine1();
   }
 
-  public static String getParishMailingAddress2(Submission submission){
+  public static String getParishMailingAddress2(Submission submission) {
     String selectedParish = (String) submission.getInputData().get("parish");
     Parish parishDetails = Parish.valueOf(selectedParish);
     return parishDetails.getMailingAddressLine2();
   }
 
-  public static String getParishDisplayName(Submission submission){
+  public static String getParishDisplayName(Submission submission) {
     String selectedParish = (String) submission.getInputData().get("parish");
     Parish parishDetails = Parish.valueOf(selectedParish);
     return parishDetails.getDisplayName() + " DCFS Office";
   }
 
+  public static String getParishOfficeName(Submission submission) {
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getOffice() + " DCFS Office";
+  }
+  
+  public static String getParishPhysicalAddress1(Submission submission) {
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getPhysicalAddressLine1();
+  }
 
+  public static String getParishPhysicalAddress2(Submission submission) {
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getPhysicalAddressLine2();
+  }
+  
   public static boolean isDocUploadActive(Submission submission) {
     OffsetDateTime submittedAt = submission.getSubmittedAt();
     OffsetDateTime now = OffsetDateTime.now();
