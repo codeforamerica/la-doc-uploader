@@ -116,7 +116,7 @@ public enum Parish {
   }
 
   public String getMailingAddressLine1() {
-    return mailingAddress1 + mailingAddress2;
+    return mailingAddress1 + " " + mailingAddress2;
   }
 
   public String getMailingAddressLine2(){
@@ -124,7 +124,7 @@ public enum Parish {
   }
   
   public String getPhysicalAddressLine1() {
-    return physicalAddress1 + physicalAddress2;
+    return physicalAddress1 + " " + physicalAddress2;
   }
   
     public String getPhysicalAddressLine2(){
