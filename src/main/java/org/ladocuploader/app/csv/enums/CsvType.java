@@ -4,17 +4,18 @@ import lombok.Getter;
 
 @Getter
 public enum CsvType {
-  PARENT_GUARDIAN("ParentGuardian", "parent_guardian.csv"),
-  STUDENT("Student", "student.csv"),
-  RELATIONSHIP("Relationship", "relationship.csv"),
-  ECE_APPLICATION("ECE Application", "application.csv"),
-  WIC_APPLICATION("WIC Application", "application.csv");
+  PARENT_GUARDIAN("ParentGuardian", "parent_guardian"),
+  STUDENT("Student", "student"),
+  RELATIONSHIP("Relationship", "relationship"),
+  ECE_APPLICATION("ECE Application", "application"),
+  JEFFERSON_ECE("Jefferson ECE", "jefferson_ece"),
+  WIC_APPLICATION("WIC Application", "application");
 
   private final String name;
-  private final String fileName;
-  CsvType(String name, String fileName) {
+  private final String fileNamePrefix;
+  CsvType(String name, String fileNamePrefix) {
     this.name = name;
-    this.fileName = fileName;
+    this.fileNamePrefix = fileNamePrefix;
   }
 }
 

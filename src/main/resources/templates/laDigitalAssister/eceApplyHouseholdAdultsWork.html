@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}">
-<head th:replace="~{fragments/head :: head(title=#{nola-apply-household-working.title})}"></head>
+<head th:replace="~{fragments/head :: head(title=#{ece-apply-household-working.title})}"></head>
 <body>
 <div class="page-wrapper">
   <div th:replace="~{fragments/toolbar :: toolbar}"></div>
@@ -9,7 +9,7 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block th:replace="~{fragments/icons :: householdFamilyIncome}"></th:block>
-        <th:block th:replace="~{fragments/cardHeader :: cardHeader(header=#{nola-apply-household-working.header})}"/>
+        <th:block th:replace="~{fragments/cardHeader :: cardHeader(header=#{ece-apply-household-working.header})}"/>
         <th:block
             th:replace="~{fragments/form :: form(action=${formAction}, content=~{::content})}">
           <th:block th:ref="content">
@@ -20,11 +20,11 @@
                         content=~{::options})}">
                 <th:block th:ref="options">
                   <th:block
-                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='ALL', label=#{nola-apply-household.all-of-them})}"/>
+                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='ALL', label=#{ece-apply-household.all-of-them})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='SOME', label=#{nola-apply-household.some-of-them})}"/>
+                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='SOME', label=#{ece-apply-household.some-of-them})}"/>
                   <th:block
-                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='NONE', label=#{nola-apply-household.none-of-them})}"/>
+                      th:replace="~{fragments/inputs/radio :: radio(inputName='adultsWorking',value='NONE', label=#{ece-apply-household.none-of-them})}"/>
                 </th:block>
               </th:block>
             </div>

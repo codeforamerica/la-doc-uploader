@@ -405,26 +405,40 @@ flow:
       - name: expensesChildSupportAmount
         condition: HasChildSupportExpenses
       - name: nolaEceLinks
-        condition: EligibleForEceLinks
+        condition: EligibleForEceLinksNola
+      - name: nolaApplyStart
+        condition: EligibleForEceApplyNola
+      - name: jeffersonEceLinks
+        condition: EligibleForEceLinksJefferson
+      - name: jeffersonApplyStart
+        condition: EligibleForEceApplyJefferson
+        # this needs to come after other conditions since it will apply first if it comes before county checks
       - name: wicLinks
         condition: EligibleForWicLinks
-      - name: nolaApplyStart
-        condition: EligibleForEceApply
       - name: wicApply
         condition: EligibleForWicApply
       - name: finalSignPost
   expensesChildSupportAmount:
     nextScreens:
       - name: nolaEceLinks
-        condition: EligibleForEceLinks
+        condition: EligibleForEceLinksNola
       - name: wicLinks
         condition: EligibleForWicLinks
+      - name: jeffersonApplyStart
+        condition: EligibleForEceApplyJefferson
+      - name: jeffersonEceLinks
+        condition: EligibleForEceLinksJefferson
       - name: nolaApplyStart
-        condition: EligibleForEceApply
+        condition: EligibleForEceApplyNola
       - name: wicApply
         condition: EligibleForWicApply
       - name: finalSignPost
   nolaEceLinks:
+    nextScreens:
+      - name: wicLinks
+        condition: EligibleForWicLinks
+      - name: finalSignPost
+  jeffersonEceLinks:
     nextScreens:
       - name: wicLinks
         condition: EligibleForWicLinks
@@ -439,30 +453,40 @@ flow:
       - name: wicApply
         condition: EligibleForWicApply
       - name: finalSignPost
+  jeffersonApplyStart:
+    nextScreens:
+      - name: jeffersonApplyQuestions
+        condition: InterestedInECE
+      - name: wicApply
+        condition: EligibleForWicApply
+      - name: finalSignPost
   nolaApplyQuestions:
     nextScreens:
-      - name: nolaApplyIEP
-  nolaApplyIEP:
+      - name: eceApplyIEP
+  jeffersonApplyQuestions:
     nextScreens:
-      - name: nolaApplyHouseholdAdultsWork
-  nolaApplyHouseholdAdultsWork:
+      - name: eceApplyIEP
+  eceApplyIEP:
+    nextScreens:
+      - name: eceApplyHouseholdAdultsWork
+  eceApplyHouseholdAdultsWork:
     nextScreens:
       - name: wicApply
         condition: EligibleForWicApply
-      - name: nolaApplyThankYou
+      - name: applyThankYou
         condition: InterestedInWicEce
       - name: finalSignPost
   wicApply:
     nextScreens:
-      - name: nolaApplyThankYou
+      - name: applyThankYou
         condition: InterestedInWicEce
-      - name: outsideNolaApplyThankYou
+      - name: outsideAreasApplyThankYou
         condition: InterestedInWIC
       - name: finalSignPost
-  nolaApplyThankYou:
+  applyThankYou:
     nextScreens:
       - name: finalSignPost
-  outsideNolaApplyThankYou:
+  outsideAreasApplyThankYou:
     nextScreens:
       - name: finalSignPost
   finalSignPost:

@@ -11,6 +11,7 @@
     <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/student/' + ${submission.getId()}">Student Summary CSV</a> |
     <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/ece/' + ${submission.getId()}">ECE Summary CSV</a> |
     <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/wic/' + ${submission.getId()}">WIC Summary CSV</a> |
+    <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download-csv/laDigitalAssister/jefferson-ece/' + ${submission.getId()}">Jefferson Summary CSV</a> |
     <a class="link--subtle" target="_blank" rel="noopener noreferrer" th:if="${submission != null}" th:href="'/download/laDigitalAssister/' + ${submission.getId()}">Applicant PDF</a>
   </th:block>
   <th:block th:if="${#arrays.contains(@environment.getActiveProfiles(), 'staging')}">

@@ -1,6 +1,8 @@
 package org.ladocuploader.app.utils;
 
 import formflow.library.data.Submission;
+import formflow.library.data.UserFile;
+import java.time.ZoneId;
 import org.ladocuploader.app.data.enums.Parish;
 
 import java.text.DecimalFormat;
@@ -12,6 +14,7 @@ import java.util.regex.Pattern;
 
 import static formflow.library.inputs.FieldNameMarkers.DYNAMIC_FIELD_MARKER;
 import static java.util.Collections.emptyList;
+import static org.ladocuploader.app.data.enums.Parish.JEFFERSON;
 import static org.ladocuploader.app.data.enums.Parish.ORLEANS;
 
 public class SubmissionUtilities {
@@ -101,6 +104,10 @@ public class SubmissionUtilities {
   public static boolean isOrleansParish(Submission submission) {
     return ORLEANS.name().equals(submission.getInputData().get("parish"));
   }
+  
+  public static boolean isJeffersonParish(Submission submission) {
+    return JEFFERSON.name().equals(submission.getInputData().get("parish"));
+  }
 
   public static boolean isEligibleForExperiment(Submission submission) {
     return hasHouseholdPregnancy(submission) || hasChildBornAfterCutoff(submission, ECE_CUTOFF_DATE);
@@ -129,25 +136,42 @@ public class SubmissionUtilities {
     return false;
   }
 
-  public static String getParishMailingAddress1(Submission submission){
+  public static String getParishMailingAddress1(Submission submission) {
     String selectedParish = (String) submission.getInputData().get("parish");
     Parish parishDetails = Parish.valueOf(selectedParish);
     return parishDetails.getMailingAddressLine1();
   }
 
-  public static String getParishMailingAddress2(Submission submission){
+  public static String getParishMailingAddress2(Submission submission) {
     String selectedParish = (String) submission.getInputData().get("parish");
     Parish parishDetails = Parish.valueOf(selectedParish);
     return parishDetails.getMailingAddressLine2();
   }
 
-  public static String getParishDisplayName(Submission submission){
+  public static String getParishDisplayName(Submission submission) {
     String selectedParish = (String) submission.getInputData().get("parish");
     Parish parishDetails = Parish.valueOf(selectedParish);
     return parishDetails.getDisplayName() + " DCFS Office";
   }
 
+  public static String getParishOfficeName(Submission submission) {
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getOffice() + " DCFS Office";
+  }
+  
+  public static String getParishPhysicalAddress1(Submission submission) {
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getPhysicalAddressLine1();
+  }
 
+  public static String getParishPhysicalAddress2(Submission submission) {
+    String selectedParish = (String) submission.getInputData().get("parish");
+    Parish parishDetails = Parish.valueOf(selectedParish);
+    return parishDetails.getPhysicalAddressLine2();
+  }
+  
   public static boolean isDocUploadActive(Submission submission) {
     OffsetDateTime submittedAt = submission.getSubmittedAt();
     OffsetDateTime now = OffsetDateTime.now();
@@ -296,5 +320,16 @@ public class SubmissionUtilities {
       return submission.getInputData().get("documentOwner_wildcard_" + fileId).toString();
     }
     return "";
+  }
+
+  public static String createFileNameForUploadedDocument(Submission submission, UserFile userFile, int currentFileCount, int totalFiles) {
+    String documentType = userFile.getDocTypeLabel();
+    String fileType = userFile.getOriginalName().substring(userFile.getOriginalName().lastIndexOf("."));
+    String fileOwner = submission.getInputData().get("documentOwner_wildcard_" + userFile.getFileId())
+            .toString().replace(" ", "_");
+    String cstTime = submission.getSubmittedAt().atZoneSameInstant(ZoneId.of("America/Chicago"))
+            .format(DateTimeFormatter.ofPattern("MMddyyyyHHmm"));
+    String fileCountString = String.format("%d_of_%d", currentFileCount, totalFiles);
+    return String.format("%s_%s_%s_%s%s", fileOwner, documentType, fileCountString, cstTime, fileType);
   }
 }
