@@ -5,12 +5,14 @@ import formflow.library.data.Submission;
 import formflow.library.data.SubmissionRepositoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.ladocuploader.app.data.TransmissionRepositoryService;
+import org.ladocuploader.app.data.enums.Parish;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static java.util.Collections.emptyList;
 import static org.ladocuploader.app.submission.actions.SetExperimentGroups.ExperimentGroup.APPLY;
@@ -45,9 +47,19 @@ public class HandleApplicationSigned implements Action {
 
     }
 
-    if (!transmissionRepositoryService.transmissionExists(submission, TransmissionType.ECE)) {
+    String parish = (String) submission.getInputData().get("parish");
+
+    TransmissionType transmissionType = null;
+
+    if (Objects.equals(parish, Parish.ORLEANS.name())){
+      transmissionType = TransmissionType.ECE_ORLEANS;
+    } else if (Objects.equals(parish, Parish.JEFFERSON.name())) {
+      transmissionType = TransmissionType.ECE_JEFFERSON;
+    }
+
+    if ((transmissionType != null) && (!transmissionRepositoryService.transmissionExists(submission, transmissionType))){
       if (inExperimentGroup(APPLY.name(), submission)) {
-        transmissionRepositoryService.createTransmissionRecord(submission, TransmissionType.ECE);
+        transmissionRepositoryService.createTransmissionRecord(submission, transmissionType);
       }
     }
 
