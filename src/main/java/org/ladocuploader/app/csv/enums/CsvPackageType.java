@@ -54,11 +54,11 @@ public enum CsvPackageType {
   public static class MyEnumInjector {
     @Autowired
     public MyEnumInjector(
-            @Qualifier("wicPgpEncryptor") PGPEncryptor wicEncryptor,
+            @Qualifier("wicPgpEncryptor") PGPEncryptor wicPgpEncryptor,
             @Qualifier("eceOrleansPgpEncryptor") PGPEncryptor eceOrleansPgpEncryptor,
             @Qualifier("eceJeffersonPgpEncryptor") PGPEncryptor eceJeffersonPgpEncryptor
     ) {
-      CsvPackageType.WIC_PACKAGE.setEncryptionService(wicEncryptor);
+      CsvPackageType.WIC_PACKAGE.setEncryptionService(wicPgpEncryptor);
       CsvPackageType.ECE_JEFFERSON_PACKAGE.setEncryptionService(eceJeffersonPgpEncryptor);
       CsvPackageType.ECE_ORLEANS_PACKAGE.setEncryptionService(eceOrleansPgpEncryptor);
     }
