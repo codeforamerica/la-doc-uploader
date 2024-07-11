@@ -192,10 +192,6 @@ public class SubmissionUtilities {
     return groupName.equals(submission.getInputData().get("experimentGroup"));
   }
 
-  public static boolean inParish(String parish, Submission submission){
-    return parish.equals(submission.getInputData().get("parish"));
-  }
-
   public static String householdMemberFullName(Map<String, Object> householdMember) {
     return householdMember.get("householdMemberFirstName") + " " + householdMember.get("householdMemberLastName");
   }

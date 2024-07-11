@@ -16,7 +16,7 @@ import java.util.Objects;
 
 import static java.util.Collections.emptyList;
 import static org.ladocuploader.app.submission.actions.SetExperimentGroups.ExperimentGroup.APPLY;
-import static org.ladocuploader.app.utils.SubmissionUtilities.inExperimentGroup;
+import static org.ladocuploader.app.utils.SubmissionUtilities.*;
 
 
 @Slf4j
@@ -47,13 +47,11 @@ public class HandleApplicationSigned implements Action {
 
     }
 
-    String parish = (String) submission.getInputData().get("parish");
-
     TransmissionType transmissionType = null;
 
-    if (Objects.equals(parish, Parish.ORLEANS.name())){
+    if (isOrleansParish(submission)){
       transmissionType = TransmissionType.ECE_ORLEANS;
-    } else if (Objects.equals(parish, Parish.JEFFERSON.name())) {
+    } else if (isJeffersonParish(submission)) {
       transmissionType = TransmissionType.ECE_JEFFERSON;
     }
 
