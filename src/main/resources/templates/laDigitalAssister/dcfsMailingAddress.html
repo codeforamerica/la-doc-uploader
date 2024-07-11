@@ -13,9 +13,9 @@
             th:replace="~{fragments/cardHeader :: cardHeader(header=#{dcfs-mailing-address.header})}"/>
         <div class="form-card__content">
           <div class="notice-teal spacing-below-25">
-            <p style="font-weight:bold" th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishDisplayName(submission)}"></p>
-            <p th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishMailingAddress1(submission)}"></p>
-            <p th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishMailingAddress2(submission)}"></p>
+            <p style="font-weight:bold" th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishOfficeName(submission)}"></p>
+            <p th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishPhysicalAddress1(submission)}"></p>
+            <p th:text="${T(org.ladocuploader.app.utils.SubmissionUtilities).getParishPhysicalAddress2(submission)}"></p>
           </div>
           <th:block th:utext="#{dcfs-mailing-address.write-down}"></th:block>
           <hr class="spacing-below-25 spacing-above-25">
