@@ -1,9 +1,11 @@
 package org.ladocuploader.app.csv.enums;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.ladocuploader.app.cli.PGPEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -52,12 +54,24 @@ public enum CsvPackageType {
 
   @Component
   public static class MyEnumInjector {
+
+    private final PGPEncryptor wicPgpEncryptor;
+    private final PGPEncryptor eceOrleansPgpEncryptor;
+
+    private final PGPEncryptor eceJeffersonPgpEncryptor;
     @Autowired
     public MyEnumInjector(
-            @Qualifier("wicPgpEncryptor") PGPEncryptor wicPgpEncryptor,
-            @Qualifier("eceOrleansPgpEncryptor") PGPEncryptor eceOrleansPgpEncryptor,
-            @Qualifier("eceJeffersonPgpEncryptor") PGPEncryptor eceJeffersonPgpEncryptor
-    ) {
+            PGPEncryptor wicPgpEncryptor,
+            PGPEncryptor eceOrleansPgpEncryptor,
+            PGPEncryptor eceJeffersonPgpEncryptor) {
+
+      this.wicPgpEncryptor = wicPgpEncryptor;
+      this.eceOrleansPgpEncryptor = eceOrleansPgpEncryptor;
+      this.eceJeffersonPgpEncryptor = eceJeffersonPgpEncryptor;
+    }
+
+    @PostConstruct
+    public void postConstruct() {
       CsvPackageType.WIC_PACKAGE.setEncryptionService(wicPgpEncryptor);
       CsvPackageType.ECE_JEFFERSON_PACKAGE.setEncryptionService(eceJeffersonPgpEncryptor);
       CsvPackageType.ECE_ORLEANS_PACKAGE.setEncryptionService(eceOrleansPgpEncryptor);
