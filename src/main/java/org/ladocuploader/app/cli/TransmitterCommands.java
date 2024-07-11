@@ -128,7 +128,9 @@ public class TransmitterCommands {
         if (csvPackageType.getEncryptPackage()){
             log.info("Encrypting data package");
             PGPEncryptor encryptor = csvPackageType.getPgpEncryptor();
+            log.info("Got encryptor for package={}", csvPackageType.name());
             byte [] data = encryptor.signAndEncryptPayload(fileName);
+            log.info("Encrypted file using encryptor for package {}", csvPackageType.name());
             log.info("Uploading encrypted file");
             sftpClient.uploadFile(fileName, uploadLocation, data);
             log.info("Finished uploading encrypted file");
