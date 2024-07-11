@@ -131,7 +131,7 @@ pgp:
   ece:
     jefferson:
       seckey-file-path: ${ECE_PGP_SECKEY_FILE_PATH}
-      pubkey-file-path: ${ECE_PGP_PUBKEY_FILE_PATH}
+      pubkey-file-path: ${ECE_PGP_JEFFERSON_PUBKEY_FILE_PATH}
       sigkey-password: ${ECE_PGP_SIGKEY_PASSWORD}
       bucket-name: ${ECE_PGP_KEYS_DIR}
     orleans:
