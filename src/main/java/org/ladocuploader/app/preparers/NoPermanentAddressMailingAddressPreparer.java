@@ -20,16 +20,20 @@ public class NoPermanentAddressMailingAddressPreparer implements SubmissionField
     Map<String, Object> inputData = submission.getInputData();
 
     boolean noHomeAddress = inputData.getOrDefault("noHomeAddress[]", List.of("false")).equals(List.of("true"));
+    boolean noMailingaddress = inputData.getOrDefault("mailingAddressStreetAddress1", "").equals("") &&
+            inputData.getOrDefault("mailingAddressCity", "").equals("") &&
+            inputData.getOrDefault("mailingAddressState", "").equals("") &&
+            inputData.getOrDefault("mailingAddressZipCode", "").equals("");
 
-    if (noHomeAddress){
+    if (noHomeAddress && noMailingaddress) {
       // get parish address and map to mailing address
       String selectedParish = (String) submission.getInputData().get("parish");
       Parish parishDetails = Parish.valueOf(selectedParish);
       results.put("mailingAddressZipCode", new SingleField("mailingAddressZipCode", parishDetails.getMailingAddressZipcode(), null));
       results.put("mailingAddressState", new SingleField("mailingAddressState", parishDetails.getMailingAddressState(), null));
       results.put("mailingAddressCity", new SingleField("mailingAddressCity", parishDetails.getMailingAddressCity(), null));
-      results.put("mailingAddressStreetAddress1", new SingleField("mailingAddressStreetAddress2", parishDetails.getMailingAddress1(), null));
-      results.put("mailingAddressStreetAddress2", new SingleField("mailingAddressStreetAddress2", parishDetails.getMailingAddress1(), null));
+      results.put("mailingAddressStreetAddress1", new SingleField("mailingAddressStreetAddress1", parishDetails.getMailingAddress1(), null));
+      results.put("mailingAddressStreetAddress2", new SingleField("mailingAddressStreetAddress2", parishDetails.getMailingAddress2(), null));
     }
 
     return results;

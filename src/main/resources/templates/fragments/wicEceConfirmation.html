@@ -56,10 +56,10 @@
       <p th:utext="#{nola-ece.if-youre-approved}"></p>
       <p th:utext="#{nola-ece.subheader}"></p>
       <a th:if="${isNola}" class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
-         th:text="#{ece-go-to-application}"></a>
+         th:text="#{ece-go-to-application}" id="eligible-and-not-interested-ece-nola"></a>
       <a th:if="${isJefferson}" class="button button--primary" target="_blank" href="https://jeffersonchild.com/parent-guardians/"
-          th:text="#{ece-go-to-application}"></a>
-    </th:block>
+          th:text="#{ece-go-to-application}" id="eligible-and-not-interested-ece-jefferson"></a>
+    </th:block>"
 
     <th:block th:if="${inLinkGroup && isInterestedInECE}">
       <hr>
@@ -67,9 +67,9 @@
       <p th:utext="#{nola-ece.if-youre-approved}"></p>
       <p th:utext="#{nola-ece.subheader}"></p>
       <a th:if="${isNola}" class="button button--primary" target="_blank" href="http://apply.avela.org/nolaps"
-         th:text="#{ece-go-to-application}"></a>
+         th:text="#{ece-go-to-application}" id="link-group-ece-nola"></a>
       <a th:if="${isJefferson}" class="button button--primary" target="_blank" href="https://jeffersonchild.com/parent-guardians/"
-          th:text="#{ece-go-to-application}"></a>
+          th:text="#{ece-go-to-application}" id="link-group-ece-jefferson"></a>
     </th:block>
 
     <th:block th:if="${isEligibleForWIC && !isInterestedInWIC}">
@@ -78,7 +78,7 @@
       <p th:text="#{wic.if-youre-approved}"></p>
       <p th:utext="#{wic.subheader}"></p>
       <a class="button button--primary" target="_blank" href="https://mywic.us/participantreferral"
-         th:text="#{wic-go-to-application}"></a>
+         th:text="#{wic-go-to-application}" id="eligible-and-not-interested-wic"></a>
     </th:block>
 
     <th:block th:if="${inLinkGroup && isInterestedInWIC}">
@@ -87,7 +87,7 @@
       <p th:text="#{wic.if-youre-approved}"></p>
       <p th:utext="#{wic.subheader}"></p>
       <a class="button button--primary" target="_blank" href="https://mywic.us/participantreferral"
-         th:text="#{wic-go-to-application}"></a>
+         th:text="#{wic-go-to-application}" id="link-group-wic"></a>
     </th:block>
 
     <th:block th:if="${inApplyGroup || inLinkGroup}">
