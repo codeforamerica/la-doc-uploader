@@ -54,7 +54,7 @@ public enum CsvPackageType {
   public static class MyEnumInjector {
     @Autowired
     public MyEnumInjector(
-            @Qualifier("wicEncryptor") PGPEncryptor wicEncryptor,
+            @Qualifier("wicPgpEncryptor") PGPEncryptor wicEncryptor,
             @Qualifier("eceOrleansPgpEncryptor") PGPEncryptor eceOrleansPgpEncryptor,
             @Qualifier("eceJeffersonPgpEncryptor") PGPEncryptor eceJeffersonPgpEncryptor
     ) {
