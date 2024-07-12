@@ -48,7 +48,7 @@ dependencies {
     println "📚Using form flow library ${formFlowLibraryVersion}"
 
 
-    implementation 'com.amazonaws:aws-encryption-sdk-java:3.0.0'
+    implementation 'com.amazonaws:aws-encryption-sdk-java:3.0.1'
     implementation 'org.bouncycastle:bcpg-jdk15on:1.70'
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
     implementation 'org.springframework.shell:spring-shell-starter:3.2.2'
