@@ -4,8 +4,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.ladocuploader.app.cli.PGPEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
