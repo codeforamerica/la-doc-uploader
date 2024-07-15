@@ -37,8 +37,8 @@ dependencies {
     implementation 'com.jcraft:jsch:0.1.55'
     implementation 'org.springframework.shell:spring-shell-starter:3.2.2'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation("com.mixpanel:mixpanel-java:1.5.2")
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.6'
+    implementation("com.mixpanel:mixpanel-java:1.5.3")
     implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
     implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.17.0'
@@ -75,7 +75,7 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.22.0'
     testImplementation 'io.percy:percy-java-selenium:2.0.5'
     testImplementation 'org.awaitility:awaitility'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
     testImplementation 'com.deque.html.axe-core:selenium:4.8.2'
 
     testAnnotationProcessor 'org.projectlombok:lombok'
@@ -90,7 +90,7 @@ springBoot {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.shell:spring-shell-dependencies:3.2.3"
+        mavenBom "org.springframework.shell:spring-shell-dependencies:3.3.1"
     }
 }
 
