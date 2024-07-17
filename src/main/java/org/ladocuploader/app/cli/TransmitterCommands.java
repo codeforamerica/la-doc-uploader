@@ -52,22 +52,16 @@ public class TransmitterCommands {
 
     private final String successfulSubmissionKey = "success";
 
-    private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE, TransmissionType.WIC);
+    private final List<TransmissionType> transmissionTypes = List.of(TransmissionType.ECE_ORLEANS, TransmissionType.ECE_JEFFERSON, TransmissionType.WIC);
 
     private final long TWO_HOURS = 2L;
 
-    private final PGPEncryptor wicPgpEncryptor;
-
-    private final PGPEncryptor ecePgpEncryptor;
-
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor wicPgpEncryptor, PGPEncryptor ecePgpEncryptor) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
         this.fileRepository = cloudFileRepository;
-        this.wicPgpEncryptor = wicPgpEncryptor;
-        this.ecePgpEncryptor = ecePgpEncryptor;
     }
 
     @Scheduled(cron="${transmissions.wic-ece-transmission-schedule}")
@@ -133,16 +127,10 @@ public class TransmitterCommands {
         String uploadLocation = csvPackageType.getUploadLocation();
         if (csvPackageType.getEncryptPackage()){
             log.info("Encrypting data package");
-            byte [] data = new byte[]{};
-            if (csvPackageType == CsvPackageType.WIC_PACKAGE) {
-                log.info("Encrypting WIC file from memory");
-                data = wicPgpEncryptor.signAndEncryptPayload(fileName);
-                log.info("Finished encrypting WIC file");
-            } else if (csvPackageType == CsvPackageType.ECE_PACKAGE ){
-                log.info("Encrypting ECE zip file from memory");
-                data = ecePgpEncryptor.signAndEncryptPayload(fileName);
-                log.info("Finished encrypting ECE zip file");
-            }
+            PGPEncryptor encryptor = csvPackageType.getPgpEncryptor();
+            log.info("Got encryptor for package={}", csvPackageType.name());
+            byte [] data = encryptor.signAndEncryptPayload(fileName);
+            log.info("Encrypted file using encryptor for package {}", csvPackageType.name());
             log.info("Uploading encrypted file");
             sftpClient.uploadFile(fileName, uploadLocation, data);
             log.info("Finished uploading encrypted file");
