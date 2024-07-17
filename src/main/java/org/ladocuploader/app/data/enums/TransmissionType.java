@@ -4,7 +4,8 @@ import org.ladocuploader.app.csv.enums.CsvPackageType;
 
 public enum TransmissionType {
     SNAP(null),
-    ECE(CsvPackageType.ECE_PACKAGE),
+    ECE_ORLEANS(CsvPackageType.ECE_ORLEANS_PACKAGE),
+    ECE_JEFFERSON(CsvPackageType.ECE_JEFFERSON_PACKAGE),
     WIC(CsvPackageType.WIC_PACKAGE);
 
     private final CsvPackageType packageType;
