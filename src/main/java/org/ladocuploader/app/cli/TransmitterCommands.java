@@ -57,7 +57,7 @@ public class TransmitterCommands {
     private final long TWO_HOURS = 2L;
 
     public TransmitterCommands(TransmissionRepository transmissionRepository,
-                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository, PGPEncryptor wicPgpEncryptor, PGPEncryptor ecePgpEncryptor) {
+                               SftpClient sftpClient, CsvService csvService, CloudFileRepository cloudFileRepository) {
         this.transmissionRepository = transmissionRepository;
         this.sftpClient = sftpClient;
         this.csvService = csvService;
