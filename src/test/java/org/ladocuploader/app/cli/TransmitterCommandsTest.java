@@ -106,7 +106,7 @@ public class TransmitterCommandsTest {
                 )).build();
         submissionRepository.save(submissionWithDocs);
         Transmission transmission = Transmission.fromSubmission(submission);
-        transmission.setTransmissionType(TransmissionType.ECE);
+        transmission.setTransmissionType(TransmissionType.ECE_ORLEANS);
         transmission.setStatus(TransmissionStatus.Queued);
         transmissionRepository.save(transmission);
 
@@ -118,7 +118,7 @@ public class TransmitterCommandsTest {
         userFileRepository.save(docfile);
 
         transmission = Transmission.fromSubmission(submissionWithDocs);
-        transmission.setTransmissionType(TransmissionType.ECE);
+        transmission.setTransmissionType(TransmissionType.ECE_ORLEANS);
         transmission.setStatus(TransmissionStatus.Queued);
         transmissionRepository.save(transmission);
 
@@ -150,8 +150,8 @@ public class TransmitterCommandsTest {
 
     @Test
     void transmitZipFile() throws IOException, JSchException, SftpException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        CsvPackage ecePackage = new CsvPackage(CsvPackageType.ECE_PACKAGE);
-        List<CsvType> csvTypes = CsvPackageType.ECE_PACKAGE.getCsvTypeList();
+        CsvPackage ecePackage = new CsvPackage(CsvPackageType.ECE_ORLEANS_PACKAGE);
+        List<CsvType> csvTypes = CsvPackageType.ECE_ORLEANS_PACKAGE.getCsvTypeList();
         csvTypes.forEach(csvType ->
         {
             CsvDocument csvDocument = new CsvDocument(csvType, "some bytes".getBytes());
@@ -186,7 +186,7 @@ public class TransmitterCommandsTest {
 
         docFile.delete();
 
-        Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.ECE);
+        Transmission transmission = transmissionRepository.findBySubmissionAndTransmissionType(submission, TransmissionType.ECE_ORLEANS);
         assertNotNull(transmission.getStatus());
         assertNotNull(transmission.getRunId());
 

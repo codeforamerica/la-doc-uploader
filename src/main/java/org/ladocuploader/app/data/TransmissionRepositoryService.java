@@ -7,8 +7,6 @@ import org.ladocuploader.app.data.enums.TransmissionStatus;
 import org.ladocuploader.app.data.enums.TransmissionType;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @Transactional
 public class TransmissionRepositoryService {
