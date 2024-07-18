@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '3.2.4'
+    id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'java'
     id 'com.adarshr.test-logger' version '3.2.0'
@@ -57,7 +57,7 @@ dependencies {
     testImplementation 'org.projectlombok:lombok:1.18.32'
 
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.11.0'
-    implementation 'io.sentry:sentry-logback:7.11.0'
+    implementation 'io.sentry:sentry-logback:7.12.0'
 
 
     testImplementation 'junit:junit:4.13.2'
@@ -75,8 +75,9 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.22.0'
     testImplementation 'io.percy:percy-java-selenium:2.0.5'
     testImplementation 'org.awaitility:awaitility'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
-    testImplementation 'com.deque.html.axe-core:selenium:4.8.2'
+    testImplementation 'com.deque.html.axe-core:selenium:4.9.1'
+
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.1'
 
     testAnnotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
