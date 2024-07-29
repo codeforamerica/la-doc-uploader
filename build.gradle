@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '3.3.1'
+    id 'org.springframework.boot' version '3.3.2'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'java'
     id 'com.adarshr.test-logger' version '3.2.0'
@@ -35,7 +35,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.jcraft:jsch:0.1.55'
-    implementation 'org.springframework.shell:spring-shell-starter:3.2.2'
+    implementation 'org.springframework.shell:spring-shell-starter:3.3.1'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.6'
     implementation("com.mixpanel:mixpanel-java:1.5.3")
@@ -51,13 +51,13 @@ dependencies {
     implementation 'com.amazonaws:aws-encryption-sdk-java:3.0.1'
     implementation 'org.bouncycastle:bcpg-jdk15on:1.70'
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
-    implementation 'org.springframework.shell:spring-shell-starter:3.2.2'
+    implementation 'org.springframework.shell:spring-shell-starter:3.3.1'
 
-    implementation 'commons-net:commons-net:3.10.0'
-    testImplementation 'org.projectlombok:lombok:1.18.32'
+    testImplementation 'org.projectlombok:lombok:1.18.34'
+    implementation 'commons-net:commons-net:3.11.1'
 
-    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.11.0'
-    implementation 'io.sentry:sentry-logback:7.12.0'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.12.1'
+    implementation 'io.sentry:sentry-logback:7.12.1'
 
 
     testImplementation 'junit:junit:4.13.2'
@@ -72,12 +72,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.apache.httpcomponents.client5:httpclient5:5.3.1'
-    testImplementation 'org.seleniumhq.selenium:selenium-java:4.22.0'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.23.0'
     testImplementation 'io.percy:percy-java-selenium:2.0.5'
     testImplementation 'org.awaitility:awaitility'
     testImplementation 'com.deque.html.axe-core:selenium:4.9.1'
 
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.1'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.2'
 
     testAnnotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
