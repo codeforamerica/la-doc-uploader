@@ -99,7 +99,7 @@ public class WICApplicationCsvModel extends BaseCsvModel {
         String notPregnantNoInfantNoChild = !hasPregnancy && !hasInfant && !hasChildUnderFive ? "None of the above" : "";
         objectData.put("notPregnantNoInfantNoChild", notPregnantNoInfantNoChild);
         
-        objectData.put("preferredLanguage", inputData.getOrDefault("preferredLanguage", "English"));
+        objectData.put("preferredLanguage", inputData.getOrDefault("languageRead", "English"));
 
         WICApplicationCsvModel wicModel = mapper.convertValue(objectData, WICApplicationCsvModel.class);
         wicModel.setSubmissionId(submission.getId());
